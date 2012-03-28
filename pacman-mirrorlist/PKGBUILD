@@ -15,3 +15,4 @@ build() {
 }
 
 
+md5sums=('7a55b91905cd7b97223ed591a002fa15')
