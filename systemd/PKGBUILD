@@ -1,0 +1,90 @@
+# Based on the file created for Arch Linux by:
+# Dave Reisner <dreisner@archlinux.org>
+
+# Maintainer: Guinux <nuxgui@gmail.com>
+
+pkgname=systemd
+pkgver=44
+pkgrel=1
+arch=('i686' 'x86_64')
+url="http://www.freedesktop.org/wiki/Software/systemd"
+license=('GPL2')
+groups=('base')
+pkgdesc="systemd and service manager"
+makedepends=('acl' 'cryptsetup' 'dbus-core' 'docbook-xsl' 'gperf' 'intltool'
+             'kmod' 'libcap' 'libxslt' 'linux-api-headers' 'pam' 'udev' 'xz')
+options=('!libtool')
+depends=('acl' 'dbus' 'dbus-core' "libsystemd=$pkgver" 'kbd' 'kmod' 'libcap' 'pam' 
+         'util-linux' 'udev' 'xz' 'dbus-python' 'python2-cairo' 'systemd-manjaro-units')
+optdepends=('cryptsetup: required for encrypted block devices'
+            'initscripts: legacy support for hostname and vconsole setup'
+            'initscripts-systemd: native boot and initialization scripts'
+            'systemd-sysvcompat: symlink package to provide sysvinit binaries')
+backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
+        etc/dbus-1/system.d/org.freedesktop.hostname1.conf
+        etc/dbus-1/system.d/org.freedesktop.login1.conf
+        etc/dbus-1/system.d/org.freedesktop.locale1.conf
+        etc/dbus-1/system.d/org.freedesktop.timedate1.conf
+        etc/systemd/system.conf
+        etc/systemd/user.conf
+        etc/systemd/systemd-logind.conf
+        etc/systemd/systemd-journald.conf)
+install=systemd.install
+source=("http://www.freedesktop.org/software/systemd/systemd-$pkgver.tar.xz"
+        "os-release"
+        0001-util-never-follow-symlinks-in-rm_rf_children.patch)
+sha256sums=('7a5aac4b4b8b3a82bf59292f10e43d8f2c2d7039f34e95714f81d8edcb42233c'
+            '0cee1cf4781e9f5f07171801aa58f3d4a363b894476ab3cb8e8b22af97ef99c7'
+            '4bf6f7d0312f07614d2addece6b48f3301bb85de5f27c8b9729e11b1f4d9e36a')
+            
+build() {
+  cd "systemd-$pkgver"
+
+  # https://bugzilla.redhat.com/show_bug.cgi?id=803358
+  patch -Np1 <"$srcdir/0001-util-never-follow-symlinks-in-rm_rf_children.patch"
+
+  ./configure --sysconfdir=/etc \
+              --libexecdir=/usr/lib \
+              --libdir=/usr/lib \
+              --with-pamlibdir=/lib/security \
+              --localstatedir=/var \
+              --with-rootprefix= \
+              --enable-plymouth \
+              --disable-gtk \
+              --with-distro=arch
+
+  make
+}
+
+package() {
+  cd "systemd-$pkgver"
+
+  make DESTDIR="$pkgdir" install
+
+  install -Dm644 "$srcdir/os-release" "$pkgdir/etc/os-release"
+
+  printf "d /run/console 755 root root\n" >"$pkgdir/usr/lib/tmpfiles.d/console.conf"
+  chmod 644 "$pkgdir/usr/lib/tmpfiles.d/console.conf"
+
+  # symlink to /bin/systemd for compat and sanity
+  ln -s ../lib/systemd/systemd "$pkgdir/bin/systemd"
+
+  # use python2 for systemd-analyze
+  sed -i '1s/python$/python2/' "$pkgdir/usr/bin/systemd-analyze"
+
+  # fix .so links in manpage stubs
+  find "$pkgdir/usr/share/man" -type f -name '*.[[:digit:]]' \
+      -exec sed -i '1s|^\.so \(.*\)\.\([[:digit:]]\+\)|.so man\2/\1.\2|' {} +
+
+  # rename man pages to avoid conflicts with sysvinit and initscripts
+  manpages=(man8/{telinit,halt,reboot,poweroff,runlevel,shutdown}.8
+            man5/{hostname,{vconsole,locale}.conf}.5)
+  cd "$pkgdir/usr/share/man"
+  for manpage in "${manpages[@]}"; do
+    IFS='/' read section page <<< "$manpage"
+    mv "$manpage" "$section/systemd.$page"
+  done
+
+  ### erase libs because they are split off in libsystemd (libs, includes, pkgconfig, man3)
+  rm -f "$pkgdir"/usr/lib/libsystemd-*.so*
+}

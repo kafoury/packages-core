@@ -1,0 +1,11 @@
+[Unit]
+Description=SLiM Simple Login Manager
+After=rc-local.service systemd-user-sessions.service
+Conflicts=plymouth-quit.service
+
+[Service]
+ExecStartPre=/bin/plymouth quit
+ExecStart=/usr/bin/slim -nodaemon
+
+[Install]
+WantedBy=graphical.target

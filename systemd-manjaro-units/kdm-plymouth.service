@@ -1,0 +1,11 @@
+[Unit]
+Description=K Display Manager
+After=rc-local.service systemd-user-sessions.service
+Conflicts=plymouth-quit.service
+
+[Service]
+ExecStartPre=/bin/plymouth quit
+ExecStart=/usr/bin/kdm -nodaemon tty7
+
+[Install]
+WantedBy=graphical.target
