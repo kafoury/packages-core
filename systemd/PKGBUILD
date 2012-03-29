@@ -3,33 +3,17 @@
 
 # Maintainer: Guinux <nuxgui@gmail.com>
 
-pkgname=systemd
+pkgbase=systemd
+pkgname=('systemd' 'libsystemd')
 pkgver=44
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2')
 groups=('base')
-pkgdesc="systemd and service manager"
 makedepends=('acl' 'cryptsetup' 'dbus-core' 'docbook-xsl' 'gperf' 'intltool'
              'kmod' 'libcap' 'libxslt' 'linux-api-headers' 'pam' 'udev' 'xz')
 options=('!libtool')
-depends=('acl' 'dbus' 'dbus-core' "libsystemd=$pkgver" 'kbd' 'kmod' 'libcap' 'pam' 
-         'util-linux' 'udev' 'xz' 'dbus-python' 'python2-cairo' 'systemd-manjaro-units')
-optdepends=('cryptsetup: required for encrypted block devices'
-            'initscripts: legacy support for hostname and vconsole setup'
-            'initscripts-systemd: native boot and initialization scripts'
-            'systemd-sysvcompat: symlink package to provide sysvinit binaries')
-backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
-        etc/dbus-1/system.d/org.freedesktop.hostname1.conf
-        etc/dbus-1/system.d/org.freedesktop.login1.conf
-        etc/dbus-1/system.d/org.freedesktop.locale1.conf
-        etc/dbus-1/system.d/org.freedesktop.timedate1.conf
-        etc/systemd/system.conf
-        etc/systemd/user.conf
-        etc/systemd/systemd-logind.conf
-        etc/systemd/systemd-journald.conf)
-install=systemd.install
 source=("http://www.freedesktop.org/software/systemd/systemd-$pkgver.tar.xz"
         "os-release"
         0001-util-never-follow-symlinks-in-rm_rf_children.patch)
@@ -56,7 +40,23 @@ build() {
   make
 }
 
-package() {
+package_systemd() {
+  pkgdesc="systemd and service manager"
+  depends=('acl' 'dbus' 'dbus-core' "libsystemd=$pkgver" 'kbd' 'kmod' 'libcap' 'pam' 
+           'util-linux' 'udev' 'xz' 'dbus-python' 'python2-cairo' 'systemd-manjaro-units')
+  optdepends=('cryptsetup: required for encrypted block devices'
+              'systemd-sysvcompat: symlink package to provide sysvinit binaries')
+  backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
+          etc/dbus-1/system.d/org.freedesktop.hostname1.conf
+          etc/dbus-1/system.d/org.freedesktop.login1.conf
+          etc/dbus-1/system.d/org.freedesktop.locale1.conf
+          etc/dbus-1/system.d/org.freedesktop.timedate1.conf
+          etc/systemd/system.conf
+          etc/systemd/user.conf
+          etc/systemd/systemd-logind.conf
+          etc/systemd/systemd-journald.conf)
+  install=systemd.install
+
   cd "systemd-$pkgver"
 
   make DESTDIR="$pkgdir" install
@@ -85,6 +85,19 @@ package() {
     mv "$manpage" "$section/systemd.$page"
   done
 
-  ### erase libs because they are split off in libsystemd (libs, includes, pkgconfig, man3)
-  rm -f "$pkgdir"/usr/lib/libsystemd-*.so*
+  ### split off libsystemd (libs, includes, pkgconfig, man3)
+  install -dm755 "$srcdir"/libsystemd/usr/{include,lib/pkgconfig}
+
+  cd "$srcdir"/libsystemd
+  mv "$pkgdir/usr/lib"/libsystemd-*.so* usr/lib
+  mv "$pkgdir/usr/include/systemd" usr/include
+  mv "$pkgdir/usr/lib/pkgconfig"/libsystemd-*.pc usr/lib/pkgconfig
 }
+
+package_libsystemd() {
+  pkgdesc="systemd client libraries"
+  depends=('libcap' 'xz')
+
+  mv "$srcdir/libsystemd"/* "$pkgdir"
+}
+
