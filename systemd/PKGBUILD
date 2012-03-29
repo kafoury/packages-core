@@ -10,7 +10,6 @@ pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2')
-groups=('base')
 makedepends=('acl' 'cryptsetup' 'dbus-core' 'docbook-xsl' 'gperf' 'intltool'
              'kmod' 'libcap' 'libxslt' 'linux-api-headers' 'pam' 'udev' 'xz')
 options=('!libtool')
