@@ -15,10 +15,12 @@ install='filesystem.install'
 depends=('iana-etc' 'bash' 'coreutils')
 backup=('etc/fstab' 'etc/crypttab' 'etc/group' 'etc/hosts' 'etc/ld.so.conf' 'etc/passwd'
         'etc/shadow' 'etc/gshadow' 'etc/resolv.conf' 'etc/motd' 'etc/nsswitch.conf'
-        'etc/shells' 'etc/host.conf' 'etc/securetty' 'etc/profile' 'etc/issue')
+        'etc/shells' 'etc/host.conf' 'etc/securetty' 'etc/profile' 'etc/issue' 'etc/rc.local'
+        'etc/rc.local.shutdown' 'etc/hostname' 'etc/vconsole.conf' 'etc/locale.conf' 'etc/modules.conf')
 source=('group' 'issue' 'nsswitch.conf' 'securetty' 'host.conf' 'ld.so.conf'
         'passwd' 'shadow' 'fstab' 'crypttab' 'hosts' 'motd' 'resolv.conf' 'shells'
-        'gshadow' 'profile' 'modprobe.d.usb-load-ehci-first' 'rc.local' 'rc.local.shutdown')
+        'gshadow' 'profile' 'modprobe.d.usb-load-ehci-first' 'rc.local' 'rc.local.shutdown'
+        'hostname' 'locale.conf' 'vconsole.conf' 'modules.conf')
 sha256sums=('c74c53d61d283650c343fd80d5e5a586b8fc6601ff258e3abfcd983b3c0c2f63'
             'aa59e888f2f4b6f565ae7f4057b987bfde07890a2ccde438abee2b93a93d96c0'
             '504d3ac929bcee8a609a3b4f1b67e9d7bb061433b51229c00b807665237b1bb7'
@@ -37,7 +39,11 @@ sha256sums=('c74c53d61d283650c343fd80d5e5a586b8fc6601ff258e3abfcd983b3c0c2f63'
             'd8d4d3eb8e2bc1f64de5b0d33cd6864558c0fe149cedb479fad36e0523060e60'
             '6486258d7667a9dc389658cf45ca535e14ea472db2f7fe425932cfa2e5a59da1'
             '156b75b3470c2f73efca084b7ee681eca01508df3d8e9ba0c9325162b5d80f11'
-            '4367e4f2b40237448cad791410a1acaedcd46f5504827840aa85214fad1b546c')
+            '4367e4f2b40237448cad791410a1acaedcd46f5504827840aa85214fad1b546c'
+            '295a881e674d14ee0c0e77f25236a8fd99a9453e5c33f635f55d2e8c6959c7ea'
+            'bc538cf42f96e24b8ec94c32242b6891de245e0207fab6937bfce3e23942742b'
+            'cd4a55177020a436254bb4baf84e068b98b3b0f6644173a7c853d58d236e00f1'
+            'a8a1cd5c81b11498d43ba0e0b5de53de6f154a395d54171f44d2874b4f659053')
 
 package() {
 	cd ${srcdir}
@@ -56,7 +62,7 @@ package() {
 
 	# setup /etc
 	install -d ${pkgdir}/etc/{ld.so.conf.d,skel,profile.d}
-	for f in fstab group host.conf hosts issue ld.so.conf motd nsswitch.conf passwd resolv.conf securetty shells profile; do
+	for f in fstab group host.conf hosts issue ld.so.conf motd nsswitch.conf passwd resolv.conf securetty shells profile hostname locale.conf vconsole.conf modules.conf; do
 		install -m644 ${srcdir}/${f} ${pkgdir}/etc/
 	done
 	ln -s /proc/self/mounts ${pkgdir}/etc/mtab
