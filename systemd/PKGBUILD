@@ -10,10 +10,18 @@ pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2')
+<<<<<<< HEAD
 makedepends=('acl' 'cryptsetup' 'dbus-core' 'docbook-xsl' 'gperf' 'intltool'
              'kmod' 'libcap' 'libxslt' 'linux-api-headers' 'pam' 'udev' 'xz')
 options=('!libtool')
 source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
+=======
+groups=('base')
+makedepends=('acl' 'cryptsetup' 'dbus-core' 'docbook-xsl' 'gperf' 'intltool'
+             'kmod' 'libcap' 'libxslt' 'linux-api-headers' 'pam' 'udev' 'xz')
+options=('!libtool')
+source=("http://www.freedesktop.org/software/systemd/systemd-$pkgver.tar.xz"
+>>>>>>> origin/master
         "os-release"
         0001-util-never-follow-symlinks-in-rm_rf_children.patch)
 sha256sums=('7a5aac4b4b8b3a82bf59292f10e43d8f2c2d7039f34e95714f81d8edcb42233c'
@@ -41,11 +49,18 @@ build() {
 
 package_systemd() {
   pkgdesc="systemd and service manager"
+<<<<<<< HEAD
   groups=('base')
   depends=('acl' 'dbus' 'dbus-core' "libsystemd=$pkgver" 'kbd' 'kmod' 'libcap' 'pam' 
            'util-linux' 'udev' 'xz' 'dbus-python' 'python2-cairo' 'systemd-manjaro-units'
            'systemd-sysvcompat')
   optdepends=('cryptsetup: required for encrypted block devices')
+=======
+  depends=('acl' 'dbus' 'dbus-core' "libsystemd=$pkgver" 'kbd' 'kmod' 'libcap' 'pam' 
+           'util-linux' 'udev' 'xz' 'dbus-python' 'python2-cairo' 'systemd-manjaro-units')
+  optdepends=('cryptsetup: required for encrypted block devices'
+              'systemd-sysvcompat: symlink package to provide sysvinit binaries')
+>>>>>>> origin/master
   backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
           etc/dbus-1/system.d/org.freedesktop.hostname1.conf
           etc/dbus-1/system.d/org.freedesktop.login1.conf
@@ -55,9 +70,15 @@ package_systemd() {
           etc/systemd/user.conf
           etc/systemd/systemd-logind.conf
           etc/systemd/systemd-journald.conf)
+<<<<<<< HEAD
   install="$pkgname.install"
 
   cd "$pkgname-$pkgver"
+=======
+  install=systemd.install
+
+  cd "systemd-$pkgver"
+>>>>>>> origin/master
 
   make DESTDIR="$pkgdir" install
 
@@ -79,6 +100,18 @@ package_systemd() {
   find "$pkgdir/usr/share/man" -type f -name '*.[[:digit:]]' \
       -exec sed -i '1s|^\.so \(.*\)\.\([[:digit:]]\+\)|.so man\2/\1.\2|' {} +
 
+<<<<<<< HEAD
+=======
+  # rename man pages to avoid conflicts with sysvinit and initscripts
+  manpages=(man8/{telinit,halt,reboot,poweroff,runlevel,shutdown}.8
+            man5/{hostname,{vconsole,locale}.conf}.5)
+  cd "$pkgdir/usr/share/man"
+  for manpage in "${manpages[@]}"; do
+    IFS='/' read section page <<< "$manpage"
+    mv "$manpage" "$section/systemd.$page"
+  done
+
+>>>>>>> origin/master
   ### split off libsystemd (libs, includes, pkgconfig, man3)
   install -dm755 "$srcdir"/libsystemd/usr/{include,lib/pkgconfig}
 
@@ -86,6 +119,7 @@ package_systemd() {
   mv "$pkgdir/usr/lib"/libsystemd-*.so* usr/lib
   mv "$pkgdir/usr/include/systemd" usr/include
   mv "$pkgdir/usr/lib/pkgconfig"/libsystemd-*.pc usr/lib/pkgconfig
+<<<<<<< HEAD
 }
 
 package_libsystemd() {
@@ -96,3 +130,14 @@ package_libsystemd() {
 }
 
 # vim: ft=sh syn=sh et
+=======
+}
+
+package_libsystemd() {
+  pkgdesc="systemd client libraries"
+  depends=('libcap' 'xz')
+
+  mv "$srcdir/libsystemd"/* "$pkgdir"
+}
+
+>>>>>>> origin/master

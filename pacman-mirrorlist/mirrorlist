@@ -1,0 +1,7 @@
+##
+## Manjaro Linux repository mirrorlist
+## Generated on 2012-03-28
+##
+
+## Any
+Server = http://reponew.manjaro.org/$repo/$arch/src

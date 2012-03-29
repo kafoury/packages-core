@@ -1,0 +1,18 @@
+pkgname=pacman-mirrorlist
+pkgver=20120328
+pkgrel=1
+pkgdesc="Manjaro Linux mirror list for use by pacman"
+arch=('any')
+url="https://git.manjaro.org/packages-sources/core/trees/master/manjaro-mirrorlist"
+license=('GPL')
+backup=(etc/pacman.d/mirrorlist)
+source=(mirrorlist)
+
+
+build() {
+  mkdir -p $pkgdir/etc/pacman.d
+  install -m644 $srcdir/mirrorlist $pkgdir/etc/pacman.d/
+}
+
+
+md5sums=('7a55b91905cd7b97223ed591a002fa15')
