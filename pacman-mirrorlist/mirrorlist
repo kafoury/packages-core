@@ -4,4 +4,4 @@
 ##
 
 ## Any
-Server = http://reponew.manjaro.org/$repo/$arch/src
+Server = http://reponew.manjaro.org/$repo/$arch/bin

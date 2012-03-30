@@ -4,8 +4,8 @@
 # Maintainer: Roland <roland@manjarolinux.org>
 
 pkgname=filesystem
-pkgver=2011.12
-pkgrel=2
+pkgver=2012.03
+pkgrel=1
 pkgdesc='Base filesystem'
 arch=('any')
 license=('GPL')

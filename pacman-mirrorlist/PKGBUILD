@@ -1,5 +1,5 @@
 pkgname=pacman-mirrorlist
-pkgver=20120328
+pkgver=20120329
 pkgrel=1
 pkgdesc="Manjaro Linux mirror list for use by pacman"
 arch=('any')
@@ -13,6 +13,4 @@ build() {
   mkdir -p $pkgdir/etc/pacman.d
   install -m644 $srcdir/mirrorlist $pkgdir/etc/pacman.d/
 }
-
-
-md5sums=('7a55b91905cd7b97223ed591a002fa15')
+md5sums=('e27ebb2e2fdacacdb257c46b108397b2')
