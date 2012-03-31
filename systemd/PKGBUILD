@@ -43,8 +43,7 @@ package_systemd() {
   pkgdesc="systemd and service manager"
   groups=('base')
   depends=('acl' 'dbus' 'dbus-core' "libsystemd=$pkgver" 'kbd' 'kmod' 'libcap' 'pam' 
-           'util-linux' 'udev' 'xz' 'dbus-python' 'python2-cairo' 'systemd-manjaro-units'
-           'systemd-sysvcompat')
+           'util-linux' 'udev' 'xz' 'dbus-python' 'python2-cairo' 'systemd-manjaro-units')
   optdepends=('cryptsetup: required for encrypted block devices')
   backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
           etc/dbus-1/system.d/org.freedesktop.hostname1.conf
@@ -68,6 +67,14 @@ package_systemd() {
 
   # symlink to /bin/systemd for compat and sanity
   ln -s ../lib/systemd/systemd "$pkgdir/bin/systemd"
+  
+  # add required symlinks
+  install -dm755 "$pkgdir/sbin"
+  for tool in runlevel reboot shutdown poweroff halt telinit; do
+    ln -s '/bin/systemctl' "$pkgdir/sbin/$tool"
+  done
+
+  ln -s '../lib/systemd/systemd' "$pkgdir/sbin/init"
 
   # use python2 for systemd-analyze
   sed -i '1s/python$/python2/' "$pkgdir/usr/bin/systemd-analyze"
