@@ -1,0 +1,79 @@
+# Based on the file created for Arch Linux by:
+# Dan McGee <dan@archlinux.org>
+# Dave Reisner <dave@archlinux.org>
+
+# Maintainer: Roland <roland@manjarolinux.org>
+
+pkgname=pacman
+pkgver=4.0.2
+pkgrel=1
+pkgdesc="A library-based package manager with dependency support"
+arch=('i686' 'x86_64')
+url="http://www.archlinux.org/pacman/"
+license=('GPL')
+groups=('base')
+depends=('bash' 'glibc>=2.15' 'libarchive>=3.0.2' 'curl>=7.19.4'
+         'gpgme' 'pacman-mirrorlist')
+makedepends=('asciidoc')
+optdepends=('fakeroot: for makepkg usage as normal user')
+backup=(etc/pacman.conf etc/makepkg.conf)
+install=pacman.install
+options=(!libtool)
+source=(ftp://ftp.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz{,.sig}
+        pacman.conf
+        pacman.conf.x86_64
+        makepkg.conf)
+sha256sums=('b53d03b29d5ea41efecd39e1fc3a6c9549d3f23a14d2d7fd540996bc4f8931e5'
+            '8b4a47dae1e2d4eb8fdc9d924428c3efc3b90c9eb2924e475f3426ee9b3759c9'
+            '6987e1a6ae1b2073c4c55198d67d4439ed957192940a013466c35c3bcabd370c'
+            '68d855f4c59c61f2dae793e7db317b2803e44e92ee26c99b46c07de3c84c5d4b'
+            '049491c1e3749cffb8033f7c757866490af836697fc5ce7bfbeb66596b9b0bc9')
+
+# keep an upgrade path for older installations
+PKGEXT='.pkg.tar.gz'
+
+build() {
+  cd $srcdir/$pkgname-$pkgver
+
+  ./configure --prefix=/usr --sysconfdir=/etc \
+    --localstatedir=/var --enable-doc
+  make
+}
+
+check() {
+  make -C "$pkgname-$pkgver" check
+}
+
+package() {
+  cd $srcdir/$pkgname-$pkgver
+  make DESTDIR=$pkgdir install
+
+  # install Arch specific stuff
+  mkdir -p $pkgdir/etc
+  case "$CARCH" in
+    i686)
+      install -m644 $srcdir/pacman.conf $pkgdir/etc/pacman.conf
+      mycarch="i686"
+      mychost="i686-pc-linux-gnu"
+      myflags="-march=i686 "
+      ;;
+    x86_64)
+      install -m644 $srcdir/pacman.conf.x86_64 $pkgdir/etc/pacman.conf
+      mycarch="x86_64"
+      mychost="x86_64-unknown-linux-gnu"
+      myflags="-march=x86-64 "
+      ;;
+  esac
+  install -m644 $srcdir/makepkg.conf $pkgdir/etc/
+  # set things correctly in the default conf file
+  sed -i $pkgdir/etc/makepkg.conf \
+    -e "s|@CARCH[@]|$mycarch|g" \
+    -e "s|@CHOST[@]|$mychost|g" \
+    -e "s|@CARCHFLAGS[@]|$myflags|g"
+
+  # install completion files
+  mkdir -p $pkgdir/etc/bash_completion.d/
+  install -m644 contrib/bash_completion $pkgdir/etc/bash_completion.d/pacman
+  mkdir -p $pkgdir/usr/share/zsh/site-functions/
+  install -m644 contrib/zsh_completion $pkgdir/usr/share/zsh/site-functions/_pacman
+}
