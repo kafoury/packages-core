@@ -2,7 +2,7 @@
 # Dan McGee <dan@archlinux.org>
 # Dave Reisner <dave@archlinux.org>
 
-# Maintainer: Roland <roland@manjarolinux.org>
+# Maintainer: Guinux <nuxgui@gmail.com>
 
 pkgname=pacman
 pkgver=4.0.2

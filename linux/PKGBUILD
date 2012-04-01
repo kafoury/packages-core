@@ -3,6 +3,7 @@
 # Thomas Baechler <thomas@archlinux.org>
 
 # Maintainer: Guinux <nuxgui@gmail.com>
+# Co-Maintainer: Clittle <philm@manjarolinux.org>
 
 pkgbase=linux
 pkgname=('linux' 'linux-headers')
@@ -19,12 +20,21 @@ options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.2.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
-        'config' 'config.x86_64'
+        'config' 'config.x86_64' 'config.aufs'
         # standard config files for mkinitcpio ramdisk
         "${pkgname}.preset"
+        'aufs3.2-20120326.patch.bz2'
+        'aufs3-base.patch'
+        'aufs3-kbuild.patch'
+        'aufs3-loopback.patch'
+        'aufs3-proc_map.patch'
+        'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
+        'ext4-options.patch'
+        'fix-acerhdf-1810T-bios.patch'
         'i915-fix-ghost-tv-output.patch'
         'i915-gpu-finish.patch'
+<<<<<<< HEAD
         'ext4-options.patch')
 md5sums=('364066fa18767ec0ae5f4e4abcf9dc51'
          '687632bb0ba65439198ac60f2c02a8f2'
@@ -35,6 +45,27 @@ md5sums=('364066fa18767ec0ae5f4e4abcf9dc51'
          '263725f20c0b9eb9c353040792d644e5'
          '4cd79aa147825837dc8bc9f6b736c0a0'
          'c8299cf750a84e12d60b372c8ca7e1e8')
+=======
+)
+sha256sums=('dd96ed02b53fb5d57762e4b1f573460909de472ca588f81ec6660e4a172e7ba7'
+            '673fff654c4b81b2e9ca7d57cf82ca05f9a5723d55e81ec231b95b201de0a844'
+            '1e560618fd7f7131fdfa1bfbe10c8b7838ee75da194a4adc9348fefb67ad225a'
+            '45772fe37aed5b7111a37f2b35f8639c850a554b5873d9d1ab0163e1820a6bdc'
+            'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
+            'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
+            '48b7c68757a84109e8a3104672b2037cb376126f806d4b04d9f61c62bf5874be'
+            '2635ca013f170d4381826ec5b3aba3c15bfabd567df435df2c522c8ccd07ccb4'  
+            '1662adb22364323e630850d3064d2f7307e409782b577584f7c71c0d5c125eb8'  
+            'ab1cd55dd5605866add81aa088838bd8e72cf11db91142705d8c55de3869ef2a'  
+            '87418bd51cb15f84123abd7eee8c58211dfd5c217c39eb329ecfba023a1cb538'  
+            'fa4e22264afbddda60174508989d00fcef09e7b753f24f7456b92cb7cf56272c'
+            'b9d79ca33b0b51ff4f6976b7cd6dbb0b624ebf4fbf440222217f8ffc50445de4'  
+            '6fb90d77c7be02f4d3dff424a16baaa43ef84ca47ec046cc8e37471f7124e421'
+            '763eb938442e3112aa63c8e5153361254d9b2c9b20adce66c67892f14b89d1d4'
+            '9ccadbe3eb30bb283af3eb869c3a4bdb764628854811cc616a2e02e9ef398705'  
+            'ee4d0c5c33f45cd8758cb0b65e1a567e14d043f50f80df30a70192cf04b590bb'  
+)
+>>>>>>> 1ab0a972d3610f29900ec73922240426474eeada
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -58,6 +89,11 @@ build() {
   # needed.
   patch -Np1 -i "${srcdir}/i915-fix-ghost-tv-output.patch"
 
+  # Patch submitted upstream, waiting for inclusion:
+  # https://lkml.org/lkml/2012/2/19/51
+  # add support for latest bios of Acer 1810T acerhdf module
+  patch -Np1 -i "${srcdir}/fix-acerhdf-1810T-bios.patch"
+
   # set DEFAULT_CONSOLE_LOGLEVEL to 4 (same value as the 'quiet' kernel param)
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
@@ -67,11 +103,21 @@ build() {
   # https://bugs.archlinux.org/task/28653
   patch -Np1 -i "${srcdir}/ext4-options.patch"
 
+  # add aufs3 support
+  patch -Np1 -i "${srcdir}/aufs3.2-20120326.patch"
+  patch -Np1 -i "${srcdir}/aufs3-base.patch"
+  patch -Np1 -i "${srcdir}/aufs3-kbuild.patch"
+  patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
+  patch -Np1 -i "${srcdir}/aufs3-proc_map.patch"
+  patch -Np1 -i "${srcdir}/aufs3-standalone.patch"
+
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config
   else
     cat "${srcdir}/config" > ./.config
   fi
+
+  cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config

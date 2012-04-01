@@ -1,7 +1,7 @@
 # Based on the file created for Arch Linux by:
 # Tom Gundersen <teg@jklm.no>
 
-# Maintainer: Roland <roland@manjarolinux.org>
+# Maintainer: Guinux <nuxgui@gmail.com>
 
 pkgname=filesystem
 pkgver=2012.03
