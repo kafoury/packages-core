@@ -8,7 +8,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers')
 _kernelname=-MANJARO
 _basekernel=3.2
-pkgver=${_basekernel}.12
+pkgver=${_basekernel}.13
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -26,15 +26,15 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.2.tar.xz"
         'i915-fix-ghost-tv-output.patch'
         'i915-gpu-finish.patch'
         'ext4-options.patch')
-sha256sums=('dd96ed02b53fb5d57762e4b1f573460909de472ca588f81ec6660e4a172e7ba7'
-            'a35f30a28e832591e2748d41afde3a8a0625695f47025ae056d000a628e0a7b4'
-            '1e560618fd7f7131fdfa1bfbe10c8b7838ee75da194a4adc9348fefb67ad225a'
-            '45772fe37aed5b7111a37f2b35f8639c850a554b5873d9d1ab0163e1820a6bdc'
-            'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            'b9d79ca33b0b51ff4f6976b7cd6dbb0b624ebf4fbf440222217f8ffc50445de4'
-            '9ccadbe3eb30bb283af3eb869c3a4bdb764628854811cc616a2e02e9ef398705'
-            'ee4d0c5c33f45cd8758cb0b65e1a567e14d043f50f80df30a70192cf04b590bb'
-            '44744f6ece96ef627602aa6c88d4329642e8e50c93beb0f6b6eda91acbf2926b')
+md5sums=('364066fa18767ec0ae5f4e4abcf9dc51'
+         '687632bb0ba65439198ac60f2c02a8f2'
+         'a6913ef2a39541f18bd610cbb8f360ea'
+         '2182f8e0de70498130f7d9d770092c73'
+         'eb14dcfd80c00852ef81ded6e826826a'
+         '9d3c56a4b999c8bfbd4018089a62f662'
+         '263725f20c0b9eb9c353040792d644e5'
+         '4cd79aa147825837dc8bc9f6b736c0a0'
+         'c8299cf750a84e12d60b372c8ca7e1e8')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -107,8 +107,12 @@ build() {
 package_linux() {
   pkgdesc="The Linux Kernel and modules"
   groups=('base')
-  depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
+  depends=('coreutils' 'linux-firmware' 'module-init-tools>=3.16' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
+  provides=('kernel26')
+  conflicts=('kernel26')
+  replaces=('kernel26')
+  backup=("etc/mkinitcpio.d/${pkgname}.preset")
   install=${pkgname}.install
 
   cd "${srcdir}/linux-${_basekernel}"
@@ -120,7 +124,7 @@ package_linux() {
 
   mkdir -p "${pkgdir}"/{lib/modules,lib/firmware,boot}
   make INSTALL_MOD_PATH="${pkgdir}" modules_install
-  cp arch/$KARCH/boot/bzImage "${pkgdir}/boot/vmlinuz-${pkgver}-${pkgrel}-manjaro"
+  cp arch/$KARCH/boot/bzImage "${pkgdir}/boot/vmlinuz"
 
   # add vmlinux
   install -D -m644 vmlinux "${pkgdir}/usr/src/linux-${_kernver}/vmlinux"
@@ -130,13 +134,13 @@ package_linux() {
 
   # set correct depmod command for install
   sed \
-    -e  "s/RELEASE=.*/RELEASE=${pkgver}-${pkgrel}/g" \
+    -e  "s/KERNEL_NAME=.*/KERNEL_NAME=${_kernelname}/g" \
     -e  "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/g" \
     -i "${startdir}/${pkgname}.install"
   sed \
-    -e "s|ALL_kver=.*|ALL_kver=\"/boot/vmlinuz-${pkgver}-${pkgrel}-manjaro\"|g" \
-    -e "s|default_image=.*|default_image=\"/boot/initramfs-${pkgver}-${pkgrel}-manjaro.img\"|g" \
-    -e "s|fallback_image=.*|fallback_image=\"/boot/initramfs-${pkgver}-${pkgrel}-manjaro-fallback.img\"|g" \
+    -e "s|ALL_kver=.*|ALL_kver=\"/boot/vmlinuz\"|g" \
+    -e "s|default_image=.*|default_image=\"/boot/initramfs.img\"|g" \
+    -e "s|fallback_image=.*|fallback_image=\"/boot/initramfs-fallback.img\"|g" \
     -i "${pkgdir}/etc/mkinitcpio.d/${pkgname}.preset"
 
   # remove build and source links
@@ -146,14 +150,17 @@ package_linux() {
   # gzip -9 all modules to save 100MB of space
   find "${pkgdir}" -name '*.ko' -exec gzip -9 {} \;
   # make room for external modules
-  ln -s "../extramodules-${_basekernel}${_kernelname:--MANJARO}" "${pkgdir}/lib/modules/${_kernver}/extramodules"
+  ln -s "../extramodules-${_basekernel}${_kernelname:--ARCH}" "${pkgdir}/lib/modules/${_kernver}/extramodules"
   # add real version for building modules and running depmod from post_install/upgrade
-  mkdir -p "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--MANJARO}"
-  echo "${_kernver}" > "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--MANJARO}/version"
+  mkdir -p "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--ARCH}"
+  echo "${_kernver}" > "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--ARCH}/version"
 }
 
 package_linux-headers() {
   pkgdesc="Header files and scripts for building modules for linux kernel"
+  provides=('kernel26-headers')
+  conflicts=('kernel26-headers')
+  replaces=('kernel26-headers')
 
   mkdir -p "${pkgdir}/lib/modules/${_kernver}"
 
