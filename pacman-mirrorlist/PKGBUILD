@@ -1,3 +1,5 @@
+# Maintainer: Guinux <nuxgui@gmail.com>
+
 pkgname=pacman-mirrorlist
 pkgver=20120329
 pkgrel=1
