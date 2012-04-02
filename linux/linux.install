@@ -11,19 +11,26 @@ post_install () {
   echo ">>> Generating initial ramdisk, using mkinitcpio.  Please wait..."
   mkinitcpio -p linux
   
-  # update grub.cfg 
-  grub-mkconfig -o /boot/grub/grub.cfg
+  # update grub.cfg
+  if [ -f /usr/sbin/grub-mkconfig ]; then
+      grub-mkconfig -o /boot/grub/grub.cfg
+  else
+      echo "WARNING: It seems there is no bootloader installed - Your system might not boot."
+      echo "Add followed initramfs files to your bootloader config:"
+      echo ">> linux	/boot/vmlinuz-${RELEASE}-manjaro"
+      echo ">> initrd	/boot/initramfs-${RELEASE}-manjaro.img"
+  fi
 }
 
 post_upgrade() {
   # reminder notice
   if findmnt --fstab -uno SOURCE /boot &>/dev/null && ! mountpoint -q /boot; then
-  echo "WARNING: /boot appears to be a separate partition but is not mounted."
+      echo "WARNING: /boot appears to be a separate partition but is not mounted."
   fi
   
   # remove old initcpio
-  rm -f boot/initramfs-${RELEASE}-manjaro.img
-  rm -f boot/initramfs-${RELEASE}-manjaro-fallback.img
+  rm -f boot/initramfs-*-manjaro.img
+  rm -f boot/initramfs-*-manjaro-fallback.img
   
   # updating module dependencies
   echo ">>> Updating module dependencies. Please wait ..."
@@ -31,8 +38,15 @@ post_upgrade() {
   echo ">>> Generating initial ramdisk, using mkinitcpio.  Please wait..."
   mkinitcpio -p linux
   
-  # update grub.cfg 
-  grub-mkconfig -o /boot/grub/grub.cfg
+  # update grub.cfg
+  if [ -f /usr/sbin/grub-mkconfig ]; then
+      grub-mkconfig -o /boot/grub/grub.cfg
+  else
+      echo "WARNING: It seems there is no bootloader installed - Your system might not boot."
+      echo "Add followed initramfs files to your bootloader config:"
+      echo ">> linux	/boot/vmlinuz-${RELEASE}-manjaro"
+      echo ">> initrd	/boot/initramfs-${RELEASE}-manjaro.img"
+  fi
 }
 
 post_remove() {
@@ -40,6 +54,8 @@ post_remove() {
   rm -f boot/initramfs-${RELEASE}-manjaro.img
   rm -f boot/initramfs-${RELEASE}-manjaro-fallback.img
   
-  # update grub.cfg 
-  grub-mkconfig -o /boot/grub/grub.cfg
+  # update grub.cfg
+  if [ -f /usr/sbin/grub-mkconfig ]; then
+      grub-mkconfig -o /boot/grub/grub.cfg
+  fi
 }
