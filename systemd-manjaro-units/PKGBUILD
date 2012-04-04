@@ -16,15 +16,13 @@ source=("systemd-arch-units-$pkgver.tar.gz::https://www.github.com/falconindy/sy
         'kdm-plymouth.service'
         'slim-plymouth.service'
         'rc-local.service'
-        'rc-local-shutdown.service'
-        'livecd.service')
+        'rc-local-shutdown.service')
 sha256sums=('379030486d7d7d25122464036d1bc8b939f2de4c27f0ff869973793fd5585ee6'
             'bb33a592b35535ee2016337c09bb0888ba08fd677b4046496e1a32d655d42f89'
             'f1d77f69b76d70ff2e330745591a0d0ae3272b56cabf71ea4831a518918884ab'
             '8d71d39684201b6c5f5f571049cdcf84fba679d72c4de49795920e46ceb6f600'
             '2e27fd62ec5e579e65f779710db2ddb10adf744077caabc2c15b44d040d0fc97'
-            '308cd05122a3d30529e74b8562f89ee8abda9b40e4c2f890262ccb25097087b0'
-            '226b084fc7cd84c674016a6004341228798525d56b2d666ddd906c9fc8c85eee')
+            '308cd05122a3d30529e74b8562f89ee8abda9b40e4c2f890262ccb25097087b0')
             
 package() {
   dirname=$(tar tf "$srcdir/systemd-arch-units-$pkgver.tar.gz" | sed 1q)
@@ -38,5 +36,4 @@ package() {
   install -Dm644 "${srcdir}/slim-plymouth.service" "${pkgdir}/lib/systemd/system/slim-plymouth.service"
   install -Dm644 "${srcdir}/rc-local.service" "${pkgdir}/lib/systemd/system/rc-local.service"
   install -Dm644 "${srcdir}/rc-local-shutdown.service" "${pkgdir}/lib/systemd/system/rc-local-shutdown.service"
-  install -Dm644 "${srcdir}/livecd.service" "${pkgdir}/lib/systemd/system/livecd.service"
 }
