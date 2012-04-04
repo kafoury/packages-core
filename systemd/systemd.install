@@ -16,9 +16,6 @@ post_install() {
   if [ ! -f etc/machine-id ]; then
     systemd-machine-id-setup
   fi
-
-  echo "systemd has been installed to /bin/systemd. Please ensure you append"
-  echo "init=/bin/systemd to your kernel command line in your bootloader."
 }
 
 post_upgrade() {
