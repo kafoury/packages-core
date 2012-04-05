@@ -34,6 +34,9 @@ build() {
               --with-rootprefix= \
               --enable-plymouth \
               --disable-gtk \
+              --disable-selinux \
+              --disable-tcpwrap \
+              --disable-audit \
               --with-distro=arch
 
   make
