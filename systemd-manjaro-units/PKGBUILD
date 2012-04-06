@@ -30,7 +30,7 @@ package() {
   cd "$srcdir/$dirname"
 
   make DESTDIR="$pkgdir" install
-  
+
   install -Dm644 "${srcdir}/gdm-plymouth.service" "${pkgdir}/lib/systemd/system/gdm-plymouth.service"
   install -Dm644 "${srcdir}/kdm-plymouth.service" "${pkgdir}/lib/systemd/system/kdm-plymouth.service"
   install -Dm644 "${srcdir}/slim-plymouth.service" "${pkgdir}/lib/systemd/system/slim-plymouth.service"

@@ -96,6 +96,10 @@ package_systemd() {
   mv "$pkgdir/usr/lib"/libsystemd-*.so* usr/lib
   mv "$pkgdir/usr/include/systemd" usr/include
   mv "$pkgdir/usr/lib/pkgconfig"/libsystemd-*.pc usr/lib/pkgconfig
+  
+  
+  # Fix local environment in gettys
+  sed -i "s/\(Environment=LANG=\)/#\1/" "$pkgdir"/lib/systemd/system/getty@.service
 }
 
 package_libsystemd() {
