@@ -65,8 +65,8 @@ build() {
 package_linux32-lirc() {
   pkgdesc="Linux Infrared Remote Control kernel modules for stock arch kernel"
   depends=('lirc-utils' 'linux32')
-  replaces=('lirc+pctv' "$pkgbase=$pkgver")
-  conflicts=("$pkgbase=$pkgver")
+  replaces=('lirc+pctv' "$pkgbase")
+  conflicts=("$pkgbase")
   install=lirc.install
 
   cd "${srcdir}/lirc-${pkgver}/drivers"
