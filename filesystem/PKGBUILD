@@ -4,7 +4,7 @@
 # Maintainer: Guinux <nuxgui@gmail.com>
 
 pkgname=filesystem
-pkgver=2012.03
+pkgver=2012.04
 pkgrel=1
 pkgdesc='Base filesystem'
 arch=('any')
@@ -46,61 +46,66 @@ sha256sums=('c74c53d61d283650c343fd80d5e5a586b8fc6601ff258e3abfcd983b3c0c2f63'
             'a8a1cd5c81b11498d43ba0e0b5de53de6f154a395d54171f44d2874b4f659053')
 
 package() {
-	cd ${srcdir}
+	cd ${pkgdir}
 
 	#
 	# setup root filesystem
 	#
 	for d in bin boot dev etc home lib/modules media mnt sbin usr var opt srv/http sys run; do
-		install -d -m755 ${pkgdir}/${d}
+		install -d -m755 ${d}
 	done
-	install -d -m555 ${pkgdir}/proc
-	install -d -m0750 ${pkgdir}/root
-	install -d -m1777 ${pkgdir}/tmp
+	install -d -m555 proc
+	install -d -m0750 root
+	install -d -m1777 tmp
 	# vsftpd won't run with write perms on /srv/ftp
-	install -d -m555 -g ftp ${pkgdir}/srv/ftp
+	install -d -m555 -g ftp srv/ftp
 
 	# setup /etc
-	install -d ${pkgdir}/etc/{ld.so.conf.d,skel,profile.d}
+	install -d etc/{ld.so.conf.d,skel,profile.d}
 	for f in fstab group host.conf hosts issue ld.so.conf motd nsswitch.conf passwd resolv.conf securetty shells profile hostname locale.conf vconsole.conf; do
-		install -m644 ${srcdir}/${f} ${pkgdir}/etc/
+		install -m644 ${srcdir}/${f} etc/
 	done
-	ln -s /proc/self/mounts ${pkgdir}/etc/mtab
+	ln -s /proc/self/mounts etc/mtab
 	for f in gshadow shadow crypttab; do
-		install -m600 ${srcdir}/${f} ${pkgdir}/etc/
+		install -m644 ${srcdir}/${f} etc/
 	done
 
 	# add modules-load.d/modules
-	install -D -m644 ${srcdir}/modules.conf ${pkgdir}/etc/modules-load.d/modules.conf
+	install -D -m644 ${srcdir}/modules.conf etc/modules-load.d/modules.conf
 
 	# add rc.local and rc.local.shutdown
-	install -m755 ${srcdir}/rc.local ${pkgdir}/etc/
-	install -m755 ${srcdir}/rc.local.shutdown ${pkgdir}/etc/
+	install -m755 ${srcdir}/rc.local etc/
+	install -m755 ${srcdir}/rc.local.shutdown etc/
 
 	# Create the manjaro-release file
 	echo "Manjaro Linux" > ${pkgdir}/etc/manjaro-release
 
-	install -D -m644 ${srcdir}/modprobe.d.usb-load-ehci-first ${pkgdir}/lib/modprobe.d/usb-load-ehci-first.conf
+	install -D -m644 ${srcdir}/modprobe.d.usb-load-ehci-first usr/lib/modprobe.d/usb-load-ehci-first.conf
 
 	# setup /var
 	for d in cache/man local opt run log/old lib/misc empty; do
-		install -d -m755 ${pkgdir}/var/${d}
+		install -d -m755 var/${d}
 	done
 	install -d -m1777 ${pkgdir}/var/{lock,tmp,spool/mail}
 	# allow setgid games to write scores
-	install -d -m775 -g games ${pkgdir}/var/games
-	ln -s spool/mail ${pkgdir}/var/mail
+	install -d -m775 -g games var/games
+	ln -s spool/mail var/mail
 	# prevent pacman from removing directory (FS#16886)
 	touch ${pkgdir}/var/empty/.keep
+
+	# not ready yet, needs possible change in pacman or other magic
+	# is fixed by initscripts on next boot
+#	ln -s ../run var/run
+#	ln -s ../run/lock var/lock
 
 	#
 	# setup /usr hierarchy
 	#
 	for d in bin include lib sbin share/misc src; do
-		install -d -m755 ${pkgdir}/usr/${d}
+		install -d -m755 usr/${d}
 	done
 	for d in $(seq 8); do
-		install -d -m755 ${pkgdir}/usr/share/man/man${d}
+		install -d -m755 usr/share/man/man${d}
 	done
 
 
@@ -108,7 +113,7 @@ package() {
 	# setup /usr/local hierarchy
 	#
 	for d in bin etc games include lib man sbin share src; do
-		install -d -m755 ${pkgdir}/usr/local/${d}
+		install -d -m755 usr/local/${d}
 	done
-	ln -s ../man ${pkgdir}/usr/local/share/man
+	ln -s ../man usr/local/share/man
 }
