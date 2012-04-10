@@ -33,7 +33,7 @@ build() {
   patch -p1 <$srcdir/cdfs-3.0.patch
   patch -p1 <$srcdir/cdfs-3.2.patch
   make KDIR=/lib/modules/${_kernver}/build
-  install -Dm0644 cdfs.ko $pkgdir/lib/modules/extramodules-3.${_kernver}-ARCH/cdfs.ko
+  install -Dm0644 cdfs.ko $pkgdir/lib/modules/$_extramodules/cdfs.ko
 
   sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "${startdir}/${_pkgname}.install"
 
