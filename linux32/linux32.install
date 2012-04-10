@@ -3,13 +3,14 @@
 
 RELEASE=3.2.14-1
 KERNEL_VERSION=3.2.14-1-MANJARO
+BASEVER=32
 
 post_install () {
   # updating module dependencies
   echo ">>> Updating module dependencies. Please wait ..."
   depmod ${KERNEL_VERSION}
   echo ">>> Generating initial ramdisk, using mkinitcpio.  Please wait..."
-  mkinitcpio -p linux
+  mkinitcpio -p linux${BASEVER}
   
   # update grub.cfg
   if [ -f /usr/sbin/grub-mkconfig ]; then
@@ -29,14 +30,14 @@ post_upgrade() {
   fi
   
   # remove old initcpio
-  rm -f boot/initramfs-*-manjaro.img
-  rm -f boot/initramfs-*-manjaro-fallback.img
+  rm -f boot/initramfs-${RELEASE}-manjaro.img
+  rm -f boot/initramfs-${RELEASE}-manjaro-fallback.img
   
   # updating module dependencies
   echo ">>> Updating module dependencies. Please wait ..."
   depmod ${KERNEL_VERSION}
   echo ">>> Generating initial ramdisk, using mkinitcpio.  Please wait..."
-  mkinitcpio -p linux
+  mkinitcpio -p linux${BASEVER}
   
   # update grub.cfg
   if [ -f /usr/sbin/grub-mkconfig ]; then

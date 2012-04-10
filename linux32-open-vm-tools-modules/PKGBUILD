@@ -5,7 +5,8 @@
 # Maintainer: Guinux <nuxgui@gmail.com>
 # Co-Maintainer: Clittle <philm@manjarolinux.org>
 
-pkgname=open-vm-tools-modules
+pkgname=linux32-open-vm-tools-modules
+_pkgname=open-vm-tools-modules
 pkgver=2012.03.13
 _pkgsubver=651368
 pkgrel=1
@@ -13,9 +14,11 @@ pkgdesc="kernel modules for the open source implementation of VMware Tools"
 arch=('i686' 'x86_64')
 url="http://open-vm-tools.sourceforge.net/"
 license=('GPL')
-makedepends=('libdnet' 'icu' 'uriparser' 'linux-headers')
-depends=("linux")
-install=$pkgname.install
+makedepends=('libdnet' 'icu' 'uriparser' 'linux32-headers')
+depends=("linux32")
+replaces=("$_pkgname=$pkgver")
+conflicts=("$_pkgname=$pkgver")
+install=$_pkgname.install
 options=('!strip')
 source=("http://downloads.sourceforge.net/open-vm-tools/open-vm-tools-$pkgver-${_pkgsubver}.tar.gz"
 	"modprobe.conf")
@@ -23,7 +26,7 @@ md5sums=('a664206443d5de53f5f8ee8d5fe6c2d7'
          'ac9b8e3cb798f5056ca92767ec705117')
 
 build() {
-  _kernver=`pacman -Q linux | cut -d . -f 2 | cut -f 1 -d -`
+  _kernver=`pacman -Q linux32 | cut -d . -f 2 | cut -f 1 -d -`
   KERNEL_RELEASE=`cat /lib/modules/extramodules-3.${_kernver}-MANJARO/version`
 
   cd "$srcdir/open-vm-tools-${pkgver}-${_pkgsubver}"
@@ -35,7 +38,7 @@ build() {
 }
 
 package() {
-  _kernver=`pacman -Q linux | cut -d . -f 2 | cut -f 1 -d -`
+  _kernver=`pacman -Q linux32 | cut -d . -f 2 | cut -f 1 -d -`
   depends=("linux>=3.${_kernver}" "linux<3.`expr ${_kernver} + 1`")
   KERNEL_VERSION=`cat /lib/modules/extramodules-3.${_kernver}-MANJARO/version`
   msg "Kernel = $KERNEL_VERSION"
@@ -48,5 +51,5 @@ package() {
   gzip $pkgdir/lib/modules/extramodules-3.${_kernver}-MANJARO/*.ko
 
   install -D -m 644 ${srcdir}/modprobe.conf ${pkgdir}/etc/modprobe.d/${pkgname}.conf
-  sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "${startdir}/${pkgname}.install"
+  sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "${startdir}/${_pkgname}.install"
 }

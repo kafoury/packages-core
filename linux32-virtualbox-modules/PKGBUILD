@@ -5,13 +5,13 @@
 # Co-Maintainer: Clittle <philm@manjarolinux.org>
 
 pkgbase=virtualbox-modules
-pkgname=('virtualbox-modules' 'virtualbox-manjaro-modules')
+pkgname=('linux32-virtualbox-modules' 'linux32-virtualbox-manjaro-modules')
 pkgver=4.1.12
 pkgrel=1
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
-makedepends=('libstdc++5' 'bin86' 'dev86' 'iasl' 'libxslt' 'libxml2' 'libpng' 'libidl2' 'xalan-c' 'sdl' 'linux-headers')
+makedepends=('libstdc++5' 'bin86' 'dev86' 'iasl' 'libxslt' 'libxml2' 'libpng' 'libidl2' 'xalan-c' 'sdl' 'linux32-headers')
 [[ $CARCH == "x86_64" ]] && makedepends=("${makedepends[@]}" 'gcc-multilib' 'lib32-glibc')
 source=(http://download.virtualbox.org/virtualbox/${pkgver}/VirtualBox-${pkgver}.tar.bz2
          LocalConfig.kmk 60-vboxguest.rules)
@@ -50,13 +50,13 @@ build() {
     make -C "$srcdir/VirtualBox-${pkgver}/out/linux.$BUILD_PLATFORM_ARCH/release/bin/additions/src"
 }
 
-package_virtualbox-manjaro-modules(){
+package_linux32-virtualbox-manjaro-modules(){
     pkgdesc="Additions only for Manjaro Linux guests (kernel modules)"
     license=('GPL')
     install=virtualbox-manjaro-modules.install
-    depends=('linux>=3.2' 'linux<3.3')
-    replaces=('virtualbox-guest-modules')
-    conflicts=('virtualbox-guest-modules')
+    depends=('linux32')
+    replaces=('virtualbox-guest-modules' "virtualbox-manjaro-modules=$pkgver")
+    conflicts=('virtualbox-guest-modules' "virtualbox-manjaro-modules=$pkgver")
 
     source "$srcdir/VirtualBox-${pkgver}/env.sh"
 
@@ -75,11 +75,13 @@ package_virtualbox-manjaro-modules(){
     sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='${_extramodules}'/" "$startdir/virtualbox-manjaro-modules.install"
 }
 
-package_virtualbox-modules(){
+package_linux32-virtualbox-modules(){
     pkgdesc="Kernel modules for VirtualBox"
     license=('GPL')
     install=virtualbox-modules.install
-    depends=('linux>=3.2' 'linux<3.3')
+    depends=('linux32')
+    replaces=('virtualbox-modules')
+    conflicts=("virtualbox-modules=$pkgver")
 
     source "$srcdir/VirtualBox-${pkgver}/env.sh"
 

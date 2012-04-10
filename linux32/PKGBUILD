@@ -5,16 +5,16 @@
 # Maintainer: Guinux <nuxgui@gmail.com>
 # Co-Maintainer: Clittle <philm@manjarolinux.org>
 
-pkgbase=linux
-pkgname=('linux' 'linux-headers')
+pkgbase=linux32
+pkgname=('linux32' 'linux32-headers')
 _kernelname=-MANJARO
 _basekernel=3.2
+_basever=32
 pkgver=${_basekernel}.14
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
-groups=('base')
 makedepends=('xmlto' 'docbook-xsl')
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.2.tar.xz"
@@ -131,11 +131,13 @@ build() {
   make ${MAKEFLAGS} bzImage modules
 }
 
-package_linux() {
+package_linux32() {
   pkgdesc="The Linux Kernel and modules"
   groups=('base')
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
+  conflicts=("linux=$pkgver")
+  replaces=("linux=$pkgver")
   install=${pkgname}.install
 
   cd "${srcdir}/linux-${_basekernel}"
@@ -159,6 +161,7 @@ package_linux() {
   sed \
     -e  "s/RELEASE=.*/RELEASE=${pkgver}-${pkgrel}/g" \
     -e  "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/g" \
+    -e  "s/BASEVER=.*/BASEVER=${_basever}/g" \
     -i "${startdir}/${pkgname}.install"
   sed \
     -e "s|ALL_kver=.*|ALL_kver=\"/boot/vmlinuz-${pkgver}-${pkgrel}-manjaro\"|g" \
@@ -179,8 +182,10 @@ package_linux() {
   echo "${_kernver}" > "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--MANJARO}/version"
 }
 
-package_linux-headers() {
+package_linux32-headers() {
   pkgdesc="Header files and scripts for building modules for linux kernel"
+  conflicts=("linux-headers=$pkgver")
+  replaces=("linux-headers=$pkgver")
 
   mkdir -p "${pkgdir}/lib/modules/${_kernver}"
 

@@ -5,16 +5,16 @@
 # Co-Maintainer: Clittle <philm@manjarolinux.org>
 
 pkgbase=lirc
-pkgname=('lirc' 'lirc-utils')
+pkgname=('linux32-lirc' 'lirc-utils')
 pkgver=0.9.0
-pkgrel=12
+pkgrel=1
 epoch=1
 _extramodules=extramodules-3.2-MANJARO
 _kernver="$(cat /lib/modules/${_extramodules}/version)"
 arch=('i686' 'x86_64')
 url="http://www.lirc.org/"
 license=('GPL')
-makedepends=('help2man' 'linux-headers>=3.2' 'linux-headers<3.3' 'alsa-lib' 'libx11' 'libftdi' 'libirman' 'python2')
+makedepends=('help2man' 'linux32-headers' 'alsa-lib' 'libx11' 'libftdi' 'libirman' 'python2')
 options=('!makeflags' '!strip')
 source=(http://prdownloads.sourceforge.net/${pkgbase}/${pkgbase}-${pkgver}.tar.bz2
         lirc_wpc8769l.patch
@@ -62,10 +62,11 @@ build() {
   make
 }
 
-package_lirc() {
+package_linux32-lirc() {
   pkgdesc="Linux Infrared Remote Control kernel modules for stock arch kernel"
-  depends=('lirc-utils' 'linux>=3.2' 'linux<3.3')
-  replaces=('lirc+pctv')
+  depends=('lirc-utils' 'linux32')
+  replaces=('lirc+pctv' "$pkgbase=$pkgver")
+  conflicts=("$_pkgname=$pkgver")
   install=lirc.install
 
   cd "${srcdir}/lirc-${pkgver}/drivers"

@@ -4,17 +4,20 @@
 # Maintainer: Guinux <nuxgui@gmail.com>
 # Co-Maintainer: Clittle <philm@manjarolinux.org>
 
-pkgname=fcpcmcia
+pkgname=linux32-fcpcmcia
+_pkgname=fcpcmcia
 pkgver=31107
-pkgrel=64
+pkgrel=1
 _extramodules=extramodules-3.2-MANJARO
 _kernver="$(cat /lib/modules/${_extramodules}/version)"
 pkgdesc="AVM ISDN driver for FRITZ PCMCIA isdn cards. For stock arch 2.6 kernel"
 arch=(i686 x86_64)
 license=('custom:"AVM"' 'LPGL')
 url="http://www.avm.de"
-depends=('isdn4k-utils' 'linux>=3.2' 'linux<3.3')
-makedepends=('linux-headers>=3.2' 'linux-headers<3.3')
+depends=('isdn4k-utils' 'linux32')
+makedepends=('linux32-headers')
+replaces=("$_pkgname=$pkgver")
+conflicts=("$_pkgname=$pkgver")
 if [ "$CARCH" = "i686" ]; then source=(ftp://ftp.avm.de/cardware/fritzcrd.pcm/linux/suse.93/fcpcmcia-suse93-3.11-07.tar.gz
         pcmcia-2.6.17.patch 
         atomic.patch kernel-2.6.19.patch 

@@ -5,16 +5,20 @@
 # Maintainer: Guinux <nuxgui@gmail.com>
 # Co-Maintainer: Clittle <philm@manjarolinux.org>
 
-pkgname=cdfs
+pkgname=linux32-cdfs
+_pkgname=cdfs
 pkgver=2.6.27
-pkgrel=19
+pkgrel=1
 pkgdesc="File system module that 'exports' all tracks and boot images on a CD as normal files."
 arch=(i686 x86_64)
 url="http://www.elis.UGent.be/~ronsse/cdfs/"
 license=('GPL')
-makedepends=('linux-headers')
+depends=('linux32')
+makedepends=('linux32-headers')
+replaces=("$_pkgname=$pkgver")
+conflicts=("$_pkgname=$pkgver")
 install=cdfs.install
-source=("http://www.elis.UGent.be/~ronsse/cdfs/download/$pkgname-$pkgver.tar.bz2"
+source=("http://www.elis.UGent.be/~ronsse/cdfs/download/$_pkgname-$pkgver.tar.bz2"
 	"cdfs-3.0.patch"
 	"cdfs-3.2.patch")
 md5sums=('ac64c014a90e3c488394832ea29605b3'
@@ -25,13 +29,13 @@ _extramodules=extramodules-3.2-MANJARO
 _kernver="$(cat /lib/modules/$_extramodules/version || true)"
 
 build() {
-  cd $srcdir/$pkgname-$pkgver
+  cd $srcdir/$_pkgname-$pkgver
   patch -p1 <$srcdir/cdfs-3.0.patch
   patch -p1 <$srcdir/cdfs-3.2.patch
   make KDIR=/lib/modules/${_kernver}/build
   install -Dm0644 cdfs.ko $pkgdir/lib/modules/extramodules-3.${_kernver}-ARCH/cdfs.ko
 
-  sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "${startdir}/${pkgname}.install"
+  sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "${startdir}/${_pkgname}.install"
 
   find "$pkgdir" -name '*.ko' -exec gzip -9 {} \;
 }

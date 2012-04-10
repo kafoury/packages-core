@@ -6,24 +6,27 @@
 # Maintainer: Guinux <nuxgui@gmail.com>
 # Co-Maintainer: Clittle <philm@manjarolinux.org>
 
-pkgname=vhba-module
+pkgname=linux32-vhba-module
+_pkgname=vhba-module
 pkgver=20110915
 _extramodules=extramodules-3.2-MANJARO
-pkgrel=5
+pkgrel=1
 pkgdesc="Kernel module that emulates SCSI devices"
 arch=('i686' 'x86_64')
 url="http://cdemu.sourceforge.net/"
 license=('GPL')
-depends=('linux>=3.2' 'linux<3.3')
-makedepends=('linux-headers>=3.2')
-install=$pkgname.install
-source=("http://downloads.sourceforge.net/cdemu/$pkgname-$pkgver.tar.bz2"
+depends=('linux32')
+makedepends=('linux32-headers')
+replaces=("$_pkgname=$pkgver")
+conflicts=("$_pkgname=$pkgver")
+install=$_pkgname.install
+source=("http://downloads.sourceforge.net/cdemu/$_pkgname-$pkgver.tar.bz2"
         '60-vhba.rules')
 md5sums=('8bb99b427ca67bad448f4dd211bdd1a2'
          '549bd2d9696bd1884c8eed7193c00e21')
 
 build() {
-  cd "$srcdir/$pkgname-$pkgver"
+  cd "$srcdir/$_pkgname-$pkgver"
 
   _kernver="$(cat /lib/modules/$_extramodules/version)"
 
@@ -31,7 +34,7 @@ build() {
 }
 
 package() {
-  cd "$srcdir/$pkgname-$pkgver"
+  cd "$srcdir/$_pkgname-$pkgver"
 
   install -D vhba.ko "$pkgdir/lib/modules/$_extramodules/vhba.ko"
 
