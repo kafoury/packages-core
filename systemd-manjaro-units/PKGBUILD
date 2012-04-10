@@ -4,7 +4,7 @@
 # Maintainer: Guinux <nuxgui@gmail.com>
 
 pkgname=systemd-manjaro-units
-pkgver=20120317
+pkgver=20120401
 pkgrel=1
 pkgdesc="Manjaro specific Systemd unit files"
 arch=('any')
@@ -17,7 +17,7 @@ source=("systemd-arch-units-$pkgver.tar.gz::https://www.github.com/falconindy/sy
         'slim-plymouth.service'
         'rc-local.service'
         'rc-local-shutdown.service')
-sha256sums=('379030486d7d7d25122464036d1bc8b939f2de4c27f0ff869973793fd5585ee6'
+sha256sums=('aee0a15d1a0e9b73a4fa8d5025e1b844a734ec71f5360fb7e3397d48b90c243a'
             'bb33a592b35535ee2016337c09bb0888ba08fd677b4046496e1a32d655d42f89'
             'f1d77f69b76d70ff2e330745591a0d0ae3272b56cabf71ea4831a518918884ab'
             '8d71d39684201b6c5f5f571049cdcf84fba679d72c4de49795920e46ceb6f600'

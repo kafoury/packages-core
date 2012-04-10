@@ -6,7 +6,7 @@
 pkgbase=systemd
 pkgname=('systemd' 'libsystemd')
 pkgver=44
-pkgrel=1
+pkgrel=5
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2')
@@ -15,9 +15,13 @@ makedepends=('acl' 'cryptsetup' 'dbus-core' 'docbook-xsl' 'gperf' 'intltool'
 options=('!libtool')
 source=("http://www.freedesktop.org/software/systemd/systemd-$pkgver.tar.xz"
         "os-release"
-        0001-util-never-follow-symlinks-in-rm_rf_children.patch)
+        "0001-check-for-proper-return-from-dirent_ensure_type.patch"
+        "0001-logind-close-FIFO-before-ending-sessions-cleanly.patch"
+        "0001-util-never-follow-symlinks-in-rm_rf_children.patch")
 sha256sums=('7a5aac4b4b8b3a82bf59292f10e43d8f2c2d7039f34e95714f81d8edcb42233c'
             '0cee1cf4781e9f5f07171801aa58f3d4a363b894476ab3cb8e8b22af97ef99c7'
+            'c2a99eed24e262d26df77de3a0c8e7b56aa4887b0d0302fc8fe5ba43cce80656'
+            '0ae64dd027044c9d833d174c7642dc5013ace1357e489f361533c0ffa3db2a0c'
             '4bf6f7d0312f07614d2addece6b48f3301bb85de5f27c8b9729e11b1f4d9e36a')
 
 build() {
@@ -25,6 +29,12 @@ build() {
 
   # https://bugzilla.redhat.com/show_bug.cgi?id=803358
   patch -Np1 <"$srcdir/0001-util-never-follow-symlinks-in-rm_rf_children.patch"
+
+  # https://bugs.archlinux.org/task/28386
+  patch -Np1 <"$srcdir/0001-logind-close-FIFO-before-ending-sessions-cleanly.patch"
+
+  # Fix broken 'systemctl list-unit-files' (upstream fb5ef067c49)
+  patch -Np1 <"$srcdir/0001-check-for-proper-return-from-dirent_ensure_type.patch"
 
   ./configure --sysconfdir=/etc \
               --libexecdir=/usr/lib \
