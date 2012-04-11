@@ -6,7 +6,7 @@
 
 pkgname=linux33-nvidia
 _pkgname=nvidia
-pkgver=295.33
+pkgver=295.40
 _extramodules=extramodules-3.3-MANJARO
 _kernver="$(cat /lib/modules/${_extramodules}/version)"
 pkgrel=1
@@ -30,7 +30,7 @@ elif [ "$CARCH" = "x86_64" ]; then
     _arch='x86_64'
     _pkg="NVIDIA-Linux-${_arch}-${pkgver}-no-compat32"
     source=("ftp://download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
-    md5sums=('04e814843bcaf23efa0b4b3df4ea2700')
+    md5sums=('dde8347cde142c329b6bb923747672a3')
 fi
 
 build() {
