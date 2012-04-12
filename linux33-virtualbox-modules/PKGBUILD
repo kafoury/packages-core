@@ -80,6 +80,7 @@ package_linux33-virtualbox-modules(){
     license=('GPL')
     install=virtualbox-modules.install
     depends=('linux33')
+    provides=('virtualbox-modules')
     replaces=('virtualbox-modules')
     conflicts=("virtualbox-modules=$pkgver")
 
