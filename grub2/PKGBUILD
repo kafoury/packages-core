@@ -27,7 +27,7 @@ makedepends=('rsync' 'xz' 'bdf-unifont' 'python2' 'autogen' 'texinfo'
 	'help2man' 'gettext' 'device-mapper' 'fuse')
 optdepends=('libisoburn: provides xorriso for generating grub2 rescue iso using grub-mkrescue')
 conflicts=('grub' 'grub2-common' 'grub2-bios')
-provides=("grub2-common=${epoch}:${_pkgver}" "grub2-bios=${epoch}:${_pkgver}")
+provides=("grub2-common=${epoch}:${pkgver}" "grub2-bios=${epoch}:${pkgver}")
 backup=('boot/grub/grub.cfg' 'etc/default/grub' 'etc/grub.d/40_custom')
 options=('strip' 'purge' 'docs' 'zipman' '!emptydirs')
 
