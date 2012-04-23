@@ -4,16 +4,17 @@
 
 # Maintainer: Guinux <nuxgui@gmail.com>
 
-_grub2_rev="3750"
+_grub_bzr_rev="4169"
+_pkgver="2.00~beta4"
 
-_grub2_lua_ver="20"
-_grub2_gpxe_ver="12"
-_grub2_ntldr_ver="20"
-_grub2_915_ver="7"
+_grub_lua_ver=24
+_grub_gpxe_ver=12
+_grub_ntldr_ver=21
+_grub_915_ver=9
 
 pkgname=grub2
-pkgver=1.99
-pkgrel=6
+pkgver=2.00beta4
+pkgrel=1
 epoch=1
 pkgdesc="The GNU GRand Unified Bootloader version 2 - Built for PC BIOS"
 arch=('i686' 'x86_64')
@@ -26,18 +27,17 @@ makedepends=('rsync' 'xz' 'bdf-unifont' 'python2' 'autogen' 'texinfo'
 	'help2man' 'gettext' 'device-mapper' 'fuse')
 optdepends=('libisoburn: provides xorriso for generating grub2 rescue iso using grub-mkrescue')
 conflicts=('grub' 'grub2-common' 'grub2-bios')
-provides=("grub2-common=${epoch}:${pkgver}" "grub2-bios=${epoch}:${pkgver}")
+provides=("grub2-common=${epoch}:${_pkgver}" "grub2-bios=${epoch}:${_pkgver}")
 backup=('boot/grub/grub.cfg' 'etc/default/grub' 'etc/grub.d/40_custom')
 options=('strip' 'purge' 'docs' 'zipman' '!emptydirs')
 
-# source=("ftp://ftp.gnu.org/gnu/grub/grub-${pkgver}.tar.xz"
-source=("ftp://ftp.archlinux.org/other/grub2/grub2_r${_grub2_rev}.tar.xz"        
-	"ftp://ftp.archlinux.org/other/grub2/grub2_extras_lua_r${_grub2_lua_ver}.tar.xz"
-	"ftp://ftp.archlinux.org/other/grub2/grub2_extras_gpxe_r${_grub2_gpxe_ver}.tar.xz"
-	"ftp://ftp.archlinux.org/other/grub2/grub2_extras_ntldr-img_r${_grub2_ntldr_ver}.tar.xz"
-	"ftp://ftp.archlinux.org/other/grub2/grub2_extras_915resolution_r${_grub2_915_ver}.tar.xz"
-	'grub2_automake_1.11.2_pkglib_to_pkgdata.patch'
-	'grub-mkconfig-Use_outside_GRUB_PREFIX_if_defined.patch'
+# source=("ftp://ftp.gnu.org/gnu/grub/grub-${_pkgver}.tar.xz"
+# source=("ftp://ftp.archlinux.org/other/grub2/grub2_r${_grub_rev}.tar.xz"
+source=("http://alpha.gnu.org/gnu/grub/grub-${_pkgver}".tar.xz  
+	"ftp://ftp.archlinux.org/other/grub2/grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
+	"ftp://ftp.archlinux.org/other/grub2/grub2_extras_gpxe_r${_grub_gpxe_ver}.tar.xz"
+	"ftp://ftp.archlinux.org/other/grub2/grub2_extras_ntldr-img_r${_grub_ntldr_ver}.tar.xz"
+	"ftp://ftp.archlinux.org/other/grub2/grub2_extras_915resolution_r${_grub_915_ver}.tar.xz"
 	'manjaro_grub2_mkconfig_fixes.patch'
 	'grub.default'
 	'grub.cfg'
@@ -45,20 +45,14 @@ source=("ftp://ftp.archlinux.org/other/grub2/grub2_r${_grub2_rev}.tar.xz"
 	'background.png'
 	'update-grub')
 
-noextract=("grub2_extras_lua_r${_grub2_lua_ver}.tar.xz"
-           "grub2_extras_gpxe_r${_grub2_gpxe_ver}.tar.xz"
-           "grub2_extras_ntldr-img_r${_grub2_ntldr_ver}.tar.xz"
-           "grub2_extras_915resolution_r${_grub2_915_ver}.tar.xz")
+noextract=("grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
+           "grub2_extras_gpxe_r${_grub_gpxe_ver}.tar.xz"
+           "grub2_extras_ntldr-img_r${_grub_ntldr_ver}.tar.xz"
+           "grub2_extras_915resolution_r${_grub_915_ver}.tar.xz")
 
-sha256sums=('b6798cc99d1edbdb21aeb744444c46360cd6be148e7a9a03bfc50e93e38a2c94'
-            'ef37274fb57d0656d4892c8cb38b8dde9d0adafb5b71d24a171423c290f91107'
+sha256sums=('628a17fefafcbd90cdab25220ef3ae717558dde73e55adf83dfee3aae55e390e'
+            'bfe0318a9bb7edbaee2489b1396d0034791751b42035ea40ad61600fdf974df2'
             '8ce1b6b89ef0e3545736477d4c4418524e32c7fb9ba40c67dcebfb84b98cde66'
-            '3c6925c42e744f17b9b588f554b6d8c1488e6f4f8928300e08608230fad25b34'
-            'b55e5fbe1de7aa4329e80dd25eb5886474c0ed0df3e65b399160ff0b938ac6c4'
-            '54c9c9aef89005157b9f3b0250a5601fff52db782eff3882fa5d278344ade111'
-            'df1780d3bc136cfdbc4f942a12d2d27e03b5fa95c4067766059aa132254c42c5'
-            '9a58761f50e9b7bcd3017bee899811db2508add94c6f56e7052d9ae6c42d39e2'
-            'fcaab0139d66f29aa76b070e1d5d0d1372e1e1a887f8a9818027a9bcaa893737'
             '7fc95d49c0febe98a76e56b606a280565cb736580adecf163bc6b5aca8e7cbd8'
             'ba0f871ee93760d14d7f19709bb875af4a863a758776a23519ca7100a63da295'
             'c92a3a4de75365152bf1a568c55f5adf880256035bfc993add03b519d0f67046'
@@ -75,49 +69,42 @@ build() {
 
 	_HOST="${CARCH}"
 
-    cd "${srcdir}/grub-${pkgver}"
-	rsync -Lrtvz translationproject.org::tp/latest/grub/ "${srcdir}/grub-${pkgver}/po" || true
-	(cd "${srcdir}/grub-${pkgver}/po" && ls *.po | cut -d. -f1 | xargs) > "${srcdir}/grub-${pkgver}/po/LINGUAS"
+        cd "${srcdir}/grub-${_pkgver}"
+	rsync -Lrtvz translationproject.org::tp/latest/grub/ "${srcdir}/grub-${_pkgver}/po" || true
+	(cd "${srcdir}/grub-${_pkgver}/po" && ls *.po | cut -d. -f1 | xargs) > "${srcdir}/grub-${_pkgver}/po/LINGUAS"
 	echo
 
-    ## Fix automake 1.11.2 autogen.sh pkglib_DATA and pkglib_SCRIPTS error
-	patch -Np1 -i "${srcdir}/grub2_automake_1.11.2_pkglib_to_pkgdata.patch"
-
-	## Use outside GRUB_PREFIX if defined, patch submitted upstream to grub-devel ML
-	## solves https://bugs.archlinux.org/task/26430 and https://bugs.archlinux.org/task/26463
-	patch -Np1 -i "${srcdir}/grub-mkconfig-Use_outside_GRUB_PREFIX_if_defined.patch"
-
 	## Apply specific fixes to enable grub2-mkconfig detect Manjaro kernels and initramfs
-	cd "${srcdir}/grub-${pkgver}"
+	cd "${srcdir}/grub-${_pkgver}"
 	patch -Np1 -i ${srcdir}/manjaro_grub2_mkconfig_fixes.patch
 
 	## add the grub-extra sources
-	export GRUB_CONTRIB="${srcdir}/grub-${pkgver}/grub2-extras/"
-	install -d "${srcdir}/grub-${pkgver}/grub2-extras"
+	export GRUB_CONTRIB="${srcdir}/grub-${_pkgver}/grub2-extras/"
+	install -d "${srcdir}/grub-${_pkgver}/grub2-extras"
 
-	bsdtar xf "${srcdir}/grub2_extras_lua_r${_grub2_lua_ver}.tar.xz" \
-		-C "${srcdir}/grub-${pkgver}/grub2-extras"
+	bsdtar xf "${srcdir}/grub2_extras_lua_r${_grub_lua_ver}.tar.xz" \
+		-C "${srcdir}/grub-${_pkgver}/grub2-extras"
 
-	bsdtar xf "${srcdir}/grub2_extras_gpxe_r${_grub2_gpxe_ver}.tar.xz" \
-		-C "${srcdir}/grub-${pkgver}/grub2-extras"
+	bsdtar xf "${srcdir}/grub2_extras_gpxe_r${_grub_gpxe_ver}.tar.xz" \
+		-C "${srcdir}/grub-${_pkgver}/grub2-extras"
 
 	## ntldr-img compile fails - disable for now
-	# bsdtar xf "${srcdir}/grub2_extras_ntldr-img_r${_grub2_ntldr_ver}.tar.xz" \
-	# 	-C "${srcdir}/grub-${pkgver}/grub2-extras"
+	# bsdtar xf "${srcdir}/grub2_extras_ntldr-img_r${_grub_ntldr_ver}.tar.xz" \
+	# 	-C "${srcdir}/grub-${_pkgver}/grub2-extras"
 
-	bsdtar xf "${srcdir}/grub2_extras_915resolution_r${_grub2_915_ver}.tar.xz" \
-		-C "${srcdir}/grub-${pkgver}/grub2-extras"
+	bsdtar xf "${srcdir}/grub2_extras_915resolution_r${_grub_915_ver}.tar.xz" \
+		-C "${srcdir}/grub-${_pkgver}/grub2-extras"
   
 	## Need to use python2
-	sed -i 's|python|python2|' "${srcdir}/grub-${pkgver}/autogen.sh"
+	sed -i 's|python|python2|' "${srcdir}/grub-${_pkgver}/autogen.sh"
 
 	# start the actual build process
-	cd "${srcdir}/grub-${pkgver}"
+	cd "${srcdir}/grub-${_pkgver}"
 	./autogen.sh
 	echo
   
 	## fix unifont.bdf location so grub-mkfont can create *.pf2 files
-	sed 's|/usr/share/fonts/unifont|/usr/share/fonts/misc|g' -i "${srcdir}/grub-${pkgver}/configure"
+	sed 's|/usr/share/fonts/unifont|/usr/share/fonts/misc|g' -i "${srcdir}/grub-${_pkgver}/configure"
 
 	CFLAGS="" ./configure \
 		--with-platform="pc" \
@@ -146,7 +133,7 @@ build() {
 }
 
 package() {
-	cd "${srcdir}/grub-${pkgver}"
+	cd "${srcdir}/grub-${_pkgver}"
 	make DESTDIR="${pkgdir}/" install
 	echo
 
