@@ -10,7 +10,7 @@ pkgname=('linux32' 'linux32-headers')
 _kernelname=-MANJARO
 _basekernel=3.2
 _basever=32
-pkgver=${_basekernel}.15
+pkgver=${_basekernel}.16
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -35,7 +35,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.2.tar.xz"
         'i915-fix-ghost-tv-output.patch'
 )
 sha256sums=('dd96ed02b53fb5d57762e4b1f573460909de472ca588f81ec6660e4a172e7ba7'
-            'c19029fc5b1f2a6159407d49731918f686ceb9100e8a73d9a41b0de01eff7e7a'
+            '9e401829c175977ef56f7c0c10c796339cede0ed9926c814e2a31510ae1a73a3'
             '1e560618fd7f7131fdfa1bfbe10c8b7838ee75da194a4adc9348fefb67ad225a'
             '45772fe37aed5b7111a37f2b35f8639c850a554b5873d9d1ab0163e1820a6bdc'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
