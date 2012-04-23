@@ -14,6 +14,7 @@ _grub2_915_ver="7"
 pkgname=grub2
 pkgver=1.99
 pkgrel=6
+epoch=1
 pkgdesc="The GNU GRand Unified Bootloader version 2 - Built for PC BIOS"
 arch=('i686' 'x86_64')
 license=('GPL3')
@@ -27,7 +28,6 @@ optdepends=('libisoburn: provides xorriso for generating grub2 rescue iso using 
 conflicts=('grub' 'grub2-common' 'grub2-bios')
 provides=("grub2-common=${epoch}:${pkgver}" "grub2-bios=${epoch}:${pkgver}")
 backup=('boot/grub/grub.cfg' 'etc/default/grub' 'etc/grub.d/40_custom')
-epoch=1
 options=('strip' 'purge' 'docs' 'zipman' '!emptydirs')
 
 # source=("ftp://ftp.gnu.org/gnu/grub/grub-${pkgver}.tar.xz"
@@ -58,7 +58,7 @@ sha256sums=('b6798cc99d1edbdb21aeb744444c46360cd6be148e7a9a03bfc50e93e38a2c94'
             '54c9c9aef89005157b9f3b0250a5601fff52db782eff3882fa5d278344ade111'
             'df1780d3bc136cfdbc4f942a12d2d27e03b5fa95c4067766059aa132254c42c5'
             '9a58761f50e9b7bcd3017bee899811db2508add94c6f56e7052d9ae6c42d39e2'
-            '86278f30a46d2391e3bc933f0edd920e659f721f4d9de14dd11bd3ee3a7c71cd'
+            'fcaab0139d66f29aa76b070e1d5d0d1372e1e1a887f8a9818027a9bcaa893737'
             '7fc95d49c0febe98a76e56b606a280565cb736580adecf163bc6b5aca8e7cbd8'
             'ba0f871ee93760d14d7f19709bb875af4a863a758776a23519ca7100a63da295'
             'c92a3a4de75365152bf1a568c55f5adf880256035bfc993add03b519d0f67046'

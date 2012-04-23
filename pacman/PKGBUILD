@@ -25,12 +25,12 @@ source=(ftp://ftp.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz{,.sig}
         makepkg.conf)
 sha256sums=('b53d03b29d5ea41efecd39e1fc3a6c9549d3f23a14d2d7fd540996bc4f8931e5'
             '8b4a47dae1e2d4eb8fdc9d924428c3efc3b90c9eb2924e475f3426ee9b3759c9'
-            '6987e1a6ae1b2073c4c55198d67d4439ed957192940a013466c35c3bcabd370c'
-            '68d855f4c59c61f2dae793e7db317b2803e44e92ee26c99b46c07de3c84c5d4b'
+            '4b7ca53f296e3b4316d720bc50107de8f2de9fb7b30b3d81a749a7a46cfce5c1'
+            'b8dc9609568d2a9f6ccb685a921a94bd6342c13954a8de52bbd5f09c116f8e13'
             '049491c1e3749cffb8033f7c757866490af836697fc5ce7bfbeb66596b9b0bc9')
 
 # keep an upgrade path for older installations
-PKGEXT='.pkg.tar.gz'
+#PKGEXT='.pkg.tar.gz'
 
 build() {
   cd $srcdir/$pkgname-$pkgver
