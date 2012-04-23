@@ -15,7 +15,7 @@ _grub_915_ver=9
 pkgname=('grub2-common' 'grub2-bios' 'grub2-efi-i386')
 pkgbase=grub2
 pkgver=2.00beta4
-pkgrel=1
+pkgrel=2
 url="http://www.gnu.org/software/grub/"
 arch=('i686' 'x86_64')
 license=('GPL3')
@@ -113,6 +113,7 @@ _build_grub2-common_and_bios() {
 		--sbindir="/usr/sbin" \
 		--mandir="/usr/share/man" \
 		--infodir="/usr/share/info" \
+                --datadir="/usr/lib" \
 		--datarootdir="/usr/share" \
 		--sysconfdir="/etc" \
 		--program-prefix="" \
@@ -252,6 +253,11 @@ package_grub2-bios() {
 	rm -f "${pkgdir}/usr/lib/grub/i386-pc"/*.image || true
 	rm -f "${pkgdir}/usr/lib/grub/i386-pc"/{kernel.exec,gdb_grub,gmodule.pl} || true
 
+        ## remove conflicting common files
+	rm -fr "${pkgdir}/usr/lib/grub/themes"
+	rm -f "${pkgdir}/usr/lib/grub/"*.h
+	rm -f "${pkgdir}/usr/lib/grub/"*.pf2
+	rm -f "${pkgdir}/usr/lib/grub/grub-mkconfig_lib"
 }
 
 package_grub2-efi-i386() {
