@@ -16,24 +16,27 @@ source=("systemd-arch-units-$pkgver.tar.gz::https://www.github.com/falconindy/sy
         'kdm-plymouth.service'
         'slim-plymouth.service'
         'rc-local.service'
-        'rc-local-shutdown.service')
+        'rc-local-shutdown.service'
+        'wait-and-quit_plymouth')
 sha256sums=('fda2843413b2e3d7d7989bd8812c285d860aaaff6bbf5ff923587c7448b811d6'
-            'bb33a592b35535ee2016337c09bb0888ba08fd677b4046496e1a32d655d42f89'
-            'f1d77f69b76d70ff2e330745591a0d0ae3272b56cabf71ea4831a518918884ab'
-            '8d71d39684201b6c5f5f571049cdcf84fba679d72c4de49795920e46ceb6f600'
+            'e1c85fb780ec55bc577d0dfc527eaa22a01395fa6176426738ec55aea18a9095'
+            '2defdcb799a60410132877a1f9fe5936e8e8bb1f21dfff0d349ff963349e63d0'
+            'db9f58bab35ed4b77ecf4b948d239e826ab631a85ecd527a50aae361ba3d3c45'
             '2e27fd62ec5e579e65f779710db2ddb10adf744077caabc2c15b44d040d0fc97'
-            '308cd05122a3d30529e74b8562f89ee8abda9b40e4c2f890262ccb25097087b0')
+            '308cd05122a3d30529e74b8562f89ee8abda9b40e4c2f890262ccb25097087b0'
+            '52a4d35c40f0ca765a88ff8e2f762be69e868ddfec40d18915237adbe10790be')
             
 package() {
   dirname=$(tar tf "$srcdir/systemd-arch-units-$pkgver.tar.gz" | sed 1q)
 
   cd "$srcdir/$dirname"
 
-  make DESTDIR="$pkgdir" install
-
+  make DESTDIR="$pkgdir" SD_LIBDIR="lib/systemd" install
+  
   install -Dm644 "${srcdir}/gdm-plymouth.service" "${pkgdir}/lib/systemd/system/gdm-plymouth.service"
   install -Dm644 "${srcdir}/kdm-plymouth.service" "${pkgdir}/lib/systemd/system/kdm-plymouth.service"
   install -Dm644 "${srcdir}/slim-plymouth.service" "${pkgdir}/lib/systemd/system/slim-plymouth.service"
   install -Dm644 "${srcdir}/rc-local.service" "${pkgdir}/lib/systemd/system/rc-local.service"
   install -Dm644 "${srcdir}/rc-local-shutdown.service" "${pkgdir}/lib/systemd/system/rc-local-shutdown.service"
+  install -Dm755 "${srcdir}/wait-and-quit_plymouth" "${pkgdir}/usr/bin/wait-and-quit_plymouth"
 }

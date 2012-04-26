@@ -1,0 +1,2 @@
+#!/bin/sh
+sleep 5s && plymouth quit || exit 0

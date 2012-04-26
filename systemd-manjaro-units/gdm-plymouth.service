@@ -4,8 +4,8 @@ After=rc-local.service systemd-user-sessions.service
 Conflicts=plymouth-quit.service
 
 [Service]
-ExecStartPre=/bin/plymouth quit
 ExecStart=/usr/sbin/gdm -nodaemon
+ExecStartPost=/usr/bin/wait-and-quit_plymouth
 
 [Install]
 WantedBy=graphical.target
