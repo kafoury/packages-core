@@ -10,7 +10,7 @@ pkgname=('linux33' 'linux33-headers')
 _kernelname=-MANJARO
 _basekernel=3.3
 _basever=33
-pkgver=${_basekernel}.3
+pkgver=${_basekernel}.4
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -35,7 +35,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.3.tar.xz"
         'i915-fix-ghost-tv-output.patch'
 )
 sha256sums=('355df2085626cdf0083c4bc0fe3017419034b6db5cce6f437ae8234a5e90b40c'
-            '3e9f7dccd57a447800991fb5d2c811b704c96a309dd528f8cc7752ec117bc853'
+            'ce3802097666733ef5367c4f7b593240d48e975949bae63219ffd60549d01660'
             'fff1aeaa3b9402886fef3c7a02e0488a2e5fecc67307ec05c6ab77aea401fedc'
             'd9105557a2577f90a525315d8561a945409c2d0b04261b81ed76e734df14c5ba'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
