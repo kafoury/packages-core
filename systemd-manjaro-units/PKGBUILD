@@ -5,7 +5,7 @@
 
 pkgname=systemd-manjaro-units
 pkgver=20120412
-pkgrel=1
+pkgrel=2
 pkgdesc="Manjaro specific Systemd unit files"
 arch=('any')
 license=('MIT')
