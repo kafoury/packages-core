@@ -1,0 +1,10 @@
+[Unit]
+Description=LXDE Display Manager
+After=rc-local.service systemd-user-sessions.service plymouth-transition.service
+
+[Service]
+ExecStart=/usr/sbin/lxdm
+
+[Install]
+WantedBy=graphical.target
+Also=plymouth-transition.service

@@ -1,0 +1,10 @@
+[Unit]
+Description=SLiM Simple Login Manager
+After=rc-local.service systemd-user-sessions.service plymouth-transition.service
+
+[Service]
+ExecStart=/usr/bin/slim -nodaemon
+
+[Install]
+WantedBy=graphical.target
+Also=plymouth-transition.service

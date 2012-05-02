@@ -1,2 +1,15 @@
 #!/bin/sh
-sleep 5s && plymouth quit || exit 0
+
+# Exit if plymouth is not running
+[ ! -e /run/plymouth/pid ] && exit 0 
+
+# Check if nonfree driver will be used
+USENONFREEDRIVER="false"
+for i in `ls -1 /etc/X11/xorg.conf.d/* /etc/X11/xorg.conf`
+	# Look for an uncommented line with Driver and nvidia or fglrx in the listed files
+	do cat $i | grep Driver | grep -v \# | grep -e "nvidia" -e "fglrx" && USENONFREEDRIVER="true";
+done
+
+# Enable smooth transition if free driver will be used
+[[ USENONFREEDRIVER == "false" ]] && sleep 5s
+plymouth quit || exit 0
