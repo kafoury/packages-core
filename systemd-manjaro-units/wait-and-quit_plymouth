@@ -11,5 +11,5 @@ for i in `ls -1 /etc/X11/xorg.conf.d/* /etc/X11/xorg.conf`
 done
 
 # Enable smooth transition if free driver will be used
-[[ USENONFREEDRIVER == "false" ]] && sleep 5s
+[ $USENONFREEDRIVER == "false" ] && sleep 5s
 plymouth quit || exit 0
