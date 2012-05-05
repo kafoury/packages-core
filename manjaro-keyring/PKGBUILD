@@ -11,12 +11,17 @@ arch=('any')
 url='http:/manjarolinux.org'
 license=('GPL')
 install="${pkgname}.install"
-source=("${pkgname}-${pkgver}.tar.gz"
-        "${pkgname}-${pkgver}.tar.gz.sig")
-sha256sums=('5379572e5a38ff9b470634c8a75433ea973e701cea8db50196e190e9fda29e7f'
-            '8553856004b5a22dd2cc7a0fcfabecd0191318c6f03f47ac093eb6a7af8ffcb2')
+source=('Makefile'
+        'manjaro.gpg'
+        'manjaro-revoked'
+        'manjaro-trusted')
+sha256sums=('ac8fed4c8dbb910bb4fb3c01cb63de00d6b25ac79734ea5c933706aff6f9c950'
+            '100a399e9602f3b1b359b5da2493aaf677b7f8850b74f8ab715b680be729ac30'
+            'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+            '01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b')
 
 package() {
-	cd "${srcdir}/${pkgname}-${pkgver}"
+	#cd "${srcdir}/${pkgname}-${pkgver}"
+	cd "${srcdir}"
 	make PREFIX=/usr DESTDIR=${pkgdir} install
 }
