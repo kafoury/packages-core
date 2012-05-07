@@ -1,8 +1,8 @@
 # arg 1:  the new package version
 # arg 2:  the old package version
 
-RELEASE=3.3.4-1
-KERNEL_VERSION=3.3.4-1-MANJARO
+RELEASE=3.3.5-1
+KERNEL_VERSION=3.3.5-1-MANJARO
 BASEVER=33
 
 post_install () {
