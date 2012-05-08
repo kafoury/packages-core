@@ -11,7 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.3
 _basever=33
 pkgver=${_basekernel}.5
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -33,6 +33,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.3.tar.xz"
         'ext4-options.patch'
         'fix-acerhdf-1810T-bios.patch'
         'i915-fix-ghost-tv-output.patch'
+        'nouveau-vga.patch'
 )
 sha256sums=('355df2085626cdf0083c4bc0fe3017419034b6db5cce6f437ae8234a5e90b40c'
             '43ef4775ef6fd9035e802fd75711e3064a7668f2dfd72f78b8540189790cff26'
@@ -50,6 +51,7 @@ sha256sums=('355df2085626cdf0083c4bc0fe3017419034b6db5cce6f437ae8234a5e90b40c'
             '6fb90d77c7be02f4d3dff424a16baaa43ef84ca47ec046cc8e37471f7124e421'
             '763eb938442e3112aa63c8e5153361254d9b2c9b20adce66c67892f14b89d1d4'
             '9ccadbe3eb30bb283af3eb869c3a4bdb764628854811cc616a2e02e9ef398705'
+            'bd408bf7708725610226dbd62aa675a2a6b3a388c2b0f29d0434c70834a9f0a2'
 )
 
 build() {
@@ -83,6 +85,10 @@ build() {
   # fix ext4 module to mount ext3/2 correct
   # https://bugs.archlinux.org/task/28653
   patch -Np1 -i "${srcdir}/ext4-options.patch"
+
+  # drm/nv10/gpio: fix thinko in mask for gpio lines 2-9
+  # http://cgit.freedesktop.org/nouveau/linux-2.6/commit/?id=a3a285f17867f0018de798b5ee85731ec1268305
+  patch -Np1 -i "${srcdir}/nouveau-vga.patch"
 
   # add aufs3 support
   patch -Np1 -i "${srcdir}/aufs3.3-20120402.patch"
