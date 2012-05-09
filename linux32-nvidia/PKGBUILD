@@ -54,10 +54,10 @@ package_linux32-nvidia() {
 package_mhwd-nvidia() {
     pkgdesc="MHWD module-ids for nvidia $pkgver"
     arch=('any')
-    install -d -m755 "${pkgdir}/var/lib/mhwd/pci/ids"
+    install -d -m755 "${pkgdir}/var/lib/mhwd/ids/pci/"
     # Generate mhwd database
     sh -e ${srcdir}/../mhwd-nvidia \
     ${srcdir}/${_pkg}/README.txt \
     ${srcdir}/${_pkg}/kernel/nv-kernel.o \
-    > ${pkgdir}/var/lib/mhwd/pci/ids/nvidia.ids
+    > ${pkgdir}/var/lib/mhwd/ids/pci/nvidia.ids
 }
