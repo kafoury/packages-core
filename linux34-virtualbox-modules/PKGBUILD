@@ -1,0 +1,107 @@
+# Based on the file created for Arch Linux by:
+# Ionut Biru <ibiru@archlinux.org>
+
+# Maintainer: Guinux <nuxgui@gmail.com>
+# Co-Maintainer: Clittle <philm@manjarolinux.org>
+
+pkgbase=virtualbox-modules
+pkgname=('linux34-virtualbox-modules' 'linux34-virtualbox-manjaro-modules')
+pkgver=4.1.16
+pkgrel=1
+arch=('i686' 'x86_64')
+url='http://virtualbox.org'
+license=('GPL')
+makedepends=('libstdc++5' 'bin86' 'dev86' 'iasl' 'libxslt' 'libxml2' 'libpng' 'libidl2' 'xalan-c' 'sdl' 'linux34-headers')
+[[ $CARCH == "x86_64" ]] && makedepends=("${makedepends[@]}" 'gcc-multilib' 'lib32-glibc')
+source=(http://download.virtualbox.org/virtualbox/${pkgver}/VirtualBox-${pkgver}.tar.bz2
+         LocalConfig.kmk 60-vboxguest.rules)
+sha256sums=('b670499804c718a8ebbc7c2ddee37f70e98771a151391a597b5808f4310f824e'
+            '81fb0837385e034b2eee03c94a80708557e5e070cc5b84fd9dbd9ace80c075ba'
+            '033c597e0f5285d2ddb0490868e5b6f945f45c7b1b1152a02a9e6fea438b2c95')
+
+_extramodules=extramodules-3.4-MANJARO
+_kernver="$(cat /lib/modules/${_extramodules}/version || true)"
+
+export KERN_DIR=/lib/modules/${_kernver}/build
+export KERN_INCL=/usr/src/linux-${_kernver}/include/
+
+build() {
+    cd "$srcdir/VirtualBox-${pkgver}"
+
+    cp "$srcdir/LocalConfig.kmk" .
+
+    ./configure \
+        --with-linux=/usr/src/linux-${_kernver} \
+        --disable-java \
+        --disable-docs \
+        --disable-xpcom \
+        --disable-python \
+        --disable-sdl-ttf \
+        --disable-alsa \
+        --disable-pulse \
+        --disable-dbus  \
+        --disable-opengl \
+        --build-headless \
+        --nofatal
+    source ./env.sh
+    kmk all
+
+    make -C "$srcdir/VirtualBox-${pkgver}/out/linux.$BUILD_PLATFORM_ARCH/release/bin/src"
+    make -C "$srcdir/VirtualBox-${pkgver}/out/linux.$BUILD_PLATFORM_ARCH/release/bin/additions/src"
+}
+
+package_linux34-virtualbox-manjaro-modules(){
+    pkgdesc="Additions only for Manjaro Linux guests (kernel modules)"
+    license=('GPL')
+    install=virtualbox-manjaro-modules.install
+    depends=('linux34')
+    replaces=('virtualbox-guest-modules' "virtualbox-manjaro-modules=$pkgver")
+    conflicts=('virtualbox-guest-modules' "virtualbox-manjaro-modules=$pkgver")
+
+    source "$srcdir/VirtualBox-${pkgver}/env.sh"
+
+    cd "$srcdir/VirtualBox-${pkgver}/out/linux.$BUILD_PLATFORM_ARCH/release/bin/additions/src"
+
+    for module in vboxguest.ko vboxsf.ko vboxvideo.ko; do
+        install -D -m644 ${module} \
+            "$pkgdir/lib/modules/${_extramodules}/${module}"
+    done
+
+    install -D -m 0644 "$srcdir/60-vboxguest.rules" \
+        "$pkgdir/lib/udev/rules.d/60-linux34-vboxguest.rules"
+
+    find "${pkgdir}" -name '*.ko' -exec gzip -9 {} \;
+
+    sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='${_extramodules}'/" "$startdir/virtualbox-manjaro-modules.install"
+}
+
+package_linux34-virtualbox-modules(){
+    pkgdesc="Kernel modules for VirtualBox"
+    license=('GPL')
+    install=virtualbox-modules.install
+    depends=('linux34')
+    provides=('virtualbox-modules')
+    replaces=('virtualbox-modules')
+    conflicts=("virtualbox-modules=$pkgver")
+
+    source "$srcdir/VirtualBox-${pkgver}/env.sh"
+
+
+    cd "$srcdir/VirtualBox-${pkgver}/out/linux.$BUILD_PLATFORM_ARCH/release/bin/src"
+
+    install -D -m644 vboxdrv.ko \
+        "$pkgdir/lib/modules/${_extramodules}/vboxdrv.ko"
+
+    install -D -m644 vboxnetadp.ko \
+        "$pkgdir/lib/modules/${_extramodules}/vboxnetadp.ko"
+
+    install -D -m644 vboxnetflt.ko \
+        "$pkgdir/lib/modules/${_extramodules}/vboxnetflt.ko"
+
+    install -D -m644 vboxpci.ko \
+        "$pkgdir/lib/modules/${_extramodules}/vboxpci.ko"
+
+    find "${pkgdir}" -name '*.ko' -exec gzip -9 {} \;
+
+    sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='${_extramodules}'/" "$startdir/virtualbox-modules.install"
+}

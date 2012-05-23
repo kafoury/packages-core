@@ -1,0 +1,863 @@
+/etc/pacman.d/gnupg/pubring.gpg
+-------------------------------
+pub   2048R/5718619A 2012-05-05
+uid                  Pacman Keychain Master Key <pacman@localhost>
+sig 3        5718619A 2012-05-05  Pacman Keychain Master Key <pacman@localhost>
+
+pub   2048R/247B52CC 2012-05-04 [expire: 2022-05-02]
+uid                  Guillaume Benoit (Guinux) <guillaume@manjaro.org>
+sig 3        247B52CC 2012-05-04  Guillaume Benoit (Guinux) <guillaume@manjaro.org>
+sig   L      5718619A 2012-05-05  Pacman Keychain Master Key <pacman@localhost>
+sub   2048R/72CD35DE 2012-05-04 [expire: 2022-05-02]
+sig          247B52CC 2012-05-04  Guillaume Benoit (Guinux) <guillaume@manjaro.org>
+
+pub   3072R/6AC6A4C2 2011-11-18
+uid                  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig 3        6AC6A4C2 2011-11-18  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          9741E8AC 2011-11-18  Pierre Schmitz <pierre@archlinux.de>
+sig   L      5718619A 2012-05-05  Pacman Keychain Master Key <pacman@localhost>
+sub   1024R/86872C2F 2011-11-18
+sig          6AC6A4C2 2011-11-18  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sub   3072R/1B516B59 2011-11-18
+sig          6AC6A4C2 2011-11-18  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+
+pub   4096R/FFF979E7 2011-11-29
+uid                  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        FFF979E7 2011-11-29  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig   L      5718619A 2012-05-05  Pacman Keychain Master Key <pacman@localhost>
+
+pub   3072R/CDFD6BB0 2011-11-29
+uid                  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig 3        CDFD6BB0 2011-11-29  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig   L      5718619A 2012-05-05  Pacman Keychain Master Key <pacman@localhost>
+sub   3072R/87E611F8 2011-11-29
+sig          CDFD6BB0 2011-11-29  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+
+pub   3072R/4C7EA887 2011-11-25
+uid                  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig 3        4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig   L      5718619A 2012-05-05  Pacman Keychain Master Key <pacman@localhost>
+
+pub   3072R/824B18E8 2011-11-19
+uid                  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig 3        824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig   L      5718619A 2012-05-05  Pacman Keychain Master Key <pacman@localhost>
+
+pub   2048R/EAE999BD 2011-06-03
+uid                  Allan McRae <me@allanmcrae.com>
+sig 3        EAE999BD 2011-06-03  Allan McRae <me@allanmcrae.com>
+sig          4C7EA887 2011-11-29  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-29  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          824B18E8 2011-11-29  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-01  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-11-30  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Allan McRae (Developer) <allan@archlinux.org>
+sig 3        EAE999BD 2011-06-03  Allan McRae <me@allanmcrae.com>
+sig          4C7EA887 2011-11-29  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-29  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          824B18E8 2011-11-29  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-01  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-11-30  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/753CCF8D 2011-06-03
+sig          EAE999BD 2011-06-03  Allan McRae <me@allanmcrae.com>
+
+pub   2048R/D30DB0AD 2011-04-19
+uid                  Andrea Scarpino (Arch Linux) <andrea@archlinux.org>
+sig 3        D30DB0AD 2011-05-16  Andrea Scarpino (Arch Linux) <andrea@archlinux.org>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Andrea Scarpino <bash.lnx@gmail.com>
+sig 3        D30DB0AD 2011-04-19  Andrea Scarpino (Arch Linux) <andrea@archlinux.org>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Andrea Scarpino <andrea@archlinux.org>
+sig 3        D30DB0AD 2011-04-19  Andrea Scarpino (Arch Linux) <andrea@archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Andrea Scarpino (Arch Linux Italia) <bash@archlinux.it>
+sig 3        D30DB0AD 2011-04-29  Andrea Scarpino (Arch Linux) <andrea@archlinux.org>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  [jpeg image of size 26284]
+sig 3        D30DB0AD 2011-04-19  Andrea Scarpino (Arch Linux) <andrea@archlinux.org>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/8F5AD4F6 2011-04-19
+sig          D30DB0AD 2011-04-19  Andrea Scarpino (Arch Linux) <andrea@archlinux.org>
+
+pub   2048R/0F2A092B 2011-05-14
+uid                  Andreas Radke <andyrtr@archlinux.org>
+sig 3        0F2A092B 2011-05-14  Andreas Radke <andyrtr@archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          824B18E8 2011-11-22  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2012-03-26  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-17  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/53AF8961 2011-05-14
+sig          0F2A092B 2011-05-14  Andreas Radke <andyrtr@archlinux.org>
+
+pub   2048R/EC133BAD 2011-04-19
+uid                  Angel Velásquez <angvp@archlinux.org>
+sig 3        EC133BAD 2011-04-19  Angel Velásquez <angvp@archlinux.org>
+sig          6AC6A4C2 2011-11-23  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-12-03  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2011-12-04  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/921A4E58 2011-04-19
+sig          EC133BAD 2011-04-19  Angel Velásquez <angvp@archlinux.org>
+
+pub   2048R/5CF9C8D4 2011-09-29
+uid                  Alexander Rødseth <rodseth@gmail.com>
+sig 3        5CF9C8D4 2011-09-29  Alexander Rødseth <rodseth@gmail.com>
+sig          6AC6A4C2 2011-11-23  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-28  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2011-11-29  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          FFF979E7 2012-01-28  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/8FA70AF5 2011-09-29
+sig          5CF9C8D4 2011-09-29  Alexander Rødseth <rodseth@gmail.com>
+
+pub   2048R/0901C163 2012-03-01
+uid                  Balló György <ballogyor@gmail.com>
+sig 3        0901C163 2012-03-01  Balló György <ballogyor@gmail.com>
+sig          824B18E8 2012-03-16  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          4C7EA887 2012-03-16  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          6AC6A4C2 2012-03-19  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          FFF979E7 2012-03-20  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/7C826CC3 2012-03-01
+sig          0901C163 2012-03-01  Balló György <ballogyor@gmail.com>
+
+pub   2048D/00F0D0F0 2010-01-10
+uid                  Gaetan Bisson <gaetan.bisson@normalesup.org>
+sig 3        00F0D0F0 2011-12-10  Gaetan Bisson <gaetan.bisson@normalesup.org>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-26  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-01  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Gaetan Bisson <root@vesath.org>
+sig 3        00F0D0F0 2010-10-03  Gaetan Bisson <gaetan.bisson@normalesup.org>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-26  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-01  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Gaetan Bisson <bisson@archlinux.org>
+sig 3        00F0D0F0 2010-10-03  Gaetan Bisson <gaetan.bisson@normalesup.org>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-26  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-01  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048g/EDF80CF7 2010-01-10
+sig          00F0D0F0 2010-01-10  Gaetan Bisson <gaetan.bisson@normalesup.org>
+
+pub   4096R/4CE1C13E 2008-08-01
+uid                  Florian Pritz <bluewind@xinu.at>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-11-29  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-11-30  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        4CE1C13E 2011-06-04  Florian Pritz <bluewind@xinu.at>
+uid                  Florian Pritz <flo@xinu.at>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-11-29  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-11-30  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        4CE1C13E 2011-06-04  Florian Pritz <bluewind@xinu.at>
+uid                  Florian Pritz <bluewind@jabber.ccc.de>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-11-29  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-11-30  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        4CE1C13E 2011-06-04  Florian Pritz <bluewind@xinu.at>
+sub   4096R/0965A73B 2008-08-01
+sig          4CE1C13E 2008-08-01  Florian Pritz <bluewind@xinu.at>
+
+pub   2048R/487328A9 2011-10-10
+uid                  Bartlomiej Piotrowski <b@bpiotrowski.pl>
+sig 3        487328A9 2012-02-15  Bartlomiej Piotrowski <b@bpiotrowski.pl>
+uid                  Bartłomiej Piotrowski <b@bpiotrowski.pl>
+sig 3        487328A9 2012-02-07  Bartlomiej Piotrowski <b@bpiotrowski.pl>
+uid                  Bartlomiej Piotrowski (Barthalion) <barthalion@gmail.com>
+sig 3        487328A9 2011-12-10  Bartlomiej Piotrowski <b@bpiotrowski.pl>
+sig          CDFD6BB0 2011-12-11  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-13  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Bartłomiej Piotrowski (Barthalion) <barthalion@gmail.com>
+sig 3        487328A9 2011-10-10  Bartlomiej Piotrowski <b@bpiotrowski.pl>
+sig          824B18E8 2011-11-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-11  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-13  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/EEEF4C20 2011-10-10
+sig          487328A9 2011-10-10  Bartlomiej Piotrowski <b@bpiotrowski.pl>
+
+pub   2048R/6521E06D 2011-08-21
+uid                  Christopher Brannon <chris@the-brannons.com>
+sig 3        6521E06D 2011-08-21  Christopher Brannon <chris@the-brannons.com>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          824B18E8 2011-11-22  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-01  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-13  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/AAE75139 2011-08-21
+sig          6521E06D 2011-08-21  Christopher Brannon <chris@the-brannons.com>
+
+pub   4096R/99AD6E84 2010-05-07
+uid                  Gavin Marciniak-Bisesi <Daenyth@gmail.com>
+sig          4C7EA887 2011-12-05  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2012-01-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig 3        99AD6E84 2011-12-04  Gavin Marciniak-Bisesi <Daenyth@gmail.com>
+uid                  Daenyth <Daenyth@gmail.com>
+sig          4C7EA887 2011-12-05  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2012-01-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        99AD6E84 2010-05-07  Gavin Marciniak-Bisesi <Daenyth@gmail.com>
+
+pub   1024D/F53A76ED 2007-06-26
+uid                  Dan McGee <dpmcgee@gmail.com>
+sig 3        F53A76ED 2011-11-02  Dan McGee <dpmcgee@gmail.com>
+sig          CDFD6BB0 2011-11-29  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          824B18E8 2011-11-22  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-23  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-29  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Dan McGee (Developer) <dan@archlinux.org>
+sig 3        F53A76ED 2011-11-02  Dan McGee <dpmcgee@gmail.com>
+sig          824B18E8 2011-11-22  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-23  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          CDFD6BB0 2011-11-29  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          4C7EA887 2011-11-29  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Dan McGee (Jabber) <toofishes@toofishes.net>
+sig 3        F53A76ED 2011-11-02  Dan McGee <dpmcgee@gmail.com>
+sig          824B18E8 2011-11-22  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-23  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          CDFD6BB0 2011-11-29  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          4C7EA887 2011-11-29  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048g/C3751D38 2007-06-26
+sig          F53A76ED 2007-06-26  Dan McGee <dpmcgee@gmail.com>
+
+pub   2048R/B4440678 2011-11-02
+uid                  Daniel Isenmann <daniel@archlinux.org>
+sig 3        B4440678 2011-11-02  Daniel Isenmann <daniel@archlinux.org>
+sig          824B18E8 2011-11-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-26  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/7299C5E4 2011-11-02
+sig          B4440678 2011-11-02  Daniel Isenmann <daniel@archlinux.org>
+
+pub   2048R/1985A992 2011-11-19
+uid                  Dieter Plaetinck <dieter@plaetinck.be>
+sig 3        1985A992 2011-11-19  Dieter Plaetinck <dieter@plaetinck.be>
+sig          824B18E8 2011-11-26  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-26  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          CDFD6BB0 2011-11-30  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          4C7EA887 2011-12-01  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/8D9BE36B 2011-11-19
+sig          1985A992 2011-11-19  Dieter Plaetinck <dieter@plaetinck.be>
+
+pub   2048R/F56C0C53 2011-06-25
+uid                  Dave Reisner <d@falconindy.com>
+sig          1985A992 2011-12-13  Dieter Plaetinck <dieter@plaetinck.be>
+sig 3        F56C0C53 2011-08-29  Dave Reisner <d@falconindy.com>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-01  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-11-30  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Dave Reisner <dreisner@archlinux.org>
+sig          1985A992 2011-12-13  Dieter Plaetinck <dieter@plaetinck.be>
+sig 3        F56C0C53 2011-06-25  Dave Reisner <d@falconindy.com>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-01  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-11-30  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/114BFFA5 2011-06-25
+sig          F56C0C53 2011-06-25  Dave Reisner <d@falconindy.com>
+
+pub   2048R/9205AC90 2011-04-20
+uid                  Eric Belanger <eric@archlinux.org>
+sig 3        9205AC90 2011-04-20  Eric Belanger <eric@archlinux.org>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2012-03-26  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/00A2CE7D 2011-04-20
+sig          9205AC90 2011-04-20  Eric Belanger <eric@archlinux.org>
+
+pub   2048R/A9999C34 2010-11-12
+uid                  Evangelos Foutras <evangelos@foutrelis.com>
+sig 3        A9999C34 2011-07-29  Evangelos Foutras <evangelos@foutrelis.com>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-21  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-26  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2012-03-26  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Evangelos Foutras <foutrelis@gmail.com>
+sig 3        A9999C34 2011-07-29  Evangelos Foutras <evangelos@foutrelis.com>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-21  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-26  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2012-03-26  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Evangelos Foutras <foutrelis@archlinux.org>
+sig 3        A9999C34 2011-07-29  Evangelos Foutras <evangelos@foutrelis.com>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-21  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-26  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2012-03-26  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/07EEC3DD 2010-11-12
+sig          A9999C34 2010-11-12  Evangelos Foutras <evangelos@foutrelis.com>
+
+pub   2048R/F04569AE 2011-10-15
+uid                  Giovanni Scafora <giovanni@archlinux.org>
+sig 3        F04569AE 2011-10-15  Giovanni Scafora <giovanni@archlinux.org>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-01  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/272B548C 2011-10-15
+sig          F04569AE 2011-10-15  Giovanni Scafora <giovanni@archlinux.org>
+
+pub   2048D/215B37AD 2010-02-15
+uid                  Guillaume ALAUX <guillaume@archlinux.org>
+sig          00F0D0F0 2011-05-29  Gaetan Bisson <gaetan.bisson@normalesup.org>
+sig 3        215B37AD 2011-04-18  Guillaume ALAUX <guillaume@archlinux.org>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-29  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-02  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Guillaume ALAUX <guillaume@alaux.net>
+sig          00F0D0F0 2011-05-29  Gaetan Bisson <gaetan.bisson@normalesup.org>
+sig 3        215B37AD 2011-04-18  Guillaume ALAUX <guillaume@archlinux.org>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-29  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-02  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Guillaume ALAUX <guillaume@linux.com>
+sig          00F0D0F0 2011-05-29  Gaetan Bisson <gaetan.bisson@normalesup.org>
+sig 3        215B37AD 2010-02-15  Guillaume ALAUX <guillaume@archlinux.org>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-29  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-02  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048g/39C5457A 2010-02-15
+sig          215B37AD 2010-02-15  Guillaume ALAUX <guillaume@archlinux.org>
+
+pub   2048R/4FA415FA 2011-08-25
+uid                  Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+sig          1985A992 2012-02-05  Dieter Plaetinck <dieter@plaetinck.be>
+sig 3        4FA415FA 2011-11-16  Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          824B18E8 2011-11-22  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          4C7EA887 2011-11-26  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-01  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Jan Alexander Steffens (heftig) <jan-alexander.steffens@smail.inf.h-brs.de>
+sig          1985A992 2012-02-05  Dieter Plaetinck <dieter@plaetinck.be>
+sig 3        4FA415FA 2011-11-03  Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          824B18E8 2011-11-22  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          4C7EA887 2011-11-26  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-01  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  [jpeg image of size 3865]
+sig          1985A992 2012-02-05  Dieter Plaetinck <dieter@plaetinck.be>
+sig 3        4FA415FA 2011-08-25  Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          824B18E8 2011-11-22  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-01  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/1151A394 2011-08-25
+sig          4FA415FA 2011-08-25  Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+
+pub   2048R/615137BC 2011-04-19
+uid                  Ionut Biru <ibiru@archlinux.org>
+sig 3        615137BC 2011-04-19  Ionut Biru <ibiru@archlinux.org>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-01  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-11-30  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/0B33E3B3 2011-04-19
+sig          615137BC 2011-04-19  Ionut Biru <ibiru@archlinux.org>
+
+pub   4096R/796CA067 2011-11-03
+uid                  Ike Devolder <ike.devolder@gmail.com>
+sig          6AC6A4C2 2012-03-19  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2012-03-16  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2012-03-28  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          FFF979E7 2012-03-20  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        796CA067 2011-11-03  Ike Devolder <ike.devolder@gmail.com>
+sub   4096R/3FE426A3 2011-11-03
+sig          796CA067 2011-11-03  Ike Devolder <ike.devolder@gmail.com>
+
+pub   2048R/3CFD4BB6 2011-10-23
+uid                  Jonathan Conder <jonno.conder@gmail.com>
+sig 3        3CFD4BB6 2011-10-23  Jonathan Conder <jonno.conder@gmail.com>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          824B18E8 2011-11-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          4C7EA887 2011-11-27  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-12-13  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/01806106 2011-10-23
+sig          3CFD4BB6 2011-10-23  Jonathan Conder <jonno.conder@gmail.com>
+
+pub   2048R/7C50773E 2011-10-08
+uid                  Jelle van der Waa <jelle@vdwaa.nl>
+sig 3        7C50773E 2011-10-08  Jelle van der Waa <jelle@vdwaa.nl>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2011-11-26  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          FFF979E7 2011-11-30  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/A83E99A3 2011-10-08
+sig          7C50773E 2011-10-08  Jelle van der Waa <jelle@vdwaa.nl>
+
+pub   2048R/3B94FA10 2011-06-06
+uid                  Jan de Groot <jgc@archlinux.org>
+sig 3        3B94FA10 2011-06-06  Jan de Groot <jgc@archlinux.org>
+sig          824B18E8 2011-11-21  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-23  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-30  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2012-03-26  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-11-30  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/0FBDDA6F 2011-06-06
+sig          3B94FA10 2011-06-06  Jan de Groot <jgc@archlinux.org>
+
+pub   4096R/013C2580 2011-10-23
+uid                  Jaroslav Lichtblau (trusted user) <dragonlord@aur.archlinux.org>
+sig          6AC6A4C2 2012-02-08  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2012-02-19  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2012-02-25  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          FFF979E7 2012-02-13  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        013C2580 2011-10-23  Jaroslav Lichtblau (trusted user) <dragonlord@aur.archlinux.org>
+sub   4096R/66081B9B 2011-10-23
+sig          013C2580 2011-10-23  Jaroslav Lichtblau (trusted user) <dragonlord@aur.archlinux.org>
+
+pub   1024D/589874AB 2005-06-23
+uid                  Jürgen Hötzel <juergen@hoetzel.info>
+sig 3        589874AB 2005-06-23  Jürgen Hötzel <juergen@hoetzel.info>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2011-11-26  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-28  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-01  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-17  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   1024g/B0EE373B 2005-06-23
+sig          589874AB 2005-06-23  Jürgen Hötzel <juergen@hoetzel.info>
+
+pub   2048R/983D4366 2011-08-11 [expire: 2012-08-10]
+uid                  Justin Davis (juster) <jrcd83@gmail.com>
+sig 3        983D4366 2011-08-11  Justin Davis (juster) <jrcd83@gmail.com>
+sig          824B18E8 2011-12-15  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          4C7EA887 2011-12-16  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          6AC6A4C2 2011-12-16  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          FFF979E7 2011-12-17  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/6FA896D6 2011-08-11 [expire: 2012-08-10]
+sig          983D4366 2011-08-11  Justin Davis (juster) <jrcd83@gmail.com>
+
+pub   2048R/D21E1A55 2011-11-28
+uid                  Kaiting Chen <kaitocracy@gmail.com>
+sig 3        D21E1A55 2011-11-28  Kaiting Chen <kaitocracy@gmail.com>
+sig          4C7EA887 2012-03-13  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2012-03-16  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2012-03-19  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          FFF979E7 2012-03-13  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/CA5D4AAC 2011-11-28
+sig          D21E1A55 2011-11-28  Kaiting Chen <kaitocracy@gmail.com>
+
+pub   2048R/BAB142C1 2011-02-03
+uid                  Kyle Keen <keenerd@gmail.com>
+sig 3        BAB142C1 2011-02-03  Kyle Keen <keenerd@gmail.com>
+sig          6AC6A4C2 2011-11-23  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          824B18E8 2011-11-29  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          4C7EA887 2011-12-02  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-12-13  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/46901A06 2011-02-03
+sig          BAB142C1 2011-02-03  Kyle Keen <keenerd@gmail.com>
+
+pub   2048R/D1CEDDAC 2011-10-30
+uid                  Laurent Carlier <lordheavym@gmail.com>
+sig 3        D1CEDDAC 2011-10-30  Laurent Carlier <lordheavym@gmail.com>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2011-11-26  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          FFF979E7 2011-12-17  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/B5E4ADE8 2011-10-30
+sig          D1CEDDAC 2011-10-30  Laurent Carlier <lordheavym@gmail.com>
+
+pub   4096R/9326B440 2011-10-12
+uid                  Lukas Fleischer <info@cryptocrack.de>
+sig          824B18E8 2011-11-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-11-30  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        9326B440 2011-10-12  Lukas Fleischer <info@cryptocrack.de>
+uid                  Lukas Fleischer (calcurse) <calcurse@cryptocrack.de>
+sig          824B18E8 2011-11-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-11-30  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        9326B440 2011-10-12  Lukas Fleischer <info@cryptocrack.de>
+uid                  Lukas Fleischer (Arch Linux) <archlinux@cryptocrack.de>
+sig          824B18E8 2011-11-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-11-30  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        9326B440 2011-10-12  Lukas Fleischer <info@cryptocrack.de>
+sub   4096R/EC9A8E15 2011-10-12
+sig          9326B440 2011-10-12  Lukas Fleischer <info@cryptocrack.de>
+
+pub   1024D/DA2EE423 2008-09-25
+uid                  Massimiliano Torromeo (Personal non-work identity) <massimiliano.torromeo@gmail.com>
+sig 3        DA2EE423 2008-09-25  Massimiliano Torromeo (Personal non-work identity) <massimiliano.torromeo@gmail.com>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-23  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-26  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-12-13  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   1024g/C578C3CF 2008-09-25
+sig          DA2EE423 2008-09-25  Massimiliano Torromeo (Personal non-work identity) <massimiliano.torromeo@gmail.com>
+
+pub   2048R/9741E8AC 2011-04-10
+uid                  Pierre Schmitz <pierre@archlinux.de>
+sig          4FA415FA 2012-02-05  Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+sig          1985A992 2012-02-05  Dieter Plaetinck <dieter@plaetinck.be>
+sig 3        9741E8AC 2011-04-10  Pierre Schmitz <pierre@archlinux.de>
+sig          6AC6A4C2 2011-11-18  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-01  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/54211796 2011-04-10
+sig          9741E8AC 2011-04-10  Pierre Schmitz <pierre@archlinux.de>
+
+pub   1024D/E19DAA50 2006-03-01
+uid                  Peter Richard Lewis <pete@muddygoat.org>
+sig 3        E19DAA50 2011-10-29  Peter Richard Lewis <pete@muddygoat.org>
+sig          6AC6A4C2 2011-12-02  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-12-03  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2011-12-04  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-06  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+uid                  Peter Richard Lewis <p.r.lewis@cs.bham.ac.uk>
+sig 3        E19DAA50 2008-03-04  Peter Richard Lewis <pete@muddygoat.org>
+sig          6AC6A4C2 2011-12-02  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-12-03  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2011-12-04  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-06  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+uid                  Peter Richard Lewis <prlewis@letterboxes.org>
+sig 3        E19DAA50 2011-10-29  Peter Richard Lewis <pete@muddygoat.org>
+sig          6AC6A4C2 2011-12-02  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-12-03  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2011-12-04  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-06  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+uid                  Peter Richard Lewis <plewis@aur.archlinux.org>
+sig 3        E19DAA50 2011-10-29  Peter Richard Lewis <pete@muddygoat.org>
+sig          6AC6A4C2 2011-12-02  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-12-03  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2011-12-04  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-06  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sub   1024R/3C12E88A 2008-03-04
+sig          E19DAA50 2008-03-04  Peter Richard Lewis <pete@muddygoat.org>
+sub   1024R/F39D989F 2008-03-04
+sig          E19DAA50 2008-03-04  Peter Richard Lewis <pete@muddygoat.org>
+sub   1024R/FC776955 2008-03-04
+sig          E19DAA50 2008-03-04  Peter Richard Lewis <pete@muddygoat.org>
+sub   2048g/C48DC525 2006-03-01
+sig          E19DAA50 2006-03-01  Peter Richard Lewis <pete@muddygoat.org>
+
+pub   4096R/2D1493D2 2011-02-16
+uid                  Rémy Oudompheng <remy@archlinux.org>
+sig          00F0D0F0 2011-05-29  Gaetan Bisson <gaetan.bisson@normalesup.org>
+sig          215B37AD 2011-05-31  Guillaume ALAUX <guillaume@archlinux.org>
+sig          6AC6A4C2 2011-11-23  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2011-11-25  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-03  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        2D1493D2 2011-02-16  Rémy Oudompheng <remy@archlinux.org>
+uid                  Rémy Oudompheng <oudomphe@phare.normalesup.org>
+sig          00F0D0F0 2011-05-29  Gaetan Bisson <gaetan.bisson@normalesup.org>
+sig          215B37AD 2011-05-31  Guillaume ALAUX <guillaume@archlinux.org>
+sig          6AC6A4C2 2011-11-23  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2011-11-25  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-03  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        2D1493D2 2011-02-16  Rémy Oudompheng <remy@archlinux.org>
+sub   4096R/2DCC038A 2011-02-16
+sig          2D1493D2 2011-02-16  Rémy Oudompheng <remy@archlinux.org>
+
+pub   2048R/70E80477 2011-11-19
+uid                  Роман Кирилич (Roman Kyrylych) <roman@archlinux.org>
+sig 3        70E80477 2011-11-19  Роман Кирилич (Roman Kyrylych) <roman@archlinux.org>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/A8AA192C 2011-11-19
+sig          70E80477 2011-11-19  Роман Кирилич (Roman Kyrylych) <roman@archlinux.org>
+
+pub   2048R/8406FFF3 2011-09-10
+uid                  Ronald van Haren <ronald@archlinux.org>
+sig 3        8406FFF3 2011-09-10  Ronald van Haren <ronald@archlinux.org>
+sig          824B18E8 2011-12-15  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          4C7EA887 2011-12-16  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          6AC6A4C2 2012-01-11  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          FFF979E7 2012-01-07  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/536C43A3 2011-09-10
+sig          8406FFF3 2011-09-10  Ronald van Haren <ronald@archlinux.org>
+
+pub   2048R/C0711BF1 2011-10-31
+uid                  Rashif Rahman (Ray) <schiv@archlinux.org>
+sig 3        C0711BF1 2011-10-31  Rashif Rahman (Ray) <schiv@archlinux.org>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/D1998B5D 2011-10-31
+sig          C0711BF1 2011-10-31  Rashif Rahman (Ray) <schiv@archlinux.org>
+
+pub   2048R/91B842AE 2010-06-26
+uid                  Jakob Gruber <jakob.gruber@gmail.com>
+sig 3        91B842AE 2010-06-26  Jakob Gruber <jakob.gruber@gmail.com>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-12-13  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/20F0BE34 2010-06-26
+sig          91B842AE 2010-06-26  Jakob Gruber <jakob.gruber@gmail.com>
+
+pub   4096R/2072D77A 2011-11-11
+uid                  Seblu <seblu@seblu.net>
+sig          4C7EA887 2011-11-30  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-30  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          824B18E8 2011-11-30  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          FFF979E7 2011-12-13  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        2072D77A 2011-11-27  Seblu <seblu@seblu.net>
+uid                  Sébastien Luttringer <sebastien@luttringer.net>
+sig          4C7EA887 2011-11-30  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-30  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          824B18E8 2011-11-30  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          FFF979E7 2011-12-13  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        2072D77A 2011-11-27  Seblu <seblu@seblu.net>
+uid                  Sébastien Luttringer <sebastien.luttringer@gmail.com>
+sig          4C7EA887 2011-11-30  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-30  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          824B18E8 2011-11-30  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          FFF979E7 2011-12-13  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        2072D77A 2011-11-27  Seblu <seblu@seblu.net>
+sub   4096R/46A47177 2011-11-11
+sig          2072D77A 2011-11-11  Seblu <seblu@seblu.net>
+
+pub   4096R/EA433FC7 2011-07-15
+uid                  Sergej Pupykin <arch@sergej.pp.ru>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2012-03-26  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        EA433FC7 2011-11-25  Sergej Pupykin <arch@sergej.pp.ru>
+uid                  Sergej Pupykin <ml@sergej.pp.ru>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2012-03-26  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        EA433FC7 2011-11-25  Sergej Pupykin <arch@sergej.pp.ru>
+uid                  Sergej Pupykin <sergej@p5n.pp.ru>
+sig          6AC6A4C2 2011-11-23  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2012-01-26  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          CDFD6BB0 2012-03-26  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        EA433FC7 2011-07-15  Sergej Pupykin <arch@sergej.pp.ru>
+uid                  Sergej Pupykin <pupykin.s@gmail.com>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2012-03-26  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-01  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        EA433FC7 2011-11-25  Sergej Pupykin <arch@sergej.pp.ru>
+sub   4096R/816F646D 2011-07-15
+sig          EA433FC7 2011-07-15  Sergej Pupykin <arch@sergej.pp.ru>
+
+pub   2048R/F1D357C1 2011-11-04
+uid                  Lukas Jirkovsky <l.jirkovsky@gmail.com>
+sig 3        F1D357C1 2011-11-04  Lukas Jirkovsky <l.jirkovsky@gmail.com>
+sig          824B18E8 2011-11-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2012-01-02  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/2D8606DB 2011-11-04
+sig          F1D357C1 2011-11-04  Lukas Jirkovsky <l.jirkovsky@gmail.com>
+
+pub   2048R/AB441196 2011-10-30
+uid                  Stéphane Gaudreault <stephane@archlinux.org>
+sig 3        AB441196 2011-10-30  Stéphane Gaudreault <stephane@archlinux.org>
+sig          6AC6A4C2 2011-11-21  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2011-11-26  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          FFF979E7 2011-11-30  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/FDC576A9 2011-10-30
+sig          AB441196 2011-10-30  Stéphane Gaudreault <stephane@archlinux.org>
+
+pub   4096R/E62EB915 2011-09-10
+uid                  Sven-Hendrik Haase <sh@lutzhaase.com>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2011-11-26  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          FFF979E7 2011-12-13  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        E62EB915 2011-09-10  Sven-Hendrik Haase <sh@lutzhaase.com>
+sub   4096R/EAAA28E7 2011-09-10
+sig          E62EB915 2011-09-10  Sven-Hendrik Haase <sh@lutzhaase.com>
+
+pub   4096R/0C84C0A5 2011-11-01
+uid                  Thomas Dziedzic <gostrc@gmail.com>
+sig          6AC6A4C2 2011-11-23  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-29  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2011-11-29  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          FFF979E7 2012-01-29  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        0C84C0A5 2011-11-01  Thomas Dziedzic <gostrc@gmail.com>
+sub   4096R/F6A0C179 2011-11-01
+sig          0C84C0A5 2011-11-01  Thomas Dziedzic <gostrc@gmail.com>
+
+pub   4096R/8E4B1A25 2011-05-04
+uid                  Thomas Bächler <thomas@archlinux.org>
+sig          9741E8AC 2011-11-13  Pierre Schmitz <pierre@archlinux.de>
+sig          D1CEDDAC 2011-11-30  Laurent Carlier <lordheavym@gmail.com>
+sig          4FA415FA 2012-02-05  Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+sig          824B18E8 2011-11-19  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-11-30  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          4CE1C13E 2011-11-19  Florian Pritz <bluewind@xinu.at>
+sig          FFF979E7 2011-11-30  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig 3        8E4B1A25 2011-05-04  Thomas Bächler <thomas@archlinux.org>
+sub   4096R/20016BDB 2011-05-04
+sig          8E4B1A25 2011-05-04  Thomas Bächler <thomas@archlinux.org>
+
+pub   2048R/06361833 2011-05-28
+uid                  Tom Gundersen <teg@jklm.no>
+sig          00F0D0F0 2011-05-30  Gaetan Bisson <gaetan.bisson@normalesup.org>
+sig          215B37AD 2011-05-31  Guillaume ALAUX <guillaume@archlinux.org>
+sig          4FA415FA 2012-02-05  Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+sig          9741E8AC 2012-02-05  Pierre Schmitz <pierre@archlinux.de>
+sig 3        06361833 2011-05-29  Tom Gundersen <teg@jklm.no>
+sig          824B18E8 2011-11-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-05  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-17  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig          8E4B1A25 2012-02-05  Thomas Bächler <thomas@archlinux.org>
+sig 3        2D1493D2 2011-05-29  Rémy Oudompheng <remy@archlinux.org>
+uid                  Tom Gundersen <teg@pps.jussieu.fr>
+sig          00F0D0F0 2011-05-30  Gaetan Bisson <gaetan.bisson@normalesup.org>
+sig          215B37AD 2011-05-31  Guillaume ALAUX <guillaume@archlinux.org>
+sig          4FA415FA 2012-02-05  Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+sig          9741E8AC 2012-02-05  Pierre Schmitz <pierre@archlinux.de>
+sig 3        06361833 2011-05-29  Tom Gundersen <teg@jklm.no>
+sig          824B18E8 2011-11-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-05  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-17  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig          8E4B1A25 2012-02-05  Thomas Bächler <thomas@archlinux.org>
+uid                  Tom Gundersen <tomegun@archlinux.org>
+sig          00F0D0F0 2011-05-30  Gaetan Bisson <gaetan.bisson@normalesup.org>
+sig          215B37AD 2011-05-31  Guillaume ALAUX <guillaume@archlinux.org>
+sig          4FA415FA 2012-02-05  Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+sig          9741E8AC 2012-02-05  Pierre Schmitz <pierre@archlinux.de>
+sig 3        06361833 2011-05-29  Tom Gundersen <teg@jklm.no>
+sig          824B18E8 2011-11-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-25  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-05  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-17  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sig          8E4B1A25 2012-02-05  Thomas Bächler <thomas@archlinux.org>
+sig 3        2D1493D2 2011-05-29  Rémy Oudompheng <remy@archlinux.org>
+
+pub   2048R/7EDF681F 2011-07-18
+uid                  Tobias Powalowski <tobias.powalowski@googlemail.com>
+sig 3        7EDF681F 2011-11-20  Tobias Powalowski <tobias.powalowski@googlemail.com>
+sig          824B18E8 2011-11-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-26  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2012-03-26  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Tobias Powalowski <tpowa@archlinux.org>
+sig 3        7EDF681F 2011-07-18  Tobias Powalowski <tobias.powalowski@googlemail.com>
+sig          824B18E8 2011-11-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-26  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2012-03-26  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-05  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/5BF91F41 2011-07-18
+sig          7EDF681F 2011-07-18  Tobias Powalowski <tobias.powalowski@googlemail.com>
+
+pub   2048R/3C4F88BC 2011-11-28
+uid                  Timothy Redaelli <tredaelli@archlinux.info>
+sig 3        3C4F88BC 2011-12-21  Timothy Redaelli <tredaelli@archlinux.info>
+uid                  Timothy Redaelli <timothy.redaelli@gmail.com>
+sig 3        3C4F88BC 2011-11-28  Timothy Redaelli <tredaelli@archlinux.info>
+sig          6AC6A4C2 2011-12-21  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-12-23  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          824B18E8 2012-01-03  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sub   2048R/28A38F04 2011-11-28
+sig          3C4F88BC 2011-11-28  Timothy Redaelli <tredaelli@archlinux.info>
+
+pub   2048D/295AFBF4 2009-02-20 [expire: 2013-01-22]
+uid                  Thorsten Töpper <atsutane@freethoughts.de>
+sig 3        295AFBF4 2011-02-25  Thorsten Töpper <atsutane@freethoughts.de>
+sig          824B18E8 2011-11-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-26  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-02  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-17  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Thorsten Töpper <t.toepper@gmx.de>
+sig 3        295AFBF4 2011-02-25  Thorsten Töpper <atsutane@freethoughts.de>
+sig          824B18E8 2011-11-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-26  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-02  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-17  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+uid                  Thorsten Toepper (Atsutane) <atsutane@freethoughts.de>
+sig 3        295AFBF4 2011-02-25  Thorsten Töpper <atsutane@freethoughts.de>
+sig          824B18E8 2011-11-20  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-11-26  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          CDFD6BB0 2011-12-02  Dan McGee (Arch Linux Master Key) <dan@master-key.archlinux.org>
+sig          FFF979E7 2011-12-17  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   4096g/FD8DC6BC 2009-02-20 [expire: 2013-01-22]
+sig          295AFBF4 2011-01-23  Thorsten Töpper <atsutane@freethoughts.de>
+
+pub   2048R/437520BD 2011-11-05
+uid                  Vesa Kaihlavirta <vegai@iki.fi>
+sig 3        437520BD 2011-11-05  Vesa Kaihlavirta <vegai@iki.fi>
+sig          6AC6A4C2 2011-11-20  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          4C7EA887 2011-12-23  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2012-02-21  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/6C47755B 2011-11-05
+sig          437520BD 2011-11-05  Vesa Kaihlavirta <vegai@iki.fi>
+
+pub   2048R/C2E5C0D2 2011-11-24
+uid                  Xyne. <xyne@archlinux.ca>
+sig 3        C2E5C0D2 2011-11-24  Xyne. <xyne@archlinux.ca>
+sig          6AC6A4C2 2011-11-30  Pierre Schmitz (Arch Linux Master Key) <pierre@master-key.archlinux.org>
+sig          824B18E8 2011-12-01  Thomas Bächler (Arch Linux Master Key) <thomas@master-key.archlinux.org>
+sig          4C7EA887 2011-12-02  Ionut Biru (Arch Linux Master Key) <ionut@master-key.archlinux.org>
+sig          FFF979E7 2011-12-13  Allan McRae (Arch Linux Master Key) <allan@master-key.archlinux.org>
+sub   2048R/2E7C56EC 2011-11-24
+sig          C2E5C0D2 2011-11-24  Xyne. <xyne@archlinux.ca>
+

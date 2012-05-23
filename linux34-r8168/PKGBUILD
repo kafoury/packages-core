@@ -1,0 +1,46 @@
+# Based on the file created for Arch Linux by:
+# Massimiliano Torromeo <massimiliano.torromeo@gmail.com>
+# Bob Fanger < bfanger(at)gmail >
+# Filip <fila pruda com>, Det < nimetonmaili(at)gmail >
+
+# Maintainer: Guinux <nuxgui@gmail.com>
+# Co-Maintainer: Clittle <philm@manjarolinux.org>
+
+pkgname=linux34-r8168
+_pkgname=r8168
+pkgver=8.028.00
+pkgrel=1
+pkgdesc="A kernel module for Realtek 8168 network cards"
+url="http://www.realtek.com.tw"
+license=("GPL")
+arch=('i686' 'x86_64')
+depends=('glibc' 'linux34')
+makedepends=('linux34-headers')
+replaces=("$_pkgname=$pkgver")
+conflicts=("$_pkgname=$pkgver")
+source=(http://r8168.googlecode.com/files/$_pkgname-$pkgver.tar.bz2 linux-3.3-fix.patch)
+install=$_pkgname.install
+
+_extramodules=extramodules-3.4-MANJARO
+_kernver="$(cat /lib/modules/$_extramodules/version || true)"
+
+build() {
+	cd "$srcdir/$_pkgname-$pkgver"
+        patch -p0 -i "$srcdir/linux-3.3-fix.patch"
+	make clean SYSSRC=/usr/src/linux-$_kernver modules
+}
+
+package() {
+	cd "$srcdir/$_pkgname-$pkgver/src"
+	install -D -m644 $_pkgname.ko "$pkgdir/lib/modules/$_extramodules/$_pkgname.ko"
+
+	# set the kernel we've built for inside the install script
+	sed -i -e "s/EXTRAMODULES=.*/EXTRAMODULES=${_extramodules}/g" "${startdir}/${_pkgname}.install"
+
+	find "$pkgdir" -name '*.ko' -exec gzip -9 {} \;
+}
+
+md5sums=('4cc3c1706f00b55ab9bd6f5e06b758c2'
+         '8b5e1c03862e65240508797655ca0463')
+sha256sums=('c77873f43693eea5304e17e35ff3d6503f6581e358d28c38927573ea56f4d6a3'
+            'c674f08945ba9f59268ef35a7e56ea296013eaa73c32d0b1ab073e25ab8befe0')
