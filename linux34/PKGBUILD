@@ -144,7 +144,7 @@ package_linux34() {
 
   mkdir -p "${pkgdir}"/{lib/modules,lib/firmware,boot}
   make INSTALL_MOD_PATH="${pkgdir}" modules_install
-  cp arch/$KARCH/boot/bzImage "${pkgdir}/boot/vmlinuz-${pkgver}-${pkgrel}-manjaro"
+  cp arch/$KARCH/boot/bzImage "${pkgdir}/boot/vmlinuz-${pkgver}-${pkgrel}-${CARCH}-manjaro"
 
   # add vmlinux
   install -D -m644 vmlinux "${pkgdir}/usr/src/linux-${_kernver}/vmlinux"
@@ -159,9 +159,9 @@ package_linux34() {
     -e  "s/BASEVER=.*/BASEVER=${_basever}/g" \
     -i "${startdir}/${pkgname}.install"
   sed \
-    -e "s|ALL_kver=.*|ALL_kver=\"/boot/vmlinuz-${pkgver}-${pkgrel}-manjaro\"|g" \
-    -e "s|default_image=.*|default_image=\"/boot/initramfs-${pkgver}-${pkgrel}-manjaro.img\"|g" \
-    -e "s|fallback_image=.*|fallback_image=\"/boot/initramfs-${pkgver}-${pkgrel}-manjaro-fallback.img\"|g" \
+    -e "s|ALL_kver=.*|ALL_kver=\"/boot/vmlinuz-${pkgver}-${pkgrel}-${CARCH}-manjaro\"|g" \
+    -e "s|default_image=.*|default_image=\"/boot/initramfs-${pkgver}-${pkgrel}-${CARCH}-manjaro.img\"|g" \
+    -e "s|fallback_image=.*|fallback_image=\"/boot/initramfs-${pkgver}-${pkgrel}-${CARCH}-manjaro-fallback.img\"|g" \
     -i "${pkgdir}/etc/mkinitcpio.d/${pkgname}.preset"
 
   # remove build and source links
