@@ -142,6 +142,7 @@ package_linux33() {
   groups=('base')
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
+  provides=("linux=$pkgver")
   conflicts=("linux=$pkgver")
   replaces=("linux=$pkgver")
   install=${pkgname}.install
@@ -167,7 +168,7 @@ package_linux33() {
   sed \
     -e  "s/RELEASE=.*/RELEASE=${pkgver}-${pkgrel}/g" \
     -e  "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/g" \
-    -e  "s/KERNEL_BASE=.*/KERNEL_BASE=${_kernbase}/g" \
+    -e  "s/KERNEL_BASE=.*/KERNEL_BASE=${_basekernel}/g" \
     -e  "s/BASEVER=.*/BASEVER=${_basever}/g" \
     -e  "s/ARCH=.*/ARCH=${CARCH}/g" \
     -i "${startdir}/${pkgname}.install"
@@ -192,6 +193,7 @@ package_linux33() {
 
 package_linux33-headers() {
   pkgdesc="Header files and scripts for building modules for linux kernel"
+  provides=("linux-headers=$pkgver")
   conflicts=("linux-headers=$pkgver")
   replaces=("linux-headers=$pkgver")
 
