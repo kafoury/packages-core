@@ -57,6 +57,7 @@ package_linux32-virtualbox-manjaro-modules(){
     depends=('linux32')
     replaces=('virtualbox-guest-modules' "virtualbox-manjaro-modules=$pkgver")
     conflicts=('virtualbox-guest-modules' "virtualbox-manjaro-modules=$pkgver")
+    provides=("virtualbox-archlinux-modules=$pkgver")
 
     source "$srcdir/VirtualBox-${pkgver}/env.sh"
 
