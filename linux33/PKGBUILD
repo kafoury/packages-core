@@ -9,7 +9,6 @@ pkgbase=linux33
 pkgname=('linux33' 'linux33-headers')
 _kernelname=-MANJARO
 _basekernel=3.3
-_basever=33
 pkgver=${_basekernel}.7
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -167,7 +166,7 @@ package_linux33() {
   sed \
     -e  "s/RELEASE=.*/RELEASE=${pkgver}-${pkgrel}/g" \
     -e  "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/g" \
-    -e  "s/BASEVER=.*/BASEVER=${_basever}/g" \
+    -e  "s/BASEVER=.*/BASEVER=${_basekernel}/g" \
     -i "${startdir}/${pkgname}.install"
   sed \
     -e "s|ALL_kver=.*|ALL_kver=\"/boot/vmlinuz-${pkgver}-${pkgrel}-${CARCH}-manjaro\"|g" \

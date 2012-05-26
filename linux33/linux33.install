@@ -30,8 +30,8 @@ post_upgrade() {
   fi
   
   # remove old initcpio
-  rm -f boot/initramfs-${BASEVER}*-manjaro.img
-  rm -f boot/initramfs-${BASEVER}*-manjaro-fallback.img
+  rm -f /boot/initramfs-${BASEVER}*-manjaro.img
+  rm -f /boot/initramfs-${BASEVER}*-manjaro-fallback.img
   
   # updating module dependencies
   echo ">>> Updating module dependencies. Please wait ..."
@@ -52,8 +52,8 @@ post_upgrade() {
 
 post_remove() {
   # remove initcpio
-  rm -f boot/initramfs-${RELEASE}-manjaro.img
-  rm -f boot/initramfs-${RELEASE}-manjaro-fallback.img
+  rm -f /boot/initramfs-${RELEASE}-manjaro.img
+  rm -f /boot/initramfs-${RELEASE}-manjaro-fallback.img
   
   # update grub.cfg
   if [ -f /usr/sbin/grub-mkconfig ]; then

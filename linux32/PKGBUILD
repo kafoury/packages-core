@@ -9,7 +9,6 @@ pkgbase=linux32
 pkgname=('linux32' 'linux32-headers')
 _kernelname=-MANJARO
 _basekernel=3.2
-_basever=32
 pkgver=${_basekernel}.18
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -161,7 +160,7 @@ package_linux32() {
   sed \
     -e  "s/RELEASE=.*/RELEASE=${pkgver}-${pkgrel}/g" \
     -e  "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/g" \
-    -e  "s/BASEVER=.*/BASEVER=${_basever}/g" \
+    -e  "s/BASEVER=.*/BASEVER=${_basekernel}/g" \
     -i "${startdir}/${pkgname}.install"
   sed \
     -e "s|ALL_kver=.*|ALL_kver=\"/boot/vmlinuz-${pkgver}-${pkgrel}-${CARCH}-manjaro\"|g" \
