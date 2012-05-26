@@ -59,7 +59,7 @@ build() {
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
-  # enable only if you executed "gen-stable-queue-patch.sh" before
+  # enable only if you have "gen-stable-queue-patch.sh" executed before
   patch -Np1 -i "${srcdir}/../prepatch-${_basekernel}-`date +%Y%m%d`"
 
   # Some chips detect a ghost TV output
