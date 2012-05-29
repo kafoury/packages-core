@@ -10,7 +10,7 @@ pkgdesc="Manjaro Linux Hardware Detection"
 arch=('i686' 'x86_64')
 url="http://git.manjaro.org"
 license=('GPL')
-makedepends=('git')
+makedepends=('git' 'cmake')
 
 
 

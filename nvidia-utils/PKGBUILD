@@ -6,7 +6,7 @@
 pkgbase=nvidia-utils
 pkgname=('nvidia-utils' 'opencl-nvidia')
 pkgver=295.53
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.nvidia.com/"
 license=('custom')
@@ -103,4 +103,8 @@ package_nvidia-utils() {
     ln -s nvidia "${pkgdir}/usr/share/doc/nvidia-utils"
 
     create_links
+
+    # some cleanup
+    cd "${pkgdir}/usr/lib/"
+    rm -f `ls ./ | grep libGL | grep -v libGL.so.nvidia`
 }
