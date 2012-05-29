@@ -33,7 +33,7 @@ getsource() {
 package_mhwd() {
   pkgdesc="Manjaro Linux Hardware Detection library and application"
   makedepends=('cmake')
-  depends=('hwinfo' 'mhwd-db' 'libgl')
+  depends=('hwinfo' 'mhwd-db')
 
   getsource "mhwd" "git://git.manjaro.org/core/mhwd.git"
 
