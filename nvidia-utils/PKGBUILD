@@ -31,11 +31,6 @@ create_links() {
         [[ -e "${_soname}" ]] || ln -s "$(basename "${_lib}")" "${_soname}"
         [[ -e "${_soname/.[0-9]*/}" ]] || ln -s "$(basename "${_soname}")" "${_soname/.[0-9]*/}"
     done < <(find "${pkgdir}" -type f -name '*.so*' -print0)
-    # rename conflicting files
-    if [ -e ${pkgdir}/usr/lib/libGL.so ]; then
-       mv ${pkgdir}/usr/lib/libGL.so.1 ${pkgdir}/usr/lib/libGL.so.nvidia
-       rm ${pkgdir}/usr/lib/libGL.so
-    fi
 }
 
 build() {
@@ -60,7 +55,7 @@ package_opencl-nvidia() {
 
 package_nvidia-utils() {
     pkgdesc="NVIDIA drivers utilities and libraries."
-    depends=('xorg-server' 'libxvmc' 'libgl')
+    depends=('xorg-server' 'libxvmc' 'libgl' 'mhwd')
     optdepends=('gtk2: nvidia-settings' 'pkg-config: nvidia-xconfig'
                 'opencl-nvidia: OpenCL support')
     install=$pkgname.install
@@ -69,10 +64,9 @@ package_nvidia-utils() {
     # X driver
     install -D -m755 nvidia_drv.so "${pkgdir}/usr/lib/xorg/modules/drivers/nvidia_drv.so"
     # GLX extension module for X
-    install -D -m755 "libglx.so.${pkgver}" "${pkgdir}/usr/lib/xorg/modules/extensions/libglx.so.${pkgver}"
-    ln -s "libglx.so.${pkgver}" "${pkgdir}/usr/lib/xorg/modules/extensions/libglx.so.nvidia"	# X doesn't find glx otherwise
+    install -D -m755 "libglx.so.${pkgver}" "${pkgdir}/usr/lib/xorg/modules/extensions/libglx.so.nvidia"
     # OpenGL library
-    install -D -m755 "libGL.so.${pkgver}" "${pkgdir}/usr/lib/libGL.so.${pkgver}"
+    install -D -m755 "libGL.so.${pkgver}" "${pkgdir}/usr/lib/libGL.so.nvidia"
     # OpenGL core library
     install -D -m755 "libnvidia-glcore.so.${pkgver}" "${pkgdir}/usr/lib/libnvidia-glcore.so.${pkgver}"
     # XvMC

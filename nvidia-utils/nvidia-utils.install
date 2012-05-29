@@ -1,7 +1,5 @@
 post_install() {
-    ln -sf libGL.so.nvidia /usr/lib/libGL.so.1
-    ln -sf libGL.so.nvidia /usr/lib/libGL.so
-    ln -sf libglx.so.nvidia /usr/lib/xorg/modules/extensions/libglx.so
+	mhwd-gpu --check
 }
 
 post_upgrade() {
@@ -9,7 +7,5 @@ post_upgrade() {
 }
 
 post_remove() {
-    ls -sf libGL.so.1.2 /usr/lib/libGL.so.1
-    ls -sf libGL.so.1.2 /usr/lib/libGL.so
-    ln -sf libglx.xorg /usr/lib/xorg/modules/extensions/libglx.so
+	mhwd-gpu --check
 }

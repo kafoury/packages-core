@@ -1,7 +1,5 @@
 post_install() {
-    ls -sf libGL.so.1.2 /usr/lib/libGL.so.1
-    ls -sf libGL.so.1.2 /usr/lib/libGL.so
-    ln -sf libglx.xorg /usr/lib/xorg/modules/extensions/libglx.so
+	mhwd-gpu --check
 }
 
 post_upgrade() {
@@ -9,6 +7,5 @@ post_upgrade() {
 }
 
 post_remove() {
-    rm /usr/lib/libGL.so*
-    rm /usr/lib/xorg/modules/extensions/libglx.so
+	mhwd-gpu --check
 }
