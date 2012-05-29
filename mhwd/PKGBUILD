@@ -1,0 +1,61 @@
+#
+# maintainer: Philip Müller <philm[at]manjaro[dog]org>
+# maintainer: Roland Singer <roland[at]manjaro[dog]org>
+
+pkgbase=mhwd
+pkgname=('mhwd' 'mhwd-db')
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Manjaro Linux Hardware Detection"
+arch=('i686' 'x86_64')
+url="http://git.manjaro.org"
+license=('GPL')
+makedepends=('git')
+
+
+
+getsource() {
+  cd "$srcdir"
+  msg "Connecting to GIT server...."
+
+  if [ -d $1 ] ; then
+    cd $1 && git pull origin master && git checkout -b $pkgver
+    msg "The local files are updated."
+  else
+    git clone $2 $1
+    cd $1 && git checkout -b $pkgver $pkgver
+  fi
+
+  msg "GIT checkout done or server timeout"
+}
+
+
+package_mhwd() {
+  pkgdesc="Manjaro Linux Hardware Detection library and application"
+  makedepends=('cmake')
+  depends=('hwinfo' 'mhwd-db' 'libgl')
+
+  getsource "mhwd" "git://git.manjaro.org/core/mhwd.git"
+
+  cd ${srcdir}/${pkgname}
+  mkdir -p ${pkgdir}/var/lib/mhwd/{db,local}/{pci,usb}
+
+  cmake ./
+  make all
+  make DESTDIR="${pkgdir}" install
+}
+
+
+package_mhwd-db() {
+  pkgdesc="Manjaro Linux Hardware Detection Database"
+  depends=('mhwd-nvidia')
+
+  getsource "mhwd-db" "git://git.manjaro.org/core/mhwd-db.git"
+
+  cd ${srcdir}/${pkgname}/
+  mkdir -p ${pkgdir}/var/lib/mhwd/db
+  mkdir -p ${pkgdir}/etc/X11/mhwd.d
+
+  cp -r pci ${pkgdir}/var/lib/mhwd/db/
+  # cp -r usb ${pkgdir}/var/lib/mhwd/db/
+}

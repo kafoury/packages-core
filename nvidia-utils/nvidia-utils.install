@@ -1,5 +1,7 @@
 post_install() {
 	mhwd-gpu --check
+
+	echo "to use nvidia as default driver run: 'mhwd-gpu --setgl nvidia'"
 }
 
 post_upgrade() {
