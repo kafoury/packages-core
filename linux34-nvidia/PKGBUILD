@@ -16,7 +16,9 @@ url="http://www.nvidia.com/"
 depends=('linux34' "nvidia-utils=${pkgver}")
 makedepends=('linux34-headers')
 replaces=("$_pkgname=$pkgver")
+provides=("$_pkgname=$pkgver")
 conflicts=('nvidia-96xx' 'nvidia-173xx' "$_pkgname=$pkgver")
+groups=('nvidia-kernel-modules')
 license=('custom')
 install=nvidia.install
 options=(!strip)

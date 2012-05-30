@@ -39,8 +39,10 @@ build() {
 package_linux32-nvidia() {
     pkgdesc="NVIDIA drivers for linux32."
     depends=('linux32' "nvidia-utils=${pkgver}")
+    provides=("$_pkgname=$pkgver")
     replaces=("$_pkgname=$pkgver")
     conflicts=('nvidia-96xx' 'nvidia-173xx' "$_pkgname=$pkgver")
+    groups=('nvidia-kernel-modules')
     install=nvidia.install
 
     install -D -m644 "${srcdir}/${_pkg}/kernel/nvidia.ko" \
