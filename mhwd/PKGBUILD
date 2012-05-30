@@ -12,8 +12,6 @@ url="http://git.manjaro.org"
 license=('GPL')
 makedepends=('git' 'cmake')
 
-
-
 getsource() {
   cd "$srcdir"
   msg "Connecting to GIT server...."
@@ -29,12 +27,7 @@ getsource() {
   msg "GIT checkout done or server timeout"
 }
 
-
-package_mhwd() {
-  pkgdesc="Manjaro Linux Hardware Detection library and application"
-  makedepends=('cmake')
-  depends=('hwinfo' 'mhwd-db')
-
+build() {
   getsource "mhwd" "git://git.manjaro.org/core/mhwd.git"
 
   cd ${srcdir}/${pkgname}
@@ -42,9 +35,16 @@ package_mhwd() {
 
   cmake ./
   make all
-  make DESTDIR="${pkgdir}" install
 }
 
+package_mhwd() {
+  pkgdesc="Manjaro Linux Hardware Detection library and application"
+  depends=('hwinfo' 'mhwd-db')
+
+  cd ${srcdir}/${pkgname}
+
+  make DESTDIR="${pkgdir}" install
+}
 
 package_mhwd-db() {
   pkgdesc="Manjaro Linux Hardware Detection Database"
