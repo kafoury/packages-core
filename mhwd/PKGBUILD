@@ -4,13 +4,13 @@
 
 pkgbase=mhwd
 pkgname=('mhwd' 'mhwd-db')
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc="Manjaro Linux Hardware Detection"
 arch=('i686' 'x86_64')
 url="http://git.manjaro.org"
 license=('GPL')
-makedepends=('git' 'cmake')
+makedepends=('git' 'cmake' 'hwinfo')
 
 getsource() {
   cd "$srcdir"
