@@ -14,7 +14,7 @@ arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
 license=('custom')
 depends=('linux33' 'catalyst-utils')
-makedepends=('gcc-libs' 'gcc>4.0.0' 'make' 'linux-headers')
+makedepends=('gcc-libs' 'gcc>4.0.0' 'make' 'linux33-headers')
 provides=("$_pkgname=$pkgver")
 replaces=("$_pkgname=$pkgver")
 conflicts=('catalyst-test' 'nvidia' 'xf86-video-ati' 'xf86-video-radeonhd' 'ati-dri')
