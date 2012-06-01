@@ -1,20 +1,13 @@
 --- 12.6/common/lib/modules/fglrx/build_mod/firegl_public.c	2012-05-29 20:18:09.000000000 +0000
 +++ 12.6/common/lib/modules/fglrx/build_mod/firegl_public.c	2012-06-01 20:08:06.891305714 +0000
-@@ -5799,10 +5806,16 @@ void ATI_API_CALL KCL_fpu_begin(void)
- #ifdef CONFIG_X86_64
-     kernel_fpu_begin();
- #else
-+#ifndef TS_USEDFPU
-+    preempt_disable();
-+    if (__thread_has_fpu(current))
-+        __save_init_fpu(current);
-+#else
-     struct thread_info *cur_task = current_thread_info();
-     preempt_disable();
-     if (cur_task->status & TS_USEDFPU)
-         __save_init_fpu(cur_task->task);
+@@ -187,6 +187,9 @@
+ #include <linux/gfp.h>
+ #include <linux/swap.h>
+ #include "asm/i387.h"
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,4,0)
++#include <asm/fpu-internal.h>
 +#endif
-     else
-         clts();
- #endif
+ 
+ #include "firegl_public.h"
+ #include "kcl_osconfig.h"
 
