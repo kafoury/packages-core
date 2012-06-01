@@ -1,7 +1,9 @@
-# Maintainer: Vi0L0 <vi0l093@gmail.com>
+# Partly based on original PKGBUILD by Vi0L0 <vi0l093@gmail.com>
 # Great Contributor: Eduardo "kensai" Romero (previous maintainer)
 # Contributor: csslayer
 # Contributor: cvigano
+
+# Maintainer: Clittle <philm@manjarolinux.org>
 
 pkgbase=catalyst-utils
 pkgname=('catalyst-utils' 'mhwd-catalyst')
@@ -11,13 +13,6 @@ pkgdesc="AMD/ATI Catalyst drivers utilities and libraries with OpenCL implementa
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
 license=('custom')
-depends=('xorg-server>=1.12.0' 'xorg-server<1.13.0' 'netkit-bsd-finger' 'libxrandr' 'libsm' 'fontconfig' 'libxcursor' 'libxi' 'gcc-libs' 'libxinerama' 'mhwd' 'libgl')
-optdepends=('qt: to run ATi Catalyst Control Center (amdcccle)'
-	    'libxxf86vm: to run ATi Catalyst Control Center (amdcccle)'
-	    'opencl-headers: headers necessary for OpenCL development')
-conflicts=('catalyst-test' 'catalyst-utils' 'libcl')
-provides=("libatical=${pkgver}" 'libcl')
-install=${pkgname}.install
 
 source=(
     #http://www2.ati.com/drivers/linux/amd-driver-installer-${pkgver/./-}-x86.x86_64.run
@@ -37,6 +32,13 @@ build() {
 }
 
 package_catalyst-utils() {
+  depends=('xorg-server>=1.12.0' 'xorg-server<1.13.0' 'netkit-bsd-finger' 'libxrandr' 'libsm' 'fontconfig' 'libxcursor' 'libxi' 'gcc-libs' 'libxinerama' 'mhwd' 'libgl')
+  optdepends=('qt: to run ATi Catalyst Control Center (amdcccle)'
+	      'libxxf86vm: to run ATi Catalyst Control Center (amdcccle)'
+	      'opencl-headers: headers necessary for OpenCL development')
+  conflicts=('catalyst-test' 'catalyst-utils' 'libcl')
+  provides=("libatical=${pkgver}" 'libcl')
+  install=${pkgname}.install
   ## Install userspace tools and libraries
     # Create directories
       install -m755 -d "${pkgdir}/etc/ati"
