@@ -25,12 +25,14 @@ source=(#http://www2.ati.com/drivers/linux/amd-driver-installer-${pkgver/./-}-x8
         http://www2.ati.com/drivers/hotfix/catalyst_12.6_hotfixes/amd-driver-installer-8.98-x86.x86_64.zip
         ati_make.sh
         makefile_compat.patch
-        3.4.0.patch)
+        3.4.0.patch
+        3.4.0-i686.patch)
 
 md5sums=('91dcca91882f292f3c6103c369d154ae'
 	 '660396540b0ceaff71d6155c986734de'
 	 '3e1b82bd69774ea808da69c983d6a43b'
-         'ea181d1017b46e3ae5038a71d17664b3')
+         'ea181d1017b46e3ae5038a71d17664b3'
+         'e3d79b63b89173bc3986922e43fd2062')
 
 
 
@@ -65,6 +67,10 @@ build() {
     patch -Np1 -i ../makefile_compat.patch
 
     patch -Np1 -i ../3.4.0.patch
+
+    if [ "${CARCH}" = "i686" ]; then
+       patch -Np1 -i ../3.4.0-i686.patch
+    fi
 
 #    if [[ ${_kernver:0:6} < "2.6.39" ]] && [[ `cat /lib/modules/${_kernver}/build/.config | grep -c CONFIG_BKL=y` = 0 ]]; then
 #	patch -Np1 -i ../no_bkl.patch
