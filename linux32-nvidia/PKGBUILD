@@ -4,8 +4,7 @@
 # Maintainer: Guinux <nuxgui@gmail.com>
 # Co-Maintainer: Clittle <philm@manjarolinux.org>
 
-pkgbase=linux32-nvidia
-pkgname=('linux32-nvidia' 'mhwd-nvidia')
+pkgname=('linux32-nvidia')
 _pkgname=nvidia
 pkgver=295.53
 _extramodules=extramodules-3.2-MANJARO
@@ -36,7 +35,7 @@ build() {
     make SYSSRC=/lib/modules/"${_kernver}/build" module
 }
 
-package_linux32-nvidia() {
+package() {
     pkgdesc="NVIDIA drivers for linux32."
     depends=('linux32' "nvidia-utils=${pkgver}")
     provides=("$_pkgname=$pkgver")
@@ -51,15 +50,4 @@ package_linux32-nvidia() {
     echo "blacklist nouveau" >> "${pkgdir}/lib/modprobe.d/nvidia.conf"
     sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='${_extramodules}'/" "${startdir}/nvidia.install"
     gzip "${pkgdir}/lib/modules/${_extramodules}/nvidia.ko"
-}
-
-package_mhwd-nvidia() {
-    pkgdesc="MHWD module-ids for nvidia $pkgver"
-    arch=('any')
-    install -d -m755 "${pkgdir}/var/lib/mhwd/ids/pci/"
-    # Generate mhwd database
-    sh -e ${srcdir}/../mhwd-nvidia \
-    ${srcdir}/${_pkg}/README.txt \
-    ${srcdir}/${_pkg}/kernel/nv-kernel.o \
-    > ${pkgdir}/var/lib/mhwd/ids/pci/nvidia.ids
 }

@@ -1,0 +1,25 @@
+
+check_libdri_so(){
+    if [ ! -e usr/lib/xorg/modules/extensions/libdri.so ]; then
+        ln -sf usr/lib/xorg/modules/extensions/libdri.xorg usr/lib/xorg/modules/extensions/libdri.so
+    fi
+}
+
+
+post_install(){
+    check_libdri_so
+    mhwd-gpu --check
+
+    echo "to use catalyst as default driver run: 'mhwd-gpu --setgl catalyst'"
+}
+
+post_upgrade(){
+    post_install
+}
+
+post_remove(){
+    # If the symlink is dead, remove it
+     check_libdri_so
+     echo "NOTE: Don't forget to recover your original xorg.conf file."
+     mhwd-gpu --check
+}

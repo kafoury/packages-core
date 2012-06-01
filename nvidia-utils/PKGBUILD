@@ -4,7 +4,7 @@
 
 # Maintainer: Clittle <philm@manjarolinux.org>
 pkgbase=nvidia-utils
-pkgname=('nvidia-utils' 'opencl-nvidia')
+pkgname=('nvidia-utils' 'opencl-nvidia' 'mhwd-nvidia')
 pkgver=295.53
 pkgrel=2
 arch=('i686' 'x86_64')
@@ -107,4 +107,15 @@ package_nvidia-utils() {
     # some cleanup
     cd "${pkgdir}/usr/lib/"
     rm -f `ls ./ | grep libGL | grep -v libGL.so.nvidia`
+}
+
+package_mhwd-nvidia() {
+    pkgdesc="MHWD module-ids for nvidia $pkgver"
+    arch=('any')
+    install -d -m755 "${pkgdir}/var/lib/mhwd/ids/pci/"
+    # Generate mhwd database
+    sh -e ${srcdir}/../mhwd-nvidia \
+    ${srcdir}/${_pkg}/README.txt \
+    ${srcdir}/${_pkg}/kernel/nv-kernel.o \
+    > ${pkgdir}/var/lib/mhwd/ids/pci/nvidia.ids
 }

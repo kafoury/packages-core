@@ -6,7 +6,7 @@
 
 pkgname=pacman
 pkgver=4.0.3
-pkgrel=1
+pkgrel=1.1
 pkgdesc="A library-based package manager with dependency support"
 arch=('i686' 'x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -27,7 +27,7 @@ source=(ftp://ftp.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz{,.sig}
 sha256sums=('a48696ae51aaccf31a69ea7916ba9b06e7836eb933b8a281c666729c9d55ce25'
             '87d0f36ffa218b4bf22b7522d6464ffb47441f7360feb517c05cf82622d122c3'
             '4b7ca53f296e3b4316d720bc50107de8f2de9fb7b30b3d81a749a7a46cfce5c1'
-            'b8dc9609568d2a9f6ccb685a921a94bd6342c13954a8de52bbd5f09c116f8e13'
+            'b4202183a3e1deb7c0b6991df90123ee08e00260fbc90f174bc44586da258eb8'
             '049491c1e3749cffb8033f7c757866490af836697fc5ce7bfbeb66596b9b0bc9')
 
 # keep an upgrade path for older installations

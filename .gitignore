@@ -4,6 +4,10 @@ pkg
 *.pkg.*
 *.src.*
 *.tar.*
+*.tgz
 *.run
+*.zip
+*.xz
+*.log
 *~
 aufs3-standalone
