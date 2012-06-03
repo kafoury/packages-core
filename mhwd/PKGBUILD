@@ -32,8 +32,8 @@ build() {
 
   cd ${srcdir}/${pkgname}
 
-  if [ -e ${srcdir}/../mhwd-db-${pkgver}-${pkgrel}.patch ]; then
-     patch -Np1 -i ${srcdir}/../mhwd-db-${pkgver}-${pkgrel}.patch
+  if [ -e ${srcdir}/../mhwd-${pkgver}-${pkgrel}.patch ]; then
+     patch -Np1 -i ${srcdir}/../mhwd-${pkgver}-${pkgrel}.patch
   fi
 
   mkdir -p ${pkgdir}/var/lib/mhwd/{db,local}/{pci,usb}
