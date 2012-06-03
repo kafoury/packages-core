@@ -5,7 +5,7 @@
 pkgbase=mhwd
 pkgname=('mhwd' 'mhwd-db')
 pkgver=0.1.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Manjaro Linux Hardware Detection"
 arch=('i686' 'x86_64')
 url="http://git.manjaro.org"
@@ -31,6 +31,11 @@ build() {
   getsource "mhwd" "git://git.manjaro.org/core/mhwd.git"
 
   cd ${srcdir}/${pkgname}
+
+  if [ -e ${srcdir}/../mhwd-db-${pkgver}-${pkgrel}.patch ]; then
+     patch -Np1 -i ${srcdir}/../mhwd-db-${pkgver}-${pkgrel}.patch
+  fi
+
   mkdir -p ${pkgdir}/var/lib/mhwd/{db,local}/{pci,usb}
 
   cmake ./
@@ -49,10 +54,16 @@ package_mhwd() {
 package_mhwd-db() {
   pkgdesc="Manjaro Linux Hardware Detection Database"
   depends=('mhwd-nvidia' 'mhwd-catalyst')
+  arch='any'
 
   getsource "mhwd-db" "git://git.manjaro.org/core/mhwd-db.git"
 
   cd ${srcdir}/${pkgname}/
+
+  if [ -e ${srcdir}/../mhwd-db-${pkgver}-${pkgrel}.patch ]; then
+     patch -Np1 -i ${srcdir}/../mhwd-db-${pkgver}-${pkgrel}.patch
+  fi
+
   mkdir -p ${pkgdir}/var/lib/mhwd/db
   mkdir -p ${pkgdir}/etc/X11/mhwd.d
 
