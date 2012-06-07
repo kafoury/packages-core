@@ -55,13 +55,9 @@ build() {
 package_systemd() {
   pkgdesc="system and service manager"
   depends=('acl' 'dbus-core' "libsystemd=$pkgver" 'kmod' 'libcap' 'pam'
-           "systemd-tools=$pkgver" "systemd-sysvcompat=$pkgver" 'util-linux' 'xz')
+           "systemd-tools=$pkgver" "systemd-sysvcompat=$pkgver" 'systemd-manjaro-units' 'util-linux' 'xz')
   optdepends=('dbus-python: systemd-analyze'
-              'initscripts: legacy support for hostname and vconsole setup'
-              'initscripts-systemd: native boot and initialization scripts'
-              'python2-cairo: systemd-analyze'
-              'systemd-arch-units: collection of native unit files for Arch daemon/init scripts'
-              'systemd-sysvcompat: symlink package to provide sysvinit binaries')
+              'python2-cairo: systemd-analyze')
   backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
           etc/dbus-1/system.d/org.freedesktop.hostname1.conf
           etc/dbus-1/system.d/org.freedesktop.login1.conf
