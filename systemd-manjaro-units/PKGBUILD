@@ -5,7 +5,7 @@
 
 pkgname=systemd-manjaro-units
 pkgver=20120606
-pkgrel=2
+pkgrel=3
 pkgdesc="Manjaro specific Systemd unit files"
 arch=('any')
 license=('MIT')
@@ -34,12 +34,12 @@ package() {
   dirname=$(tar tf "$srcdir/systemd-arch-units-$pkgver.tar.gz" | sed 1q)
   make -C "$srcdir/$dirname" DESTDIR="$pkgdir" install
   
-  install -Dm644 "${srcdir}/gdm.service" "${pkgdir}/usr/lib/systemd/system/gdm.service"
-  install -Dm644 "${srcdir}/kdm.service" "${pkgdir}/usr/lib/systemd/system/kdm.service"
-  install -Dm644 "${srcdir}/slim.service" "${pkgdir}/usr/lib/systemd/system/slim-plymouth.service"
-  install -Dm644 "${srcdir}/lxdm.service" "${pkgdir}/usr/lib/systemd/system/lxdm.service"
+  #install -Dm644 "${srcdir}/gdm.service" "${pkgdir}/usr/lib/systemd/system/gdm.service"
+  #install -Dm644 "${srcdir}/kdm.service" "${pkgdir}/usr/lib/systemd/system/kdm.service"
+  #install -Dm644 "${srcdir}/slim.service" "${pkgdir}/usr/lib/systemd/system/slim-plymouth.service"
+  #install -Dm644 "${srcdir}/lxdm.service" "${pkgdir}/usr/lib/systemd/system/lxdm.service"
   install -Dm644 "${srcdir}/rc-local.service" "${pkgdir}/usr/lib/systemd/system/rc-local.service"
   install -Dm644 "${srcdir}/rc-local-shutdown.service" "${pkgdir}/usr/lib/systemd/system/rc-local-shutdown.service"
-  install -Dm644 "${srcdir}/plymouth-transition.service" "${pkgdir}/usr/lib/systemd/system/plymouth-transition.service"
-  install -Dm755 "${srcdir}/wait-and-quit_plymouth" "${pkgdir}/usr/bin/wait-and-quit_plymouth"
+  #install -Dm644 "${srcdir}/plymouth-transition.service" "${pkgdir}/usr/lib/systemd/system/plymouth-transition.service"
+  #install -Dm755 "${srcdir}/wait-and-quit_plymouth" "${pkgdir}/usr/bin/wait-and-quit_plymouth"
 }
