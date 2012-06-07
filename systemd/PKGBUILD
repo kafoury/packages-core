@@ -6,7 +6,7 @@
 pkgbase=systemd
 pkgname=('systemd' 'libsystemd' 'systemd-tools' 'systemd-sysvcompat')
 pkgver=184
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
@@ -41,6 +41,7 @@ build() {
       --enable-split-usr \
       --enable-introspection \
       --enable-gtk-doc \
+      --enable-plymouth \
       --disable-audit \
       --disable-ima \
       --with-pamlibdir=/usr/lib/security \
@@ -100,6 +101,9 @@ package_systemd() {
   mv "$pkgdir/usr/lib"/libsystemd-*.so* usr/lib
   mv "$pkgdir/usr/include/systemd" usr/include
   mv "$pkgdir/usr/lib/pkgconfig"/libsystemd-*.pc usr/lib/pkgconfig
+
+  # Fix local environment in gettys
+  sed -i "s/\(Environment=LANG=\)/#\1/" "$pkgdir"/lib/systemd/system/getty@.service
 
   ### split out manpages for sysvcompat
   rm -rf "$srcdir/_sysvcompat"
