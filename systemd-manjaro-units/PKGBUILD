@@ -36,7 +36,7 @@ package() {
   
   install -Dm644 "${srcdir}/gdm.service" "${pkgdir}/usr/lib/systemd/system/gdm.service"
   install -Dm644 "${srcdir}/kdm.service" "${pkgdir}/usr/lib/systemd/system/kdm.service"
-  install -Dm644 "${srcdir}/slim.service" "${pkgdir}/usr/lib/systemd/system/slim.service"
+  install -Dm644 "${srcdir}/slim.service" "${pkgdir}/usr/lib/systemd/system/slim-plymouth.service"
   install -Dm644 "${srcdir}/lxdm.service" "${pkgdir}/usr/lib/systemd/system/lxdm.service"
   install -Dm644 "${srcdir}/rc-local.service" "${pkgdir}/usr/lib/systemd/system/rc-local.service"
   install -Dm644 "${srcdir}/rc-local-shutdown.service" "${pkgdir}/usr/lib/systemd/system/rc-local-shutdown.service"
