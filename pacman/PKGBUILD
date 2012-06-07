@@ -26,8 +26,8 @@ source=(ftp://ftp.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz{,.sig}
 
 sha256sums=('a48696ae51aaccf31a69ea7916ba9b06e7836eb933b8a281c666729c9d55ce25'
             '87d0f36ffa218b4bf22b7522d6464ffb47441f7360feb517c05cf82622d122c3'
-            'bec647cf7b0f3247c40b2db3e9c050126f23068046194a9a84b0d8e918ed3608'
-            '1a329339bb446df63d9ae5f3b98e3011f2379c423616d5b31798d9478b3f3014'
+            '707adad444b1110761e0f549fb4943147655ae0ea2b3e51b12a0756bcf973801'
+            'e1e0dcec959198b97e1144c71d41402dab2ddc7e8d104507a3a75d1b6abf51cd'
             '049491c1e3749cffb8033f7c757866490af836697fc5ce7bfbeb66596b9b0bc9')
 
 # keep an upgrade path for older installations
