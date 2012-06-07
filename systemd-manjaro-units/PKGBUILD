@@ -4,8 +4,8 @@
 # Maintainer: Guinux <nuxgui@gmail.com>
 
 pkgname=systemd-manjaro-units
-pkgver=20120412
-pkgrel=3
+pkgver=20120606
+pkgrel=1
 pkgdesc="Manjaro specific Systemd unit files"
 arch=('any')
 license=('MIT')
@@ -31,11 +31,8 @@ sha256sums=('fda2843413b2e3d7d7989bd8812c285d860aaaff6bbf5ff923587c7448b811d6'
             '605122b2e4a96f40ccfb4bd34b4d7f12df2b7a3ac6292b74f3c943c64ddcc9fd')
             
 package() {
-  dirname=$(tar tf "$srcdir/systemd-arch-units-$pkgver.tar.gz" | sed 1q)
-
-  cd "$srcdir/$dirname"
-
-  make DESTDIR="$pkgdir" SD_LIBDIR="lib/systemd" install
+  dirname=$(tar tf "$srcdir/$pkgname-$pkgver.tar.gz" | sed 1q)
+  make -C "$srcdir/$dirname" DESTDIR="$pkgdir" install
   
   install -Dm644 "${srcdir}/gdm.service" "${pkgdir}/lib/systemd/system/gdm.service"
   install -Dm644 "${srcdir}/kdm.service" "${pkgdir}/lib/systemd/system/kdm.service"
