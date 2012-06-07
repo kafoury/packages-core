@@ -103,7 +103,7 @@ package_systemd() {
   mv "$pkgdir/usr/lib/pkgconfig"/libsystemd-*.pc usr/lib/pkgconfig
 
   # Fix local environment in gettys
-  sed -i "s/\(Environment=LANG=\)/#\1/" "$pkgdir"/lib/systemd/system/getty@.service
+  sed -i "s/\(Environment=LANG=\)/#\1/" "$pkgdir"/usr/lib/systemd/system/getty@.service
 
   ### split out manpages for sysvcompat
   rm -rf "$srcdir/_sysvcompat"

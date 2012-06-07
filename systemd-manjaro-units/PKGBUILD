@@ -20,7 +20,7 @@ source=("systemd-arch-units-$pkgver.tar.gz::https://www.github.com/falconindy/sy
         'rc-local-shutdown.service'
         'plymouth-transition.service'
         'wait-and-quit_plymouth')
-sha256sums=('fda2843413b2e3d7d7989bd8812c285d860aaaff6bbf5ff923587c7448b811d6'
+sha256sums=('9ba09c681a91182cdca20bef4cea43fcfbd6af605f06ec856051d923d4c6d79b'
             '7c69211f2acb84e3d0e98da0db60462abf970653e1397e1a73a9436a4feb6907'
             'a12eb9a3e5952d331052541d82c4d5921e0555921dccb67cff580ab34e99ea19'
             'fcd0a794b4f84f839c4ba282a8ced9e0e0dff09230dea38a9217cfa997bc1cfe'
@@ -31,7 +31,7 @@ sha256sums=('fda2843413b2e3d7d7989bd8812c285d860aaaff6bbf5ff923587c7448b811d6'
             '605122b2e4a96f40ccfb4bd34b4d7f12df2b7a3ac6292b74f3c943c64ddcc9fd')
             
 package() {
-  dirname=$(tar tf "$srcdir/$pkgname-$pkgver.tar.gz" | sed 1q)
+  dirname=$(tar tf "$srcdir/systemd-arch-units-$pkgver.tar.gz" | sed 1q)
   make -C "$srcdir/$dirname" DESTDIR="$pkgdir" install
   
   install -Dm644 "${srcdir}/gdm.service" "${pkgdir}/usr/lib/systemd/system/gdm.service"
