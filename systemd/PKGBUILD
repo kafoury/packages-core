@@ -5,8 +5,8 @@
 
 pkgbase=systemd
 pkgname=('systemd' 'libsystemd' 'systemd-tools' 'systemd-sysvcompat')
-pkgver=184
-pkgrel=2
+pkgver=185
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
@@ -20,7 +20,7 @@ source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         '0001-Reinstate-TIMEOUT-handling.patch'
         'os-release'
         'locale.sh')
-sha256sums=('46ae8713ab5057aef36c97b8cc12c1b9f1c78fcfc235c1b2960e6b8f3e320aa2'
+sha256sums=('7909f41237c2cbf6cf00c757a88010e179b7a4bf146908a9131de0bb7b2097c7'
             '892ce43218e0a458981bbce451252c8987dc398e60b8de288e7542b8f2409c13'
             '99b8fa531115ae19b4411c82169f8b27bff90043cbdf895cf0e5cd7f5c4ffde8'
             'b6a7cd6512209ea6b53fec2ad4aff23573ecd36d698d7da8baa5c8278fa1a119'
