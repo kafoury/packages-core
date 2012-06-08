@@ -9,7 +9,7 @@ post_upgrade() {
     if [ "$(vercmp $2 3.5.0)" -lt 0 ]; then
         _warnupgrade
     fi
-    if [ ! -f "etc/pacman.d/gnupg/pubring.gpg" ] || [ "$(vercmp $2 4.0.3-2)" -lt 0 ]; then
+    if [ ! -f "etc/pacman.d/gnupg/pubring.gpg" ] || [ "$(vercmp $2 4.0.3-3)" -lt 0 ]; then
         _check_pubring
     fi
 }
@@ -20,7 +20,7 @@ post_install() {
 
 _check_pubring() {
     echo " >>> To import the data required by pacman for package verification run:"
-    echo " >>> \`pacman-key --init; pacman-key --populate archlinux; pacman --populate manjaro\`"
+    echo " >>> \`pacman-key --init; pacman-key --populate archlinux manjaro\`"
     echo " >>> See: https://www.archlinux.org/news/having-pacman-verify-packages"
 }
 
