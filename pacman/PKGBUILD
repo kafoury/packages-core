@@ -6,7 +6,7 @@
 
 pkgname=pacman
 pkgver=4.0.3
-pkgrel=3
+pkgrel=4
 pkgdesc="A library-based package manager with dependency support"
 arch=('i686' 'x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -28,7 +28,7 @@ sha256sums=('a48696ae51aaccf31a69ea7916ba9b06e7836eb933b8a281c666729c9d55ce25'
             '87d0f36ffa218b4bf22b7522d6464ffb47441f7360feb517c05cf82622d122c3'
             '707adad444b1110761e0f549fb4943147655ae0ea2b3e51b12a0756bcf973801'
             'e1e0dcec959198b97e1144c71d41402dab2ddc7e8d104507a3a75d1b6abf51cd'
-            '049491c1e3749cffb8033f7c757866490af836697fc5ce7bfbeb66596b9b0bc9')
+            'bcc448268679843a05ca1486fb1f2eff14a230338b1f59c427cbf1fd806c0259')
 
 # keep an upgrade path for older installations
 #PKGEXT='.pkg.tar.gz'
