@@ -5,13 +5,12 @@
 pkgbase=mhwd
 pkgname=('mhwd' 'mhwd-db')
 pkgver=0.1.5
-pkgrel=1
+pkgrel=2
 pkgdesc="Manjaro Linux Hardware Detection"
 arch=('i686' 'x86_64')
 url="http://git.manjaro.org"
 license=('GPL')
 makedepends=('git' 'cmake' 'hwinfo')
-options=('emptydirs')
 
 getsource() {
   cd "$srcdir"
@@ -37,8 +36,6 @@ build() {
      patch -Np1 -i ${srcdir}/../mhwd-${pkgver}-${pkgrel}.patch
   fi
 
-  mkdir -p ${pkgdir}/var/lib/mhwd/{db,local}/{pci,usb}
-
   cmake ./
   make all
 }
@@ -50,6 +47,7 @@ package_mhwd() {
   cd ${srcdir}/${pkgname}
 
   make DESTDIR="${pkgdir}" install
+  install -d -m755 ${pkgdir}/var/lib/mhwd/{db,local}/{pci,usb}
 }
 
 package_mhwd-db() {
