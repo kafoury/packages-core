@@ -15,13 +15,13 @@ _grub_915_ver=9
 pkgname=('grub2-common' 'grub2-bios' 'grub2-efi-i386')
 pkgbase=grub2
 pkgver=2.00beta4
-pkgrel=3
+pkgrel=4
 url="http://www.gnu.org/software/grub/"
 arch=('i686' 'x86_64')
 license=('GPL3')
 epoch="1"
-makedepends=('rsync' 'xz' 'bdf-unifont' 'python' 'autogen' 'texinfo'
-	'help2man' 'gettext' 'device-mapper' 'fuse' 'dosfstools' 'efibootmgr')
+makedepends=('rsync' 'xz' 'bdf-unifont' 'python' 'autogen' 'texinfo' 
+			'help2man' 'gettext' 'device-mapper' 'fuse' 'dosfstools' 'efibootmgr')
 
 source=("http://alpha.gnu.org/gnu/grub/grub-${_pkgver}".tar.xz
         "ftp://ftp.archlinux.org/other/grub2/grub2_extras_915resolution_r${_grub_915_ver}.tar.xz"
@@ -34,7 +34,8 @@ source=("http://alpha.gnu.org/gnu/grub/grub-${_pkgver}".tar.xz
         '20_memtest86+'
         'grub-install.fix'
         'background.png'
-	'update-grub')
+        'update-grub'
+        'fix_locale_issue.patch')
 
 noextract=("grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
            "grub2_extras_gpxe_r${_grub_gpxe_ver}.tar.xz"
@@ -52,7 +53,8 @@ sha256sums=('628a17fefafcbd90cdab25220ef3ae717558dde73e55adf83dfee3aae55e390e'
             'ba0f871ee93760d14d7f19709bb875af4a863a758776a23519ca7100a63da295'
             '97e84a99dd14bf5fb68899d00c900fff5406deb2b5611e255a7bf99696d58e36'
             'c92a3a4de75365152bf1a568c55f5adf880256035bfc993add03b519d0f67046'
-            '467b0101154076fee99d9574a5fb6b772a3923cc200a1f4ca08fe17be8d68111')
+            '467b0101154076fee99d9574a5fb6b772a3923cc200a1f4ca08fe17be8d68111'
+            '7fb275f05ac4f196b2f04cbe80b60426f42dad48a5fe66755384f623907f6f00')
 
 _build_grub2-common_and_bios() {
 
@@ -62,11 +64,13 @@ _build_grub2-common_and_bios() {
 
 	## Apply Manjaro Linux specific fixes to enable grub-mkconfig detect Manjaro kernels and initramfs
 	patch -Np1 -i "${srcdir}/manjaro_grub2_mkconfig_fixes.patch"
-	echo
 
 	## upstream grub-install fix
 	## http://lists.gnu.org/archive/html/help-grub/2012-04/msg00096.html
 	patch -Np0 -i "${srcdir}/grub-install.fix"
+
+	## fix locale issue
+	patch -Np1 -i "${srcdir}/fix_locale_issue.patch"
 
 	## add the grub-extra sources
 	export GRUB_CONTRIB="${srcdir}/grub_bios-${_pkgver}/grub-extras/"
@@ -123,11 +127,9 @@ _build_grub2-common_and_bios() {
 		--disable-werror
 
 	CFLAGS="" make
-
 }
 
 _build_grub2-efi-i386() {
-
 	## copy the source for building the efi package
 	cp -r "${srcdir}/grub-${_pkgver}" "${srcdir}/grub_efi-${_pkgver}"
 	cd "${srcdir}/grub_efi-${_pkgver}"
@@ -162,7 +164,9 @@ _build_grub2-efi-i386() {
 		--bindir="/usr/bin" \
 		--sbindir="/usr/sbin" \
 		--mandir="/usr/share/man" \
+		--localedir="/usr/share/locale" \
 		--infodir="/usr/share/info" \
+		--datadir="/usr/lib" \
 		--datarootdir="/usr/share" \
 		--sysconfdir="/etc" \
 		--program-prefix="" \
@@ -181,7 +185,6 @@ _build_grub2-efi-i386() {
 #}
 
 build() {
-
 	## set architecture dependent variables
 	if [[ "${CARCH}" == 'x86_64' ]]; then
 		_EFIEMU="--enable-efiemu"
@@ -196,19 +199,17 @@ build() {
 
 	_build_grub2-common_and_bios
 	_build_grub2-efi-i386
-
 }
 
 package_grub2-common() {
-
 	pkgdesc="The GNU GRand Unified Bootloader version 2 - Files common for all platforms"
 	depends=('xz' 'freetype2' 'gettext' 'device-mapper' 'fuse' 'sh')
 	conflicts=('grub' 'grub2')
-        replaces=('grub2')
+	replaces=('grub2')
 	backup=('boot/grub/grub.cfg' 'etc/default/grub' 'etc/grub.d/40_custom')
 	optdepends=('libisoburn: provides xorriso for generating grub rescue iso using grub-mkrescue'
-	            'os-prober: to detect other OSes when generating grub.cfg in BIOS systems'
-	            'mtools: for grub-mkrescue FAT FS support')
+				'os-prober: to detect other OSes when generating grub.cfg in BIOS systems'
+				'mtools: for grub-mkrescue FAT FS support')
 	install="grub2.install"
 	options=('strip' 'purge' 'docs' 'zipman' '!emptydirs')
 
@@ -225,23 +226,21 @@ package_grub2-common() {
 	install -D -m0644 "${srcdir}/grub.cfg" "${pkgdir}/boot/grub/grub.cfg"
 
 	## install update-grub
-	install -Dm755 "${srcdir}/update-grub" "${pkgdir}/sbin/update-grub"
+	install -Dm755 "${srcdir}/update-grub" "${pkgdir}/usr/sbin/update-grub"
 
 	## install grub background
 	install -Dm644 "${srcdir}/background.png" "${pkgdir}/usr/share/grub/background.png"
 
 	# remove platform specific files
 	rm -rf "${pkgdir}/usr/lib/grub/i386-pc/"
-
 }
 
 package_grub2-bios() {
-
 	pkgdesc="The GNU GRand Unified Bootloader version 2 - Built for i386 PC BIOS"
 	depends=("grub2-common=${epoch}:${pkgver}")
 	options=('!strip' '!emptydirs')
 	conflicts=('grub2')
-        replaces=('grub2')
+	replaces=('grub2')
 
 	cd "${srcdir}/grub_bios-${_pkgver}"
 	make DESTDIR="${pkgdir}/" install
@@ -254,7 +253,7 @@ package_grub2-bios() {
 	rm -f "${pkgdir}/usr/lib/grub/i386-pc"/*.image || true
 	rm -f "${pkgdir}/usr/lib/grub/i386-pc"/{kernel.exec,gdb_grub,gmodule.pl} || true
 
-        ## remove conflicting common files
+	## remove conflicting common files
 	rm -fr "${pkgdir}/usr/lib/grub/themes"
 	rm -f "${pkgdir}/usr/lib/grub/"*.h
 	rm -f "${pkgdir}/usr/lib/grub/"*.pf2
@@ -262,7 +261,6 @@ package_grub2-bios() {
 }
 
 package_grub2-efi-i386() {
-
 	pkgdesc="The GNU GRand Unified Bootloader version 2 - i386 UEFI version"
 	depends=("grub2-common=${epoch}:${pkgver}" 'dosfstools' 'efibootmgr')
 	options=('!strip' '!emptydirs')
@@ -278,4 +276,9 @@ package_grub2-efi-i386() {
 	rm -f "${pkgdir}/usr/lib/grub/i386-efi"/*.image || true
 	rm -f "${pkgdir}/usr/lib/grub/i386-efi"/{kernel.exec,gdb_grub,gmodule.pl} || true
 
+	## remove conflicting common files
+	rm -fr "${pkgdir}/usr/lib/grub/themes"
+	rm -f "${pkgdir}/usr/lib/grub/"*.h
+	rm -f "${pkgdir}/usr/lib/grub/"*.pf2
+	rm -f "${pkgdir}/usr/lib/grub/grub-mkconfig_lib"
 }

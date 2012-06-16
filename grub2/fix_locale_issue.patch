@@ -1,0 +1,12 @@
+diff -Nur a/util/grub-install.in b/util/grub-install.in
+--- a/util/grub-install.in	2012-04-18 23:00:36.000000000 +0200
++++ b/util/grub-install.in	2012-06-16 15:51:42.515530177 +0200
+@@ -40,7 +40,7 @@
+ if [ "x$pkgdatadir" = x ]; then
+     pkgdatadir="${datadir}/@PACKAGE@"
+ fi
+-localedir="@datadir@/locale"
++localedir="@datarootdir@/locale"
+ 
+ self="`basename $0`"
+ 
