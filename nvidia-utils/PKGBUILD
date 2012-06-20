@@ -5,8 +5,8 @@
 # Maintainer: Clittle <philm@manjarolinux.org>
 pkgbase=nvidia-utils
 pkgname=('nvidia-utils' 'opencl-nvidia' 'mhwd-nvidia')
-pkgver=295.53
-pkgrel=2
+pkgver=302.17
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.nvidia.com/"
 license=('custom')
@@ -15,13 +15,13 @@ options=('!strip')
 if [ "$CARCH" = "i686" ]; then
     _arch='x86'
     _pkg="NVIDIA-Linux-${_arch}-${pkgver}"
-    source=("ftp://download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
-	md5sums=('af353274ab078cb90aba428ca1f00f0e')
+    source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
+	md5sums=('b7f908ea08218df08db06026215ec419')
 elif [ "$CARCH" = "x86_64" ]; then
     _arch='x86_64'
     _pkg="NVIDIA-Linux-${_arch}-${pkgver}-no-compat32"
-    source=("ftp://download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
-    md5sums=('c974ee20fc016c9fa9ef39fc2e298f8a')
+    source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
+    md5sums=('7e768412a16853078b04037a7cc9c8ac')
 fi
 
 create_links() {
