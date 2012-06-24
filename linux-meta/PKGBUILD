@@ -1,83 +1,104 @@
+# Maintainer: Clittle <philm@manjarolinux.org>
+
+
 pkgbase=linux-meta
-pkgname=('linux' 'linux-headers' 'bbswitch' 'catalyst' 'cdfs' 'fcpci' 'fcpcmcia' 'lirc' 'ndiswrapper' 'nvidia' 'open-vm-tools-modules' 'r8168' 'rt3562sta' 'vhba-module' 'virtualbox-modules')
+
+pkgname=('linux'
+         'linux-headers'
+         'bbswitch'
+         'catalyst'
+         'cdfs'
+         'fcpci'
+         'fcpcmcia'
+         'lirc'
+         'ndiswrapper'
+         'nvidia'
+         'open-vm-tools-modules'
+         'r8168'
+         'rt3562sta'
+         'vhba-module'
+         'virtualbox-modules')
+
 pkgver=2012.06
 pkgrel=1
 arch=any
-url=www.manjaro.org
+url="www.manjaro.org"
 license=('GPL')
+linuxprefix="linux34"
+
 
 package_linux() {
           pkgdesc="Manjaro Stable Linux Kernel and modules (Meta-PKG)"
-          depends="linux34"
+          depends="$linuxprefix"
 }
 
 package_linux-headers() {
           pkgdesc="Manjaro Stable Linux Kernel headers (Meta-PKG)"
-          depends="linux34-headers"
+          depends="$linuxprefix-headers"
 }
 
 package_bbswitch() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
-          depends="linux34-$pkgname"
+          depends="$linuxprefix-$pkgname"
 }
 
 package_catalyst() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
-          depends="linux34-$pkgname"
+          depends="$linuxprefix-$pkgname"
 }
 
 package_cdfs() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
-          depends="linux34-$pkgname"
+          depends="$linuxprefix-$pkgname"
 }
 
 package_fcpci() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
-          depends="linux34-$pkgname"
+          depends="$linuxprefix-$pkgname"
 }
 
 package_fcpcmcia() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
-          depends="linux34-$pkgname"
+          depends="$linuxprefix-$pkgname"
 }
 
 package_lirc() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
-          depends="linux34-$pkgname"
+          depends="$linuxprefix-$pkgname"
 }
 
 package_ndiswrapper() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
-          depends="linux34-$pkgname"
+          depends="$linuxprefix-$pkgname"
 }
 
 package_nvidia() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
-          depends="linux34-$pkgname"
+          depends="$linuxprefix-$pkgname"
 }
 
 package_open-vm-tools-modules() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
-          depends="linux34-$pkgname"
+          depends="$linuxprefix-$pkgname"
 }
 
 package_r8168() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
-          depends="linux34-$pkgname"
+          depends="$linuxprefix-$pkgname"
 }
 
 package_rt3562sta() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
-          depends="linux34-$pkgname"
+          depends="$linuxprefix-$pkgname"
 }
 
 package_vhba-module() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
-          depends="linux34-$pkgname"
+          depends="$linuxprefix-$pkgname"
 }
 
 package_virtualbox-modules() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
-          depends="linux34-$pkgname"
+          depends="$linuxprefix-$pkgname"
 }
 
