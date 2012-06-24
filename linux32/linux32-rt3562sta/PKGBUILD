@@ -7,6 +7,7 @@
 
 pkgname=linux32-rt3562sta
 _pkgname=rt3562sta
+groups=('linux32-extramodules')
 pkgver=2.4.1.1
 pkgrel=1
 pkgdesc="Ralink RT3562 PCI WLAN adaptors kernel module"
@@ -15,8 +16,6 @@ url="http://www.mediatek.com/en/Products/support.php?sn=501"
 license=('GPL')
 depends=('linux32')
 makedepends=('linux32-headers')
-replaces=("$_pkgname=$pkgver")
-conflicts=("$_pkgname=$pkgver")
 source=(
 	http://dl.dropbox.com/u/362439/DPO_RT3562_3592_3062_LinuxSTA_V${pkgver}_20101217.tgz
 	$_pkgname-$pkgver-config.patch

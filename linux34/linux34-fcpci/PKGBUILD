@@ -6,6 +6,7 @@
 
 pkgname=linux34-fcpci
 _pkgname=fcpci
+groups=('linux34-extramodules')
 pkgver=31107
 pkgrel=1
 _extramodules=extramodules-3.4-MANJARO
@@ -16,8 +17,7 @@ license=('custom:"AVM"' 'LGPL')
 url="http://www.avm.de"
 depends=('isdn4k-utils' 'linux34')
 makedepends=('linux34' 'linux34-headers')
-replaces=("$_pkgname=$pkgver")
-conflicts=("$_pkgname=$pkgver")
+
 if [ "$CARCH" = "i686" ]; then
   source=(ftp://ftp.avm.de/cardware/fritzcrd.pci/linux/suse.93/fcpci-suse93-3.11-07.tar.gz 
 	kernel-2.6.19.patch 

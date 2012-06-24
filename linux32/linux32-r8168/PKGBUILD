@@ -8,6 +8,7 @@
 
 pkgname=linux32-r8168
 _pkgname=r8168
+groups=('linux32-extramodules')
 pkgver=8.028.00
 pkgrel=1
 pkgdesc="A kernel module for Realtek 8168 network cards"
@@ -16,8 +17,6 @@ license=("GPL")
 arch=('i686' 'x86_64')
 depends=('glibc' 'linux32')
 makedepends=('linux32-headers')
-replaces=("$_pkgname=$pkgver")
-conflicts=("$_pkgname=$pkgver")
 source=(http://r8168.googlecode.com/files/$_pkgname-$pkgver.tar.bz2)
 install=$_pkgname.install
 

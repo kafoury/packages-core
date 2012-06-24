@@ -8,6 +8,7 @@
 
 pkgname=linux32-vhba-module
 _pkgname=vhba-module
+groups=('linux32-extramodules')
 pkgver=20110915
 _extramodules=extramodules-3.2-MANJARO
 pkgrel=1
@@ -17,8 +18,6 @@ url="http://cdemu.sourceforge.net/"
 license=('GPL')
 depends=('linux32')
 makedepends=('linux32-headers')
-replaces=("$_pkgname=$pkgver")
-conflicts=("$_pkgname=$pkgver")
 install=$_pkgname.install
 source=("http://downloads.sourceforge.net/cdemu/$_pkgname-$pkgver.tar.bz2"
         '60-vhba.rules')

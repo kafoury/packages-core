@@ -10,6 +10,7 @@ _extramodules=extramodules-3.4-MANJARO
 _kver="$(cat /lib/modules/${_extramodules}/version)"
 _pkgname=ndiswrapper
 pkgname=linux34-ndiswrapper
+groups=('linux34-extramodules')
 pkgver=1.57
 pkgrel=1
 pkgdesc="Module for NDIS (Windows Network Drivers) drivers supplied by vendors."
@@ -19,10 +20,6 @@ url="http://ndiswrapper.sourceforge.net"
 install=ndiswrapper.install
 depends=('linux34' 'wireless_tools' 'perl' "$_pkgname-utils")
 makedepends=('linux34-headers')
-#provides=("$_pkgname-utils" "$_pkgname-bin")
-#replaces=("_$_pkgname-utils" "$_pkgname-bin" "$_pkgname=$pkgver")
-replaces=("$_pkgname=$pkgver")
-conflicts=("$_pkgname=$pkgver")
 source=("http://downloads.sourceforge.net/sourceforge/$_pkgname/$_pkgname-$pkgver.tar.gz" 'linux33.patch')
 options=('!strip')
 md5sums=('7a401dc540938bf07893c67f418b6152' '567050289e1a7c80b3274a3668253c71')

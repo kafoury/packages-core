@@ -55,10 +55,8 @@ package_linux32-virtualbox-manjaro-modules(){
     license=('GPL')
     install=virtualbox-manjaro-modules.install
     depends=('linux32')
-    replaces=('virtualbox-guest-modules' "virtualbox-manjaro-modules=$pkgver")
-    conflicts=('virtualbox-guest-modules')
     provides=("virtualbox-archlinux-modules=$pkgver")
-    groups=('virtualbox-kernel-modules')
+    groups=('linux32-extramodules')
 
     source "$srcdir/VirtualBox-${pkgver}/env.sh"
 
@@ -82,9 +80,7 @@ package_linux32-virtualbox-modules(){
     license=('GPL')
     install=virtualbox-modules.install
     depends=('linux32')
-    provides=("virtualbox-modules=$pkgver")
-    replaces=('virtualbox-modules')
-    groups=('virtualbox-kernel-modules')
+    groups=('linux32-extramodules')
 
     source "$srcdir/VirtualBox-${pkgver}/env.sh"
 

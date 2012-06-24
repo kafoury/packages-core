@@ -6,6 +6,7 @@
 
 pkgname=linux34-fcpcmcia
 _pkgname=fcpcmcia
+groups=('linux34-extramodules')
 pkgver=31107
 pkgrel=1
 _extramodules=extramodules-3.4-MANJARO
@@ -16,8 +17,7 @@ license=('custom:"AVM"' 'LPGL')
 url="http://www.avm.de"
 depends=('isdn4k-utils' 'linux34')
 makedepends=('linux34-headers')
-replaces=("$_pkgname=$pkgver")
-conflicts=("$_pkgname=$pkgver")
+
 if [ "$CARCH" = "i686" ]; then source=(ftp://ftp.avm.de/cardware/fritzcrd.pcm/linux/suse.93/fcpcmcia-suse93-3.11-07.tar.gz
         pcmcia-2.6.17.patch 
         atomic.patch kernel-2.6.19.patch 

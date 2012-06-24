@@ -9,16 +9,14 @@ _pkgname=nvidia
 pkgver=302.17
 _extramodules=extramodules-3.4-MANJARO
 _kernver="$(cat /lib/modules/${_extramodules}/version)"
+groups=('linux34-extramodules')
 pkgrel=1
 pkgdesc="NVIDIA drivers for linux."
 arch=('i686' 'x86_64')
 url="http://www.nvidia.com/"
 depends=('linux34' "nvidia-utils=${pkgver}")
 makedepends=('linux34-headers')
-replaces=("$_pkgname=$pkgver")
-provides=("$_pkgname=$pkgver")
 conflicts=('nvidia-96xx' 'nvidia-173xx')
-groups=('nvidia-kernel-modules')
 license=('custom')
 install=nvidia.install
 options=(!strip)
