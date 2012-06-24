@@ -17,7 +17,8 @@ pkgname=('linux'
          'r8168'
          'rt3562sta'
          'vhba-module'
-         'virtualbox-modules')
+         'virtualbox-modules'
+         'virtualbox-manjaro-modules')
 
 pkgver=2012.06
 pkgrel=1
@@ -98,7 +99,11 @@ package_vhba-module() {
 }
 
 package_virtualbox-modules() {
-          pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
+          pkgdesc="Manjaro Stable Linux Kernel extramodules (Meta-PKG)"
           depends="$linuxprefix-$pkgname"
 }
 
+package_virtualbox-manjaro-modules() {
+          pkgdesc="Manjaro Stable Linux Kernel extramodules (Meta-PKG)"
+          depends="$linuxprefix-$pkgname"
+}
