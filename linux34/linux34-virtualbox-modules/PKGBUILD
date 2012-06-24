@@ -4,7 +4,7 @@
 # Maintainer: Guinux <nuxgui@gmail.com>
 # Co-Maintainer: Clittle <philm@manjarolinux.org>
 
-pkgbase=virtualbox-modules
+pkgbase=linux34-virtualbox-modules
 pkgname=('linux34-virtualbox-modules' 'linux34-virtualbox-manjaro-modules')
 pkgver=4.1.16
 pkgrel=1
