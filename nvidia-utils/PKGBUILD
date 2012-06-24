@@ -104,6 +104,12 @@ package_nvidia-utils() {
 
     create_links
 
+
+	# Bumblebee support
+	mkdir -p "${pkgdir}/usr/lib/nvidia-bumblebee/xorg/modules/extensions"
+	ln -s "/usr/lib/libGL.so.nvidia" "${pkgdir}/usr/lib/nvidia-bumblebee/libGL.so"
+	ln -s "/usr/lib/xorg/modules/extensions/libglx.so.nvidia" "${pkgdir}/usr/lib/nvidia-bumblebee/xorg/modules/extensions/libglx.so"
+
     # some cleanup
     cd "${pkgdir}/usr/lib/"
     rm -f `ls ./ | grep libGL | grep -v libGL.so.nvidia`
