@@ -15,9 +15,8 @@ fi
 
 url="http://www.Bumblebee-Project.org"
 license=("GPL3")
-install='bumblebee.install'
 backup=('etc/bumblebee/bumblebee.conf')
-source=("10-evdev.conf" "10-quirks.conf" "bumblebee_xorg_config_dir_fix_patch.diff" "https://github.com/downloads/Bumblebee-Project/Bumblebee/${pkgname}-${pkgver}.tar.gz")
+source=("10-evdev.conf" "10-quirks.conf" "bumblebee_config_patch.diff" "bumblebee_xorg_config_dir_fix_patch.diff" "https://github.com/downloads/Bumblebee-Project/Bumblebee/${pkgname}-${pkgver}.tar.gz")
 
 
 build() {
@@ -26,10 +25,14 @@ build() {
 	# Patch Xorg config dir patch
 	patch -p0 < "${srcdir}/bumblebee_xorg_config_dir_fix_patch.diff"
 
+	# Patch configs
+	patch -p1 < "${srcdir}/bumblebee_config_patch.diff"
+
     ./configure \
         CONF_DRIVER_MODULE_NVIDIA=nvidia \
         CONF_LDPATH_NVIDIA=/usr/lib/nvidia-bumblebee:/usr/lib32/nvidia-bumblebee \
         CONF_MODPATH_NVIDIA=/usr/lib/nvidia-bumblebee/xorg/,/usr/lib/xorg/modules \
+        CONF_GID=users \
         --prefix=/usr \
         --sysconfdir=/etc \
         --without-pidfile
@@ -51,5 +54,6 @@ package() {
 
 md5sums=('198c5598e32818f6524f56c55596378c'
          'd4f7dfc6be4ef4e2c6dd7632a9d88abe'
+         '20c955c5e40f57e0133a274057dd51f0'
          'b607b630f620d20484d700a164840286'
          '2ddd4d47bc52aceb3b295e68f9f32ffe')

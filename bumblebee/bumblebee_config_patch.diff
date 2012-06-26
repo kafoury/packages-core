@@ -1,0 +1,12 @@
+diff -ur bumblebee/configure bumblebee_new/configure
+--- bumblebee/configure	2012-01-19 16:11:46.481692106 +0100
++++ bumblebee_new/configure	2012-06-26 19:54:16.296337451 +0200
+@@ -1891,7 +1891,7 @@
+ 
+ 
+ 
+-CONF_GID="bumblebee"
++CONF_GID="users"
+ 
+ 
+ cat >>confdefs.h <<_ACEOF
