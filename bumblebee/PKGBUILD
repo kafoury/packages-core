@@ -1,8 +1,9 @@
-# Maintainer: Clittle <philm@manjarolinux.org>
+# Maintainer: Roland <roland@manjaro.org>
+# Maintainer: Clittle <philm@manjaro.org>
 
 pkgname=bumblebee
 pkgver=3.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Bumblebee brings Optimus Support for Linux through VirtualGL."
 arch=('i686' 'x86_64')
 depends=('virtualgl' 'glib2' 'systemd')
@@ -16,11 +17,15 @@ url="http://www.Bumblebee-Project.org"
 license=("GPL3")
 install='bumblebee.install'
 backup=('etc/bumblebee/bumblebee.conf')
-source=("https://github.com/downloads/Bumblebee-Project/Bumblebee/${pkgname}-${pkgver}.tar.gz")
-md5sums=('2ddd4d47bc52aceb3b295e68f9f32ffe')
+source=("10-evdev.conf" "10-quirks.conf" "bumblebee_xorg_config_dir_fix_patch.diff" "https://github.com/downloads/Bumblebee-Project/Bumblebee/${pkgname}-${pkgver}.tar.gz")
+
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
+
+	# Patch Xorg config dir patch
+	patch -p0 < "${srcdir}/bumblebee_xorg_config_dir_fix_patch.diff"
+
     ./configure \
         CONF_DRIVER_MODULE_NVIDIA=nvidia \
         CONF_LDPATH_NVIDIA=/usr/lib/nvidia-bumblebee:/usr/lib32/nvidia-bumblebee \
@@ -37,4 +42,14 @@ package() {
     install -D -m755 "scripts/systemd/bumblebeed.service" "$pkgdir/usr/lib/systemd/system/bumblebeed.service"
     # Make bash_completion work
     mv -v "${pkgdir}/etc/bash_completion.d/bumblebee" "${pkgdir}/etc/bash_completion.d/optirun"
+
+	# Install bumblebees xorg.conf.d files
+	install -D -m755 "${srcdir}/10-evdev.conf" "${pkgdir}/etc/X11/bumblebee.xorg.conf.d/10-evdev.conf"
+	install -D -m755 "${srcdir}/10-quirks.conf" "${pkgdir}/etc/X11/bumblebee.xorg.conf.d/10-quirks.conf"
 }
+
+
+md5sums=('198c5598e32818f6524f56c55596378c'
+         'd4f7dfc6be4ef4e2c6dd7632a9d88abe'
+         'b607b630f620d20484d700a164840286'
+         '2ddd4d47bc52aceb3b295e68f9f32ffe')
