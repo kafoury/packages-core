@@ -18,11 +18,11 @@ getsource() {
   msg "Connecting to GIT server...."
 
   if [ -d $1 ] ; then
-    cd $1 && git pull origin master #&& git checkout -b $pkgver
+    cd $1 && git pull origin master && git checkout -b $pkgver
     msg "The local files are updated."
   else
     git clone $2 $1
-    #cd $1 && git checkout -b $pkgver $pkgver
+    cd $1 && git checkout -b $pkgver $pkgver
   fi
 
   msg "GIT checkout done or server timeout"
