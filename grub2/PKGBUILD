@@ -237,7 +237,7 @@ package_grub2-bios() {
 	replaces=('grub2')
 
 	cd "${srcdir}/grub_bios-${_pkgver}"
-	make bashcompletiondir=/usr/share/bash-completion/completions make DESTDIR="${pkgdir}/" install
+	make bashcompletiondir=/usr/share/bash-completion/completions DESTDIR="${pkgdir}/" install
 
 	## remove non platform-specific files
 	rm -rf "${pkgdir}"/{boot,etc,usr/{share,bin,sbin}}
