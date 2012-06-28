@@ -5,24 +5,31 @@
 pkgbase=mhwd
 pkgname=('mhwd' 'mhwd-db')
 pkgver=0.1.6
-pkgrel=1
+pkgrel=2
 pkgdesc="Manjaro Linux Hardware Detection"
 arch=('i686' 'x86_64')
 url="http://git.manjaro.org"
 license=('GPL')
 depends=('gcc-libs' 'hwinfo')
 makedepends=('git' 'cmake')
+_git=yes
 
 getsource() {
   cd "$srcdir"
   msg "Connecting to GIT server...."
 
   if [ -d $1 ] ; then
-    cd $1 && git pull origin master && git checkout -b $pkgver
+    if [ "$_git" == "yes" ] ; then
+       cd $1 && git pull origin master
+    else
+       cd $1 && git pull origin master && git checkout -b $pkgver
+    fi
     msg "The local files are updated."
   else
     git clone $2 $1
-    cd $1 && git checkout -b $pkgver $pkgver
+    if [ "$_git" != "yes" ] ; then
+       cd $1 && git checkout -b $pkgver $pkgver
+    fi
   fi
 
   msg "GIT checkout done or server timeout"

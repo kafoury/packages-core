@@ -5,7 +5,7 @@
 # Maintainer: Guinux <nuxgui@gmail.com>
 
 _grub_bzr_rev="4232"
-_pkgver="2.00~beta4"
+_pkgver="2.00"
 
 _grub_lua_ver=24
 _grub_gpxe_ver=12
@@ -14,16 +14,16 @@ _grub_915_ver=9
 
 pkgname=('grub2-common' 'grub2-bios' 'grub2-efi-i386')
 pkgbase=grub2
-pkgver=2.00beta4
-pkgrel=4
+pkgver=2.00
+pkgrel=1
+epoch=1
 url="http://www.gnu.org/software/grub/"
 arch=('i686' 'x86_64')
 license=('GPL3')
-epoch="1"
 makedepends=('rsync' 'xz' 'bdf-unifont' 'python' 'autogen' 'texinfo' 
 			'help2man' 'gettext' 'device-mapper' 'fuse' 'dosfstools' 'efibootmgr')
 
-source=("http://alpha.gnu.org/gnu/grub/grub-${_pkgver}".tar.xz
+source=("http://ftp.gnu.org/gnu/grub/grub-${_pkgver}".tar.xz
         "ftp://ftp.archlinux.org/other/grub2/grub2_extras_915resolution_r${_grub_915_ver}.tar.xz"
         "ftp://ftp.archlinux.org/other/grub2/grub2_extras_gpxe_r${_grub_gpxe_ver}.tar.xz"
         "ftp://ftp.archlinux.org/other/grub2/grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
@@ -42,7 +42,7 @@ noextract=("grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
            "grub2_extras_ntldr-img_r${_grub_ntldr_ver}.tar.xz"
            "grub2_extras_915resolution_r${_grub_915_ver}.tar.xz")
 
-sha256sums=('628a17fefafcbd90cdab25220ef3ae717558dde73e55adf83dfee3aae55e390e'
+sha256sums=('784ec38e7edc32239ad75b8e66df04dc8bfb26d88681bc9f627133a6eb85c458'
             '04f79ec649764b02444d9bd82b39814bd17f018abf00c8b34bbafa37899c3a3f'
             '8ce1b6b89ef0e3545736477d4c4418524e32c7fb9ba40c67dcebfb84b98cde66'
             'bfe0318a9bb7edbaee2489b1396d0034791751b42035ea40ad61600fdf974df2'
