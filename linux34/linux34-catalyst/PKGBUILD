@@ -8,7 +8,7 @@ _kernver="$(cat /lib/modules/${_extramodules}/version)"
 pkgname=linux34-catalyst
 _pkgname=catalyst
 pkgver=12.6
-pkgrel=3
+pkgrel=4
 pkgdesc="AMD/ATI Catalyst drivers for linux. fglrx kernel module only"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
@@ -18,13 +18,13 @@ makedepends=('gcc-libs' 'gcc>4.0.0' 'make' 'linux34-headers')
 groups=('linux34-extramodules')
 install=catalyst.install
 
-source=(#http://www2.ati.com/drivers/linux/amd-driver-installer-${pkgver/./-}-x86.x86_64.run
-        http://www2.ati.com/drivers/hotfix/catalyst_12.6_hotfixes/amd-driver-installer-8.98-x86.x86_64.zip
+source=(http://www2.ati.com/drivers/linux/amd-driver-installer-${pkgver/./-}-x86.x86_64.run
+        #http://www2.ati.com/drivers/hotfix/catalyst_12.6_hotfixes/amd-driver-installer-8.98-x86.x86_64.zip
         ati_make.sh
         makefile_compat.patch
         3.4.patch)
 
-md5sums=('91dcca91882f292f3c6103c369d154ae'
+md5sums=('6bd4f0875202390ed7122696db29be77'
 	 '660396540b0ceaff71d6155c986734de'
 	 '3e1b82bd69774ea808da69c983d6a43b'
          'd9cd452c1eac3cf6650647820768e4e0')
@@ -38,8 +38,8 @@ build() {
 
 
     msg "Unpacking archive ..."
-    #/bin/sh ./amd-driver-installer-${pkgver/./-}-x86.x86_64.run --extract archive_files
-    /bin/sh ./amd-driver-installer-8.98-x86.x86_64.run --extract archive_files
+    /bin/sh ./amd-driver-installer-${pkgver/./-}-x86.x86_64.run --extract archive_files
+    #/bin/sh ./amd-driver-installer-8.98-x86.x86_64.run --extract archive_files
 
 
     if [ "${CARCH}" = "x86_64" ]; then
