@@ -9,7 +9,7 @@ pkgname=linux34-cdfs
 _pkgname=cdfs
 groups=('linux34-extramodules')
 pkgver=2.6.27
-pkgrel=1
+pkgrel=2
 pkgdesc="File system module that 'exports' all tracks and boot images on a CD as normal files."
 arch=(i686 x86_64)
 url="http://www.elis.UGent.be/~ronsse/cdfs/"
@@ -27,15 +27,15 @@ md5sums=('ac64c014a90e3c488394832ea29605b3'
          '9215e7bdac728bd2f889fb525e543454')
 
 _extramodules=extramodules-3.4-MANJARO
-_kernver="$(cat /lib/modules/$_extramodules/version || true)"
+_kernver="$(cat /usr/lib/modules/$_extramodules/version || true)"
 
 build() {
   cd $srcdir/$_pkgname-$pkgver
   patch -p1 <$srcdir/cdfs-3.0.patch
   patch -p1 <$srcdir/cdfs-3.2.patch
   patch -p1 <$srcdir/cdfs-3.4.patch
-  make KDIR=/lib/modules/${_kernver}/build
-  install -Dm0644 cdfs.ko $pkgdir/lib/modules/$_extramodules/cdfs.ko
+  make KDIR=/usr/lib/modules/${_kernver}/build
+  install -Dm0644 cdfs.ko $pkgdir/usr/lib/modules/$_extramodules/cdfs.ko
 
   sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "${startdir}/${_pkgname}.install"
 

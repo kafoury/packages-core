@@ -11,7 +11,7 @@ _pkgname=vhba-module
 groups=('linux32-extramodules')
 pkgver=20110915
 _extramodules=extramodules-3.2-MANJARO
-pkgrel=1
+pkgrel=2
 pkgdesc="Kernel module that emulates SCSI devices"
 arch=('i686' 'x86_64')
 url="http://cdemu.sourceforge.net/"
@@ -27,7 +27,7 @@ md5sums=('8bb99b427ca67bad448f4dd211bdd1a2'
 build() {
   cd "$srcdir/$_pkgname-$pkgver"
 
-  _kernver="$(cat /lib/modules/$_extramodules/version)"
+  _kernver="$(cat /usr/lib/modules/$_extramodules/version)"
 
   make -j1 KDIR=/usr/src/linux-$_kernver
 }
@@ -35,7 +35,7 @@ build() {
 package() {
   cd "$srcdir/$_pkgname-$pkgver"
 
-  install -D vhba.ko "$pkgdir/lib/modules/$_extramodules/vhba.ko"
+  install -D vhba.ko "$pkgdir/usr/lib/modules/$_extramodules/vhba.ko"
 
   sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" \
     "$startdir/vhba-module.install"
@@ -43,7 +43,7 @@ package() {
 	find "$pkgdir" -name '*.ko' -exec gzip -9 {} \;
 
   install -Dm644 "$srcdir/60-vhba.rules" \
-	  "$pkgdir/lib/udev/rules.d/60-vhba.rules"
+	  "$pkgdir/usr/lib/udev/rules.d/60-vhba.rules"
 }
 
 # vim:set ts=2 sw=2 et:

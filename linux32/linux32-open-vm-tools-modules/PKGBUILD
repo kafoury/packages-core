@@ -10,7 +10,7 @@ _pkgname=open-vm-tools-modules
 groups=('linux32-extramodules')
 pkgver=2012.05.21
 _pkgsubver=724730
-pkgrel=1
+pkgrel=2
 pkgdesc="kernel modules for the open source implementation of VMware Tools"
 arch=('i686' 'x86_64')
 url="http://open-vm-tools.sourceforge.net/"
@@ -26,7 +26,7 @@ md5sums=('91affb5b23db8abceff930613845f434'
 
 build() {
   _kernver=`pacman -Q linux32 | cut -d . -f 2 | cut -f 1 -d -`
-  KERNEL_RELEASE=`cat /lib/modules/extramodules-3.${_kernver}-MANJARO/version`
+  KERNEL_RELEASE=`cat /usr/lib/modules/extramodules-3.${_kernver}-MANJARO/version`
 
   cd "$srcdir/open-vm-tools-${pkgver}-${_pkgsubver}"
   sed -i 's|proc-3.2.8|procps|g' configure
@@ -40,15 +40,15 @@ build() {
 package() {
   _kernver=`pacman -Q linux32 | cut -d . -f 2 | cut -f 1 -d -`
   depends=("linux>=3.${_kernver}" "linux<3.`expr ${_kernver} + 1`")
-  KERNEL_VERSION=`cat /lib/modules/extramodules-3.${_kernver}-MANJARO/version`
+  KERNEL_VERSION=`cat /usr/lib/modules/extramodules-3.${_kernver}-MANJARO/version`
   msg "Kernel = $KERNEL_VERSION"
 
   cd "$srcdir/open-vm-tools-${pkgver}-${_pkgsubver}"
-  mkdir -p $pkgdir/lib/modules/extramodules-3.${_kernver}-MANJARO/
+  mkdir -p $pkgdir/usr/lib/modules/extramodules-3.${_kernver}-MANJARO/
   for MOD in `find -type f -name '*.ko'`; do
-    install -Dm644 $MOD $pkgdir/lib/modules/extramodules-3.${_kernver}-MANJARO/
+    install -Dm644 $MOD $pkgdir/usr/lib/modules/extramodules-3.${_kernver}-MANJARO/
   done
-  gzip $pkgdir/lib/modules/extramodules-3.${_kernver}-MANJARO/*.ko
+  gzip $pkgdir/usr/lib/modules/extramodules-3.${_kernver}-MANJARO/*.ko
 
   install -D -m 644 ${srcdir}/modprobe.conf ${pkgdir}/etc/modprobe.d/${pkgname}.conf
   sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "${startdir}/${_pkgname}.install"

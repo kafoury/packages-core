@@ -3,12 +3,12 @@
 # maintainer: Roland Singer <roland[at]manjaro[dog]org>
 
 _extramodules=extramodules-3.4-MANJARO
-_kernver="$(cat /lib/modules/${_extramodules}/version)"
+_kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 
 pkgname=linux34-catalyst
 _pkgname=catalyst
 pkgver=12.6
-pkgrel=4
+pkgrel=5
 pkgdesc="AMD/ATI Catalyst drivers for linux. fglrx kernel module only"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
@@ -67,7 +67,7 @@ build() {
 
     msg "Compiling fglrx module ..."
    ## Compile module using _ati_check variables
-    make -C /lib/modules/${_kernver}/build SUBDIRS="`pwd`" ARCH=${BUILDARCH} \
+    make -C /usr/lib/modules/${_kernver}/build SUBDIRS="`pwd`" ARCH=${BUILDARCH} \
       MODFLAGS="-DMODULE -DATI -DFGL -DPAGE_ATTR_FIX=$PAGE_ATTR_FIX -DCOMPAT_ALLOC_USER_SPACE=$COMPAT_ALLOC_USER_SPACE $def_smp $def_modversions" \
       PAGE_ATTR_FIX=$PAGE_ATTR_FIX COMPAT_ALLOC_USER_SPACE=$COMPAT_ALLOC_USER_SPACE modules || return 1
 }
@@ -75,7 +75,7 @@ build() {
 package() {
 
   ## here we are checking kernel's extramodules dir
-    for r in /lib/modules/*; do
+    for r in /usr/lib/modules/*; do
       s=${r:13}
       if [[ ${s:0:3} = "ext" ]]; then
 	if [[ `cat ${r}/version | grep -c ${_kernver}` != 0 ]]; then
@@ -90,8 +90,8 @@ package() {
 
 
     cd "${srcdir}/archive_files/common/lib/modules/fglrx/build_mod"
-    install -m755 -d "${pkgdir}/lib/modules/${_destidir}/" || return 1
-    install -m644 fglrx.ko "${pkgdir}/lib/modules/${_destidir}/" || return 1
+    install -m755 -d "${pkgdir}/usr/lib/modules/${_destidir}/" || return 1
+    install -m644 fglrx.ko "${pkgdir}/usr/lib/modules/${_destidir}/" || return 1
     find "${pkgdir}" -name '*.ko' -exec gzip -9 {} \;
     sed -i -e "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/" $startdir/catalyst.install
 

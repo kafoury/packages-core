@@ -7,7 +7,7 @@
 pkgbase=linux32-virtualbox-modules
 pkgname=('linux32-virtualbox-modules' 'linux32-virtualbox-manjaro-modules')
 pkgver=4.1.16
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
@@ -20,9 +20,9 @@ sha256sums=('b670499804c718a8ebbc7c2ddee37f70e98771a151391a597b5808f4310f824e'
             '033c597e0f5285d2ddb0490868e5b6f945f45c7b1b1152a02a9e6fea438b2c95')
 
 _extramodules=extramodules-3.2-MANJARO
-_kernver="$(cat /lib/modules/${_extramodules}/version || true)"
+_kernver="$(cat /usr/lib/modules/${_extramodules}/version || true)"
 
-export KERN_DIR=/lib/modules/${_kernver}/build
+export KERN_DIR=/usr/lib/modules/${_kernver}/build
 export KERN_INCL=/usr/src/linux-${_kernver}/include/
 
 build() {
@@ -64,11 +64,11 @@ package_linux32-virtualbox-manjaro-modules(){
 
     for module in vboxguest.ko vboxsf.ko vboxvideo.ko; do
         install -D -m644 ${module} \
-            "$pkgdir/lib/modules/${_extramodules}/${module}"
+            "$pkgdir/usr/lib/modules/${_extramodules}/${module}"
     done
 
     install -D -m 0644 "$srcdir/60-vboxguest.rules" \
-        "$pkgdir/lib/udev/rules.d/60-linux32-vboxguest.rules"
+        "$pkgdir/usr/lib/udev/rules.d/60-linux32-vboxguest.rules"
 
     find "${pkgdir}" -name '*.ko' -exec gzip -9 {} \;
 
@@ -88,16 +88,16 @@ package_linux32-virtualbox-modules(){
     cd "$srcdir/VirtualBox-${pkgver}/out/linux.$BUILD_PLATFORM_ARCH/release/bin/src"
 
     install -D -m644 vboxdrv.ko \
-        "$pkgdir/lib/modules/${_extramodules}/vboxdrv.ko"
+        "$pkgdir/usr/lib/modules/${_extramodules}/vboxdrv.ko"
 
     install -D -m644 vboxnetadp.ko \
-        "$pkgdir/lib/modules/${_extramodules}/vboxnetadp.ko"
+        "$pkgdir/usr/lib/modules/${_extramodules}/vboxnetadp.ko"
 
     install -D -m644 vboxnetflt.ko \
-        "$pkgdir/lib/modules/${_extramodules}/vboxnetflt.ko"
+        "$pkgdir/usr/lib/modules/${_extramodules}/vboxnetflt.ko"
 
     install -D -m644 vboxpci.ko \
-        "$pkgdir/lib/modules/${_extramodules}/vboxpci.ko"
+        "$pkgdir/usr/lib/modules/${_extramodules}/vboxpci.ko"
 
     find "${pkgdir}" -name '*.ko' -exec gzip -9 {} \;
 

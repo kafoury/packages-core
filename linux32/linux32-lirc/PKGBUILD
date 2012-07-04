@@ -7,10 +7,10 @@
 pkgbase=lirc
 pkgname=('linux32-lirc' 'lirc-utils')
 pkgver=0.9.0
-pkgrel=1
+pkgrel=2
 epoch=1
 _extramodules=extramodules-3.2-MANJARO
-_kernver="$(cat /lib/modules/${_extramodules}/version)"
+_kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 arch=('i686' 'x86_64')
 url="http://www.lirc.org/"
 license=('GPL')
@@ -51,7 +51,7 @@ build() {
 
   PYTHON=python2 ./configure --enable-sandboxed --prefix=/usr \
       --with-driver=all --with-kerneldir=/usr/src/linux-${_kernver}/ \
-      --with-moduledir=/lib/modules/${_kernver}/kernel/drivers/misc \
+      --with-moduledir=/usr/lib/modules/${_kernver}/kernel/drivers/misc \
       --with-transmitter
 
   # Remove drivers already in kernel
@@ -70,7 +70,7 @@ package_linux32-lirc() {
   install=lirc.install
 
   cd "${srcdir}/lirc-${pkgver}/drivers"
-  make DESTDIR="${pkgdir}" moduledir="/lib/modules/${_extramodules}" install
+  make DESTDIR="${pkgdir}" moduledir="/usr/lib/modules/${_extramodules}" install
 
   # set the kernel we've built for inside the install script
   sed -i -e "s/EXTRAMODULES=.*/EXTRAMODULES=${_extramodules}/g" "${startdir}/lirc.install"
@@ -104,5 +104,5 @@ package_lirc-utils() {
   install -d "${pkgdir}/etc/lirc"
   
   # remove built modules
-  rm -r "${pkgdir}/lib/"
+  rm -r "${pkgdir}/usr/lib/"
 }

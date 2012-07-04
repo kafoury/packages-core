@@ -5,10 +5,10 @@
 pkgname=linux32-bbswitch
 _pkgname=bbswitch
 _extramodules=extramodules-3.2-MANJARO
-_kernver="$(cat /lib/modules/${_extramodules}/version)"
+_kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 groups=('linux32-extramodules')
 pkgver=0.4.2
-pkgrel=1
+pkgrel=2
 pkgdesc="kernel module allowing to switch dedicated graphics card on Optimus laptops"
 arch=('i686' 'x86_64')
 url=("http://github.com/Bumblebee-Project/bbswitch")
@@ -28,7 +28,7 @@ build() {
 
 package() {
   cd ${srcdir}/${_pkgname}-${pkgver}
-  install -D -m644 bbswitch.ko $pkgdir/lib/modules/${_extramodules}/bbswitch.ko
+  install -D -m644 bbswitch.ko $pkgdir/usr/lib/modules/${_extramodules}/bbswitch.ko
   # gzip -9 modules
   find "$pkgdir" -name '*.ko' -exec gzip -9 {} \;
   sed -i -e "s/EXTRAMODULES=.*/EXTRAMODULES=${_extramodules}/g" $startdir/*.install

@@ -7,12 +7,12 @@
 # Co-Maintainer: Clittle <philm@manjarolinux.org>
 
 _extramodules=extramodules-3.4-MANJARO
-_kver="$(cat /lib/modules/${_extramodules}/version)"
+_kver="$(cat /usr/lib/modules/${_extramodules}/version)"
 _pkgname=ndiswrapper
 pkgname=linux34-ndiswrapper
 groups=('linux34-extramodules')
 pkgver=1.57
-pkgrel=1
+pkgrel=2
 pkgdesc="Module for NDIS (Windows Network Drivers) drivers supplied by vendors."
 license=('GPL')
 arch=('i686' 'x86_64')
@@ -43,7 +43,7 @@ package() {
   # set the kernel we've built for inside the install script
   sed -i -e "s/EXTRAMODULES=.*/EXTRAMODULES=${_extramodules}/g" "${startdir}/${_pkgname}.install"
 
-  gzip "$pkgdir/lib/modules/$_extramodules/$_pkgname.ko"
+  gzip "$pkgdir/usr/lib/modules/$_extramodules/$_pkgname.ko"
 
   # rm ndiswrapper-utils
   rm -R "$pkgdir/usr" "$pkgdir/sbin"

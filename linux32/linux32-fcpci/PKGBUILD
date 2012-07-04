@@ -8,9 +8,9 @@ pkgname=linux32-fcpci
 _pkgname=fcpci
 groups=('linux32-extramodules')
 pkgver=31107
-pkgrel=1
+pkgrel=2
 _extramodules=extramodules-3.2-MANJARO
-_kernver="$(cat /lib/modules/${_extramodules}/version)"
+_kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 pkgdesc="AVM ISDN driver for FRITZ PCI isdn cards"
 arch=(i686 x86_64)
 license=('custom:"AVM"' 'LGPL')
@@ -98,12 +98,12 @@ build() {
     $i.old $i
   done
 
-  make LIBDIR=$pkgdir/var/lib/fritz KDIR=/lib/modules/${_kernver}/build all
+  make LIBDIR=$pkgdir/var/lib/fritz KDIR=/usr/lib/modules/${_kernver}/build all
 }
 
 package() {
-  mkdir -p $pkgdir/lib/modules/${_extramodules}
-  cp $srcdir/fritz/src/fcpci.ko $pkgdir/lib/modules/${_extramodules}/ 
+  mkdir -p $pkgdir/usr/lib/modules/${_extramodules}
+  cp $srcdir/fritz/src/fcpci.ko $pkgdir/usr/lib/modules/${_extramodules}/ 
   rm -r $pkgdir/var/lib/fritz  
   # build module dependencies
   sed -i -e "s/EXTRAMODULES=.*/EXTRAMODULES=${_extramodules}/g" $startdir/fcpci.install
