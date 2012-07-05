@@ -30,11 +30,12 @@ build() {
 
   cd "$srcdir/open-vm-tools-${pkgver}-${_pkgsubver}"
   sed -i 's|proc-3.2.8|procps|g' configure
-  [ $NOEXTRACT -eq 1 ] || ./configure --prefix=/usr \
-	--without-x --with-kernel-release=$KERNEL_RELEASE
+  [ $NOEXTRACT -eq 1 ] || ./configure \
+      --prefix=/usr \
+      --without-x \
+      --with-linuxdir=/usr/lib/modules/$KERNEL_RELEASE
 
-  cd modules
-  make modules -j1
+  make -C modules modules
 }
 
 package() {

@@ -25,7 +25,7 @@ source=(http://www2.ati.com/drivers/linux/amd-driver-installer-${pkgver/./-}-x86
         3.4.patch)
 
 md5sums=('6bd4f0875202390ed7122696db29be77'
-	 '660396540b0ceaff71d6155c986734de'
+	 '85be25933d15c5c0d914409cf4dcbf0a'
 	 '3e1b82bd69774ea808da69c983d6a43b'
          'd9cd452c1eac3cf6650647820768e4e0')
 

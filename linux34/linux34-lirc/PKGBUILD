@@ -14,7 +14,7 @@ _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 arch=('i686' 'x86_64')
 url="http://www.lirc.org/"
 license=('GPL')
-makedepends=('help2man' 'linux33-headers' 'alsa-lib' 'libx11' 'libftdi' 'libirman' 'python2')
+makedepends=('help2man' 'linux34-headers' 'alsa-lib' 'libx11' 'libftdi' 'libirman' 'python2')
 options=('!makeflags' '!strip')
 source=(http://prdownloads.sourceforge.net/${pkgbase}/${pkgbase}-${pkgver}.tar.bz2
         lirc_wpc8769l.patch

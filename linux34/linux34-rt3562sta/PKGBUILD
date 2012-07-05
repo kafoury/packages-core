@@ -55,6 +55,10 @@ build() {
 	sed -i 's|ra2|wlan2|g' *.txt README* *.dat
 
 	export EXTRA_CFLAGS="-DVERSION=$pkgver"
+
+	# this Makefile is far too strict...
+	echo "LINUX_SRC = /usr/lib/modules/$_kernver/build" >> Makefile
+
 	make
 }
 

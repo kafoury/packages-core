@@ -21,8 +21,8 @@ makedepends=('linux34-headers')
 install=$_pkgname.install
 source=("http://downloads.sourceforge.net/cdemu/$_pkgname-$pkgver.tar.bz2"
         '60-vhba.rules')
-md5sums=('d97372da1d270d1605742b2995fb6678'
-         'b5e82d0160e7a181219b67c1794d5c27')
+sha256sums=('23d968aa841af25579238bb75d0f8a8e73c2562d7205d22a5af63ef681e53f81'
+         '8172d71045f5279f29eeb0224cc5ba85d14ff8514caa7718329cffe4f3574a31')
 
 build() {
   cd "$srcdir/$_pkgname-$pkgver"

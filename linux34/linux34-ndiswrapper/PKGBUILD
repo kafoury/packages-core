@@ -31,13 +31,16 @@ build() {
   sed -i "/modinfo/s/s/usr\//" driver/Makefile
   patch -i $srcdir/linux33.patch -N -p0
 
+  # make sure we point to the right build directory
+  sed -i "/^KBUILD/ s,.*,KBUILD = $(readlink -f /usr/lib/modules/$_kver/build)," driver/Makefile
+
   make KVERS=$_kver
 }
 
 package() {
   cd "$srcdir/$_pkgname-$pkgver"
 
-  make INST_DIR="lib/modules/$_extramodules" \
+  make INST_DIR="usr/lib/modules/$_extramodules" \
     KVERS=$_kver DESTDIR="$pkgdir/" install
 
   # set the kernel we've built for inside the install script
