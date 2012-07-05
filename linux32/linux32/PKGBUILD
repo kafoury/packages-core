@@ -10,8 +10,9 @@ pkgname=('linux32' 'linux32-headers')
 _kernelname=-MANJARO
 _basekernel=3.2
 _basever=32
+_aufs=20120611
 pkgver=${_basekernel}.21
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -23,7 +24,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.2.tar.xz"
         'config' 'config.x86_64' 'config.aufs'
         # standard config files for mkinitcpio ramdisk
         "${pkgname}.preset"
-        'aufs3.2-20120611.patch.bz2'
+        "aufs${_basekernel}-${_aufs}.patch.bz2"
         'aufs3-base.patch'
         'aufs3-kbuild.patch'
         'aufs3-loopback.patch'
@@ -85,7 +86,7 @@ build() {
   patch -Np1 -i "${srcdir}/ext4-options.patch"
 
   # add aufs3 support
-  patch -Np1 -i "${srcdir}/aufs3.2-20120611.patch"
+  patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
   patch -Np1 -i "${srcdir}/aufs3-base.patch"
   patch -Np1 -i "${srcdir}/aufs3-kbuild.patch"
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"

@@ -20,7 +20,6 @@ mkdir -p ../tmp/linux-3.2
 cp -a fs ../tmp/linux-3.2
 cp -a include ../tmp/linux-3.2
 cp -a Documentation ../tmp/linux-3.2
-echo "test"
 rm ../tmp/linux-3.2/include/linux/Kbuild
 cd ../tmp
 diff -Naur null linux-3.2  | filterdiff | \
