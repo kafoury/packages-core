@@ -34,7 +34,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'fix-acerhdf-1810T-bios.patch'
         'i915-fix-ghost-tv-output.patch'
         '3.4.4-fix-backlight-regression.patch'
-        '3.4.4-fix-gtx560ti-nouveau-regression.patch'
+        '3.4.4-fix-nouveau-regression.patch'
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             'b21b47755ee4d32b3ed58a46d8775d9128ac4b9b23a889bfb2ccfa772f0ab76a'
@@ -52,7 +52,7 @@ sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             '763eb938442e3112aa63c8e5153361254d9b2c9b20adce66c67892f14b89d1d4'
             '9ccadbe3eb30bb283af3eb869c3a4bdb764628854811cc616a2e02e9ef398705'
             '04d3a4d636950ea8906843274cc6b7b4f745dc65e10f4a9f213dcb5ac9b9f8a8'
-            '9a7fd5c6a0dbc06774b9786068ef2c940df0ca848fac96fbd08a55527e90c42f'
+            '3c0a7e69e77d7c99d30de3b511ed5c36a43d7e5e604fab5c8eac9e7ff1f59017'
 )
 
 build() {
@@ -81,7 +81,7 @@ build() {
 
   # fix nouveau regression
   # Arch Linux bug report: FS#30417
-  patch -Np1 -i "${srcdir}/3.4.4-fix-gtx560ti-nouveau-regression.patch"
+  patch -Np1 -i "${srcdir}/3.4.4-fix-nouveau-regression.patch"
 
   # Patch submitted upstream, waiting for inclusion:
   # https://lkml.org/lkml/2012/2/19/51
