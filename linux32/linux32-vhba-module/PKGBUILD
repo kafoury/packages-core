@@ -9,9 +9,9 @@
 pkgname=linux32-vhba-module
 _pkgname=vhba-module
 groups=('linux32-extramodules')
-pkgver=20110915
+pkgver=20120422
 _extramodules=extramodules-3.2-MANJARO
-pkgrel=2
+pkgrel=1
 pkgdesc="Kernel module that emulates SCSI devices"
 arch=('i686' 'x86_64')
 url="http://cdemu.sourceforge.net/"
@@ -21,8 +21,8 @@ makedepends=('linux32-headers')
 install=$_pkgname.install
 source=("http://downloads.sourceforge.net/cdemu/$_pkgname-$pkgver.tar.bz2"
         '60-vhba.rules')
-md5sums=('8bb99b427ca67bad448f4dd211bdd1a2'
-         '549bd2d9696bd1884c8eed7193c00e21')
+md5sums=('d97372da1d270d1605742b2995fb6678'
+         'b5e82d0160e7a181219b67c1794d5c27')
 
 build() {
   cd "$srcdir/$_pkgname-$pkgver"

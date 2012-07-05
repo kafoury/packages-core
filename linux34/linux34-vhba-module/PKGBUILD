@@ -9,9 +9,9 @@
 pkgname=linux34-vhba-module
 _pkgname=vhba-module
 groups=('linux34-extramodules')
-pkgver=20110915
+pkgver=20120422
 _extramodules=extramodules-3.4-MANJARO
-pkgrel=2
+pkgrel=1
 pkgdesc="Kernel module that emulates SCSI devices"
 arch=('i686' 'x86_64')
 url="http://cdemu.sourceforge.net/"
@@ -20,17 +20,14 @@ depends=('linux34')
 makedepends=('linux34-headers')
 install=$_pkgname.install
 source=("http://downloads.sourceforge.net/cdemu/$_pkgname-$pkgver.tar.bz2"
-        '60-vhba.rules'
-        'vhba-kernel3.4.0.patch')
-md5sums=('8bb99b427ca67bad448f4dd211bdd1a2'
-         '549bd2d9696bd1884c8eed7193c00e21'
-         '6ce222394b340c992dff9f447e1a36c4')
+        '60-vhba.rules')
+md5sums=('d97372da1d270d1605742b2995fb6678'
+         'b5e82d0160e7a181219b67c1794d5c27')
 
 build() {
   cd "$srcdir/$_pkgname-$pkgver"
 
   _kernver="$(cat /usr/lib/modules/$_extramodules/version)"
-  patch -p2 -i $srcdir/vhba-kernel3.4.0.patch
 
   make -j1 KDIR=/usr/src/linux-$_kernver
 }
