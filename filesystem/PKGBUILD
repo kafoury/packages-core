@@ -4,7 +4,7 @@
 # Maintainer: Guinux <nuxgui@gmail.com>
 
 pkgname=filesystem
-pkgver=2012.06
+pkgver=2012.07
 pkgrel=1
 pkgdesc='Base filesystem'
 arch=('any')
@@ -21,7 +21,7 @@ source=('group' 'issue' 'nsswitch.conf' 'securetty' 'host.conf' 'ld.so.conf'
         'passwd' 'shadow' 'fstab' 'crypttab' 'hosts' 'motd' 'resolv.conf' 'shells'
         'gshadow' 'profile' 'modprobe.d.usb-load-ehci-first' 'rc.local' 'rc.local.shutdown'
         'hostname' 'locale.conf' 'vconsole.conf' 'modules.conf')
-sha256sums=('c74c53d61d283650c343fd80d5e5a586b8fc6601ff258e3abfcd983b3c0c2f63'
+sha256sums=('6dd21918391a2f66e1e68bc8651ff65b951860bb84faba958d0b2243a9f5b630'
             'aa59e888f2f4b6f565ae7f4057b987bfde07890a2ccde438abee2b93a93d96c0'
             '504d3ac929bcee8a609a3b4f1b67e9d7bb061433b51229c00b807665237b1bb7'
             'f7b38167196943d8fb9d2e75358c7262d5fe1082b257c4c8caffe3b6de429cb5'
@@ -35,7 +35,7 @@ sha256sums=('c74c53d61d283650c343fd80d5e5a586b8fc6601ff258e3abfcd983b3c0c2f63'
             'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
             '74d2be3dd69600bcf0da751a1804a386bf4ad143b76d79c336acaa5c600e7991'
             '6cff886fe9e23096d5f67b7857a747ebaf10431be5a2afc40236de5ad13a654f'
-            '01284869dc22e4d2e8ee953dbbf0e0fdf9455042d5133fda1d276399badba993'
+            '8768ae609137f9273f908a305f2fde7b1508b1150b38702481c14f93bfd01ed7'
             'd8d4d3eb8e2bc1f64de5b0d33cd6864558c0fe149cedb479fad36e0523060e60'
             '90fb123aa8c0176bc144322b585bb889181c437542ddbe546af43e11b95be6ab'
             '156b75b3470c2f73efca084b7ee681eca01508df3d8e9ba0c9325162b5d80f11'
@@ -51,7 +51,7 @@ package() {
 	#
 	# setup root filesystem
 	#
-	for d in bin boot dev etc home lib/modules media mnt sbin usr var opt srv/http run; do
+	for d in boot dev etc home media mnt usr var opt srv/http run; do
 		install -d -m755 ${d}
 	done
 	install -d -m555 proc
