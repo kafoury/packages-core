@@ -9,8 +9,8 @@
 pkgname=linux32-r8168
 _pkgname=r8168
 groups=('linux32-extramodules')
-pkgver=8.028.00
-pkgrel=2
+pkgver=8.031.00
+pkgrel=1
 pkgdesc="A kernel module for Realtek 8168 network cards"
 url="http://www.realtek.com.tw"
 license=("GPL")
@@ -19,13 +19,21 @@ depends=('glibc' 'linux32')
 makedepends=('linux32-headers')
 source=(http://r8168.googlecode.com/files/$_pkgname-$pkgver.tar.bz2)
 install=$_pkgname.install
+md5sums=('ec1654f02e2dad930bbeb0210ddab7e5')
+sha256sums=('5c617b3c08aca18d1eb24d33f77df40020eb64fb32c8e4008265e08b7ffe5779')
 
 _extramodules=extramodules-3.2-MANJARO
 _kernver="$(cat /usr/lib/modules/$_extramodules/version || true)"
 
 build() {
-	cd "$srcdir/$_pkgname-$pkgver"
-	make clean SYSSRC=/usr/src/linux-$_kernver modules
+	cd "$pkgname-$pkgver"
+
+	# avoid using the Makefile directly -- it doesn't understand
+	# any kernel but the current.
+	make -C /usr/lib/modules/$_kernver/build \
+	SUBDIRS="$srcdir/$pkgname-$pkgver/src" \
+	EXTRA_CFLAGS="-DCONFIG_R8168_NAPI -DCONFIG_R8168_VLAN" \
+	modules
 }
 
 package() {
@@ -37,6 +45,3 @@ package() {
 
 	find "$pkgdir" -name '*.ko' -exec gzip -9 {} \;
 }
-
-md5sums=('4cc3c1706f00b55ab9bd6f5e06b758c2')
-sha256sums=('c77873f43693eea5304e17e35ff3d6503f6581e358d28c38927573ea56f4d6a3')

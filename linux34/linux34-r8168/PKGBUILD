@@ -9,24 +9,31 @@
 pkgname=linux34-r8168
 _pkgname=r8168
 groups=('linux34-extramodules')
-pkgver=8.028.00
-pkgrel=2
+pkgver=8.031.00
+pkgrel=1
 pkgdesc="A kernel module for Realtek 8168 network cards"
 url="http://www.realtek.com.tw"
 license=("GPL")
 arch=('i686' 'x86_64')
 depends=('glibc' 'linux34')
 makedepends=('linux34-headers')
-source=(http://r8168.googlecode.com/files/$_pkgname-$pkgver.tar.bz2 linux-3.3-fix.patch)
+source=(http://r8168.googlecode.com/files/$_pkgname-$pkgver.tar.bz2)
 install=$_pkgname.install
+md5sums=('ec1654f02e2dad930bbeb0210ddab7e5')
+sha256sums=('5c617b3c08aca18d1eb24d33f77df40020eb64fb32c8e4008265e08b7ffe5779')
 
 _extramodules=extramodules-3.4-MANJARO
 _kernver="$(cat /usr/lib/modules/$_extramodules/version || true)"
 
 build() {
-	cd "$srcdir/$_pkgname-$pkgver"
-        patch -p0 -i "$srcdir/linux-3.3-fix.patch"
-	make clean SYSSRC=/usr/src/linux-$_kernver modules
+	cd "$pkgname-$pkgver"
+
+	# avoid using the Makefile directly -- it doesn't understand
+	# any kernel but the current.
+	make -C /usr/lib/modules/$_kernver/build \
+	SUBDIRS="$srcdir/$pkgname-$pkgver/src" \
+	EXTRA_CFLAGS="-DCONFIG_R8168_NAPI -DCONFIG_R8168_VLAN" \
+	modules
 }
 
 package() {
@@ -38,8 +45,3 @@ package() {
 
 	find "$pkgdir" -name '*.ko' -exec gzip -9 {} \;
 }
-
-md5sums=('4cc3c1706f00b55ab9bd6f5e06b758c2'
-         '8b5e1c03862e65240508797655ca0463')
-sha256sums=('c77873f43693eea5304e17e35ff3d6503f6581e358d28c38927573ea56f4d6a3'
-            'c674f08945ba9f59268ef35a7e56ea296013eaa73c32d0b1ab073e25ab8befe0')
