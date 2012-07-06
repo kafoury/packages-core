@@ -20,7 +20,7 @@ pkgname=('linux'
          'virtualbox-modules'
          'virtualbox-manjaro-modules')
 
-pkgver=2012.06
+pkgver=2012.07
 pkgrel=1
 arch=any
 url="www.manjaro.org"
@@ -44,6 +44,11 @@ package_bbswitch() {
 }
 
 package_catalyst() {
+          pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
+          depends="$linuxprefix-$pkgname"
+}
+
+package_catalyst-legacy() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
           depends="$linuxprefix-$pkgname"
 }

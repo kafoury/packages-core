@@ -2,33 +2,32 @@
 # maintainer: Philip Müller <philm[at]manjaro[dog]org>
 # maintainer: Roland Singer <roland[at]manjaro[dog]org>
 
-_extramodules=extramodules-3.4-MANJARO
+_extramodules=extramodules-3.2-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 
-pkgname=linux34-catalyst
-_pkgname=catalyst
+pkgname=('linux32-catalyst-legacy')
+_pkgname=catalyst-legacy
+groups=('linux32-extramodules')
 pkgver=12.6
-pkgrel=6
-pkgdesc="AMD/ATI Catalyst drivers for linux. fglrx kernel module only"
+pkgrel=1
+pkgdesc="AMD/ATI Catalyst legacy drivers for linux. fglrx kernel module only (for AMD Radeon HD 2000 - 4000 series)"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
 license=('custom')
-depends=('linux34' 'catalyst-utils')
-makedepends=('gcc-libs' 'gcc>4.0.0' 'make' 'linux34-headers')
-conflicts=('linux34-catalyst-legacy')
-groups=('linux34-extramodules')
+depends=('linux32' 'catalyst-legacy-utils')
+makedepends=('gcc-libs' 'gcc>4.0.0' 'make' 'linux32-headers')
+conflicts=('linux32-catalyst')
 install=catalyst.install
 
-source=(http://www2.ati.com/drivers/linux/amd-driver-installer-${pkgver/./-}-x86.x86_64.run
-        #http://www2.ati.com/drivers/hotfix/catalyst_12.6_hotfixes/amd-driver-installer-8.98-x86.x86_64.zip
+source=(http://www2.ati.com/drivers/legacy/amd-driver-installer-${pkgver}-legacy-x86.x86_64.zip
         ati_make.sh
-        makefile_compat.patch
-        3.4.patch)
+        makefile_compat.patch)
 
-md5sums=('6bd4f0875202390ed7122696db29be77'
-	 '85be25933d15c5c0d914409cf4dcbf0a'
-	 '3e1b82bd69774ea808da69c983d6a43b'
-         'd9cd452c1eac3cf6650647820768e4e0')
+sha256sums=('5353a3f874d31f0fde46c390ce17cc2f27875156dbf3e7c20b5cca494a058102'
+	    'e1d3cedbfc6a239d5d71458c458137f1a7404ebddfa838557d25c965dd49c845'
+	    'd344df75ffbe9bd899e288862f41983c2e24b5eff3e7e8cf02d4891eeb137fff')
+
+
 
 build() {
 
@@ -39,8 +38,7 @@ build() {
 
 
     msg "Unpacking archive ..."
-    /bin/sh ./amd-driver-installer-${pkgver/./-}-x86.x86_64.run --extract archive_files
-    #/bin/sh ./amd-driver-installer-8.98-x86.x86_64.run --extract archive_files
+    /bin/sh ./amd-driver-installer-${pkgver}-legacy-x86.x86_64.run --extract archive_files
 
 
     if [ "${CARCH}" = "x86_64" ]; then
@@ -58,19 +56,27 @@ build() {
     msg "Applying patch(es) ..."
    ## makefile patch to choose arch_compat_alloc_user_space or older compat_alloc_user_space
    ## works only in combination with ati_make.sh script
-    patch -Np1 -i ../makefile_compat.patch || return 1
-    patch -Np1 -i ../3.4.patch || return 1
+    patch -Np1 -i ../makefile_compat.patch
+
+#    if [[ ${_kernver:0:6} < "2.6.39" ]] && [[ `cat /usr/lib/modules/${_kernver}/build/.config | grep -c CONFIG_BKL=y` = 0 ]]; then
+#	patch -Np1 -i ../no_bkl.patch
+#    fi
+
+#    if [[ ${_kernver:0:6} == "2.6.39" ]] || [[ ${_kernver:0:6} > "2.6.39" ]]; then
+#	patch -Np1 -i ../no_bkl.patch
+#        patch -Np1 -i ../2.6.39_bkl.patch
+#    fi
 
     cd "${srcdir}/archive_files/common/lib/modules/fglrx/build_mod"
-    cp "${srcdir}/archive_files/arch/${_archdir}/lib/modules/fglrx/build_mod/libfglrx_ip.a" . || return 1
-    cp 2.6.x/Makefile . || return 1
+    cp "${srcdir}/archive_files/arch/${_archdir}/lib/modules/fglrx/build_mod/libfglrx_ip.a" .
+    cp 2.6.x/Makefile .
 
 
     msg "Compiling fglrx module ..."
    ## Compile module using _ati_check variables
     make -C /usr/lib/modules/${_kernver}/build SUBDIRS="`pwd`" ARCH=${BUILDARCH} \
       MODFLAGS="-DMODULE -DATI -DFGL -DPAGE_ATTR_FIX=$PAGE_ATTR_FIX -DCOMPAT_ALLOC_USER_SPACE=$COMPAT_ALLOC_USER_SPACE $def_smp $def_modversions" \
-      PAGE_ATTR_FIX=$PAGE_ATTR_FIX COMPAT_ALLOC_USER_SPACE=$COMPAT_ALLOC_USER_SPACE modules || return 1
+      PAGE_ATTR_FIX=$PAGE_ATTR_FIX COMPAT_ALLOC_USER_SPACE=$COMPAT_ALLOC_USER_SPACE modules
 }
 
 package() {

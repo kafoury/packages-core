@@ -9,13 +9,14 @@ pkgname=linux32-catalyst
 _pkgname=catalyst
 groups=('linux32-extramodules')
 pkgver=12.6
-pkgrel=4
+pkgrel=5
 pkgdesc="AMD/ATI Catalyst drivers for linux. fglrx kernel module only"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
 license=('custom')
 depends=('linux32' 'catalyst-utils')
 makedepends=('gcc-libs' 'gcc>4.0.0' 'make' 'linux32-headers')
+conflicts=('linux32-catalyst-legacy')
 install=catalyst.install
 
 source=(http://www2.ati.com/drivers/linux/amd-driver-installer-${pkgver/./-}-x86.x86_64.run
@@ -81,31 +82,14 @@ build() {
 }
 
 package() {
-
-  ## here we are checking kernel's extramodules dir
-    for r in /usr/lib/modules/*; do
-      s=${r:13}
-      if [[ ${s:0:3} = "ext" ]]; then
-	if [[ `cat ${r}/version | grep -c ${_kernver}` != 0 ]]; then
-	  _destidir=${s}
-	  sed -i -e "s/EXTRAMODULES=.*/EXTRAMODULES=${s}/" $startdir/catalyst.install
-	fi
-	elif [[ ${s} = ${_kernver} ]] && [[ ! -e ${r}/extramodules ]]; then
-	  _destidir=${_kernver}/video
-	  sed -i -e "s/EXTRAMODULES=.*/EXTRAMODULES=null/" $startdir/catalyst.install
-      fi
-    done
-
-
     cd "${srcdir}/archive_files/common/lib/modules/fglrx/build_mod"
-    install -m755 -d "${pkgdir}/usr/lib/modules/${_destidir}/"
-    install -m644 fglrx.ko "${pkgdir}/usr/lib/modules/${_destidir}/"
+    install -m755 -d "${pkgdir}/usr/lib/modules/${_extramodules}/"
+    install -m644 fglrx.ko "${pkgdir}/usr/lib/modules/${_extramodules}/"
     find "${pkgdir}" -name '*.ko' -exec gzip -9 {} \;
-    sed -i -e "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/" $startdir/catalyst.install
+    sed -i -e "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/" $startdir/*.install
+    sed -i -e "s/EXTRAMODULES=.*/EXTRAMODULES=${_extramodules}/" $startdir/*.install
 
-  ## License
+    ## License
     install -m755 -d "${pkgdir}/usr/share/licenses/${pkgname}"
     install -m644 "${srcdir}/archive_files/LICENSE.TXT" "${pkgdir}/usr/share/licenses/${pkgname}/"
-
-    sed -i -e "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/" $startdir/*.install
 }
