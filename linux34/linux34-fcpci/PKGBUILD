@@ -38,7 +38,7 @@ if [ "$CARCH" = "i686" ]; then
          '21bfa466b1fb94663ed1f265948dba5e'
          '34f5b78b219de8ce12793b16e0171e87'
          '224a7679645a51929f8d5e1f210d7a9e'
-         '3980ae3eaa82d93b81b0ca34bb57a065'
+         '3980ae3eaa82d93b81b0ca32bb57a065'
          'e6f6c96df15392bbc92eb75f6611f4a7'
          '05a5b3a55f6b47be7503b22e3be82b28'
          '88cdbf6b0c736a25899c695b00406749')
