@@ -60,7 +60,7 @@ package_mhwd() {
 
 package_mhwd-db() {
   pkgdesc="Manjaro Linux Hardware Detection Database"
-  depends=('mhwd-nvidia' 'mhwd-catalyst')
+  depends=('mhwd-nvidia' 'mhwd-catalyst' 'mhwd-catalyst-legacy')
   arch='any'
 
   getsource "mhwd-db" "git://git.manjaro.org/core/mhwd-db.git"
