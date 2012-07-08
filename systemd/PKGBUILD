@@ -5,7 +5,7 @@
 
 pkgbase=systemd
 pkgname=('systemd' 'libsystemd' 'systemd-tools' 'systemd-sysvcompat')
-pkgver=185
+pkgver=186
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
@@ -20,7 +20,7 @@ source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         '0001-Reinstate-TIMEOUT-handling.patch'
         'os-release'
         'locale.sh')
-sha256sums=('7909f41237c2cbf6cf00c757a88010e179b7a4bf146908a9131de0bb7b2097c7'
+sha256sums=('b2c201f501952e52241827f01541de7ee05c1238fc39bfe97065f5a04e46b27e'
             '892ce43218e0a458981bbce451252c8987dc398e60b8de288e7542b8f2409c13'
             '99b8fa531115ae19b4411c82169f8b27bff90043cbdf895cf0e5cd7f5c4ffde8'
             'b6a7cd6512209ea6b53fec2ad4aff23573ecd36d698d7da8baa5c8278fa1a119'
@@ -70,9 +70,7 @@ package_systemd() {
           etc/systemd/journald.conf)
   install="systemd.install"
 
-  cd "$pkgname-$pkgver"
-
-  make DESTDIR="$pkgdir" install
+  make -C "$pkgname-$pkgver" DESTDIR="$pkgdir" install
 
   install -Dm644 "$srcdir/os-release" "$pkgdir/etc/os-release"
   printf "d /run/console 0755 root root\n" > "$pkgdir/usr/lib/tmpfiles.d/console.conf"
@@ -129,6 +127,7 @@ package_systemd() {
   mv "$pkgdir"/etc/udev etc
   mv "$pkgdir"/etc/{binfmt,modules-load,sysctl,tmpfiles}.d etc
   mv "$pkgdir"/usr/bin/udevadm usr/bin
+  mv "$pkgdir"/usr/bin/systemd-machine-id-setup usr/bin
   mv "$pkgdir"/usr/lib/pkgconfig usr/lib
   mv "$pkgdir"/usr/lib/systemd/systemd-udevd usr/lib/systemd
   mv "$pkgdir"/usr/lib/systemd/system/systemd-udev* usr/lib/systemd/system
@@ -143,8 +142,8 @@ package_systemd() {
   mv "$pkgdir"/usr/share/gir-1.0 usr/share
   mv "$pkgdir"/usr/share/gtk-doc/html/{g,lib}udev usr/share/gtk-doc/html
   mv "$pkgdir"/usr/share/man/man7/udev.7 usr/share/man/man7
-  mv "$pkgdir"/usr/share/man/man8/{systemd-udevd,udevadm}.8 usr/share/man/man8
-  mv "$pkgdir"/usr/share/man/man1/systemd-{ask-password,delta,detect-virt}.1 usr/share/man/man1
+  mv "$pkgdir"/usr/share/man/man8/{systemd-{tmpfiles,udevd},udevadm}.8 usr/share/man/man8
+  mv "$pkgdir"/usr/share/man/man1/systemd-{ask-password,delta,detect-virt,machine-id-setup}.1 usr/share/man/man1
   mv "$pkgdir"/usr/share/man/man5/{binfmt,modules-load,sysctl,tmpfiles}.d.5 usr/share/man/man5
   mv "$pkgdir"/usr/share/man/man5/{hostname,{vconsole,locale}.conf}.5 usr/share/man/man5
   mv "$pkgdir"/usr/bin/systemd-{ask-password,delta,detect-virt,tmpfiles,tty-ask-password-agent} usr/bin
@@ -177,7 +176,7 @@ package_libsystemd() {
 package_systemd-tools() {
   pkgdesc='standalone tools from systemd'
   url='http://www.freedesktop.org/wiki/Software/systemd'
-  depends=('acl' 'bash' 'glibc' 'glib2' 'kmod' 'hwids' 'util-linux' 'kbd')
+  depends=('acl' 'bash' 'glibc' 'glib2' 'libsystemd' 'kmod' 'hwids' 'util-linux' 'kbd')
   optdepends=('cryptsetup: required for encrypted block devices')
   provides=("udev=$pkgver")
   conflicts=('udev')
@@ -194,13 +193,13 @@ package_systemd-tools() {
   ln -s ../lib/systemd/systemd-udevd "$pkgdir/usr/bin/udevd"
   ln -s ../systemd/systemd-udevd  "$pkgdir/usr/lib/udev/udevd"
 
+  # add back tmpfiles.d/legacy.conf
+  install -m644 "systemd-$pkgver/tmpfiles.d/legacy.conf" "$pkgdir/usr/lib/tmpfiles.d"
+
   # Replace dialout/tape/cdrom group in rules with uucp/storage/optical group
   sed -i 's#GROUP="dialout"#GROUP="uucp"#g;
           s#GROUP="tape"#GROUP="storage"#g;
           s#GROUP="cdrom"#GROUP="optical"#g' "$pkgdir"/usr/lib/udev/rules.d/*.rules
-
-  # get rid of unneded lock directories
-  sed -ri '/\/run\/lock\/(subsys|lockdev)/d' "$pkgdir"/usr/lib/tmpfiles.d/legacy.conf
 
   # add mkinitcpio hooks
   install -Dm644 "$srcdir/initcpio-install-udev" "$pkgdir/usr/lib/initcpio/install/udev"
