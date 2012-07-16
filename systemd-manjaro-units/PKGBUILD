@@ -4,8 +4,8 @@
 # Maintainer: Guinux <nuxgui@gmail.com>
 
 pkgname=systemd-manjaro-units
-pkgver=20120606
-pkgrel=4
+pkgver=20120704
+pkgrel=1
 pkgdesc="Manjaro specific Systemd unit files"
 arch=('any')
 license=('MIT')
@@ -20,7 +20,7 @@ source=("systemd-arch-units-$pkgver.tar.gz::https://www.github.com/falconindy/sy
         'rc-local-shutdown.service'
         'plymouth-transition.service'
         'wait-and-quit_plymouth')
-sha256sums=('9ba09c681a91182cdca20bef4cea43fcfbd6af605f06ec856051d923d4c6d79b'
+sha256sums=('6b45a0c607a864e051a0b9f9f413a079f1d2498498eaa11be4d6834f0dcace69'
             '7c69211f2acb84e3d0e98da0db60462abf970653e1397e1a73a9436a4feb6907'
             'a12eb9a3e5952d331052541d82c4d5921e0555921dccb67cff580ab34e99ea19'
             'fcd0a794b4f84f839c4ba282a8ced9e0e0dff09230dea38a9217cfa997bc1cfe'
