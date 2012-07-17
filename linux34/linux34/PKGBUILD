@@ -11,8 +11,8 @@ _kernelname=-MANJARO
 _basekernel=3.4
 _basever=34
 _aufs=20120611
-pkgver=${_basekernel}.4
-pkgrel=3
+pkgver=${_basekernel}.5
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -34,10 +34,9 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'fix-acerhdf-1810T-bios.patch'
         'i915-fix-ghost-tv-output.patch'
         '3.4.4-fix-backlight-regression.patch'
-        '3.4.4-fix-nouveau-regression.patch'
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
-            'b21b47755ee4d32b3ed58a46d8775d9128ac4b9b23a889bfb2ccfa772f0ab76a'
+            '3a5bbae6ea83e394d14bfc894b0885e8066323b396e299f40c17d53799bc46ad'
             '2e7aa7f8460b5a46377d9e7bba84a9f381b03b9763b9dbaaa2581869a11230ef'
             '09c993c740887d30ed8edad716912c91dd4e673a6373e9d77786bc8283285f30'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
@@ -52,7 +51,6 @@ sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             '763eb938442e3112aa63c8e5153361254d9b2c9b20adce66c67892f14b89d1d4'
             '9ccadbe3eb30bb283af3eb869c3a4bdb764628854811cc616a2e02e9ef398705'
             '04d3a4d636950ea8906843274cc6b7b4f745dc65e10f4a9f213dcb5ac9b9f8a8'
-            '3c0a7e69e77d7c99d30de3b511ed5c36a43d7e5e604fab5c8eac9e7ff1f59017'
 )
 
 build() {
@@ -78,10 +76,6 @@ build() {
   # Fix backlight control on some laptops:
   # https://bugzilla.kernel.org/show_bug.cgi?id=43168
   patch -Np1 -i "${srcdir}/3.4.4-fix-backlight-regression.patch"
-
-  # fix nouveau regression
-  # Arch Linux bug report: FS#30417
-  patch -Np1 -i "${srcdir}/3.4.4-fix-nouveau-regression.patch"
 
   # Patch submitted upstream, waiting for inclusion:
   # https://lkml.org/lkml/2012/2/19/51
