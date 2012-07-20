@@ -6,7 +6,7 @@
 
 pkgname=pacman
 pkgver=4.0.3
-pkgrel=4
+pkgrel=5
 pkgdesc="A library-based package manager with dependency support"
 arch=('i686' 'x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -20,12 +20,16 @@ backup=(etc/pacman.conf etc/makepkg.conf)
 install=pacman.install
 options=(!libtool)
 source=(ftp://ftp.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz{,.sig}
+        0001-Add-conflict-for-replacing-owned-empty-directory.patch
+        0002-Check-empty-subdirectory-ownership.patch
         pacman.conf
         pacman.conf.x86_64
         makepkg.conf)
 
 sha256sums=('a48696ae51aaccf31a69ea7916ba9b06e7836eb933b8a281c666729c9d55ce25'
             '87d0f36ffa218b4bf22b7522d6464ffb47441f7360feb517c05cf82622d122c3'
+            '4a64e2aa188314e640e7ed34898b4611aac386fe42a52720d220779a86003c17'
+            'a547c8daaf12e79ff8d0fd7a29a5a020095b1ac8eb17b4cc8e572600e08afb7a'
             '707adad444b1110761e0f549fb4943147655ae0ea2b3e51b12a0756bcf973801'
             'e1e0dcec959198b97e1144c71d41402dab2ddc7e8d104507a3a75d1b6abf51cd'
             'bcc448268679843a05ca1486fb1f2eff14a230338b1f59c427cbf1fd806c0259')
@@ -35,6 +39,9 @@ sha256sums=('a48696ae51aaccf31a69ea7916ba9b06e7836eb933b8a281c666729c9d55ce25'
 
 build() {
   cd $srcdir/$pkgname-$pkgver
+
+  patch -p1 -i $srcdir/0001-Add-conflict-for-replacing-owned-empty-directory.patch
+  patch -p1 -i $srcdir/0002-Check-empty-subdirectory-ownership.patch
 
   ./configure --prefix=/usr --sysconfdir=/etc \
     --localstatedir=/var --enable-doc
