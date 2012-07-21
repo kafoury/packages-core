@@ -7,7 +7,7 @@
 pkgbase=linux34-virtualbox-modules
 pkgname=('linux34-virtualbox-modules' 'linux34-virtualbox-manjaro-modules')
 pkgver=4.1.18
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
