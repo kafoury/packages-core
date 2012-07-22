@@ -1,11 +1,12 @@
 # Based on the file created for Arch Linux by:
 # Dave Reisner <dreisner@archlinux.org>
 
-# Maintainer: Guinux <nuxgui@gmail.com>
+# Maintainer:  Phil Müller <philm@manajro.org>
+# Contributor: Guinux <nuxgui@gmail.com>
 
 pkgbase=systemd
 pkgname=('systemd' 'libsystemd' 'systemd-tools' 'systemd-sysvcompat')
-pkgver=185
+pkgver=187
 pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
@@ -18,17 +19,13 @@ source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-install-udev'
         'initcpio-install-timestamp'
         '0001-Reinstate-TIMEOUT-handling.patch'
-        '0001-vconsole-setup-enable-utf-8-mode-explicitly.patch'
-        '0001-udev-systemd-udev-settle.service-fix-After.patch'
         'os-release'
         'locale.sh')
-sha256sums=('7909f41237c2cbf6cf00c757a88010e179b7a4bf146908a9131de0bb7b2097c7'
+sha256sums=('1a3b338f00cc1ec8b1dcdafe6ce7928f016f70403190db72960df38731fbeed4'
             '892ce43218e0a458981bbce451252c8987dc398e60b8de288e7542b8f2409c13'
             '99b8fa531115ae19b4411c82169f8b27bff90043cbdf895cf0e5cd7f5c4ffde8'
             'b6a7cd6512209ea6b53fec2ad4aff23573ecd36d698d7da8baa5c8278fa1a119'
             'd6e4f76dd01ce21e84b99586d6dab06a826b8455c9d5e8a5c87e55e9a737182d'
-            '8a7192a041f4aa2010af5414912259f6c50cb01f88b2dc6d4e3ff91d6e49517e'
-            '3e798985b5d3a340f16e36b673fbe9faa9c0f6fe4708ba91875d8731414dfabc'
             '0cee1cf4781e9f5f07171801aa58f3d4a363b894476ab3cb8e8b22af97ef99c7'
             '9244e9917b20f1db918ea34b1902f356c3958dbe944373c32158ee5666894ab2')
 
@@ -37,12 +34,6 @@ build() {
 
   # still waiting on ipw2x00 to get fixed...
   patch -Np1 <"$srcdir/0001-Reinstate-TIMEOUT-handling.patch"
-
-  # upstream commit d305a67b46644d6360ef557109384c831ee8e018
-  patch -Np1 <"$srcdir/0001-vconsole-setup-enable-utf-8-mode-explicitly.patch"
-
-  # upstream commit 8e8eb8fbafcaa841fa5393e396acde27b26edf2f
-  patch -Np1 <"$srcdir/0001-udev-systemd-udev-settle.service-fix-After.patch"
 
   ./configure \
       --libexecdir=/usr/lib \
@@ -67,7 +58,7 @@ package_systemd() {
   pkgdesc="system and service manager"
   depends=('acl' 'dbus-core' "libsystemd=$pkgver" 'kmod' 'libcap' 'pam'
            "systemd-tools=$pkgver" "systemd-sysvcompat=$pkgver" 'systemd-manjaro-units' 'util-linux' 'xz')
-  optdepends=('dbus-python: systemd-analyze'
+  optdepends=('python2-dbus: systemd-analyze'
               'python2-cairo: systemd-analyze')
   backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
           etc/dbus-1/system.d/org.freedesktop.hostname1.conf
@@ -80,18 +71,13 @@ package_systemd() {
           etc/systemd/journald.conf)
   install="systemd.install"
 
-  cd "$pkgname-$pkgver"
-
-  make DESTDIR="$pkgdir" install
+  make -C "$pkgname-$pkgver" DESTDIR="$pkgdir" install
 
   install -Dm644 "$srcdir/os-release" "$pkgdir/etc/os-release"
   printf "d /run/console 0755 root root\n" > "$pkgdir/usr/lib/tmpfiles.d/console.conf"
 
   install -dm755 "$pkgdir/bin"
   ln -s ../usr/lib/systemd/systemd "$pkgdir/bin/systemd"
-
-  # fix systemd-analyze for python2
-  sed -i '1s/python$/python2/' "$pkgdir/usr/bin/systemd-analyze"
 
   # move bash-completion and symlink for loginctl
   install -Dm644 "$pkgdir/etc/bash_completion.d/systemd-bash-completion.sh" \
@@ -103,6 +89,10 @@ package_systemd() {
   # as a sane default
   rm "$pkgdir/etc/systemd/system/getty.target.wants/getty@tty1.service"
   rmdir "$pkgdir/etc/systemd/system/getty.target.wants"
+
+  # fix systemd-analyze for python2. the 'plot' verb does not work
+  # with py3k due to a bug in python-cairo
+  sed -i '1s/python$/python2/' "$pkgdir/usr/bin/systemd-analyze"
 
   ### split off libsystemd (libs, includes, pkgconfig, man3)
   rm -rf "$srcdir/_libsystemd"
@@ -127,7 +117,7 @@ package_systemd() {
       "$srcdir"/_tools/etc/udev \
       "$srcdir"/_tools/usr/bin \
       "$srcdir"/_tools/usr/include \
-      "$srcdir"/_tools/usr/lib/{systemd/system,udev} \
+      "$srcdir"/_tools/usr/lib/udev \
       "$srcdir"/_tools/usr/lib/systemd/system/{sysinit,sockets}.target.wants \
       "$srcdir"/_tools/usr/lib/girepository-1.0 \
       "$srcdir"/_tools/usr/share/pkgconfig \
@@ -139,6 +129,7 @@ package_systemd() {
   mv "$pkgdir"/etc/udev etc
   mv "$pkgdir"/etc/{binfmt,modules-load,sysctl,tmpfiles}.d etc
   mv "$pkgdir"/usr/bin/udevadm usr/bin
+  mv "$pkgdir"/usr/bin/systemd-machine-id-setup usr/bin
   mv "$pkgdir"/usr/lib/pkgconfig usr/lib
   mv "$pkgdir"/usr/lib/systemd/systemd-udevd usr/lib/systemd
   mv "$pkgdir"/usr/lib/systemd/system/systemd-udev* usr/lib/systemd/system
@@ -154,9 +145,9 @@ package_systemd() {
   mv "$pkgdir"/usr/share/gtk-doc/html/{g,lib}udev usr/share/gtk-doc/html
   mv "$pkgdir"/usr/share/man/man7/udev.7 usr/share/man/man7
   mv "$pkgdir"/usr/share/man/man8/{systemd-{tmpfiles,udevd},udevadm}.8 usr/share/man/man8
-  mv "$pkgdir"/usr/share/man/man1/systemd-{ask-password,delta,detect-virt}.1 usr/share/man/man1
+  mv "$pkgdir"/usr/share/man/man1/systemd-{ask-password,delta,detect-virt,machine-id-setup}.1 usr/share/man/man1
   mv "$pkgdir"/usr/share/man/man5/{binfmt,modules-load,sysctl,tmpfiles}.d.5 usr/share/man/man5
-  mv "$pkgdir"/usr/share/man/man5/{hostname,{vconsole,locale}.conf}.5 usr/share/man/man5
+  mv "$pkgdir"/usr/share/man/man5/{hostname,{vconsole,locale}.conf,crypttab}.5 usr/share/man/man5
   mv "$pkgdir"/usr/bin/systemd-{ask-password,delta,detect-virt,tmpfiles,tty-ask-password-agent} usr/bin
   mv "$pkgdir"/usr/lib/systemd/systemd-{ac-power,binfmt,cryptsetup,modules-load,random-seed,remount-fs,reply-password,sysctl,timestamp,vconsole-setup} usr/lib/systemd
 }
@@ -202,6 +193,9 @@ package_systemd-tools() {
 
   # udevd is no longer udevd because systemd. why isn't udevadm now udevctl?
   ln -s ../lib/systemd/systemd-udevd "$pkgdir/usr/bin/udevd"
+
+  # add back tmpfiles.d/legacy.conf
+  install -m644 "systemd-$pkgver/tmpfiles.d/legacy.conf" "$pkgdir/usr/lib/tmpfiles.d"
 
   # Replace dialout/tape/cdrom group in rules with uucp/storage/optical group
   sed -i 's#GROUP="dialout"#GROUP="uucp"#g;
