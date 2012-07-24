@@ -58,7 +58,7 @@ _build_grub-common_and_bios() {
 	sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i "${srcdir}/grub_bios-${pkgver}/configure.ac"
 
         ## fix glibc 2.16 issue
-        sed -i -e '/gets is a security/d' "${srcdir}/grub-${pkgver}/grub-core/gnulib/stdio.in.h"
+        sed -i -e '/gets is a security/d' "${srcdir}/grub_bios-${pkgver}/grub-core/gnulib/stdio.in.h"
 
 	## add the grub-extra sources
 	export GRUB_CONTRIB="${srcdir}/grub_bios-${pkgver}/grub-extras/"
