@@ -24,7 +24,8 @@ source=("http://ftp.gnu.org/gnu/grub/grub-${pkgver}.tar.xz"
         'grub.default'
         'grub.cfg'
         '20_memtest86+'
-        'grub_bzr_export.sh')
+        'grub_bzr_export.sh'
+        'update-grub')
 
 noextract=("grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
            "grub2_extras_ntldr-img_r${_grub_ntldr_ver}.tar.xz"
@@ -39,7 +40,8 @@ sha1sums=('274d91e96b56a5b9dd0a07accff69dbb6dfb596b'
           'f4f464d362a03360b79b135b44eb71ba29ccedc4'
           '19a6c2f10219a57c6f988f1bfa701b27d14cd381'
           'ce35d7ae75cd1b5b677e894e528f96add40e77b9'
-          '0cfd4e51cdb14a92f06cfd3c607f2aa21f3e55fc')
+          '0cfd4e51cdb14a92f06cfd3c607f2aa21f3e55fc'
+          '02838339939695b2fa73e2a487fda0f89498b58e')
 
 _build_grub-common_and_bios() {
 
@@ -114,6 +116,10 @@ _build_grub-efi-i386() {
 
 	## copy the source for building the efi package
 	cp -r "${srcdir}/grub-${pkgver}" "${srcdir}/grub_efi-${pkgver}"
+
+        ## fix glibc 2.16 issue
+        sed -i -e '/gets is a security/d' "${srcdir}/grub_efi-${pkgver}/grub-core/gnulib/stdio.in.h"
+
 	cd "${srcdir}/grub_efi-${pkgver}"
 
 	export GRUB_CONTRIB="${srcdir}/grub_efi-${pkgver}/grub-extras/"
