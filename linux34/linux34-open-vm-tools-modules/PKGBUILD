@@ -10,7 +10,7 @@ _pkgname=open-vm-tools-modules
 groups=('linux34-extramodules')
 pkgver=2012.05.21
 _pkgsubver=724730
-pkgrel=3
+pkgrel=4
 pkgdesc="kernel modules for the open source implementation of VMware Tools"
 arch=('i686' 'x86_64')
 url="http://open-vm-tools.sourceforge.net/"
@@ -40,6 +40,7 @@ build() {
 
 package() {
   _kernver=`pacman -Q linux34 | cut -d . -f 2 | cut -f 1 -d -`
+  _extramodules=extramodules-3.${_kernver}-MANJARO
   depends=("linux>=3.${_kernver}" "linux<3.`expr ${_kernver} + 1`")
   KERNEL_VERSION=`cat /usr/lib/modules/extramodules-3.${_kernver}-MANJARO/version`
   msg "Kernel = $KERNEL_VERSION"
