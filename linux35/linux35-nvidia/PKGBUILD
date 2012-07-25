@@ -1,0 +1,48 @@
+# Based on the file created for Arch Linux by:
+# Maintainer : Thomas Baechler <thomas@archlinux.org>
+
+# Maintainer: Guinux <nuxgui@gmail.com>
+# Co-Maintainer: Clittle <philm@manjarolinux.org>
+
+pkgname=linux35-nvidia
+_pkgname=nvidia
+pkgver=302.17
+_extramodules=extramodules-3.5-MANJARO
+_kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
+groups=('linux35-extramodules')
+pkgrel=1
+pkgdesc="NVIDIA drivers for linux."
+arch=('i686' 'x86_64')
+url="http://www.nvidia.com/"
+depends=('linux35' "nvidia-utils=${pkgver}")
+makedepends=('linux35-headers')
+conflicts=('nvidia-96xx' 'nvidia-173xx')
+license=('custom')
+install=nvidia.install
+options=(!strip)
+
+if [ "$CARCH" = "i686" ]; then
+    _arch='x86'
+    _pkg="NVIDIA-Linux-${_arch}-${pkgver}"
+    source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
+    md5sums=('b7f908ea08218df08db06026215ec419')
+elif [ "$CARCH" = "x86_64" ]; then
+    _arch='x86_64'
+   _pkg="NVIDIA-Linux-${_arch}-${pkgver}-no-compat32"
+    source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
+    md5sums=('7e768412a16853078b04037a7cc9c8ac')
+fi
+
+build() {
+    cd "${srcdir}"
+    sh "${_pkg}.run" --extract-only
+    cd "${_pkg}/kernel"
+    make SYSSRC=/usr/lib/modules/"${_kernver}/build" module
+}
+
+package() {
+    install -D -m644 "${srcdir}/${_pkg}/kernel/nvidia.ko" \
+        "${pkgdir}/usr/lib/modules/${_extramodules}/nvidia.ko"
+    sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='${_extramodules}'/" "${startdir}/nvidia.install"
+    gzip "${pkgdir}/usr/lib/modules/${_extramodules}/nvidia.ko"
+}
