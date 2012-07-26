@@ -7,7 +7,7 @@
 pkgbase=linux32-virtualbox-modules
 pkgname=('linux32-virtualbox-modules' 'linux32-virtualbox-manjaro-modules')
 pkgver=4.1.18
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
