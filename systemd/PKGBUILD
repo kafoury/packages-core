@@ -1,13 +1,12 @@
 # Based on the file created for Arch Linux by:
 # Dave Reisner <dreisner@archlinux.org>
 
-# Maintainer:  Phil Müller <philm@manajro.org>
-# Contributor: Guinux <nuxgui@gmail.com>
+# Maintainer: Guinux <nuxgui@gmail.com>
 
 pkgbase=systemd
 pkgname=('systemd' 'libsystemd' 'systemd-tools' 'systemd-sysvcompat')
 pkgver=185
-pkgrel=3
+pkgrel=4
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
@@ -82,13 +81,18 @@ package_systemd() {
           etc/systemd/journald.conf)
   install="systemd.install"
 
-  make -C "$pkgname-$pkgver" DESTDIR="$pkgdir" install
+  cd "$pkgname-$pkgver"
+
+  make DESTDIR="$pkgdir" install
 
   install -Dm644 "$srcdir/os-release" "$pkgdir/etc/os-release"
   printf "d /run/console 0755 root root\n" > "$pkgdir/usr/lib/tmpfiles.d/console.conf"
 
   install -dm755 "$pkgdir/bin"
   ln -s ../usr/lib/systemd/systemd "$pkgdir/bin/systemd"
+
+  # fix systemd-analyze for python2
+  sed -i '1s/python$/python2/' "$pkgdir/usr/bin/systemd-analyze"
 
   # move bash-completion and symlink for loginctl
   install -Dm644 "$pkgdir/etc/bash_completion.d/systemd-bash-completion.sh" \
@@ -100,10 +104,6 @@ package_systemd() {
   # as a sane default
   rm "$pkgdir/etc/systemd/system/getty.target.wants/getty@tty1.service"
   rmdir "$pkgdir/etc/systemd/system/getty.target.wants"
-
-  # fix systemd-analyze for python2. the 'plot' verb does not work
-  # with py3k due to a bug in python-cairo
-  sed -i '1s/python$/python2/' "$pkgdir/usr/bin/systemd-analyze"
 
   ### split off libsystemd (libs, includes, pkgconfig, man3)
   rm -rf "$srcdir/_libsystemd"
@@ -128,7 +128,7 @@ package_systemd() {
       "$srcdir"/_tools/etc/udev \
       "$srcdir"/_tools/usr/bin \
       "$srcdir"/_tools/usr/include \
-      "$srcdir"/_tools/usr/lib/udev \
+      "$srcdir"/_tools/usr/lib/{systemd/system,udev} \
       "$srcdir"/_tools/usr/lib/systemd/system/{sysinit,sockets}.target.wants \
       "$srcdir"/_tools/usr/lib/girepository-1.0 \
       "$srcdir"/_tools/usr/share/pkgconfig \
@@ -140,7 +140,6 @@ package_systemd() {
   mv "$pkgdir"/etc/udev etc
   mv "$pkgdir"/etc/{binfmt,modules-load,sysctl,tmpfiles}.d etc
   mv "$pkgdir"/usr/bin/udevadm usr/bin
-  mv "$pkgdir"/usr/bin/systemd-machine-id-setup usr/bin
   mv "$pkgdir"/usr/lib/pkgconfig usr/lib
   mv "$pkgdir"/usr/lib/systemd/systemd-udevd usr/lib/systemd
   mv "$pkgdir"/usr/lib/systemd/system/systemd-udev* usr/lib/systemd/system
@@ -156,16 +155,11 @@ package_systemd() {
   mv "$pkgdir"/usr/share/gtk-doc/html/{g,lib}udev usr/share/gtk-doc/html
   mv "$pkgdir"/usr/share/man/man7/udev.7 usr/share/man/man7
   mv "$pkgdir"/usr/share/man/man8/{systemd-{tmpfiles,udevd},udevadm}.8 usr/share/man/man8
-  mv "$pkgdir"/usr/share/man/man1/systemd-{ask-password,delta,detect-virt,machine-id-setup}.1 usr/share/man/man1
+  mv "$pkgdir"/usr/share/man/man1/systemd-{ask-password,delta,detect-virt}.1 usr/share/man/man1
   mv "$pkgdir"/usr/share/man/man5/{binfmt,modules-load,sysctl,tmpfiles}.d.5 usr/share/man/man5
   mv "$pkgdir"/usr/share/man/man5/{hostname,{vconsole,locale}.conf}.5 usr/share/man/man5
   mv "$pkgdir"/usr/bin/systemd-{ask-password,delta,detect-virt,tmpfiles,tty-ask-password-agent} usr/bin
   mv "$pkgdir"/usr/lib/systemd/systemd-{ac-power,binfmt,cryptsetup,modules-load,random-seed,remount-fs,reply-password,sysctl,timestamp,vconsole-setup} usr/lib/systemd
-
-  # remove plymouth.service files
-  rm "$pkgdir"/usr/lib/systemd/system/plymouth*service
-  rm "$pkgdir"/usr/lib/systemd/system/systemd-ask-password-plymouth*
-  rm "$pkgdir"/usr/lib/systemd/system/*target.wants/plymouth*service
 }
 
 package_systemd-sysvcompat() {
@@ -209,9 +203,6 @@ package_systemd-tools() {
 
   # udevd is no longer udevd because systemd. why isn't udevadm now udevctl?
   ln -s ../lib/systemd/systemd-udevd "$pkgdir/usr/bin/udevd"
-
-  # add back tmpfiles.d/legacy.conf
-  install -m644 "systemd-$pkgver/tmpfiles.d/legacy.conf" "$pkgdir/usr/lib/tmpfiles.d"
 
   # Replace dialout/tape/cdrom group in rules with uucp/storage/optical group
   sed -i 's#GROUP="dialout"#GROUP="uucp"#g;

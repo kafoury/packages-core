@@ -5,6 +5,10 @@ sd_booted() {
 }
 
 post_install() {
+  if [ ! -f etc/machine-id ]; then
+    systemd-machine-id-setup
+  fi
+
   # enable getty@tty1 by default, but don't track the file
   systemctl enable getty@.service
 
@@ -13,6 +17,10 @@ post_install() {
 }
 
 post_upgrade() {
+  if [ ! -f etc/machine-id ]; then
+    systemd-machine-id-setup
+  fi
+
   if sd_booted; then
     # we moved the binary in 44-2 to /usr, so a reexec leads to a
     # coredump. refuse this reexec and warn the user that they should
