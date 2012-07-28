@@ -164,6 +164,7 @@ package_systemd() {
   # remove plymouth.service files
   rm "$pkgdir"/usr/lib/systemd/system/plymouth*service
   rm "$pkgdir"/usr/lib/systemd/system/systemd-ask-password-plymouth*
+  rm "$pkgdir"/usr/lib/systemd/system/*target.wants/plymouth*service
 }
 
 package_systemd-sysvcompat() {
