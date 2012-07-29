@@ -5,7 +5,7 @@
 
 pkgname=filesystem
 pkgver=2012.07
-pkgrel=1
+pkgrel=2
 pkgdesc='Base filesystem'
 arch=('any')
 license=('GPL')
@@ -30,7 +30,7 @@ sha256sums=('6dd21918391a2f66e1e68bc8651ff65b951860bb84faba958d0b2243a9f5b630'
             '61f3203e6b7d666e22d6d4d75f3c688640c2905186641aaa285d332db0e1456a'
             '34b820ca01b9ad7e4792e92122b39e891e647c016b7ecccb220d6f4e72eee5c7'
             '37700fd6a4a18a00c75cd86e3c55f7affaed937a88b95dee6c7dda3d46cd4f5e'
-            '7ee98c477fec37ebf6f52fc6a1c4d4c017d1fe4f8e54b414828da33634711aae'
+            'ea8c67a34a0a8a41beabe3ceb5733c9e8b84b27c569c11ddbfd8395fce99d8dd'
             '13d1f59c1d0860bf43da996e2b9a6ab2744791614241ed9a1376b7e7e30de3a8'
             'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
             '74d2be3dd69600bcf0da751a1804a386bf4ad143b76d79c336acaa5c600e7991'
