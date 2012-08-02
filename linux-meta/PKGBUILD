@@ -21,8 +21,8 @@ pkgname=('linux'
          'virtualbox-modules'
          'virtualbox-manjaro-modules')
 
-pkgver=2012.07
-pkgrel=2
+pkgver=2012.08
+pkgrel=1
 arch=any
 url="www.manjaro.org"
 license=('GPL')
@@ -32,6 +32,7 @@ linuxprefix="linux34"
 package_linux() {
           pkgdesc="Manjaro Stable Linux Kernel and modules (Meta-PKG)"
           depends="$linuxprefix"
+          groups=('base')
           mkdir -p $pkgdir/etc/mkinitcpio.d
           ln -sf $linuxprefix.preset $pkgdir/etc/mkinitcpio.d/linux.preset
 }
