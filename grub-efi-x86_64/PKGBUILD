@@ -4,58 +4,48 @@
 
 # Maintainer: Guinux <nuxgui@gmail.com>
 
-_grub_bzr_rev="4232"
-_pkgver="2.00"
-
 _grub_lua_ver=24
-_grub_gpxe_ver=12
 
-pkgname=grub2-efi-x86_64
+pkgname=grub-efi-x86_64
 pkgver=2.00
 pkgrel=1
-epoch=1
-pkgdesc="The GNU GRand Unified Bootloader version 2 - x86_64 UEFI version"
-url="http://www.gnu.org/software/grub/"
+pkgdesc="GNU GRand Unified Bootloader (2) - x86_64 UEFI Modules"
+url="https://www.gnu.org/software/grub/"
 arch=('any')
 license=('GPL3')
-
 makedepends=('xz' 'python' 'autogen' 'texinfo' 'help2man' 'gettext' 'device-mapper' 'fuse')
-depends=("grub2-common=${epoch}:${pkgver}" 'dosfstools' 'efibootmgr')
+depends=("grub-common=${pkgver}" 'dosfstools' 'efibootmgr')
 
 options=('!strip' '!emptydirs')
+replaces=('grub2-efi-x86_64')
+provides=('grub2-efi-x86_64')
 
-# source=("ftp://ftp.archlinux.org/other/grub2/grub_r${_grub_bzr_rev}.tar.xz"
-source=("http://ftp.gnu.org/gnu/grub/grub-${_pkgver}".tar.xz
-        "ftp://ftp.archlinux.org/other/grub2/grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
-        "ftp://ftp.archlinux.org/other/grub2/grub2_extras_gpxe_r${_grub_gpxe_ver}.tar.xz")
+source=("http://ftp.gnu.org/gnu/grub/grub-${pkgver}.tar.xz"
+        "ftp://ftp.archlinux.org/other/grub2/grub2_extras_lua_r${_grub_lua_ver}.tar.xz")
 
-noextract=("grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
-           "grub2_extras_gpxe_r${_grub_gpxe_ver}.tar.xz")
+noextract=("grub2_extras_lua_r${_grub_lua_ver}.tar.xz")
 
 sha256sums=('784ec38e7edc32239ad75b8e66df04dc8bfb26d88681bc9f627133a6eb85c458'
-            'bfe0318a9bb7edbaee2489b1396d0034791751b42035ea40ad61600fdf974df2'
-            '8ce1b6b89ef0e3545736477d4c4418524e32c7fb9ba40c67dcebfb84b98cde66')
+            'bfe0318a9bb7edbaee2489b1396d0034791751b42035ea40ad61600fdf974df2')
 
 build() {
+
 	if [[ "${CARCH}" == 'i686' ]]; then
-		echo "This package can be built only in a x86_64 system. Exiting."
+		echo "This package can be built only in an x86_64 system. Exiting."
 		exit 1
 	fi
 
-	cd "${srcdir}/grub-${_pkgver}"
+	cd "${srcdir}/grub-${pkgver}"
 
 	## add grub-extras
-	export GRUB_CONTRIB="${srcdir}/grub-${_pkgver}/grub-extras/"
-	install -d "${srcdir}/grub-${_pkgver}/grub-extras"
+	export GRUB_CONTRIB="${srcdir}/grub-${pkgver}/grub-extras/" 
+	install -d "${srcdir}/grub-${pkgver}/grub-extras"
 
 	bsdtar xf "${srcdir}/grub2_extras_lua_r${_grub_lua_ver}.tar.xz" \
-		-C "${srcdir}/grub-${_pkgver}/grub-extras"
-
-	bsdtar xf "${srcdir}/grub2_extras_gpxe_r${_grub_gpxe_ver}.tar.xz" \
-		-C "${srcdir}/grub-${_pkgver}/grub-extras"
+		-C "${srcdir}/grub-${pkgver}/grub-extras"
 
 	## start the actual build process
-	cd "${srcdir}/grub-${_pkgver}/"
+	cd "${srcdir}/grub-${pkgver}/"
 	./autogen.sh
 
 	CFLAGS="" ./configure \
@@ -73,9 +63,7 @@ build() {
 		--bindir="/usr/bin" \
 		--sbindir="/usr/sbin" \
 		--mandir="/usr/share/man" \
-		--localedir="/usr/share/locale" \
 		--infodir="/usr/share/info" \
-		--datadir="/usr/lib" \
 		--datarootdir="/usr/share" \
 		--sysconfdir="/etc" \
 		--program-prefix="" \
@@ -84,11 +72,13 @@ build() {
 		--disable-werror
 
 	CFLAGS="" make
+
 }
 
 package() {
-	cd "${srcdir}/grub-${_pkgver}"
-	make DESTDIR="${pkgdir}/" install
+
+	cd "${srcdir}/grub-${pkgver}"
+	make DESTDIR="${pkgdir}/" install 
 
 	## remove non platform-specific files
 	rm -rf "${pkgdir}"/{boot,etc,usr/{share,bin,sbin}}
@@ -98,9 +88,4 @@ package() {
 	rm -f "${pkgdir}/usr/lib/grub/x86_64-efi"/*.image || true
 	rm -f "${pkgdir}/usr/lib/grub/x86_64-efi"/{kernel.exec,gdb_grub,gmodule.pl} || true
 
-	## remove conflicting common files
-	rm -fr "${pkgdir}/usr/lib/grub/themes"
-	rm -f "${pkgdir}/usr/lib/grub/"*.h
-	rm -f "${pkgdir}/usr/lib/grub/"*.pf2
-	rm -f "${pkgdir}/usr/lib/grub/grub-mkconfig_lib"
 }

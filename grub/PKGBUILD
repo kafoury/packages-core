@@ -1,5 +1,8 @@
-# Maintainer: Ronald van Haren <ronald.archlinux.org>
-# Contributor: Keshav P R <(the.ridikulus.rat) (aatt) (gemmaeiil) (ddoott) (ccoomm)>
+# Based on the file created for Arch Linux by:
+# Ronald van Haren <ronald.archlinux.org>
+# Keshav P R <(the.ridikulus.rat) (aatt) (gemmaeiil) (ddoott) (ccoomm)>
+
+# Maintainer: Guinux <nuxgui@gmail.com>
 
 _grub_lua_ver=24
 _grub_ntldr_ver=21
@@ -8,7 +11,7 @@ _grub_915_ver=9
 pkgname=('grub-common' 'grub-bios' 'grub-efi-i386')
 pkgbase=grub
 pkgver=2.00
-pkgrel=1
+pkgrel=2
 url="https://www.gnu.org/software/grub/"
 arch=('i686' 'x86_64')
 license=('GPL3')
@@ -31,17 +34,17 @@ noextract=("grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
            "grub2_extras_ntldr-img_r${_grub_ntldr_ver}.tar.xz"
            "grub2_extras_915resolution_r${_grub_915_ver}.tar.xz")
 
-sha1sums=('274d91e96b56a5b9dd0a07accff69dbb6dfb596b'
-          '89290031b974780c6df76893836d2477d4add895'
-          'eb4b35b4c36b64f9405cbcbc538cb205171c1c0a'
-          'd5ae2efec25616028a9d89e98b6e454f1c4c415f'
-          'a7f4b0038cc7325df1ddea200d4f7c539af291c6'
-          '8e3db3cc3c998132b4e1d4505b0e286de53a8e45'
-          'f4f464d362a03360b79b135b44eb71ba29ccedc4'
-          '19a6c2f10219a57c6f988f1bfa701b27d14cd381'
-          'ce35d7ae75cd1b5b677e894e528f96add40e77b9'
-          '0cfd4e51cdb14a92f06cfd3c607f2aa21f3e55fc'
-          '02838339939695b2fa73e2a487fda0f89498b58e')
+sha256sums=('784ec38e7edc32239ad75b8e66df04dc8bfb26d88681bc9f627133a6eb85c458'
+            'bfe0318a9bb7edbaee2489b1396d0034791751b42035ea40ad61600fdf974df2'
+            '2b8b1112b67c2b8d0e46b87fd0a2597461ce4d4c80fc25d0a7319db94b6ac600'
+            '04f79ec649764b02444d9bd82b39814bd17f018abf00c8b34bbafa37899c3a3f'
+            '825f9df5c410cf881a048dd51ac002dd78290f2846693c63767530e1c5cc3c8c'
+            'c92a3a4de75365152bf1a568c55f5adf880256035bfc993add03b519d0f67046'
+            '0baf7abdf6ace9b9a863df6345ae5ed6646982f84287ebe5a0823ebc63a06a4c'
+            '7fc95d49c0febe98a76e56b606a280565cb736580adecf163bc6b5aca8e7cbd8'
+            '259d7eafa2751dd443cb3a08784ef444565cc487d427afa9a268e41bb6c5aba2'
+            '625b5d04726ae7f7af8924916171cc5a6ca30d82045e8ea93ac006a4043c8a54'
+            '467b0101154076fee99d9574a5fb6b772a3923cc200a1f4ca08fe17be8d68111')
 
 _build_grub-common_and_bios() {
 
@@ -186,13 +189,12 @@ build() {
 package_grub-common() {
 
 	pkgdesc="GNU GRand Unified Bootloader - Utilities and Common Files"
-	depends=('sh' 'xz' 'freetype2' 'gettext' 'device-mapper' 'fuse')
+	depends=('sh' 'xz' 'freetype2' 'gettext' 'device-mapper' 'fuse' 'os-prober')
 	conflicts=('grub-legacy' 'grub')
 	replaces=('grub2-common')
 	provides=('grub2-common')
 	backup=('boot/grub/grub.cfg' 'etc/default/grub' 'etc/grub.d/40_custom')
 	optdepends=('libisoburn: provides xorriso for generating grub rescue iso using grub-mkrescue'
-	            'os-prober: to detect other OSes when generating grub.cfg in BIOS systems'
 	            'mtools: for grub-mkrescue FAT FS support')
 	install="grub.install"
 	options=('strip' 'purge' 'docs' 'zipman' '!emptydirs')
