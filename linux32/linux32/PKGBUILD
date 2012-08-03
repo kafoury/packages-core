@@ -10,7 +10,7 @@ pkgname=('linux32' 'linux32-headers')
 _kernelname=-MANJARO
 _basekernel=3.2
 _basever=32
-_aufs=20120611
+_aufs=20120730
 pkgver=${_basekernel}.25
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -41,7 +41,7 @@ sha256sums=('dd96ed02b53fb5d57762e4b1f573460909de472ca588f81ec6660e4a172e7ba7'
             '595365793e83440e12ff1b87c0f0e06d3ed19818e93fe12a5794ef27b436ee1c'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            'c0260a2c2daa158b52f9ef766f33225020d28cb38fa294bd3129cc0d2ad17fad'
+            'c6426c399da23964051c7aa04e1363a7c79a60001f79ed1b700cf0b8874613e6'
             '2635ca013f170d4381826ec5b3aba3c15bfabd567df435df2c522c8ccd07ccb4'
             '1662adb22364323e630850d3064d2f7307e409782b577584f7c71c0d5c125eb8'
             'ea655ea1dfe2803587ccb31711aa8717ee09aaf770b68f8752dada6d97c5b1b1'

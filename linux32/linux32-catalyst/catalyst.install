@@ -1,14 +1,6 @@
-
-KERNEL_VERSION=3.2.24-1-MANJARO
-EXTRAMODULES=extramodules-3.2-MANJARO
-
-
 dep_extr_mod(){
-if [ $EXTRAMODULES != null ]; then
-    depmod $(cat /usr/lib/modules/$EXTRAMODULES/version)
-else
-    depmod $KERNEL_VERSION
-fi
+  EXTRAMODULES='extramodules-3.2-MANJARO'
+  depmod $(cat /usr/lib/modules/$EXTRAMODULES/version)
 }
 
 whisperer(){
