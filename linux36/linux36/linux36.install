@@ -1,0 +1,64 @@
+# arg 1:  the new package version
+# arg 2:  the old package version
+
+RELEASE=3.6rc1-1
+KERNEL_VERSION=3.6.0-1-MANJARO
+KERNEL_BASE=3.6
+BASEVER=36
+ARCH=x86_64
+
+post_install () {
+  # updating module dependencies
+  echo ">>> Updating module dependencies. Please wait ..."
+  depmod ${KERNEL_VERSION}
+  echo ">>> Generating initial ramdisk, using mkinitcpio.  Please wait..."
+  mkinitcpio -p linux${BASEVER}
+  
+  # update grub.cfg
+  if [ -f /usr/sbin/grub-mkconfig ]; then
+      grub-mkconfig -o /boot/grub/grub.cfg
+  else
+      echo "WARNING: It seems there is no bootloader installed - Your system might not boot."
+      echo "Add followed initramfs files to your bootloader config:"
+      echo ">> linux	/boot/vmlinuz-${RELEASE}-${ARCH}-manjaro"
+      echo ">> initrd	/boot/initramfs-${RELEASE}-${ARCH}-manjaro.img"
+  fi
+}
+
+post_upgrade() {
+  # reminder notice
+  if findmnt --fstab -uno SOURCE /boot &>/dev/null && ! mountpoint -q /boot; then
+      echo "WARNING: /boot appears to be a separate partition but is not mounted."
+  fi
+  
+  # remove old initcpio
+  rm -f /boot/initramfs-${KERNEL_BASE}*-${ARCH}-manjaro.img
+  rm -f /boot/initramfs-${KERNEL_BASE}*-${ARCH}-manjaro-fallback.img
+  
+  # updating module dependencies
+  echo ">>> Updating module dependencies. Please wait ..."
+  depmod ${KERNEL_VERSION}
+  echo ">>> Generating initial ramdisk, using mkinitcpio.  Please wait..."
+  mkinitcpio -p linux${BASEVER}
+  
+  # update grub.cfg
+  if [ -f /usr/sbin/grub-mkconfig ]; then
+      grub-mkconfig -o /boot/grub/grub.cfg
+  else
+      echo "WARNING: It seems there is no bootloader installed - Your system might not boot."
+      echo "Add followed initramfs files to your bootloader config:"
+      echo ">> linux	/boot/vmlinuz-${RELEASE}-${ARCH}-manjaro"
+      echo ">> initrd	/boot/initramfs-${RELEASE}-${ARCH}-manjaro.img"
+  fi
+}
+
+post_remove() {
+  # remove initcpio
+  rm -f /boot/initramfs-${RELEASE}-${ARCH}-manjaro.img
+  rm -f /boot/initramfs-${RELEASE}-${ARCH}-manjaro-fallback.img
+  
+  # update grub.cfg
+  if [ -f /usr/sbin/grub-mkconfig ]; then
+      grub-mkconfig -o /boot/grub/grub.cfg
+  fi
+}
