@@ -10,7 +10,7 @@ pkgver=302.17
 _extramodules=extramodules-3.6-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 groups=('linux36-extramodules')
-pkgrel=0.1
+pkgrel=0.2
 pkgdesc="NVIDIA drivers for linux."
 arch=('i686' 'x86_64')
 url="http://www.nvidia.com/"
@@ -25,22 +25,24 @@ if [ "$CARCH" = "i686" ]; then
     _arch='x86'
     _pkg="NVIDIA-Linux-${_arch}-${pkgver}"
     source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
-    md5sums=('b7f908ea08218df08db06026215ec419')
+	sha256sums=('3525d3814361bd202998cea2962bb3d1bb3419206d02fd8ac30d61358c1a284f')
 elif [ "$CARCH" = "x86_64" ]; then
     _arch='x86_64'
-   _pkg="NVIDIA-Linux-${_arch}-${pkgver}-no-compat32"
+    _pkg="NVIDIA-Linux-${_arch}-${pkgver}-no-compat32"
     source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
-    md5sums=('7e768412a16853078b04037a7cc9c8ac')
+    sha256sums=('728c6c0c27f4a90186b47622416c28b492da84d28930cf3c4e01942644c04f71')
 fi
 
-source=(${source[@]} "3.6_kernel.patch")
-md5sums=(${md5sums[@]} '87518bc9d5980ab37ba3ede46852e5fe')
+source=(${source[@]} "3.6_kernel.patch" "nvidia-blacklist-vga-pmu-registers-256-304.diff")
+sha256sums=(${sha256sums[@]} '4ae164b13c9c56b46749a318f1fc828b52627bf91241b13cab69a05e1ad3c6e6'
+            '674a51e77beb3e076dd29b1d9a37ee23e1498ab128490ea2efb2140e45b44fde')
 
 build() {
     cd "${srcdir}"
     sh "${_pkg}.run" --extract-only
     cd "${_pkg}/kernel"
     patch < "${srcdir}/3.6_kernel.patch"
+    patch < "${srcdir}/nvidia-blacklist-vga-pmu-registers-256-304.diff"
     make SYSSRC=/usr/lib/modules/"${_kernver}/build" module
 }
 
