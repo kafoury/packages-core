@@ -15,10 +15,10 @@ post_install () {
   mkinitcpio -p linux${BASEVER}
   
   # update grub.cfg
-  if [ -f /usr/sbin/grub-mkconfig ]; then
-      grub-mkconfig -o /boot/grub/grub.cfg
+  if [ -f /usr/sbin/update-grub ]; then
+      update-grub
   else
-      echo "WARNING: It seems there is no bootloader installed - Your system might not boot."
+      echo "WARNING: It seems that grub is not installed - Your system might not boot."
       echo "Add followed initramfs files to your bootloader config:"
       echo ">> linux	/boot/vmlinuz-${RELEASE}-${ARCH}-manjaro"
       echo ">> initrd	/boot/initramfs-${RELEASE}-${ARCH}-manjaro.img"
@@ -42,10 +42,10 @@ post_upgrade() {
   mkinitcpio -p linux${BASEVER}
   
   # update grub.cfg
-  if [ -f /usr/sbin/grub-mkconfig ]; then
-      grub-mkconfig -o /boot/grub/grub.cfg
+  if [ -f /usr/sbin/update-grub ]; then
+      update-grub
   else
-      echo "WARNING: It seems there is no bootloader installed - Your system might not boot."
+      echo "WARNING: It seems that grub is not installed - Your system might not boot."
       echo "Add followed initramfs files to your bootloader config:"
       echo ">> linux	/boot/vmlinuz-${RELEASE}-${ARCH}-manjaro"
       echo ">> initrd	/boot/initramfs-${RELEASE}-${ARCH}-manjaro.img"
@@ -58,7 +58,7 @@ post_remove() {
   rm -f /boot/initramfs-${RELEASE}-${ARCH}-manjaro-fallback.img
   
   # update grub.cfg
-  if [ -f /usr/sbin/grub-mkconfig ]; then
-      grub-mkconfig -o /boot/grub/grub.cfg
+  if [ -f /usr/sbin/update-grub ]; then
+      update-grub
   fi
 }
