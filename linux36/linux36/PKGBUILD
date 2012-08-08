@@ -33,10 +33,11 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-${_basekernel
         'aufs3-proc_map.patch'
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
+        'mfd-regulator-tps65217-Move-regulator-plat-data-handling-to-regulator.patch'
 )
 sha256sums=('eff67b92fb79e33b5f69c467ad02b384705fb5620e98f774356784a95e566f6a'
             #'82688c4751861b17d3e44dfe8ef3ca268c9a7dc604ffca590094d99d94b4d003'
-            'a2f4b64852244fbee2edfbfa35956e780b556580d3c99dae7345f1dd023c11b2'
+            'eecff5cfc9b2171a321364ecb9afc790eb232cdb686908d5f09d463283f69595'
             '30f02b618c33c0ac6bb7a608925098f8f6d5ae423978b6fb5a9b0c3c7fa02cf0'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
@@ -47,6 +48,7 @@ sha256sums=('eff67b92fb79e33b5f69c467ad02b384705fb5620e98f774356784a95e566f6a'
             'defa5c178453606f35c17b165633390b965870aa3f1cff7026da7da28f750a94'
             '06ad2294bb1833fa318b12485e5e3db19fe943dd9bb185825eedb6ccb2d22a43'
             'b9d79ca33b0b51ff4f6976b7cd6dbb0b624ebf4fbf440222217f8ffc50445de4'
+            'cef4bb1f6b7232b1101b37474bf4e95a513f470b2a87e70397aa318443a7e9ad'
 )
 
 build() {
@@ -64,6 +66,9 @@ build() {
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -Np1 -i "${srcdir}/change-default-console-loglevel.patch"
+
+  # upstream already
+  patch -Np1 -i "${srcdir}/mfd-regulator-tps65217-Move-regulator-plat-data-handling-to-regulator.patch"
 
   # add aufs3 support
   #patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"

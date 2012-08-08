@@ -1,0 +1,21 @@
+#
+# maintainer: Philip Müller <philm[at]manjaro[dog]org>
+# maintainer: Roland Singer <roland[at]manjaro[dog]org>
+
+pkgname=('manjaro-hotfixes')
+pkgver=0.7.92.1
+pkgrel=1
+pkgdesc="Manjaro Linux Hotfixes"
+arch=('any')
+url="http://www.manjaro.org"
+license=('GPL')
+source=('org.freedesktop.NetworkManager.Manjaro.conf')
+sha256sums=('d3bda2f77205742445580c6dab2490744a4b779daef149c9ac15726cdf211e11')
+
+package() {
+  cd ${pkgdir}
+
+  # fix nm-applet
+  install -d etc/dbus-1/system.d/
+  install -D -m644 ${srcdir}/org.freedesktop.NetworkManager.Manjaro.conf etc/dbus-1/system.d/
+}
