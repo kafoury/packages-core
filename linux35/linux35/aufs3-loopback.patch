@@ -1,7 +1,7 @@
-aufs3.x-rcN loopback patch
+aufs3.5 loopback patch
 
 diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index bbca966..8dfc881 100644
+index 3bba655..bc9351f 100644
 --- a/drivers/block/loop.c
 +++ b/drivers/block/loop.c
 @@ -500,7 +500,7 @@ out:
@@ -183,7 +183,7 @@ index bbca966..8dfc881 100644
  }
  
 diff --git a/fs/aufs/f_op.c b/fs/aufs/f_op.c
-index 5ec9a13..d1c1dac 100644
+index 9abe766..03ea4d4 100644
 --- a/fs/aufs/f_op.c
 +++ b/fs/aufs/f_op.c
 @@ -355,7 +355,7 @@ static ssize_t aufs_splice_read(struct file *file, loff_t *ppos,

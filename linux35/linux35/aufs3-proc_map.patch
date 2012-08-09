@@ -1,4 +1,4 @@
-aufs3.x-rcN proc_map patch
+aufs3.5 proc_map patch
 
 diff --git a/fs/proc/nommu.c b/fs/proc/nommu.c
 index b1822dd..8b29ab7 100644
@@ -55,10 +55,10 @@ index 1ccfa53..c39acb5 100644
  		ino = inode->i_ino;
  		pgoff = (loff_t)vma->vm_pgoff << PAGE_SHIFT;
 diff --git a/include/linux/mm_types.h b/include/linux/mm_types.h
-index dad95bd..4038f18 100644
+index 704a626..a8c9afa 100644
 --- a/include/linux/mm_types.h
 +++ b/include/linux/mm_types.h
-@@ -186,6 +186,7 @@ struct vm_region {
+@@ -196,6 +196,7 @@ struct vm_region {
  	unsigned long	vm_top;		/* region allocated to here */
  	unsigned long	vm_pgoff;	/* the offset in vm_file corresponding to vm_start */
  	struct file	*vm_file;	/* the backing file or NULL */
@@ -66,7 +66,7 @@ index dad95bd..4038f18 100644
  
  	int		vm_usage;	/* region usage count (access under nommu_region_sem) */
  	bool		vm_icache_flushed : 1; /* true if the icache has been flushed for
-@@ -245,6 +246,7 @@ struct vm_area_struct {
+@@ -255,6 +256,7 @@ struct vm_area_struct {
  	unsigned long vm_pgoff;		/* Offset (within vm_file) in PAGE_SIZE
  					   units, *not* PAGE_CACHE_SIZE */
  	struct file * vm_file;		/* File we map to (can be NULL). */
@@ -75,10 +75,10 @@ index dad95bd..4038f18 100644
  
  #ifndef CONFIG_MMU
 diff --git a/kernel/fork.c b/kernel/fork.c
-index ab5211b..576d844 100644
+index f00e319..df4b0fd 100644
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
-@@ -413,6 +413,8 @@ static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
+@@ -418,6 +418,8 @@ static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
  			struct address_space *mapping = file->f_mapping;
  
  			get_file(file);
@@ -88,10 +88,10 @@ index ab5211b..576d844 100644
  				atomic_dec(&inode->i_writecount);
  			mutex_lock(&mapping->i_mmap_mutex);
 diff --git a/mm/memory.c b/mm/memory.c
-index 1b7dc66..d3a8da0 100644
+index 2466d12..906bc23 100644
 --- a/mm/memory.c
 +++ b/mm/memory.c
-@@ -2650,6 +2650,8 @@ reuse:
+@@ -2658,6 +2658,8 @@ reuse:
  		/* file_update_time outside page_lock */
  		if (vma->vm_file)
  			file_update_time(vma->vm_file);
@@ -100,7 +100,7 @@ index 1b7dc66..d3a8da0 100644
  
  		return ret;
  	}
-@@ -3335,6 +3337,8 @@ static int __do_fault(struct mm_struct *mm, struct vm_area_struct *vma,
+@@ -3343,6 +3345,8 @@ static int __do_fault(struct mm_struct *mm, struct vm_area_struct *vma,
  		/* file_update_time outside page_lock */
  		if (vma->vm_file)
  			file_update_time(vma->vm_file);

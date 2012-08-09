@@ -10,8 +10,8 @@ pkgname=('linux35' 'linux35-headers')
 _kernelname=-MANJARO
 _basekernel=3.5
 _basever=35
-_aufs=20120618
-pkgver=${_basekernel}.0
+_aufs=20120730
+pkgver=${_basekernel}.1
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -19,13 +19,12 @@ license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl')
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
-        #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
+        "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config' 'config.x86_64' 'config.aufs'
         # standard config files for mkinitcpio ramdisk
         "${pkgname}.preset"
-        #"aufs${_basekernel}-${_aufs}.patch.bz2"
-        "aufs3.x-rcN-${_aufs}.patch.bz2"
+        "aufs${_basekernel}-${_aufs}.patch.bz2"
         'aufs3-base.patch'
         'aufs3-kbuild.patch'
         'aufs3-loopback.patch'
@@ -34,29 +33,31 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'change-default-console-loglevel.patch'
         'fix-acerhdf-1810T-bios.patch'
         'i915-fix-ghost-tv-output.patch'
+        'avmfritz-only-few-bytes-are-transfered-on-a-conn.patch'
 )
 sha256sums=('b985ce383f0cfd940d988d4c99a84899028327aca8c29b420678241f26fdb342'
-            #'82688c4751861b17d3e44dfe8ef3ca268c9a7dc604ffca590094d99d94b4d003'
-            '782874b9660ed4c179226d77ea28798d555123052429472037118b6804df2701'
-            '4e89cd2b9ba6d4cb4761879bcee4737e421e9b88713850ea4d2803e31c3953d8'
+            'b85aa8d09c6abbe1cc1318e73241be3539fe61ef429acc536b9569f8b9bc3165'
+            '1343d12f06f73ba37b8c6623e5802d03223e124375726fe2788ad0f3ff4ee2df'
+            'f458c74e745d9fd8895b2565b5092698d69b2c9e352f7e60ddf9ee8e6f31613a'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '7a59e9ed51ac1fbe168aed61d9441b3cbeb3d2f53685acbf8eea37fbc2464415'
-            '84e2693f7a044f6c8968b01a541ab104523ea91fd9407fb768c7228f6029c279'
-            '502a162d41e468a065e622b93885cfdaa07df520dd13451a21b5af1865269ca6'
-            '45ebdb5e74c678a855a96b84e6b108f517254d857591489f9beddcf47cfaaf9d'
-            'a41be2a40feb5da6f48599e722af3ae683f61f1d74a034524545690d92588ebd'
-            'db2d113168f67ce5cedf882eefdb84de980f8d4fb0754e6fe20a5583afa07998'
+            '65de7e2be030d08c47d490a985c19c9bb28181e899365fcb94d434610e25d28f'
+            'e214c467b7540ac5555dd14baa48baf1c6e222a907894a96fb9809d8d438487b'
+            '259b32348a2a5e21ea3a1e0fc9fe17ddcbc41828e01351ccb514e594a31a512c'
+            '8ccaec6ef0d92f034da7f4fdfb0014e9f8a6cd48da020710d7b7791e5ced286e'
+            '176a57988463d2782e96f50924908fca436926925ed6b351d495094f47d0fcd0'
+            'e0fb2734008ec0db548182164c730a51fee81802a720960d104c4e3d2c2c3025'
             'b9d79ca33b0b51ff4f6976b7cd6dbb0b624ebf4fbf440222217f8ffc50445de4'  
             '763eb938442e3112aa63c8e5153361254d9b2c9b20adce66c67892f14b89d1d4'
             '9ccadbe3eb30bb283af3eb869c3a4bdb764628854811cc616a2e02e9ef398705'
+            'df7856a2bcf7e0596c34b10caa4bab34542a0d98e1ba4ddb5ce8a1ae2510c8e8'
 )
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  #patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -82,9 +83,12 @@ build() {
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -Np1 -i "${srcdir}/change-default-console-loglevel.patch"
 
+  # fix avmfritz capi20 functionallity
+  # https://bugzilla.kernel.org/show_bug.cgi?id=45271
+  patch -Np1 -i "${srcdir}/avmfritz-only-few-bytes-are-transfered-on-a-conn.patch"
+
   # add aufs3 support
-  #patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
-  patch -Np1 -i "${srcdir}/aufs3.x-rcN-${_aufs}.patch"
+  patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
   patch -Np1 -i "${srcdir}/aufs3-base.patch"
   patch -Np1 -i "${srcdir}/aufs3-kbuild.patch"
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
