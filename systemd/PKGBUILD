@@ -6,8 +6,8 @@
 
 pkgbase=systemd
 pkgname=('systemd' 'libsystemd' 'systemd-tools' 'systemd-sysvcompat')
-pkgver=187
-pkgrel=4.1
+pkgver=188
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
@@ -22,7 +22,7 @@ source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'use-split-usr-path.patch'
         'os-release'
         'locale.sh')
-sha256sums=('1a3b338f00cc1ec8b1dcdafe6ce7928f016f70403190db72960df38731fbeed4'
+sha256sums=('e839ed6061db57933b956f5d6952d9ad9b5ec1608363269d627cfd58c363215b'
             '892ce43218e0a458981bbce451252c8987dc398e60b8de288e7542b8f2409c13'
             '99b8fa531115ae19b4411c82169f8b27bff90043cbdf895cf0e5cd7f5c4ffde8'
             'b6a7cd6512209ea6b53fec2ad4aff23573ecd36d698d7da8baa5c8278fa1a119'
@@ -94,8 +94,11 @@ package_systemd() {
   rm "$pkgdir/etc/systemd/system/getty.target.wants/getty@tty1.service"
   rmdir "$pkgdir/etc/systemd/system/getty.target.wants"
 
-  # fix systemd-analyze for python2. the 'plot' verb does not work
-  # with py3k due to a bug in python-cairo
+  ### get rid of RPM macros
+  rm -r "$pkgdir/etc/rpm/macros.systemd"
+ 
+  # can't use py3k yet with systemd-analyze -- the 'plot' verb will not work.
+  # https://pokersource.info/show_bug.cgi?id=50989
   sed -i '1s/python$/python2/' "$pkgdir/usr/bin/systemd-analyze"
 
   ### split off libsystemd (libs, includes, pkgconfig, man3)
@@ -148,7 +151,8 @@ package_systemd() {
   mv "$pkgdir"/usr/share/gir-1.0 usr/share
   mv "$pkgdir"/usr/share/gtk-doc/html/{g,lib}udev usr/share/gtk-doc/html
   mv "$pkgdir"/usr/share/man/man7/udev.7 usr/share/man/man7
-  mv "$pkgdir"/usr/share/man/man8/{systemd-{tmpfiles,udevd},udevadm}.8 usr/share/man/man8
+  mv "$pkgdir"/usr/share/man/man8/{systemd-tmpfiles,udevadm}.8 usr/share/man/man8
+  mv "$pkgdir"/usr/share/man/man8/systemd-udevd{,.service,{-control,-kernel}.socket}.8 usr/share/man/man8
   mv "$pkgdir"/usr/share/man/man1/systemd-{ask-password,delta,detect-virt,machine-id-setup}.1 usr/share/man/man1
   mv "$pkgdir"/usr/share/man/man5/{binfmt,modules-load,sysctl,tmpfiles}.d.5 usr/share/man/man5
   mv "$pkgdir"/usr/share/man/man5/{hostname,{vconsole,locale}.conf,crypttab}.5 usr/share/man/man5

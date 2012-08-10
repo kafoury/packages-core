@@ -24,33 +24,29 @@ source=("http://downloads.sourceforge.net/open-vm-tools/open-vm-tools-$pkgver-${
 md5sums=('91affb5b23db8abceff930613845f434'
          'ac9b8e3cb798f5056ca92767ec705117')
 
-build() {
-  _kernver=`pacman -Q linux35 | cut -d . -f 2 | cut -f 1 -d -`
-  KERNEL_RELEASE=`cat /usr/lib/modules/extramodules-3.${_kernver}-MANJARO/version`
+_extramodules=extramodules-3.5-MANJARO
+_kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 
+build() {
   cd "$srcdir/open-vm-tools-${pkgver}-${_pkgsubver}"
   sed -i 's|proc-3.2.8|procps|g' configure
   [ $NOEXTRACT -eq 1 ] || ./configure \
       --prefix=/usr \
       --without-x \
-      --with-linuxdir=/usr/lib/modules/$KERNEL_RELEASE
+      --with-linuxdir=/usr/lib/modules/$_kernver
 
   make -C modules modules
 }
 
 package() {
-  _kernver=`pacman -Q linux35 | cut -d . -f 2 | cut -f 1 -d -`
-  _extramodules=extramodules-3.${_kernver}-MANJARO
-  depends=("linux>=3.${_kernver}" "linux<3.`expr ${_kernver} + 1`")
-  KERNEL_VERSION=`cat /usr/lib/modules/extramodules-3.${_kernver}-MANJARO/version`
-  msg "Kernel = $KERNEL_VERSION"
+  depends=("linux35")
 
   cd "$srcdir/open-vm-tools-${pkgver}-${_pkgsubver}"
-  mkdir -p $pkgdir/usr/lib/modules/extramodules-3.${_kernver}-MANJARO/
+  mkdir -p $pkgdir/usr/lib/modules/${_extramodules}/
   for MOD in `find -type f -name '*.ko'`; do
-    install -Dm644 $MOD $pkgdir/usr/lib/modules/extramodules-3.${_kernver}-MANJARO/
+    install -Dm644 $MOD $pkgdir/usr/lib/modules/${_extramodules}/
   done
-  gzip $pkgdir/usr/lib/modules/extramodules-3.${_kernver}-MANJARO/*.ko
+  gzip $pkgdir/usr/lib/modules/${_extramodules}/*.ko
 
   install -D -m 644 ${srcdir}/modprobe.conf ${pkgdir}/etc/modprobe.d/${pkgname}.conf
   sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "${startdir}/${_pkgname}.install"

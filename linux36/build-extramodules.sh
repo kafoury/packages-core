@@ -13,7 +13,7 @@ rm -R ${pwd}/repo*
 echo 'building extramodules'
 cd ${pwd}/*bbswitch && makepkg --sign -s --noconfirm
 cd ${pwd}/*catalyst && makepkg --sign -s --noconfirm
-cd ${pwd}/*catalyst-legacy && makepkg --sign -s --noconfirm
+cd ${pwd}/*catalyst-legacy && makepkg --sign -d --noconfirm
 cd ${pwd}/*cdfs && makepkg --sign -s --noconfirm
 cd ${pwd}/*fcpci && makepkg --sign -s --noconfirm
 cd ${pwd}/*fcpcmcia && makepkg --sign -s --noconfirm
