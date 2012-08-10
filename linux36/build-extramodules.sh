@@ -9,7 +9,6 @@ fi
 
 echo 'cleaning environment'
 rm -R ${pwd}/*/{src,pkg} -f
-rm -R ${pwd}/repo*
 echo 'building extramodules'
 cd ${pwd}/*bbswitch && makepkg --sign -s --noconfirm
 cd ${pwd}/*catalyst && makepkg --sign -s --noconfirm
