@@ -25,7 +25,7 @@ cd ${pwd}/*rt3562sta && makepkg --sign -s --noconfirm
 cd ${pwd}/*vhba-module && makepkg --sign -s --noconfirm
 if [ "`uname -m`" = "x86_64" ]; then
    cd ${pwd}/*virtualbox-modules && makepkg --sign -s
-   sudo pacman -Sy gcc-libs binutils gcc --noconfirm
+   sudo pacman -Sy gcc-libs binutils gcc
 else
    cd ${pwd}/*virtualbox-modules && makepkg --sign -s --noconfirm
 fi
