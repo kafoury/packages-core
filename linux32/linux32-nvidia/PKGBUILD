@@ -7,10 +7,10 @@
 pkgname=('linux32-nvidia')
 _pkgname=nvidia
 groups=('linux32-extramodules')
-pkgver=302.17
+pkgver=304.37
 _extramodules=extramodules-3.2-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
-pkgrel=6
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.nvidia.com/"
 makedepends=('linux32-headers')
@@ -26,17 +26,13 @@ elif [ "$CARCH" = "x86_64" ]; then
     _arch='x86_64'
     _pkg="NVIDIA-Linux-${_arch}-${pkgver}-no-compat32"
     source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
-    sha256sums=('728c6c0c27f4a90186b47622416c28b492da84d28930cf3c4e01942644c04f71')
+    sha256sums=('f78118f6813235abb7fac57b6b92c5ec48a4956b1c9dda6433d6ff0375484ff6')
 fi
-
-source=(${source[@]} "nvidia-blacklist-vga-pmu-registers-256-304.diff")
-sha256sums=(${sha256sums[@]} '674a51e77beb3e076dd29b1d9a37ee23e1498ab128490ea2efb2140e45b44fde')
 
 build() {
     cd "${srcdir}"
     sh "${_pkg}.run" --extract-only
     cd "${_pkg}/kernel"
-    patch < "${srcdir}/nvidia-blacklist-vga-pmu-registers-256-304.diff"
     make SYSSRC=/usr/lib/modules/"${_kernver}/build" module
 }
 
