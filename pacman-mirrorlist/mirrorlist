@@ -1,7 +1,20 @@
 ##
 ## Manjaro Linux repository mirrorlist
-## Generated on 2012-03-28
+## Generated on 2012-08-15
 ##
 
-## Any
-Server = http://reponew.manjaro.org/$repo/$arch/bin
+
+## Germany
+# Server = http://mirrors.mycraft.eu/manjaro/$repo/$arch
+
+
+## Greece
+# Server = http://ftp.cc.uoc.gr/mirrors/linux/manjaro/$repo/$arch
+
+
+## United Kingdom
+# Server = http://repo.manjaro.org.uk/$repo/$arch
+
+
+## United States
+# Server = http://mirror.dacentec.com/manjaro/$repo/$arch

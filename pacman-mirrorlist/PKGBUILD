@@ -1,11 +1,12 @@
-# Maintainer: Guinux <nuxgui@gmail.com>
+# Maintainer: Guillaume <guillaume@manjaro.org>
+# Maintainer: Roland <roland@manjaro.org>
 
 pkgname=pacman-mirrorlist
-pkgver=20120329
+pkgver=20120815
 pkgrel=1
 pkgdesc="Manjaro Linux mirror list for use by pacman"
 arch=('any')
-url="https://git.manjaro.org/packages-sources/core/trees/master/manjaro-mirrorlist"
+url="https://git.manjaro.org/packages-sources/basis/trees/master/pacman-mirrorlist"
 license=('GPL')
 backup=(etc/pacman.d/mirrorlist)
 source=(mirrorlist)
@@ -15,4 +16,6 @@ build() {
   mkdir -p $pkgdir/etc/pacman.d
   install -m644 $srcdir/mirrorlist $pkgdir/etc/pacman.d/
 }
-md5sums=('e27ebb2e2fdacacdb257c46b108397b2')
+
+
+md5sums=('c44a793d0a202a367c31232e14a5904c')
