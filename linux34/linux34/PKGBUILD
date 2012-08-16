@@ -11,7 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.4
 _basever=34
 _aufs=20120730
-pkgver=${_basekernel}.8
+pkgver=${_basekernel}.9
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -36,7 +36,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.4.4-fix-backlight-regression.patch'
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
-            '02ed846bfe8fc87f49b04623db270a5c8d6aced75b20a0513da5897e7a5cd551'
+            '24b9286b0913d60b5c10a9e0b896b25dc5b302334cc62b18f8b28316127f2844'
             '7476f20652dab9aeb0d7635b7afb95ffbc54244ee9b4b4539fd6045f6a4e1dba'
             'fd2b343773283e488be2c11c8e9d688d601268765b04b6bb0cce304f9f5e34ef'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
