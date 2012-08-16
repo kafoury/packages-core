@@ -11,7 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.5
 _basever=35
 _aufs=20120730
-pkgver=${_basekernel}.1
+pkgver=${_basekernel}.2
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -36,7 +36,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'avmfritz-only-few-bytes-are-transfered-on-a-conn.patch'
 )
 sha256sums=('b985ce383f0cfd940d988d4c99a84899028327aca8c29b420678241f26fdb342'
-            'b85aa8d09c6abbe1cc1318e73241be3539fe61ef429acc536b9569f8b9bc3165'
+            '6a05003eb6bc8b899ecece926de3733494d56b352e485933e21809177107d45c'
             '1343d12f06f73ba37b8c6623e5802d03223e124375726fe2788ad0f3ff4ee2df'
             'f458c74e745d9fd8895b2565b5092698d69b2c9e352f7e60ddf9ee8e6f31613a'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
