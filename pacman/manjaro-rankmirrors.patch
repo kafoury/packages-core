@@ -8,7 +8,15 @@
  #
  #   This program is free software; you can redistribute it and/or modify
  #   it under the terms of the GNU General Public License as published by
-@@ -53,7 +54,7 @@ err() {
+@@ -42,6 +43,7 @@ usage() {
+ version() {
+ 	echo "rankmirrors (pacman) @PACKAGE_VERSION@"
+ 	echo "Copyright (c) 2009 Matthew Bruenig <matthewbruenig@gmail.com>."
++	echo "Modified for Manjaro by Philip Müller <philm@manajro.org>."
+ 	echo
+ 	echo "This is free software; see the source for copying conditions."
+ 	echo "There is NO WARRANTY, to the extent permitted by law."
+@@ -53,7 +55,7 @@ err() {
  	exit 1
  }
  
@@ -17,7 +25,7 @@
  # returns the fetching time, or timeout, or unreachable
  gettime() {
  	IFS=' ' output=( $(curl -s -m 10 -w "%{time_total} %{http_code}" "$1" -o/dev/null) )
-@@ -62,17 +63,17 @@ gettime() {
+@@ -62,21 +64,18 @@ gettime() {
  	echo "${output[0]}"
  }
  
@@ -35,7 +43,12 @@
  	local replacedurl="${strippedurl//'$arch'/$ARCH}"
  	if [[ ! $TARGETREPO ]]; then
 -		replacedurl="${replacedurl//'$repo'/core}"
+-		local tmp="${replacedurl%/*}"
+-		tmp="${tmp%/*}"
+-
+-		local reponame="${tmp##*/}"
 +		replacedurl="${replacedurl//'$repo'/platform}"
- 		local tmp="${replacedurl%/*}"
- 		tmp="${tmp%/*}"
- 
++		local reponame="platform"
+ 	else
+ 		replacedurl="${replacedurl//'$repo'/$TARGETREPO}"
+ 		local reponame="$TARGETREPO"
