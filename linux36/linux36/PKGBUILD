@@ -9,10 +9,10 @@ pkgbase=linux36
 pkgname=('linux36' 'linux36-headers')
 _kernelname=-MANJARO
 _basekernel=3.6
-_rc=-rc1
+_rc=-rc2
 _basever=36
-_aufs=20120730
-pkgver=3.6rc1
+_aufs=20120813
+pkgver=3.6rc2
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -35,20 +35,20 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-${_basekernel
         'change-default-console-loglevel.patch'
         'mfd-regulator-tps65217-Move-regulator-plat-data-handling-to-regulator.patch'
 )
-sha256sums=('eff67b92fb79e33b5f69c467ad02b384705fb5620e98f774356784a95e566f6a'
+sha256sums=('b178b63f8c09ad3ee3fe07942a855dae042cc8f6aaddd0e2ff7790c0db9efe04'
             #'82688c4751861b17d3e44dfe8ef3ca268c9a7dc604ffca590094d99d94b4d003'
-            'eecff5cfc9b2171a321364ecb9afc790eb232cdb686908d5f09d463283f69595'
-            '30f02b618c33c0ac6bb7a608925098f8f6d5ae423978b6fb5a9b0c3c7fa02cf0'
+            'b4907a2f2bcf4224cd41d1572fb8e3258aa94c5e7c327cd0a5607f115dc44db7'
+            '2cb66e4ac23d95591d410893cc93714ab0b5a4c4b18771c4dd48550bda6e44c9'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '4bb5ea74f33c4f87bcbae7c276dc2a1c6f17ede63e84fe2412d230fe226069dd'
-            '476ed2223d8036b2915b15b3d412e89bb4a66af8d05dd7553d4e6ad7def6e805'
-            '39d92082c36decf1a3fe464f26f0aca13958d8e3674689c7046db7d59760698b'
-            '79cb0860511174f5f67e031c92b357b0d765d1f10d423b89fc88cc10937b1675'
-            'defa5c178453606f35c17b165633390b965870aa3f1cff7026da7da28f750a94'
-            '06ad2294bb1833fa318b12485e5e3db19fe943dd9bb185825eedb6ccb2d22a43'
+            'd928be9d6826b0fedefd7be487252e28c4a4be26c3b14b2324faccb4d6c5b5a5'
+            'db6c30af3eb8139a1ef49bf1536bf8ba45d868be854c9ff29829494ab98da4cf'
+            '5a03971afe4a1532fb243368959ebf1d66ccc1110a5a138126b3ca5efd309824'
+            'a30be9aeec9843fdabbcdc0213b6b105b222adb6db615f875f23c2a02191120a'
+            'e071eec6da165981a6bcc9115b13938c43db9e79dba7600b890988e5ba4d8079'
+            'cb4aca86bd03a1b46bcacad8e03e254d3fa367bd81ae0c3bac9021ad2d934a4c'
             'b9d79ca33b0b51ff4f6976b7cd6dbb0b624ebf4fbf440222217f8ffc50445de4'
-            'cef4bb1f6b7232b1101b37474bf4e95a513f470b2a87e70397aa318443a7e9ad'
+            '006ef329d812f8477b38f7e676b434faf429a96b262807ed3617231bf6e360d5'
 )
 
 build() {
@@ -56,6 +56,9 @@ build() {
 
   # add upstream patch
   #patch -p1 -i "${srcdir}/patch-${pkgver}"
+
+  # not included yet
+  patch -Np1 -i "${srcdir}/mfd-regulator-tps65217-Move-regulator-plat-data-handling-to-regulator.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -66,9 +69,6 @@ build() {
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -Np1 -i "${srcdir}/change-default-console-loglevel.patch"
-
-  # upstream already
-  patch -Np1 -i "${srcdir}/mfd-regulator-tps65217-Move-regulator-plat-data-handling-to-regulator.patch"
 
   # add aufs3 support
   #patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
