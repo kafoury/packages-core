@@ -104,5 +104,5 @@ package_lirc-utils() {
   install -d "${pkgdir}/etc/lirc"
   
   # remove built modules
-  rm -r "${pkgdir}/usr/lib/"
+  rm -r "${pkgdir}/usr/lib/modules"
 }
