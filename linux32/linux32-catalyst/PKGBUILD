@@ -8,8 +8,9 @@ _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 pkgname=linux32-catalyst
 _pkgname=catalyst
 groups=('linux32-extramodules')
-pkgver=12.6
-pkgrel=8
+pkgver=12.8
+_amdver=8.982
+pkgrel=1
 pkgdesc="AMD/ATI Catalyst drivers for linux. fglrx kernel module only"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
@@ -19,14 +20,14 @@ makedepends=('gcc-libs' 'gcc>4.0.0' 'make' 'linux32-headers')
 conflicts=('linux32-catalyst-legacy')
 install=catalyst.install
 
-source=(http://www2.ati.com/drivers/linux/amd-driver-installer-${pkgver/./-}-x86.x86_64.run
+source=(http://www2.ati.com/drivers/linux/amd-driver-installer-${pkgver/./-}-x86.x86_64.zip
         #http://www2.ati.com/drivers/hotfix/catalyst_12.6_hotfixes/amd-driver-installer-8.98-x86.x86_64.zip
         ati_make.sh
         makefile_compat.patch)
 
-md5sums=('6bd4f0875202390ed7122696db29be77'
-	 '85be25933d15c5c0d914409cf4dcbf0a'
-	 '3e1b82bd69774ea808da69c983d6a43b')
+sha256sums=('62525173b2b7602aa4e7e46a109204d0f349abfbb135c86d03db5cd57642bb41'
+	 'e1d3cedbfc6a239d5d71458c458137f1a7404ebddfa838557d25c965dd49c845'
+	 'd344df75ffbe9bd899e288862f41983c2e24b5eff3e7e8cf02d4891eeb137fff')
 
 
 
@@ -39,7 +40,7 @@ build() {
 
 
     msg "Unpacking archive ..."
-    /bin/sh ./amd-driver-installer-${pkgver/./-}-x86.x86_64.run --extract archive_files
+    /bin/sh ./amd-driver-installer-${_amdver}-x86.x86_64.run --extract archive_files
     #/bin/sh ./amd-driver-installer-8.98-x86.x86_64.run --extract archive_files
 
 
