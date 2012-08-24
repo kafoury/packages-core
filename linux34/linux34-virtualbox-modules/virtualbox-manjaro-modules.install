@@ -1,17 +1,27 @@
+EXTRAMODULES='extramodules-3.4-MANJARO'
+VERSION='linux34'
+
 post_install() {
 cat << EOF
 ===> You may want to load vboxguest, vboxsf and vboxvideo
 EOF
-    EXTRAMODULES='extramodules-3.4-MANJARO'
     depmod $(cat /usr/lib/modules/$EXTRAMODULES/version)
+    echo "vboxguest" > /etc/modules-load.d/$VERSION-virtualbox-manjaro-modules.conf
+    echo "vboxsf" >> /etc/modules-load.d/$VERSION-virtualbox-manjaro-modules.conf
+    echo "vboxvideo" >> /etc/modules-load.d/$VERSION-virtualbox-manjaro-modules.conf
+
 }
 
 post_upgrade() {
-    EXTRAMODULES='extramodules-3.4-MANJARO'
     depmod $(cat /usr/lib/modules/$EXTRAMODULES/version)
+    echo "vboxguest" > /etc/modules-load.d/$VERSION-virtualbox-manjaro-modules.conf
+    echo "vboxsf" >> /etc/modules-load.d/$VERSION-virtualbox-manjaro-modules.conf
+    echo "vboxvideo" >> /etc/modules-load.d/$VERSION-virtualbox-manjaro-modules.conf
 }
 
 post_remove() {
-    EXTRAMODULES='extramodules-3.4-MANJARO'
     depmod $(cat /usr/lib/modules/$EXTRAMODULES/version)
+    echo "vboxguest" > /etc/modules-load.d/$VERSION-virtualbox-manjaro-modules.conf
+    echo "vboxsf" >> /etc/modules-load.d/$VERSION-virtualbox-manjaro-modules.conf
+    echo "vboxvideo" >> /etc/modules-load.d/$VERSION-virtualbox-manjaro-modules.conf
 }

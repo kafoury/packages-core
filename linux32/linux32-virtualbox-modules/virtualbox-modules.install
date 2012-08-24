@@ -1,19 +1,30 @@
+EXTRAMODULES='extramodules-3.2-MANJARO'
+VERSION='linux32'
+
 post_install() {
 /bin/cat << EOF
 ===> You must load vboxdrv module before starting VirtualBox:
 ===> # modprobe vboxdrv
 EOF
-    EXTRAMODULES='extramodules-3.2-MANJARO'
+
     depmod $(cat /usr/lib/modules/$EXTRAMODULES/version)
+    echo "vboxdrv" > /etc/modules-load.d/$VERSION-virtualbox-modules.conf
+    echo "vboxnetadp" >> /etc/modules-load.d/$VERSION-virtualbox-modules.conf
+    echo "vboxnetflt" >> /etc/modules-load.d/$VERSION-virtualbox-modules.conf
+    echo "vboxpci" >> /etc/modules-load.d/$VERSION-virtualbox-modules.conf
+
 }
 
 post_upgrade() {
-    EXTRAMODULES='extramodules-3.2-MANJARO'
     depmod $(cat /usr/lib/modules/$EXTRAMODULES/version)
     echo 'In order to use the new version, reload all virtualbox modules manually.'
+    echo "vboxdrv" > /etc/modules-load.d/$VERSION-virtualbox-modules.conf
+    echo "vboxnetadp" >> /etc/modules-load.d/$VERSION-virtualbox-modules.conf
+    echo "vboxnetflt" >> /etc/modules-load.d/$VERSION-virtualbox-modules.conf
+    echo "vboxpci" >> /etc/modules-load.d/$VERSION-virtualbox-modules.conf
 }
 
 post_remove() {
-    EXTRAMODULES='extramodules-3.2-MANJARO'
     depmod $(cat /usr/lib/modules/$EXTRAMODULES/version)
+    rm /etc/modules-load.d/$VERSION-virtualbox-modules.conf
 }

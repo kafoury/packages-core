@@ -7,7 +7,7 @@
 pkgbase=linux34-virtualbox-modules
 pkgname=('linux34-virtualbox-modules' 'linux34-virtualbox-manjaro-modules')
 pkgver=4.1.18
-pkgrel=3
+pkgrel=4
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
@@ -73,6 +73,7 @@ package_linux34-virtualbox-manjaro-modules(){
     find "${pkgdir}" -name '*.ko' -exec gzip -9 {} \;
 
     sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='${_extramodules}'/" "$startdir/virtualbox-manjaro-modules.install"
+    sed -i -e "s/VERSION='.*'/VERSION='linux32'/" "$startdir/virtualbox-manjaro-modules.install"
 }
 
 package_linux34-virtualbox-modules(){
@@ -102,4 +103,5 @@ package_linux34-virtualbox-modules(){
     find "${pkgdir}" -name '*.ko' -exec gzip -9 {} \;
 
     sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='${_extramodules}'/" "$startdir/virtualbox-modules.install"
+    sed -i -e "s/VERSION='.*'/VERSION='linux32'/" "$startdir/virtualbox-modules.install"
 }
