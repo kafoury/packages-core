@@ -5,7 +5,7 @@
 
 pkgname=systemd-manjaro-units
 pkgver=20120704
-pkgrel=1
+pkgrel=2
 pkgdesc="Manjaro specific Systemd unit files"
 arch=('any')
 license=('MIT')
@@ -35,7 +35,7 @@ package() {
   make -C "$srcdir/$dirname" DESTDIR="$pkgdir" install
   
   install -Dm644 "${srcdir}/gdm.service" "${pkgdir}/usr/lib/systemd/system/gdm.service"
-  install -Dm644 "${srcdir}/kdm.service" "${pkgdir}/usr/lib/systemd/system/kdm.service"
+  install -Dm644 "${srcdir}/kdm.service" "${pkgdir}/usr/lib/systemd/system/kdm-plymouth.service"
   install -Dm644 "${srcdir}/slim.service" "${pkgdir}/usr/lib/systemd/system/slim-plymouth.service"
   # disabled due broken
   #install -Dm644 "${srcdir}/lxdm.service" "${pkgdir}/usr/lib/systemd/system/lxdm.service"

@@ -9,10 +9,10 @@ pkgbase=linux36
 pkgname=('linux36' 'linux36-headers')
 _kernelname=-MANJARO
 _basekernel=3.6
-_rc=-rc2
+_rc=-rc3
 _basever=36
 _aufs=20120813
-pkgver=3.6rc2
+pkgver=3.6rc3
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -35,7 +35,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-${_basekernel
         'change-default-console-loglevel.patch'
         'mfd-regulator-tps65217-Move-regulator-plat-data-handling-to-regulator.patch'
 )
-sha256sums=('b178b63f8c09ad3ee3fe07942a855dae042cc8f6aaddd0e2ff7790c0db9efe04'
+sha256sums=('823303b560ab16cd7a1b12a3c1437d678c940f78afe140a63c5b2a0f6087d0a1'
             #'82688c4751861b17d3e44dfe8ef3ca268c9a7dc604ffca590094d99d94b4d003'
             'b4907a2f2bcf4224cd41d1572fb8e3258aa94c5e7c327cd0a5607f115dc44db7'
             '2cb66e4ac23d95591d410893cc93714ab0b5a4c4b18771c4dd48550bda6e44c9'
