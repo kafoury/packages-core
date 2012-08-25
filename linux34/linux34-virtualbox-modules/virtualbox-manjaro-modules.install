@@ -1,5 +1,5 @@
 EXTRAMODULES='extramodules-3.4-MANJARO'
-VERSION='linux34'
+VERSION='linux32'
 
 post_install() {
 cat << EOF

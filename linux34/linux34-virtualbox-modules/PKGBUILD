@@ -6,8 +6,8 @@
 
 pkgbase=linux34-virtualbox-modules
 pkgname=('linux34-virtualbox-modules' 'linux34-virtualbox-manjaro-modules')
-pkgver=4.1.18
-pkgrel=4
+pkgver=4.1.20
+pkgrel=1
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
@@ -15,7 +15,7 @@ makedepends=('libstdc++5' 'bin86' 'dev86' 'iasl' 'libxslt' 'libxml2' 'libpng' 'l
 [[ $CARCH == "x86_64" ]] && makedepends=("${makedepends[@]}" 'gcc-multilib' 'lib32-glibc')
 source=(http://download.virtualbox.org/virtualbox/${pkgver}/VirtualBox-${pkgver}.tar.bz2
          LocalConfig.kmk 60-vboxguest.rules)
-sha256sums=('e650e4fdc23581b9edc0e5d5705cc596c76796851ebf65ccda0edb8e413fa3b7'
+sha256sums=('b132dbc5c6e9ed77aba737ec35b488ac152aa362c3ad49d466897bc410324aeb'
             '81fb0837385e034b2eee03c94a80708557e5e070cc5b84fd9dbd9ace80c075ba'
             '033c597e0f5285d2ddb0490868e5b6f945f45c7b1b1152a02a9e6fea438b2c95')
 
