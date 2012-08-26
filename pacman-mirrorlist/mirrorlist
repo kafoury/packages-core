@@ -1,8 +1,10 @@
 ##
 ## Manjaro Linux repository mirrorlist
-## Generated on 2012-08-15
+## Generated on 2012-08-26
 ##
 
+## France
+# Server = http://manjarolinux.polymorf.fr/$repo/$arch
 
 ## Germany
 # Server = http://mirrors.mycraft.eu/manjaro/$repo/$arch
