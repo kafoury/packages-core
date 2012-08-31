@@ -6,7 +6,7 @@ post_install() {
     echo "Copying /boot/grub/grub.cfg.pacsave to /boot/grub/grub.cfg"
     install -D -m0644 /boot/grub/grub.cfg.pacsave /boot/grub/grub.cfg
   else
-    grub-mkconfig -o /boot/grub/grub.cfg
+    update-grub
   fi
 
   for file in ${filelist[@]}; do
@@ -15,7 +15,7 @@ post_install() {
 }
 
 post_upgrade() {
-  grub-mkconfig -o /boot/grub/grub.cfg
+  update-grub
   
   for file in ${filelist[@]}; do
     install-info ${infodir}/${file}.gz ${infodir}/dir 2> /dev/null
