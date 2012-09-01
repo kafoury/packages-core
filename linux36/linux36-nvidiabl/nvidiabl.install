@@ -3,12 +3,12 @@ VERSION='linux36'
 
 post_install() {
     depmod $(cat /usr/lib/modules/$EXTRAMODULES/version)
-    echo "vboxdrv" > /etc/modules-load.d/$VERSION-nvidiabl.conf
+    echo "nvidiabl" > /etc/modules-load.d/$VERSION-nvidiabl.conf
 }
 
 post_upgrade() {
     depmod $(cat /usr/lib/modules/$EXTRAMODULES/version)
-    echo "vboxdrv" > /etc/modules-load.d/$VERSION-nvidiabl.conf
+    echo "nvidiabl" > /etc/modules-load.d/$VERSION-nvidiabl.conf
 }
 
 
