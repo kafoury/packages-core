@@ -1,0 +1,18 @@
+EXTRAMODULES='extramodules-3.5-MANJARO'
+VERSION='linux35'
+
+post_install() {
+    depmod $(cat /usr/lib/modules/$EXTRAMODULES/version)
+    echo "vboxdrv" > /etc/modules-load.d/$VERSION-nvidiabl.conf
+}
+
+post_upgrade() {
+    depmod $(cat /usr/lib/modules/$EXTRAMODULES/version)
+    echo "vboxdrv" > /etc/modules-load.d/$VERSION-nvidiabl.conf
+}
+
+
+post_remove() {
+    depmod $(cat /usr/lib/modules/$EXTRAMODULES/version)
+    rm /etc/modules-load.d/$VERSION-nvidiabl.conf
+}
