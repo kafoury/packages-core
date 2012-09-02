@@ -1,5 +1,5 @@
 EXTRAMODULES='extramodules-3.6-MANJARO'
-VERSION='linux32'
+VERSION='linux36'
 
 post_install() {
 /bin/cat << EOF

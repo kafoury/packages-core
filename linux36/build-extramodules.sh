@@ -19,6 +19,7 @@ cd ${pwd}/*fcpcmcia && makepkg --sign -s --noconfirm
 cd ${pwd}/*lirc && makepkg --sign -s --noconfirm
 cd ${pwd}/*ndiswrapper && makepkg --sign -s --noconfirm
 cd ${pwd}/*nvidia && makepkg --sign -s --noconfirm
+cd ${pwd}/*nvidiabl && makepkg --sign -s --noconfirm
 cd ${pwd}/*open-vm-tools-modules && makepkg --sign -s --noconfirm
 cd ${pwd}/*r8168 && makepkg --sign -s --noconfirm
 cd ${pwd}/*rt3562sta && makepkg --sign -s --noconfirm
