@@ -2,8 +2,8 @@
 # Tobias Powalowski <tpowa@archlinux.org>
 # Thomas Baechler <thomas@archlinux.org>
 
-# Maintainer: Guinux <nuxgui@gmail.com>
-# Co-Maintainer: Clittle <philm@manjarolinux.org>
+# Maintainer: Philip Müller <philm@manjaro.org>
+# Co-Maintainer: Guinux <nuxgui@gmail.com>
 
 pkgbase=linux34
 pkgname=('linux34' 'linux34-headers')
@@ -12,7 +12,7 @@ _basekernel=3.4
 _basever=34
 _aufs=20120730
 pkgver=${_basekernel}.10
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -20,6 +20,7 @@ makedepends=('xmlto' 'docbook-xsl')
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
+        "https://github.com/mjanusz/homepage/raw/master/projects/fbcondecor/fbcondecor-0.9.6-3.5-rc3.patch"
         # the main kernel config files
         'config' 'config.x86_64' 'config.aufs'
         # standard config files for mkinitcpio ramdisk
@@ -38,8 +39,9 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             '30467c7dc2f6eac209f5216624144960543a19c777d1ae7e4e72e8c8f43fd400'
-            '7476f20652dab9aeb0d7635b7afb95ffbc54244ee9b4b4539fd6045f6a4e1dba'
-            'fd2b343773283e488be2c11c8e9d688d601268765b04b6bb0cce304f9f5e34ef'
+            '645032cea4da3639c48570e3bca299968bb12ae78857d6389bb229c85996548e'
+            '0b07c79a1fc8854a3193bd8dbaf278d45f635dd008d22163651884c5d31b18d2'
+            'e11a8cdd5d4e4c6da36d2211be08268129533886de3496b69906fcf518e259f6'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
             '603350d86962225e23f8cc212dddf30855f46d4fa139987c9d783f3791308ef1'
@@ -99,6 +101,9 @@ build() {
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
   patch -Np1 -i "${srcdir}/aufs3-proc_map.patch"
   patch -Np1 -i "${srcdir}/aufs3-standalone.patch"
+
+  # add fbcondecor
+  patch -Np1 -i ${srcdir}/fbcondecor-0.9.6-3.5-rc3.patch
 
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config
