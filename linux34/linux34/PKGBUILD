@@ -12,7 +12,7 @@ _basekernel=3.4
 _basever=34
 _aufs=20120730
 pkgver=${_basekernel}.10
-pkgrel=2
+pkgrel=3
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -40,8 +40,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             '30467c7dc2f6eac209f5216624144960543a19c777d1ae7e4e72e8c8f43fd400'
             '645032cea4da3639c48570e3bca299968bb12ae78857d6389bb229c85996548e'
-            '0b07c79a1fc8854a3193bd8dbaf278d45f635dd008d22163651884c5d31b18d2'
-            'e11a8cdd5d4e4c6da36d2211be08268129533886de3496b69906fcf518e259f6'
+            '5f735c9975c90c43411109e5010b72dd80e653d751dfa744c4398050d1f1abe9'
+            '858d7c687565cbe8cc4717a4c1bc454d287d7335796783e030c321050ca69c91'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
             '603350d86962225e23f8cc212dddf30855f46d4fa139987c9d783f3791308ef1'
