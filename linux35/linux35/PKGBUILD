@@ -12,7 +12,7 @@ _basekernel=3.5
 _basever=35
 _aufs=20120813
 pkgver=${_basekernel}.3
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -31,8 +31,9 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'aufs3-proc_map.patch'
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
-        'fix-acerhdf-1810T-bios.patch'
-        'i915-fix-ghost-tv-output.patch'
+        'alsa-powersave-3.5.x.patch'
+        'watchdog-3.5.x.patch'
+        'i915-i2c-crash-3.5.x.patch'
 )
 sha256sums=('b985ce383f0cfd940d988d4c99a84899028327aca8c29b420678241f26fdb342'
             '79a9464a0a3fc242794394e0593634fa44b696a61e3364a42d1e9d13e9f2750d'
@@ -47,8 +48,9 @@ sha256sums=('b985ce383f0cfd940d988d4c99a84899028327aca8c29b420678241f26fdb342'
             '176a57988463d2782e96f50924908fca436926925ed6b351d495094f47d0fcd0'
             'e0fb2734008ec0db548182164c730a51fee81802a720960d104c4e3d2c2c3025'
             'b9d79ca33b0b51ff4f6976b7cd6dbb0b624ebf4fbf440222217f8ffc50445de4'  
-            '763eb938442e3112aa63c8e5153361254d9b2c9b20adce66c67892f14b89d1d4'
-            '9ccadbe3eb30bb283af3eb869c3a4bdb764628854811cc616a2e02e9ef398705'
+            'bab85b2bb775d9db4585336707cd619fe1cfd8c5959368a5642a0f9c13acf0b8'
+            '3b285aa62940908ef9dd2a72f81c28fd2c8102367188ef349509ff0f7d7f4fa8'
+            'bc9be7e4e5bc81aa30754a96f6a94c2e6eb6a147165a2ac50972c1fd59ef9964'
 )
 
 build() {
@@ -62,19 +64,17 @@ build() {
   # enable only if you have "gen-stable-queue-patch.sh" executed before
   #patch -Np1 -i "${srcdir}/../prepatch-${_basekernel}-`date +%Y%m%d`"
 
-  # Some chips detect a ghost TV output
-  # mailing list discussion: http://lists.freedesktop.org/archives/intel-gfx/2011-April/010371.html
-  # Arch Linux bug report: FS#19234
-  #
-  # It is unclear why this patch wasn't merged upstream, it was accepted,
-  # then dropped because the reasoning was unclear. However, it is clearly
-  # needed.
-  patch -Np1 -i "${srcdir}/i915-fix-ghost-tv-output.patch"
+  # fix alsa powersave bug, probably fixed in 3.5.4
+  # https://bugs.archlinux.org/task/31255
+  patch -Np1 -i  "${srcdir}/alsa-powersave-3.5.x.patch"
 
-  # Patch submitted upstream, waiting for inclusion:
-  # https://lkml.org/lkml/2012/2/19/51
-  # add support for latest bios of Acer 1810T acerhdf module
-  patch -Np1 -i "${srcdir}/fix-acerhdf-1810T-bios.patch"
+  # fix broken watchdog
+  # https://bugzilla.kernel.org/show_bug.cgi?id=44991
+  patch -Np1 -i "${srcdir}/watchdog-3.5.x.patch"
+
+  # fix i915 i2c crash
+  # https://bugzilla.kernel.org/show_bug.cgi?id=46381
+  patch -Np1 -i "${srcdir}/i915-i2c-crash-3.5.x.patch"
 
   # set DEFAULT_CONSOLE_LOGLEVEL to 4 (same value as the 'quiet' kernel param)
   # remove this when a Kconfig knob is made available by upstream
@@ -181,11 +181,11 @@ package_linux35() {
   mkdir -p "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--MANJARO}"
   echo "${_kernver}" > "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--MANJARO}/version"
 
-  # move module tree /lib -> /usr/lib
-  mv "$pkgdir/lib" "$pkgdir/usr"
-
   # Now we call depmod...
   depmod -b "$pkgdir" -F System.map "$_kernver"
+
+  # move module tree /lib -> /usr/lib
+  mv "$pkgdir/lib" "$pkgdir/usr"
 }
 
 package_linux35-headers() {

@@ -1,8 +1,9 @@
 # Maintainer: Guillaume <guillaume@manjaro.org>
 # Maintainer: Roland <roland@manjaro.org>
+# Maintainer: Philip Müller <philm@manjaro.org>
 
 pkgname=pacman-mirrorlist
-pkgver=20120826
+pkgver=20120911
 pkgrel=1
 pkgdesc="Manjaro Linux mirror list for use by pacman"
 arch=('any')
@@ -10,7 +11,7 @@ url="https://git.manjaro.org/packages-sources/basis/trees/master/pacman-mirrorli
 license=('GPL')
 backup=(etc/pacman.d/mirrorlist)
 source=(mirrorlist)
-sha256sums=('95a4e0a3acab8175da388defd2a420c9258fd8e1bb2e9865324b851f89161234')
+sha256sums=('f584f452e628ca55dfba5220c57c947dfc3de10864a1eb402ee827a6bb300044')
 
 build() {
   mkdir -p $pkgdir/etc/pacman.d
