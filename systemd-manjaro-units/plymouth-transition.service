@@ -1,9 +1,0 @@
-[Unit]
-Description=Plymouth transition
-Conflicts=plymouth-quit.service
-
-[Service]
-ExecStart=/usr/bin/wait-and-quit_plymouth
-
-[Install]
-WantedBy=graphical.target

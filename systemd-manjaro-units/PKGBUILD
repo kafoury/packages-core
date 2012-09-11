@@ -5,35 +5,23 @@
 
 pkgname=systemd-manjaro-units
 pkgver=20120704
-pkgrel=3
+pkgrel=4
 pkgdesc="Manjaro specific Systemd unit files"
 arch=('any')
 license=('MIT')
-depends=()
+depends=('plymouth')
 conflicts=('systemd-httpd-units')
 provides=('systemd-httpd-units')
 replaces=('systemd-httpd-units')
 install=systemd-manjaro-units.install
 source=("systemd-arch-units-$pkgver.tar.gz::https://www.github.com/falconindy/systemd-arch-units/tarball/$pkgver"
-        'gdm.service'
-        'kdm.service'
-        'slim.service'
-        'lxdm.service'
         'rc-local.service'
         'rc-local-shutdown.service'
-        'plymouth-transition.service'
-        'wait-and-quit_plymouth'
         'httpd.conf'
         'httpd.service')
 sha256sums=('6b45a0c607a864e051a0b9f9f413a079f1d2498498eaa11be4d6834f0dcace69'
-            '7c69211f2acb84e3d0e98da0db60462abf970653e1397e1a73a9436a4feb6907'
-            'a12eb9a3e5952d331052541d82c4d5921e0555921dccb67cff580ab34e99ea19'
-            'fcd0a794b4f84f839c4ba282a8ced9e0e0dff09230dea38a9217cfa997bc1cfe'
-            '28ce9532fa61c85450e1e867f9a805a9432f4b6dbeab5036f3ca79efdcf543d7'
             '2e27fd62ec5e579e65f779710db2ddb10adf744077caabc2c15b44d040d0fc97'
             '308cd05122a3d30529e74b8562f89ee8abda9b40e4c2f890262ccb25097087b0'
-            'ce57c64b9115a7896101fa009594976e62d04f892b130a132a9b8dc3bb59941a'
-            '605122b2e4a96f40ccfb4bd34b4d7f12df2b7a3ac6292b74f3c943c64ddcc9fd'
             '15cb5d58c9693ad432df4350e260154e492d247c85a7e1d7e6dd80c9a3c58d81'
             '70732bc6b45dd8a35738c3c1b570703593e27001df87d882964eb671a6362028')
             
@@ -41,15 +29,9 @@ package() {
   dirname=$(tar tf "$srcdir/systemd-arch-units-$pkgver.tar.gz" | sed 1q)
   make -C "$srcdir/$dirname" DESTDIR="$pkgdir" install
   
-  install -Dm644 "${srcdir}/gdm.service" "${pkgdir}/usr/lib/systemd/system/gdm.service"
-  install -Dm644 "${srcdir}/kdm.service" "${pkgdir}/usr/lib/systemd/system/kdm-plymouth.service"
-  install -Dm644 "${srcdir}/slim.service" "${pkgdir}/usr/lib/systemd/system/slim-plymouth.service"
-  # disabled due broken
-  #install -Dm644 "${srcdir}/lxdm.service" "${pkgdir}/usr/lib/systemd/system/lxdm.service"
+  ln -sf /usr/lib/systemd/system/gdm-plymouth.service "${pkgdir}/usr/lib/systemd/system/gdm.service"
   install -Dm644 "${srcdir}/rc-local.service" "${pkgdir}/usr/lib/systemd/system/rc-local.service"
   install -Dm644 "${srcdir}/rc-local-shutdown.service" "${pkgdir}/usr/lib/systemd/system/rc-local-shutdown.service"
-  install -Dm644 "${srcdir}/plymouth-transition.service" "${pkgdir}/usr/lib/systemd/system/plymouth-transition.service"
-  install -Dm755 "${srcdir}/wait-and-quit_plymouth" "${pkgdir}/usr/bin/wait-and-quit_plymouth"
   install -Dm644 "${srcdir}/httpd.service" "${pkgdir}/usr/lib/systemd/system/httpd.service"
   install -Dm644 "${srcdir}/httpd.conf" "${pkgdir}/etc/tmpfiles.d/httpd.conf"
 }
