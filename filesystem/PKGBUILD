@@ -2,48 +2,31 @@
 # Tom Gundersen <teg@jklm.no>
 
 # Maintainer: Guinux <nuxgui@gmail.com>
+# Maintainer: Roland <roland@manjaro.org>
 
 pkgname=filesystem
-pkgver=2012.07
-pkgrel=2
+pkgver=2012.8
+pkgrel=1
 pkgdesc='Base filesystem'
 arch=('any')
 license=('GPL')
-url='http://www.manjarolinux.org'
+url='http://www.manjaro.org'
 groups=('base')
 install='filesystem.install'
+makedepends=('asciidoc')
 depends=('iana-etc' 'bash' 'coreutils')
 backup=('etc/fstab' 'etc/crypttab' 'etc/group' 'etc/hosts' 'etc/ld.so.conf' 'etc/passwd'
         'etc/shadow' 'etc/gshadow' 'etc/resolv.conf' 'etc/motd' 'etc/nsswitch.conf'
         'etc/shells' 'etc/host.conf' 'etc/securetty' 'etc/profile' 'etc/issue' 'etc/rc.local'
         'etc/rc.local.shutdown' 'etc/hostname' 'etc/vconsole.conf' 'etc/locale.conf' 'etc/modules-load.d/modules.conf')
 source=('group' 'issue' 'nsswitch.conf' 'securetty' 'host.conf' 'ld.so.conf'
-        'passwd' 'shadow' 'fstab' 'crypttab' 'hosts' 'motd' 'resolv.conf' 'shells'
-        'gshadow' 'profile' 'modprobe.d.usb-load-ehci-first' 'rc.local' 'rc.local.shutdown'
+        'passwd' 'shadow' 'fstab' 'crypttab' 'hosts' 'motd' 'os-release' 'resolv.conf'
+        'shells' 'gshadow' 'profile' 'modprobe.d.usb-load-ehci-first' 'locale.sh' 'rc.local' 'rc.local.shutdown'
         'hostname' 'locale.conf' 'vconsole.conf' 'modules.conf')
-sha256sums=('6dd21918391a2f66e1e68bc8651ff65b951860bb84faba958d0b2243a9f5b630'
-            'aa59e888f2f4b6f565ae7f4057b987bfde07890a2ccde438abee2b93a93d96c0'
-            '504d3ac929bcee8a609a3b4f1b67e9d7bb061433b51229c00b807665237b1bb7'
-            'f7b38167196943d8fb9d2e75358c7262d5fe1082b257c4c8caffe3b6de429cb5'
-            'f21f35e7d3083aeee19beb48478130d119b2572922a4889df98326d551540eda'
-            '00d5d103837480d26cd350753382c3211df6bc304ee59ffaab130fad108f6a86'
-            '61f3203e6b7d666e22d6d4d75f3c688640c2905186641aaa285d332db0e1456a'
-            '34b820ca01b9ad7e4792e92122b39e891e647c016b7ecccb220d6f4e72eee5c7'
-            '37700fd6a4a18a00c75cd86e3c55f7affaed937a88b95dee6c7dda3d46cd4f5e'
-            'ea8c67a34a0a8a41beabe3ceb5733c9e8b84b27c569c11ddbfd8395fce99d8dd'
-            '13d1f59c1d0860bf43da996e2b9a6ab2744791614241ed9a1376b7e7e30de3a8'
-            'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
-            '74d2be3dd69600bcf0da751a1804a386bf4ad143b76d79c336acaa5c600e7991'
-            '6cff886fe9e23096d5f67b7857a747ebaf10431be5a2afc40236de5ad13a654f'
-            '8768ae609137f9273f908a305f2fde7b1508b1150b38702481c14f93bfd01ed7'
-            'd8d4d3eb8e2bc1f64de5b0d33cd6864558c0fe149cedb479fad36e0523060e60'
-            '90fb123aa8c0176bc144322b585bb889181c437542ddbe546af43e11b95be6ab'
-            '156b75b3470c2f73efca084b7ee681eca01508df3d8e9ba0c9325162b5d80f11'
-            '4367e4f2b40237448cad791410a1acaedcd46f5504827840aa85214fad1b546c'
-            '295a881e674d14ee0c0e77f25236a8fd99a9453e5c33f635f55d2e8c6959c7ea'
-            'bc538cf42f96e24b8ec94c32242b6891de245e0207fab6937bfce3e23942742b'
-            'cd4a55177020a436254bb4baf84e068b98b3b0f6644173a7c853d58d236e00f1'
-            'a8a1cd5c81b11498d43ba0e0b5de53de6f154a395d54171f44d2874b4f659053')
+
+build() {
+	cd ${srcdir}
+}
 
 package() {
 	cd ${pkgdir}
@@ -63,13 +46,14 @@ package() {
 
 	# setup /etc
 	install -d etc/{ld.so.conf.d,skel,profile.d}
-	for f in fstab group host.conf hosts issue ld.so.conf motd nsswitch.conf passwd resolv.conf securetty shells profile hostname locale.conf vconsole.conf; do
+	for f in fstab group host.conf hosts issue ld.so.conf motd nsswitch.conf os-release passwd resolv.conf securetty shells profile hostname locale.conf vconsole.conf; do
 		install -m644 ${srcdir}/${f} etc/
 	done
 	ln -s /proc/self/mounts etc/mtab
 	for f in gshadow shadow crypttab; do
 		install -m600 ${srcdir}/${f} etc/
 	done
+
 
 	# add modules-load.d/modules
 	install -D -m644 ${srcdir}/modules.conf etc/modules-load.d/modules.conf
@@ -81,7 +65,9 @@ package() {
 	# Create the manjaro-release file
 	echo "Manjaro Linux" > ${pkgdir}/etc/manjaro-release
 
+
 	install -D -m644 ${srcdir}/modprobe.d.usb-load-ehci-first usr/lib/modprobe.d/usb-load-ehci-first.conf
+	install -m755 ${srcdir}/locale.sh etc/profile.d/locale.sh
 
 	# setup /var
 	for d in cache/man local opt log/old lib/misc empty; do
@@ -91,7 +77,6 @@ package() {
 	# allow setgid games to write scores
 	install -d -m775 -g games var/games
 	ln -s spool/mail var/mail
-
 	ln -s ../run var/run
 	ln -s ../run/lock var/lock
 
@@ -114,3 +99,31 @@ package() {
 	done
 	ln -s ../man usr/local/share/man
 }
+
+
+
+md5sums=('45940618da782cc391c59f88ab3333c3'
+         'd87f36842a580ff7bb91a4dee2c66507'
+         '13753e4e0964f3652b0cc60a28528bdf'
+         '4c4540eeb748bf1f71d631b8c1dcf0b3'
+         'f28150d4c0b22a017be51b9f7f9977ed'
+         '6e488ffecc8ba142c0cf7e2d7aeb832e'
+         '8a9042a2cedf6b6b47eb8973f14289cb'
+         'b8355d9d2782f424f4cedcf682651be0'
+         'ca716f853860199c1286e7939b2f2666'
+         '1745349eb24ed21b4cfaa6f423bddb76'
+         '7bc65f234dfb6abf24e7c3b03e86f4ff'
+         'd41d8cd98f00b204e9800998ecf8427e'
+         '6b52a629b718789cdc40646f9d9842d5'
+         '6f48288b6fcaf0065fcb7b0e525413e0'
+         '22518e922891f9359f971f4f5b4e793c'
+         'f95416882cef800edef08382a1176b7d'
+         'f3b6ae7db8adffaaa4bffc6099dcbd50'
+         'a8a962370cd0128465d514e6a1f74130'
+         '3807d07215d9116331fe1cf8feeaa0f8'
+         'bd236a57bc00aa4727b98c5ae401c457'
+         '669ce6d766dd9deb86686219f3763fe4'
+         'f985ed56bce013283faa97152d6e8565'
+         '53d73274b6bdbe4837e313bca18539fe'
+         '37cebc2d300c3099e91d388adbf11231'
+         '5219472673582f31fd068ae328ec1145')

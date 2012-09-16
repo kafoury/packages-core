@@ -7,7 +7,7 @@
 pkgbase=systemd
 pkgname=('systemd' 'libsystemd' 'systemd-tools' 'systemd-sysvcompat')
 pkgver=189
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
@@ -19,17 +19,7 @@ source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-install-udev'
         'initcpio-install-timestamp'
         '0001-Reinstate-TIMEOUT-handling.patch'
-        'use-split-usr-path.patch'
-        'os-release'
-        'locale.sh')
-sha256sums=('fec0efd82c9f1bdff6cb9d9811c00830ed890dbe915e79c90ae306cdbd8c4529'
-            '892ce43218e0a458981bbce451252c8987dc398e60b8de288e7542b8f2409c13'
-            '99b8fa531115ae19b4411c82169f8b27bff90043cbdf895cf0e5cd7f5c4ffde8'
-            'b6a7cd6512209ea6b53fec2ad4aff23573ecd36d698d7da8baa5c8278fa1a119'
-            'd6e4f76dd01ce21e84b99586d6dab06a826b8455c9d5e8a5c87e55e9a737182d'
-            '822834eabd017c5ea5f516cfbf50ccdb3fd1d6c148d7b5bf0d7deed4adf256ec'
-            '0cee1cf4781e9f5f07171801aa58f3d4a363b894476ab3cb8e8b22af97ef99c7'
-            '9244e9917b20f1db918ea34b1902f356c3958dbe944373c32158ee5666894ab2')
+        'use-split-usr-path.patch')
 
 build() {
   cd "$pkgname-$pkgver"
@@ -77,7 +67,6 @@ package_systemd() {
 
   make -C "$pkgname-$pkgver" DESTDIR="$pkgdir" install
 
-  install -Dm644 "$srcdir/os-release" "$pkgdir/etc/os-release"
   printf "d /run/console 0755 root root\n" > "$pkgdir/usr/lib/tmpfiles.d/console.conf"
 
   install -dm755 "$pkgdir/bin"
@@ -172,8 +161,6 @@ package_systemd-sysvcompat() {
   done
 
   ln -s '../usr/lib/systemd/systemd' "$pkgdir/sbin/init"
-
-  install -Dm755 "$srcdir/locale.sh" "$pkgdir/etc/profile.d/locale.sh"
 }
 
 package_libsystemd() {
@@ -220,4 +207,11 @@ package_systemd-tools() {
   rm "$pkgdir/usr/lib/sysctl.d/coredump.conf"
 }
 
-# vim: ft=sh syn=sh et
+
+
+md5sums=('ac2eb313f5dce79622f60aac56bca66d'
+         'e99e9189aa2f6084ac28b8ddf605aeb8'
+         '59e91c4d7a69b7bf12c86a9982e37ced'
+         'df69615503ad293c9ddf9d8b7755282d'
+         '5543be25f205f853a21fa5ee68e03f0d'
+         '482dba45a783f06c2239f1355f4ce72f')
