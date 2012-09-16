@@ -6,7 +6,7 @@
 
 pkgname=pacman
 pkgver=4.0.3
-pkgrel=6
+pkgrel=7
 pkgdesc="A library-based package manager with dependency support"
 arch=('i686' 'x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -26,15 +26,6 @@ source=(ftp://ftp.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz{,.sig}
         pacman.conf
         pacman.conf.x86_64
         makepkg.conf)
-
-sha256sums=('a48696ae51aaccf31a69ea7916ba9b06e7836eb933b8a281c666729c9d55ce25'
-            '87d0f36ffa218b4bf22b7522d6464ffb47441f7360feb517c05cf82622d122c3'
-            '4a64e2aa188314e640e7ed34898b4611aac386fe42a52720d220779a86003c17'
-            'a547c8daaf12e79ff8d0fd7a29a5a020095b1ac8eb17b4cc8e572600e08afb7a'
-            'b476c7d74e31d53c7ec872e21b3ed420fe248136ef07ff9abcaafba758122110'
-            '6380d39124d8f4890d74566c456531cad1214d9b15d880984a184660132d4800'
-            '623153c18af4f7d8c0d8a9be34ee988183e96005b89541345baa5ae1516fba33'
-            'bcc448268679843a05ca1486fb1f2eff14a230338b1f59c427cbf1fd806c0259')
 
 # keep an upgrade path for older installations
 #PKGEXT='.pkg.tar.gz'
@@ -90,3 +81,5 @@ package() {
 
   install -Dm644 contrib/zsh_completion $pkgdir/usr/share/zsh/site-functions/_pacman
 }
+
+

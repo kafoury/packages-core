@@ -1,0 +1,17 @@
+#
+# maintainer: Philip Müller <philm[at]manjaro[dog]org>
+# maintainer: Roland Singer <roland[at]manjaro[dog]org>
+
+pkgname=manjaro-system
+pkgver=20120916
+pkgrel=1
+pkgdesc="Manjaro Linux System - Update script"
+arch=('any')
+url="http://www.manjaro.org"
+license=('GPL')
+install=manjaro-update-system.sh
+
+
+package() {
+	mkdir -p {$pkgdir}/var/lib/manjaro-system
+}
