@@ -30,8 +30,8 @@ post_upgrade() {
 		rm -f /etc/fonts/conf.d/69-unifont.conf
 		rm -f /etc/fonts/conf.d/80-delicious.conf
 		rm -f /etc/fonts/conf.d/90-synthetic.conf 
-
-		# Update system version
-		echo "SYSTEMVERSION=\"20120916\"" > /var/lib/manjaro-system/version
 	fi
+
+	# Update system version
+	echo "SYSTEMVERSION=\"$PACKAGEVERSION\"" > /var/lib/manjaro-system/version
 }
