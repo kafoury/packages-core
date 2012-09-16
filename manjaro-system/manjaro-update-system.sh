@@ -1,6 +1,7 @@
 #!/bin/bash
 
-SYSTEMVERSION="0"
+PACKAGEVERSION="20120916"
+SYSTEMVERSION="$PACKAGEVERSION"
 
 if [ -f /var/lib/manjaro-system/version ]; then
 	. /var/lib/manjaro-system/version
@@ -8,7 +9,7 @@ fi
 
 
 post_install() {
-	post_upgrade
+	echo "SYSTEMVERSION=\"$PACKAGEVERSION\"" > /var/lib/manjaro-system/version
 }
 
 post_upgrade() {
