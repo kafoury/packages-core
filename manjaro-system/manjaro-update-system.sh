@@ -2,7 +2,9 @@
 
 SYSTEMVERSION="0"
 
-. /var/lib/manjaro-system/version
+if [ -f /var/lib/manjaro-system/version ]; then
+	. /var/lib/manjaro-system/version
+fi
 
 
 post_install() {

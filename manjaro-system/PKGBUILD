@@ -13,5 +13,5 @@ install=manjaro-update-system.sh
 
 
 package() {
-	mkdir -p {$pkgdir}/var/lib/manjaro-system
+	mkdir -p ${pkgdir}/var/lib/manjaro-system
 }
