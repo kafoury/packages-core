@@ -1,7 +1,7 @@
 # Note: build this package with --force flag
 # Note: keep insync with mesa pkg
 #
-# Maintainer: Singro <roland@manajro.org>
+# Maintainer: Roland Singer <roland@manajro.org>
 # Co-Maintainer: Clittle <philm@manjaro.org>
 
 pkgname=('libgl')
