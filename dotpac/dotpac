@@ -7,7 +7,7 @@ if ! which dialog > /dev/null 2>&1; then
 	exit 4
 fi
 
-for e in "$EDITOR" "$VISUAL" nano pico vim vi joe mcedit e3 jed ne emacs; do
+for e in "$EDITOR" "$VISUAL" vim vi joe mcedit nano pico e3 jed ne emacs; do
 	w=`which $e 2> /dev/null`
 	if [ -n "$w" -a -x "$w" ]; then
 		texted="$w"

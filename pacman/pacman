@@ -7,11 +7,19 @@ if [ $? -eq 0 ] && [[ "$@" == *-S* ]]; then
 	echo ""
 	echo ":: Checking for pac files..."
 
-	if [ "$(find /boot /etc -name '*.pacnew' -o -name '*.pacsave')" != "" ]; then
-		echo -ne "Found pac files. Start dotpac to handle files? [Y/n] "
+	FILES="$(find /boot /etc -name '*.pacnew' -o -name '*.pacsave' | sort)"
+
+	if [ "$FILES" != "" ]; then
+		for file in $FILES; do
+			echo " $file"
+		done
+
+		echo ""
+		echo -ne "Start dotpac to handle files? [y/N] "
 		read answer
 
-		if [ "$answer" != "" ] && [ "$answer" != "y" ] && [ "$answer" != "Y" ]; then
+		if [ "$answer" != "y" ] && [ "$answer" != "Y" ]; then
+			echo "abording..."
 			exit 0
 		fi
 

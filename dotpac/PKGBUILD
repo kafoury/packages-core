@@ -3,15 +3,21 @@
 
 pkgname=dotpac
 pkgver=0.3
-pkgrel=2
+pkgrel=3
 pkgdesc="This little bash script helps you getting rid of your /etc/*.pac* files."
 arch=(any)
 license=('GPL')
 url="http://wiki.archlinux.org/index.php/dotpac"
-source=(http://aur.archlinux.org/packages/dotpac/dotpac/dotpac)
+source=(http://aur.archlinux.org/packages/dotpac/dotpac/dotpac dotpac-manjaro.patch)
 
 build () {
+	cd $srcdir
+
+	patch -p0 -i $srcdir/dotpac-manjaro.patch
 	install -D -m755 $srcdir/dotpac $pkgdir/usr/bin/dotpac
 }
 
-sha256sums=('98777efafe78435ad4cfaab63467526ff37095e637e410da4ede9096d240eae6')
+
+
+sha256sums=('ab4a96281887cee30d070a7c5ad85babe0b706a752ebd90dcfdb5f8ff376adae'
+            '310967285aafc1884abb14efb0b124c059ad14f0a08fe7a1612bb6f7934a4023')
