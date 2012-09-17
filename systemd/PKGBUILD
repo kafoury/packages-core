@@ -5,9 +5,9 @@
 # Contributor: Guinux <nuxgui@gmail.com>
 
 pkgbase=systemd
-pkgname=('systemd' 'libsystemd' 'systemd-tools')
+pkgname=('systemd' 'libsystemd' 'systemd-tools' 'systemd-sysvcompat')
 pkgver=189
-pkgrel=3
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
@@ -54,7 +54,6 @@ package_systemd() {
            "systemd-tools=$pkgver" "systemd-sysvcompat=$pkgver" 'systemd-manjaro-units' 'util-linux' 'xz')
   optdepends=('python2-dbus: systemd-analyze'
               'python2-cairo: systemd-analyze')
-  replaces=('systemd-sysvcompat')
   backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
           etc/dbus-1/system.d/org.freedesktop.hostname1.conf
           etc/dbus-1/system.d/org.freedesktop.login1.conf
@@ -148,9 +147,12 @@ package_systemd() {
   mv "$pkgdir"/usr/share/man/man5/{hostname,{vconsole,locale}.conf,crypttab}.5 usr/share/man/man5
   mv "$pkgdir"/usr/bin/systemd-{ask-password,delta,detect-virt,tmpfiles,tty-ask-password-agent} usr/bin
   mv "$pkgdir"/usr/lib/systemd/systemd-{ac-power,binfmt,cryptsetup,modules-load,random-seed,remount-fs,reply-password,sysctl,timestamp,vconsole-setup} usr/lib/systemd
+}
 
+package_systemd-sysvcompat() {
+  pkgdesc="sysvinit compat for systemd"
+  conflicts=('sysvinit' 'initscripts')
 
-  # sysvcompat
   mv "$srcdir/_sysvcompat"/* "$pkgdir"
 
   install -dm755 "$pkgdir/sbin"
@@ -160,7 +162,6 @@ package_systemd() {
 
   ln -s '../usr/lib/systemd/systemd' "$pkgdir/sbin/init"
 }
-
 
 package_libsystemd() {
   pkgdesc="systemd client libraries"
