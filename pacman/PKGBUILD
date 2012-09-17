@@ -13,7 +13,7 @@ url="http://www.archlinux.org/pacman/"
 license=('GPL')
 groups=('base')
 depends=('bash' 'glibc>=2.15' 'libarchive>=3.0.2' 'curl>=7.19.4'
-         'gpgme' 'pacman-mirrorlist' 'archlinux-keyring' 'manjaro-keyring')
+         'gpgme' 'pacman-mirrorlist' 'archlinux-keyring' 'manjaro-keyring' 'dotpac')
 makedepends=('asciidoc')
 optdepends=('fakeroot: for makepkg usage as normal user')
 backup=(etc/pacman.conf etc/makepkg.conf)
@@ -25,7 +25,8 @@ source=(ftp://ftp.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz{,.sig}
         manjaro-rankmirrors.patch
         pacman.conf
         pacman.conf.x86_64
-        makepkg.conf)
+        makepkg.conf
+		pacman)
 
 # keep an upgrade path for older installations
 #PKGEXT='.pkg.tar.gz'
@@ -80,7 +81,11 @@ package() {
   done
 
   install -Dm644 contrib/zsh_completion $pkgdir/usr/share/zsh/site-functions/_pacman
+
+  mv $pkgdir/usr/bin/pacman $pkgdir/usr/bin/pacman-bin
+  install -D -m755 $srcdir/pacman $pkgdir/usr/bin/pacman
 }
+
 
 
 sha256sums=('a48696ae51aaccf31a69ea7916ba9b06e7836eb933b8a281c666729c9d55ce25'
@@ -90,4 +95,5 @@ sha256sums=('a48696ae51aaccf31a69ea7916ba9b06e7836eb933b8a281c666729c9d55ce25'
             'b476c7d74e31d53c7ec872e21b3ed420fe248136ef07ff9abcaafba758122110'
             'f0f25c4faa1e8f98c62eb4182fbd1f192117e799395abddb056d26672dea741e'
             'e5a5a8419e1849c84b29e765dec2398d79344e86c2420d24796121624705e2e9'
-            'bcc448268679843a05ca1486fb1f2eff14a230338b1f59c427cbf1fd806c0259')
+            'bcc448268679843a05ca1486fb1f2eff14a230338b1f59c427cbf1fd806c0259'
+            '6dc39a6dd61eea5ddb4a098eb6ec4d1e1af2e335ccc9ecacc5692d156b41e1c7')

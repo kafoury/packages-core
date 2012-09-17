@@ -1,0 +1,21 @@
+#!/bin/bash
+
+
+/usr/bin/pacman-bin $@
+
+if [ $? -eq 0 ] && [[ "$@" == *-S* ]]; then
+	echo ""
+	echo ":: Checking for pac files..."
+
+	if [ "$(find /boot /etc -name '*.pacnew' -o -name '*.pacsave')" != "" ]; then
+		echo -ne "Found pac files. Start dotpac to handle files? [Y/n] "
+		read answer
+
+		if [ "$answer" != "" ] && [ "$answer" != "y" ] && [ "$answer" != "Y" ]; then
+			exit 0
+		fi
+
+		/usr/bin/dotpac
+	fi
+fi
+

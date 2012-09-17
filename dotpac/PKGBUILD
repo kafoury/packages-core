@@ -1,0 +1,17 @@
+#Maintainer: swiergot (see forums...)
+#packaged by: hellwoofa hellwoofa at arcor dot de
+
+pkgname=dotpac
+pkgver=0.3
+pkgrel=2
+pkgdesc="This little bash script helps you getting rid of your /etc/*.pac* files."
+arch=(any)
+license=('GPL')
+url="http://wiki.archlinux.org/index.php/dotpac"
+source=(http://aur.archlinux.org/packages/dotpac/dotpac/dotpac)
+
+build () {
+	install -D -m755 $srcdir/dotpac $pkgdir/usr/bin/dotpac
+}
+
+sha256sums=('98777efafe78435ad4cfaab63467526ff37095e637e410da4ede9096d240eae6')
