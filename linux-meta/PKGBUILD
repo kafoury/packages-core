@@ -22,12 +22,12 @@ pkgname=('linux'
          'virtualbox-modules'
          'virtualbox-manjaro-modules')
 
-pkgver=2012.09
+pkgver=2012.10
 pkgrel=1
 arch=any
 url="www.manjaro.org"
 license=('GPL')
-linuxprefix="linux34"
+linuxprefix="linux35"
 
 
 package_linux() {

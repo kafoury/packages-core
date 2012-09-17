@@ -9,10 +9,11 @@
 _extramodules=extramodules-3.5-MANJARO
 _kver="$(cat /usr/lib/modules/${_extramodules}/version)"
 _pkgname=ndiswrapper
-pkgname=linux35-ndiswrapper
+basename=ndidwrapper
+pkgname=('linux35-ndiswrapper' 'ndiswrapper-utils')
 groups=('linux35-extramodules')
 pkgver=1.57
-pkgrel=3
+pkgrel=4
 pkgdesc="Module for NDIS (Windows Network Drivers) drivers supplied by vendors."
 license=('GPL')
 arch=('i686' 'x86_64')
@@ -37,7 +38,7 @@ build() {
   make KVERS=$_kver
 }
 
-package() {
+package_linux35-ndiswrapper() {
   cd "$srcdir/$_pkgname-$pkgver"
 
   make INST_DIR="usr/lib/modules/$_extramodules" \
@@ -48,8 +49,19 @@ package() {
 
   gzip "$pkgdir/usr/lib/modules/$_extramodules/$_pkgname.ko"
 
-  # rm ndiswrapper-utils
-  rm -R "$pkgdir/usr" "$pkgdir/sbin"
+  # mv ndiswrapper-utils
+  mkdir -p $srcdir/tmp-ndis-utils/usr/{share,sbin}
+  mv -v "$pkgdir/usr/share" "$srcdir/tmp-ndis-utils/usr/share"
+  mv -v "$pkgdir/usr/sbin" "$srcdir/tmp-ndis-utils/usr/sbin"
+  mv -v "$pkgdir/sbin" "$srcdir/tmp-ndis-utils"
+}
+
+package_ndiswrapper-utils() {
+  pkgdesc="Utils for NDIS (Windows Network Drivers) drivers supplied by vendors."
+  pkgrel=1
+  cd $srcdir/tmp-ndis-utils
+  mv -v usr "$pkgdir"
+  mv -v sbin "$pkgdir"
 }
 
 # vim:set ts=2 sw=2 et:
