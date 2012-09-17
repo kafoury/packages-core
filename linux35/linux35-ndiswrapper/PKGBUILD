@@ -9,7 +9,7 @@
 _extramodules=extramodules-3.5-MANJARO
 _kver="$(cat /usr/lib/modules/${_extramodules}/version)"
 _pkgname=ndiswrapper
-basename=ndidwrapper
+pkgbase=ndidwrapper
 pkgname=('linux35-ndiswrapper' 'ndiswrapper-utils')
 groups=('linux35-extramodules')
 pkgver=1.57
@@ -59,6 +59,8 @@ package_linux35-ndiswrapper() {
 package_ndiswrapper-utils() {
   pkgdesc="Utils for NDIS (Windows Network Drivers) drivers supplied by vendors."
   pkgrel=1
+  depends=()
+  groups=()
   cd $srcdir/tmp-ndis-utils
   mv -v usr "$pkgdir"
   mv -v sbin "$pkgdir"
