@@ -12,6 +12,10 @@ post_upgrade() {
     if [ ! -f "etc/pacman.d/gnupg/pubring.gpg" ] || [ "$(vercmp $2 4.0.3-3)" -lt 0 ]; then
         _check_pubring
     fi
+    if [ "x`cat /etc/pacman.conf | grep manjaro-system`" == "x" ]; then
+        sed -i -e 's/HoldPkg     = pacman glibc/HoldPkg     = pacman glibc manjaro-system/g' /etc/pacman.conf
+        sed -i -e 's/SyncFirst   = pacman/SyncFirst   = manjaro-system pacman/g' /etc/pacman.conf
+    fi
 }
 
 post_install() {
