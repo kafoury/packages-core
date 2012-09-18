@@ -3,7 +3,8 @@
 
 /usr/bin/pacman-bin $@
 
-if [ $? -eq 0 ] && [[ "$@" == *-S* ]]; then
+if [ "$EUID" == 0 ]; then
+   if [[ "$@" == *-S* ]] || [[ "$@" == *-U* ]]; then
 	echo ""
 	echo ":: Checking for pac files..."
 
@@ -25,5 +26,6 @@ if [ $? -eq 0 ] && [[ "$@" == *-S* ]]; then
 
 		/usr/bin/dotpac
 	fi
+   fi
 fi
 

@@ -13,13 +13,12 @@ pkgbase=ndiswrapper
 pkgname=('linux32-ndiswrapper' 'ndiswrapper-utils')
 groups=('linux32-extramodules')
 pkgver=1.57
-pkgrel=6
+pkgrel=7
 pkgdesc="Module for NDIS (Windows Network Drivers) drivers supplied by vendors."
 license=('GPL')
 arch=('i686' 'x86_64')
 url="http://ndiswrapper.sourceforge.net"
-install=ndiswrapper.install
-depends=('linux32' 'wireless_tools' 'perl')
+depends=('linux32' 'wireless_tools' 'perl' 'ndiswrapper-utils')
 makedepends=('linux32-headers')
 source=("http://downloads.sourceforge.net/sourceforge/$_pkgname/$_pkgname-$pkgver.tar.gz")
 options=('!strip')
@@ -38,6 +37,7 @@ build() {
 }
 
 package_linux32-ndiswrapper() {
+  install=ndiswrapper.install
   cd "$srcdir/$_pkgname-$pkgver"
 
   make INST_DIR="usr/lib/modules/$_extramodules" \
@@ -57,7 +57,7 @@ package_linux32-ndiswrapper() {
 
 package_ndiswrapper-utils() {
   pkgdesc="Utils for NDIS (Windows Network Drivers) drivers supplied by vendors."
-  pkgrel=1
+  pkgrel=2
   depends=()
   groups=()
   cd $srcdir/tmp-ndis-utils

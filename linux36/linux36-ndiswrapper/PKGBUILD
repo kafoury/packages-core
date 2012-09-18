@@ -18,7 +18,6 @@ pkgdesc="Module for NDIS (Windows Network Drivers) drivers supplied by vendors."
 license=('GPL')
 arch=('i686' 'x86_64')
 url="http://ndiswrapper.sourceforge.net"
-install=ndiswrapper.install
 depends=('linux36' 'wireless_tools' 'perl' "$_pkgname-utils")
 makedepends=('linux36-headers')
 source=("http://downloads.sourceforge.net/sourceforge/$_pkgname/$_pkgname-$pkgver.tar.gz" 'linux33.patch')
@@ -39,6 +38,7 @@ build() {
 }
 
 package_linux36-ndiswrapper() {
+  install=ndiswrapper.install
   cd "$srcdir/$_pkgname-$pkgver"
 
   make INST_DIR="usr/lib/modules/$_extramodules" \
@@ -58,7 +58,7 @@ package_linux36-ndiswrapper() {
 
 package_ndiswrapper-utils() {
   pkgdesc="Utils for NDIS (Windows Network Drivers) drivers supplied by vendors."
-  pkgrel=1
+  pkgrel=2
   depends=()
   groups=()
   cd $srcdir/tmp-ndis-utils

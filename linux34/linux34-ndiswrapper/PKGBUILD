@@ -18,7 +18,6 @@ pkgdesc="Module for NDIS (Windows Network Drivers) drivers supplied by vendors."
 license=('GPL')
 arch=('i686' 'x86_64')
 url="http://ndiswrapper.sourceforge.net"
-install=ndiswrapper.install
 depends=('linux34' 'wireless_tools' 'perl' "$_pkgname-utils")
 makedepends=('linux34-headers')
 source=("http://downloads.sourceforge.net/sourceforge/$_pkgname/$_pkgname-$pkgver.tar.gz" 'linux33.patch')
@@ -26,6 +25,7 @@ options=('!strip')
 md5sums=('7a401dc540938bf07893c67f418b6152' '567050289e1a7c80b3274a3668253c71')
 
 build() {
+  install=ndiswrapper.install
   cd "$srcdir/$_pkgname-$pkgver"
 
   # modinfo path fix
@@ -58,7 +58,7 @@ package_linux34-ndiswrapper() {
 
 package_ndiswrapper-utils() {
   pkgdesc="Utils for NDIS (Windows Network Drivers) drivers supplied by vendors."
-  pkgrel=1
+  pkgrel=2
   depends=()
   groups=()
   cd $srcdir/tmp-ndis-utils
