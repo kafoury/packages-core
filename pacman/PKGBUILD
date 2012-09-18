@@ -6,7 +6,7 @@
 
 pkgname=pacman
 pkgver=4.0.3
-pkgrel=9
+pkgrel=10
 pkgdesc="A library-based package manager with dependency support"
 arch=('i686' 'x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -82,8 +82,12 @@ package() {
 
   install -Dm644 contrib/zsh_completion $pkgdir/usr/share/zsh/site-functions/_pacman
 
+  # move pacman & install wrapper
   mv $pkgdir/usr/bin/pacman $pkgdir/usr/bin/pacman-bin
   install -D -m755 $srcdir/pacman $pkgdir/usr/bin/pacman
+  # fix makepkg script
+  sed -i $pkgdir/usr/bin/makepkg \
+    -e "s|PACMAN:-pacman|PACMAN:-pacman-bin|g"
 }
 
 
