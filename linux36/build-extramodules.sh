@@ -3,7 +3,7 @@
 pwd=`pwd`
 
 if [ "`sudo cat /etc/sudoers | grep pacman-bin`" == "" ] ; then
-   echo "please add '`whoami` ALL=NOPASSWD: /usr/bin/pacman-bin' to your /etc/sudoers file"
+   echo "please add '`whoami` ALL=NOPASSWD: /usr/bin/pacman' to your /etc/sudoers file"
    exit 1
 fi
 
