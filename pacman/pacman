@@ -3,7 +3,7 @@
 
 /usr/bin/pacman-bin $@
 
-if [ "$EUID" == 0 ] && [ $? -eq 0 ]; then
+if [ $? -eq 0 ] && [ $EUID -eq 0 ]; then
    if [[ "$@" == *-S* ]] || [[ "$@" == *-U* ]]; then
 	echo ""
 	echo ":: Checking for pac files..."
