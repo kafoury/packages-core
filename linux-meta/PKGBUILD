@@ -1,5 +1,5 @@
-# Maintainer: Clittle <philm@manjarolinux.org>
-
+# Maintainer: Philip Müller <philm@manjaro.org>
+# Maintainer: Roland Singer <roland@manjaro.org>
 
 pkgbase=linux-meta
 
@@ -23,7 +23,7 @@ pkgname=('linux'
          'virtualbox-guest-modules')
 
 pkgver=2012.10
-pkgrel=2
+pkgrel=1
 arch=any
 url="www.manjaro.org"
 license=('GPL')
