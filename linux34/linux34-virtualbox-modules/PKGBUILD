@@ -1,107 +1,83 @@
 # Based on the file created for Arch Linux by:
 # Ionut Biru <ibiru@archlinux.org>
+# Sébastien Luttringer <seblu@aur.archlinux.org>
 
 # Maintainer: Guinux <nuxgui@gmail.com>
-# Co-Maintainer: Clittle <philm@manjarolinux.org>
+# Maintainer: Clittle <philm@manjaro.org>
+# Maintainer: Roland Singer <roland@manjaro.org>
+
 
 pkgbase=linux34-virtualbox-modules
-pkgname=('linux34-virtualbox-modules' 'linux34-virtualbox-manjaro-modules')
-pkgver=4.1.20
-pkgrel=2
+pkgname=('linux34-virtualbox-host-modules' 'linux34-virtualbox-guest-modules')
+pkgver=4.2.0
+pkgrel=1
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
-makedepends=('libstdc++5' 'bin86' 'dev86' 'iasl' 'libxslt' 'libxml2' 'libpng' 'libidl2' 'xalan-c' 'sdl' 'linux34-headers')
-[[ $CARCH == "x86_64" ]] && makedepends=("${makedepends[@]}" 'gcc-multilib' 'lib32-glibc')
-source=(http://download.virtualbox.org/virtualbox/${pkgver}/VirtualBox-${pkgver}.tar.bz2
-         LocalConfig.kmk 60-vboxguest.rules)
-sha256sums=('b132dbc5c6e9ed77aba737ec35b488ac152aa362c3ad49d466897bc410324aeb'
-            '81fb0837385e034b2eee03c94a80708557e5e070cc5b84fd9dbd9ace80c075ba'
-            '033c597e0f5285d2ddb0490868e5b6f945f45c7b1b1152a02a9e6fea438b2c95')
+makedepends=('linux-headers'
+             "virtualbox-host-source>=$pkgver"
+             "virtualbox-guest-source>=$pkgver"
+             'dkms'
+             'linux34' 'linux34-headers')
 
 _extramodules=extramodules-3.4-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version || true)"
 
-export KERN_DIR=/usr/lib/modules/${_kernver}/build
-export KERN_INCL=/usr/src/linux-${_kernver}/include/
 
 build() {
-    cd "$srcdir/VirtualBox-${pkgver}"
-
-    cp "$srcdir/LocalConfig.kmk" .
-
-    ./configure \
-        --with-linux=/usr/src/linux-${_kernver} \
-        --disable-java \
-        --disable-docs \
-        --disable-xpcom \
-        --disable-python \
-        --disable-sdl-ttf \
-        --disable-alsa \
-        --disable-pulse \
-        --disable-dbus  \
-        --disable-opengl \
-        --build-headless \
-        --nofatal
-    source ./env.sh
-    kmk all
-
-    make -C "$srcdir/VirtualBox-${pkgver}/out/linux.$BUILD_PLATFORM_ARCH/release/bin/src"
-    make -C "$srcdir/VirtualBox-${pkgver}/out/linux.$BUILD_PLATFORM_ARCH/release/bin/additions/src"
+  # dkms need modification to be run as user
+  cp -r /var/lib/dkms .
+  echo "dkms_tree='$srcdir/dkms'" > dkms.conf
+  # build host modules
+  msg2 'Host modules'
+  dkms --dkmsframework dkms.conf build "vboxhost/$pkgver" -k "$_kernver"
+  # build guest modules
+  msg2 'Guest modules'
+  dkms --dkmsframework dkms.conf build "vboxguest/$pkgver" -k "$_kernver"
 }
 
-package_linux34-virtualbox-manjaro-modules(){
-    pkgdesc="Additions only for Manjaro Linux guests (kernel modules)"
-    license=('GPL')
-    install=virtualbox-manjaro-modules.install
-    depends=('linux34')
-    provides=("virtualbox-archlinux-modules=$pkgver")
-    groups=('linux34-extramodules')
+package_linux34-virtualbox-host-modules(){
+  pkgdesc='Host kernel modules for VirtualBox'
+  depends=('linux34')
+  replaces=('linux34-virtualbox-modules')
+  conflicts=('linux34-virtualbox-modules')
+  install=virtualbox-host-modules.install
+  groups=('linux34-extramodules')
 
-    source "$srcdir/VirtualBox-${pkgver}/env.sh"
 
-    cd "$srcdir/VirtualBox-${pkgver}/out/linux.$BUILD_PLATFORM_ARCH/release/bin/additions/src"
+  install -dm755 "$pkgdir/usr/lib/modules/$_extramodules"
+  cd "dkms/vboxhost/$pkgver/$_kernver/$CARCH/module"
+  install -m644 * "$pkgdir/usr/lib/modules/$_extramodules"
+  find "$pkgdir" -name '*.ko' -exec gzip -9 {} +
+  sed -ie "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "$startdir/virtualbox-host-modules.install"
 
-    for module in vboxguest.ko vboxsf.ko vboxvideo.ko; do
-        install -D -m644 ${module} \
-            "$pkgdir/usr/lib/modules/${_extramodules}/${module}"
-    done
-
-    install -D -m 0644 "$srcdir/60-vboxguest.rules" \
-        "$pkgdir/usr/lib/udev/rules.d/60-linux34-vboxguest.rules"
-
-    find "${pkgdir}" -name '*.ko' -exec gzip -9 {} \;
-
-    sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='${_extramodules}'/" "$startdir/virtualbox-manjaro-modules.install"
-    sed -i -e "s/VERSION='.*'/VERSION='linux34'/" "$startdir/virtualbox-manjaro-modules.install"
+  mkdir -p "$pkgdir/etc/modules-load.d"
+  echo "vboxdrv" > "$pkgdir/etc/modules-load.d/linux34-virtualbox-host-modules.conf"
+  echo "vboxnetadp" >> "$pkgdir/etc/modules-load.d/linux34-virtualbox-host-modules.conf"
+  echo "vboxnetflt" >> "$pkgdir/etc/modules-load.d/linux34-virtualbox-host-modules.conf"
+  echo "vboxpci" >> "$pkgdir/etc/modules-load.d/linux34-virtualbox-host-modules.conf"
 }
 
-package_linux34-virtualbox-modules(){
-    pkgdesc="Kernel modules for VirtualBox"
-    license=('GPL')
-    install=virtualbox-modules.install
-    depends=('linux34')
-	groups=('linux34-extramodules')
+package_linux34-virtualbox-guest-modules(){
+  pkgdesc='Guest kernel modules for VirtualBox'
+  license=('GPL')
+  depends=('linux34')
+  replaces=('linux34-virtualbox-manjaro-modules')
+  conflicts=('linux34-virtualbox-manjaro-modules')
+  install=virtualbox-guest-modules.install
+  groups=('linux34-extramodules')
 
-    source "$srcdir/VirtualBox-${pkgver}/env.sh"
 
+  install -dm755 "$pkgdir/usr/lib/modules/$_extramodules"
+  cd "dkms/vboxguest/$pkgver/$_kernver/$CARCH/module"
+  install -m644 * "$pkgdir/usr/lib/modules/$_extramodules"
+  find "$pkgdir" -name '*.ko' -exec gzip -9 {} +
+  sed -ie "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "$startdir/virtualbox-host-modules.install"
 
-    cd "$srcdir/VirtualBox-${pkgver}/out/linux.$BUILD_PLATFORM_ARCH/release/bin/src"
-
-    install -D -m644 vboxdrv.ko \
-        "$pkgdir/usr/lib/modules/${_extramodules}/vboxdrv.ko"
-
-    install -D -m644 vboxnetadp.ko \
-        "$pkgdir/usr/lib/modules/${_extramodules}/vboxnetadp.ko"
-
-    install -D -m644 vboxnetflt.ko \
-        "$pkgdir/usr/lib/modules/${_extramodules}/vboxnetflt.ko"
-
-    install -D -m644 vboxpci.ko \
-        "$pkgdir/usr/lib/modules/${_extramodules}/vboxpci.ko"
-
-    find "${pkgdir}" -name '*.ko' -exec gzip -9 {} \;
-
-    sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='${_extramodules}'/" "$startdir/virtualbox-modules.install"
-    sed -i -e "s/VERSION='.*'/VERSION='linux34'/" "$startdir/virtualbox-modules.install"
+  mkdir -p "$pkgdir/etc/modules-load.d"
+  echo "vboxguest" > "$pkgdir/etc/modules-load.d/linux34-virtualbox-guest-modules.conf"
+  echo "vboxsf" >> "$pkgdir/etc/modules-load.d/linux34-virtualbox-guest-modules.conf"
+  echo "vboxvideo" >> "$pkgdir/etc/modules-load.d/linux34-virtualbox-guest-modules.conf"
 }
+
+# vim:set ts=2 sw=2 et:
