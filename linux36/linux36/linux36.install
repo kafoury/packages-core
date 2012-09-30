@@ -1,7 +1,7 @@
 # arg 1:  the new package version
 # arg 2:  the old package version
 
-RELEASE=3.6rc6-1
+RELEASE=3.6rc7-1
 KERNEL_VERSION=3.6.0-1-MANJARO
 KERNEL_BASE=3.6
 BASEVER=36
