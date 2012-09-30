@@ -23,12 +23,7 @@ cd ${pwd}/*open-vm-tools-modules && makepkg --sign -s --noconfirm
 cd ${pwd}/*r8168 && makepkg --sign -s --noconfirm
 cd ${pwd}/*rt3562sta && makepkg --sign -s --noconfirm
 cd ${pwd}/*vhba-module && makepkg --sign -s --noconfirm
-if [ "`uname -m`" = "x86_64" ]; then
-   cd ${pwd}/*virtualbox-modules && makepkg --sign -s
-   sudo pacman -Sy gcc-libs binutils gcc
-else
-   cd ${pwd}/*virtualbox-modules && makepkg --sign -s --noconfirm
-fi
+cd ${pwd}/*virtualbox-modules && makepkg --sign -s --noconfirm
 echo 'create repo'
 mkdir -p ${pwd}/repo-`uname -m`
 mv ${pwd}/*/*`uname -m`.pkg* ${pwd}/repo-`uname -m`
