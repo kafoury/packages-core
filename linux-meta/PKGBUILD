@@ -19,11 +19,11 @@ pkgname=('linux'
          'r8168'
          'rt3562sta'
          'vhba-module'
-         'virtualbox-modules'
-         'virtualbox-manjaro-modules')
+         'virtualbox-host-modules'
+         'virtualbox-guest-modules')
 
 pkgver=2012.10
-pkgrel=1
+pkgrel=2
 arch=any
 url="www.manjaro.org"
 license=('GPL')
@@ -113,12 +113,16 @@ package_vhba-module() {
           depends="$linuxprefix-$pkgname"
 }
 
-package_virtualbox-modules() {
+package_virtualbox-host-modules() {
           pkgdesc="Manjaro Stable Linux Kernel extramodules (Meta-PKG)"
           depends="$linuxprefix-$pkgname"
+          replaces=('virtualbox-modules')
+          conflicts=('virtualbox-modules')
 }
 
-package_virtualbox-manjaro-modules() {
+package_virtualbox-guest-modules() {
           pkgdesc="Manjaro Stable Linux Kernel extramodules (Meta-PKG)"
           depends="$linuxprefix-$pkgname"
+          replaces=('virtualbox-manjaro-modules')
+          conflicts=('virtualbox-manjaro-modules')
 }
