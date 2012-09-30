@@ -3,7 +3,7 @@
 # Sébastien Luttringer <seblu@aur.archlinux.org>
 
 # Maintainer: Guinux <nuxgui@gmail.com>
-# Maintainer: Clittle <philm@manjaro.org>
+# Maintainer: Philip Müller <philm@manjaro.org>
 # Maintainer: Roland Singer <roland@manjaro.org>
 
 
@@ -14,14 +14,13 @@ pkgrel=2
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
-makedepends=('linux-headers'
-             "virtualbox-host-source>=$pkgver"
+makedepends=("virtualbox-host-source>=$pkgver"
              "virtualbox-guest-source>=$pkgver"
-             'dkms'
+             'dkms' 'expac'
              'linux34' 'linux34-headers')
 
-_extramodules=extramodules-3.4-MANJARO
-_kernver="$(cat /usr/lib/modules/${_extramodules}/version || true)"
+_kernver=$(expac -Q '%v' linux34-headers)-MANJARO
+_extraver=extramodules-${_kernver%.*}-MANJARO
 
 
 build() {
@@ -45,11 +44,11 @@ package_linux34-virtualbox-host-modules(){
   groups=('linux34-extramodules')
 
 
-  install -dm755 "$pkgdir/usr/lib/modules/$_extramodules"
+  install -dm755 "$pkgdir/usr/lib/modules/$_extraver"
   cd "dkms/vboxhost/$pkgver/$_kernver/$CARCH/module"
-  install -m644 * "$pkgdir/usr/lib/modules/$_extramodules"
+  install -m644 * "$pkgdir/usr/lib/modules/$_extraver"
   find "$pkgdir" -name '*.ko' -exec gzip -9 {} +
-  sed -ie "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "$startdir/virtualbox-host-modules.install"
+  sed -ie "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extraver'/" "$startdir/virtualbox-host-modules.install"
 
   mkdir -p "$pkgdir/etc/modules-load.d"
   echo "vboxdrv" > "$pkgdir/etc/modules-load.d/linux34-virtualbox-host-modules.conf"
@@ -68,11 +67,11 @@ package_linux34-virtualbox-guest-modules(){
   groups=('linux34-extramodules')
 
 
-  install -dm755 "$pkgdir/usr/lib/modules/$_extramodules"
+  install -dm755 "$pkgdir/usr/lib/modules/$_extraver"
   cd "dkms/vboxguest/$pkgver/$_kernver/$CARCH/module"
-  install -m644 * "$pkgdir/usr/lib/modules/$_extramodules"
+  install -m644 * "$pkgdir/usr/lib/modules/$_extraver"
   find "$pkgdir" -name '*.ko' -exec gzip -9 {} +
-  sed -ie "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "$startdir/virtualbox-host-modules.install"
+  sed -ie "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extraver'/" "$startdir/virtualbox-host-modules.install"
 
   mkdir -p "$pkgdir/etc/modules-load.d"
   echo "vboxguest" > "$pkgdir/etc/modules-load.d/linux34-virtualbox-guest-modules.conf"
