@@ -6,7 +6,7 @@
 
 pkgname=systemd-manjaro-units
 pkgver=20120915
-pkgrel=1
+pkgrel=2
 pkgdesc="Manjaro specific Systemd unit files"
 arch=('any')
 url="http://github.com/falconindy/systemd-arch-units"
@@ -15,9 +15,7 @@ depends=('systemd')
 install=systemd-manjaro-units.install
 source=("systemd-arch-units-$pkgver.tar.gz::https://www.github.com/falconindy/systemd-arch-units/tarball/$pkgver"
         'rc-local.service'
-        'rc-local-shutdown.service'
-        'httpd.conf'
-        'httpd.service')
+        'rc-local-shutdown.service')
 
 
 package() {
@@ -27,12 +25,8 @@ package() {
 
   install -Dm644 "${srcdir}/rc-local.service" "${pkgdir}/usr/lib/systemd/system/rc-local.service"
   install -Dm644 "${srcdir}/rc-local-shutdown.service" "${pkgdir}/usr/lib/systemd/system/rc-local-shutdown.service"
-  install -Dm644 "${srcdir}/httpd.service" "${pkgdir}/usr/lib/systemd/system/httpd.service"
-  install -Dm644 "${srcdir}/httpd.conf" "${pkgdir}/etc/tmpfiles.d/httpd.conf"
 }
 
 sha256sums=('c982cacb0d6d883ba276d38baa68f7ece7f510cfac2f99d6caaea89094db3f8a'
             '2e27fd62ec5e579e65f779710db2ddb10adf744077caabc2c15b44d040d0fc97'
-            '308cd05122a3d30529e74b8562f89ee8abda9b40e4c2f890262ccb25097087b0'
-            '15cb5d58c9693ad432df4350e260154e492d247c85a7e1d7e6dd80c9a3c58d81'
-            '70732bc6b45dd8a35738c3c1b570703593e27001df87d882964eb671a6362028')
+            '308cd05122a3d30529e74b8562f89ee8abda9b40e4c2f890262ccb25097087b0')
