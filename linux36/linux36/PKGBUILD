@@ -9,17 +9,16 @@ pkgbase=linux36
 pkgname=('linux36' 'linux36-headers')
 _kernelname=-MANJARO
 _basekernel=3.6
-_rc=-rc7
 _basever=36
 _aufs=20120813
-pkgver=3.6rc7
+pkgver=3.6.0
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-${_basekernel}${_rc}.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
         #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config' 'config.x86_64' 'config.aufs'
@@ -34,7 +33,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-${_basekernel
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
 )
-sha256sums=('f5ef8ca32a5a78845b59b53f990ea6f2577c14ca3d7ebd54155f967e6f54f775'
+sha256sums=('4ab9a6ef1c1735713f9f659d67f92efa7c1dfbffb2a2ad544005b30f9791784f'
             #'82688c4751861b17d3e44dfe8ef3ca268c9a7dc604ffca590094d99d94b4d003'
             '7d4f9528f4a30bf4b36e0fe77114d4df477852e5bb5e5af703ce3c75e2a23094'
             '34c7054bd83f1fa80df0f651918a470f27e8b0f109cef5dcec12dbc2f0aa3bd2'
@@ -50,7 +49,7 @@ sha256sums=('f5ef8ca32a5a78845b59b53f990ea6f2577c14ca3d7ebd54155f967e6f54f775'
 )
 
 build() {
-  cd "${srcdir}/linux-${_basekernel}${_rc}"
+  cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
   #patch -p1 -i "${srcdir}/patch-${pkgver}"
@@ -123,7 +122,7 @@ package_linux36() {
   provides=("linux=$pkgver")
   install=${pkgname}.install
 
-  cd "${srcdir}/linux-${_basekernel}${_rc}"
+  cd "${srcdir}/linux-${_basekernel}"
 
   KARCH=x86
 
@@ -182,7 +181,7 @@ package_linux36-headers() {
   cd "${pkgdir}/usr/lib/modules/${_kernver}"
   ln -sf ../../../src/linux-${_kernver} build
 
-  cd "${srcdir}/linux-${_basekernel}${_rc}"
+  cd "${srcdir}/linux-${_basekernel}"
   install -D -m644 Makefile \
     "${pkgdir}/usr/src/linux-${_kernver}/Makefile"
   install -D -m644 kernel/Makefile \

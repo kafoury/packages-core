@@ -51,6 +51,7 @@ build() {
       --enable-plymouth \
       --disable-audit \
       --disable-ima \
+      --disable-tcpwrap \
       --with-distro=arch \
       --with-usb-ids-path=/usr/share/hwdata/usb.ids \
       --with-pci-ids-path=/usr/share/hwdata/pci.ids
