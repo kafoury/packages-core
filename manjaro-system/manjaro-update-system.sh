@@ -10,6 +10,7 @@ fi
 
 post_install() {
 	echo "SYSTEMVERSION=\"$PACKAGEVERSION\"" > /var/lib/manjaro-system/version
+	post_upgrade
 }
 
 post_upgrade() {
