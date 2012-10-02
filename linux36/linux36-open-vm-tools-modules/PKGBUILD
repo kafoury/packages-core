@@ -10,7 +10,7 @@ _pkgname=open-vm-tools-modules
 groups=('linux36-extramodules')
 pkgver=2012.05.21
 _pkgsubver=724730
-pkgrel=0.1
+pkgrel=1
 pkgdesc="kernel modules for the open source implementation of VMware Tools"
 arch=('i686' 'x86_64')
 url="http://open-vm-tools.sourceforge.net/"
@@ -20,17 +20,19 @@ depends=("linux36")
 install=$_pkgname.install
 options=('!strip')
 source=("http://downloads.sourceforge.net/open-vm-tools/open-vm-tools-$pkgver-${_pkgsubver}.tar.gz"
-	"modprobe.conf")
-md5sums=('91affb5b23db8abceff930613845f434'
-         'ac9b8e3cb798f5056ca92767ec705117')
+	"modprobe.conf"
+	"linux-3.6-build-fix.patch")
+sha256sums=('c7daaaf0ed031cd36295cf10d51dbbdedeb1eb0015e49f0806620792f8dab71b'
+         '27b83062b8b6a279e8bfb13f10566467377f38ac077e75933211912cac4a085d'
+         '84e75fbee9de9af606c582337321e88927086d43292f11cf778d9bdba1065f2f')
 
 _extramodules=extramodules-3.6-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 
 build() {
   cd "$srcdir/open-vm-tools-${pkgver}-${_pkgsubver}"
-  #sed -i 's|s_frozen|s_writers.frozen|g' modules/linux/vmsync/sync.c
   sed -i 's|proc-3.2.8|procps|g' configure
+  patch -p1 <$srcdir/linux-3.6-build-fix.patch
   [ $NOEXTRACT -eq 1 ] || ./configure \
       --prefix=/usr \
       --without-x \

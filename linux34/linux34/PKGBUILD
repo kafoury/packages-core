@@ -3,7 +3,7 @@
 # Thomas Baechler <thomas@archlinux.org>
 
 # Maintainer: Philip Müller <philm@manjaro.org>
-# Co-Maintainer: Guinux <nuxgui@gmail.com>
+# Maintainer: Guinux <guillaume@manjaro.org>
 
 pkgbase=linux34
 pkgname=('linux34' 'linux34-headers')
@@ -11,7 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.4
 _basever=34
 _aufs=20120730
-pkgver=${_basekernel}.11
+pkgver=${_basekernel}.12
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"

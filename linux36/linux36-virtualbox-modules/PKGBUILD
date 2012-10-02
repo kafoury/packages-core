@@ -2,8 +2,8 @@
 # Ionut Biru <ibiru@archlinux.org>
 # Sébastien Luttringer <seblu@aur.archlinux.org>
 
-# Maintainer: Guinux <nuxgui@gmail.com>
 # Maintainer: Philip Müller <philm@manjaro.org>
+# Maintainer: Guinux <guillaume@manjaro.org>
 # Maintainer: Roland Singer <roland@manjaro.org>
 
 
@@ -19,8 +19,7 @@ makedepends=("virtualbox-host-source>=$pkgver"
              'dkms' 'expac'
              'linux36' 'linux36-headers')
 
-#_kernver=$(expac -Q '%v' linux36-headers)-MANJARO
-_kernver=$(expac -Q '%v' linux36-headers | cut -dr -f1).0-$(expac -Q '%v' linux36-headers | cut -d- -f2)-MANJARO
+_kernver=$(expac -Q '%v' linux36-headers)-MANJARO
 _extraver=extramodules-${_kernver%.*}-MANJARO
 
 

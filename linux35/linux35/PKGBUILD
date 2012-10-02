@@ -2,8 +2,8 @@
 # Tobias Powalowski <tpowa@archlinux.org>
 # Thomas Baechler <thomas@archlinux.org>
 
-# Maintainer: Guinux <nuxgui@gmail.com>
-# Co-Maintainer: Clittle <philm@manjarolinux.org>
+# Maintainer: Philip Müller <philm@manjaro.org>
+# Maintainer: Guinux <guillaume@manjaro.org>
 
 pkgbase=linux35
 pkgname=('linux35' 'linux35-headers')
@@ -11,7 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.5
 _basever=35
 _aufs=20120813
-pkgver=${_basekernel}.4
+pkgver=${_basekernel}.5
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
