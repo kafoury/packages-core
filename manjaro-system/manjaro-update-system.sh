@@ -9,12 +9,11 @@ fi
 
 
 post_install() {
-	post_upgrade
+	echo "SYSTEMVERSION=\"$PACKAGEVERSION\"" > /var/lib/manjaro-system/version
 }
 
 post_upgrade() {
-	# remove symlinks if fontconfig < 2.10.1
-	if [ $(pacman -Q fontconfig | cut -d- -f1 | cut -d" " -f2 | sed -e 's/\.//g') -lt "2101" ]; then
+	if [ "$SYSTEMVERSION" -lt "20120916" ]; then
 		# System operation
 		rm -f /etc/fonts/conf.d/20-unhint-small-vera.conf
 		rm -f /etc/fonts/conf.d/29-replace-bitmap-fonts.conf
