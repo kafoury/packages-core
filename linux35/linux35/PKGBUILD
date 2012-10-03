@@ -175,11 +175,11 @@ package_linux35() {
   mkdir -p "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--MANJARO}"
   echo "${_kernver}" > "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--MANJARO}/version"
 
-  # move module tree /lib -> /usr/lib
-  mv "$pkgdir/lib" "$pkgdir/usr"
-
   # Now we call depmod...
   depmod -b "$pkgdir" -F System.map "$_kernver"
+
+  # move module tree /lib -> /usr/lib
+  mv "$pkgdir/lib" "$pkgdir/usr"
 }
 
 package_linux35-headers() {
