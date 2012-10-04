@@ -5,7 +5,7 @@ RELEASE=3.5.5-1
 KERNEL_VERSION=3.5.5-1-MANJARO
 KERNEL_BASE=3.5
 BASEVER=35
-ARCH=i686
+ARCH=x86_64
 
 post_install () {
   # updating module dependencies
