@@ -7,7 +7,7 @@
 pkgbase=systemd
 pkgname=('systemd' 'systemd-sysvcompat')
 pkgver=194
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
@@ -61,7 +61,7 @@ check() {
 package_systemd() {
   pkgdesc="system and service manager"
   depends=('acl' 'bash' 'dbus-core' 'glib2' 'kbd' 'kmod' 'hwids' 'libcap' 'libgcrypt'
-           'pam' 'util-linux' 'xz')
+           'pam' 'util-linux' 'xz' "systemd-sysvcompat=$pkgver" 'systemd-manjaro-units')
   provides=("libsystemd=$pkgver" "systemd-tools=$pkgver" "udev=$pkgver")
   replaces=('libsystemd' 'systemd-tools' 'udev')
   conflicts=('libsystemd' 'systemd-tools' 'udev')
