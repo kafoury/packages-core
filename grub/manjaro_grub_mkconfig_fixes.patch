@@ -70,20 +70,14 @@
    sed "s/^/$submenu_indentation/" << EOF
  	echo	'$message'
  	linux	${rel_dirname}/${basename} root=${linux_root_device_thisversion} ro ${args}
-@@ -190,7 +193,21 @@ while [ "x$list" != "x" ] ; do
+@@ -190,7 +190,15 @@ while [ "x$list" != "x" ] ; do
    alt_version=`echo $version | sed -e "s,\.old$,,g"`
    linux_root_device_thisversion="${LINUX_ROOT_DEVICE}"
  
 +  if test -e "/etc/manjaro-release" ; then
-+    if echo "${basename}" | grep -q 'vmlinuz-linux' ; then
-+      version="`echo "${basename}" | sed -e 's,vmlinuz-linux,,g'`"
-+
-+      if [ "x${version}" = "x" ] ; then
-+        version="core repo kernel"
-+      else
-+        version="`echo "${version}" | sed -e 's,-,,g'`"
-+        version="${version} kernel"
-+      fi
++    kbasename="`echo "${basename}" | sed -e 's,vmlinuz-,linux,g'`"
++    if test -e "${dirname}/${kbasename}.kver" ; then
++ 	version="$(cat ${dirname}/${kbasename}.kver)"
 +    fi
 +  fi
 +
