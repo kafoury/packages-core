@@ -160,6 +160,9 @@ package_linux34() {
   make INSTALL_MOD_PATH="${pkgdir}" modules_install
   cp arch/$KARCH/boot/bzImage "${pkgdir}/boot/vmlinuz-${_basever}-${CARCH}"
 
+  # add kernel version
+  echo "${pkgver}-${pkgrel}-${CARCH}-MANJARO" > "${pkgdir}/boot/vmlinuz-${_basever}-${CARCH}.ver"
+
   # add vmlinux
   install -D -m644 vmlinux "${pkgdir}/usr/src/linux-${_kernver}/vmlinux"
 
