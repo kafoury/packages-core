@@ -144,7 +144,11 @@ package_linux35() {
   cp arch/$KARCH/boot/bzImage "${pkgdir}/boot/vmlinuz-${_basever}-${CARCH}"
 
   # add kernel version
-  echo "${pkgver}-${pkgrel}-${CARCH}-MANJARO" > "${pkgdir}/boot/${pkgbase}-${CARCH}.kver"
+  if [ "${CARCH}" = "x86_64" ]; then
+     echo "${pkgver}-${pkgrel}-MANJARO x64" > "${pkgdir}/boot/${pkgbase}-${CARCH}.kver"
+  else
+     echo "${pkgver}-${pkgrel}-MANJARO x32" > "${pkgdir}/boot/${pkgbase}-${CARCH}.kver"
+  fi
 
   # add vmlinux
   install -D -m644 vmlinux "${pkgdir}/usr/src/linux-${_kernver}/vmlinux"
