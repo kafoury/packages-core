@@ -11,7 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.6
 _basever=36
 _aufs=20120813
-pkgver=${_basekernel}.1
+pkgver=${_basekernel}.2
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -131,7 +131,10 @@ package_linux36() {
 
   mkdir -p "${pkgdir}"/{lib/modules,lib/firmware,boot}
   make INSTALL_MOD_PATH="${pkgdir}" modules_install
-  cp arch/$KARCH/boot/bzImage "${pkgdir}/boot/vmlinuz-${pkgver}-${pkgrel}-${CARCH}-manjaro"
+  cp arch/$KARCH/boot/bzImage "${pkgdir}/boot/vmlinuz-${_basever}-${CARCH}"
+
+  # add kernel version
+  echo "${pkgver}-${pkgrel}-${CARCH}-MANJARO" > "${pkgdir}/boot/vmlinuz-${_basever}-${CARCH}.ver"
 
   # add vmlinux
   install -D -m644 vmlinux "${pkgdir}/usr/src/linux-${_kernver}/vmlinux"
@@ -148,9 +151,9 @@ package_linux36() {
     -e  "s/ARCH=.*/ARCH=${CARCH}/g" \
     -i "${startdir}/${pkgname}.install"
   sed \
-    -e "s|ALL_kver=.*|ALL_kver=\"/boot/vmlinuz-${pkgver}-${pkgrel}-${CARCH}-manjaro\"|g" \
-    -e "s|default_image=.*|default_image=\"/boot/initramfs-${pkgver}-${pkgrel}-${CARCH}-manjaro.img\"|g" \
-    -e "s|fallback_image=.*|fallback_image=\"/boot/initramfs-${pkgver}-${pkgrel}-${CARCH}-manjaro-fallback.img\"|g" \
+    -e "s|ALL_kver=.*|ALL_kver=\"/boot/vmlinuz-${_basever}-${CARCH}\"|g" \
+    -e "s|default_image=.*|default_image=\"/boot/initramfs-${_basever}-${CARCH}.img\"|g" \
+    -e "s|fallback_image=.*|fallback_image=\"/boot/initramfs-${_basever}-${CARCH}-fallback.img\"|g" \
     -i "${pkgdir}/etc/mkinitcpio.d/${pkgname}.preset"
 
   # remove build and source links

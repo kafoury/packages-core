@@ -32,8 +32,8 @@ post_upgrade() {
   fi
   
   # remove old initcpio
-  rm -f /boot/initramfs-${KERNEL_BASE}*-${ARCH}-manjaro.img
-  rm -f /boot/initramfs-${KERNEL_BASE}*-${ARCH}-manjaro-fallback.img
+  rm -f /boot/initramfs-${KERNEL_BASE}*-${ARCH}*.img
+  rm -f /boot/initramfs-${KERNEL_BASE}*-${ARCH}*-fallback.img
   
   # updating module dependencies
   echo ">>> Updating module dependencies. Please wait ..."
