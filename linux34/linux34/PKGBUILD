@@ -184,7 +184,7 @@ package_linux34() {
   sed \
     -e "s|ALL_kver=.*|ALL_kver=\"/boot/vmlinuz-${_basever}-${CARCH}\"|g" \
     -e "s|default_image=.*|default_image=\"/boot/initramfs-${_basever}-${CARCH}.img\"|g" \
-    -e "s|fallback_image=.*|fallback_image=\"/boot/initramfs-${_basever}-${CARCH}.img\"|g" \
+    -e "s|fallback_image=.*|fallback_image=\"/boot/initramfs-${_basever}-${CARCH}-fallback.img\"|g" \
     -i "${pkgdir}/etc/mkinitcpio.d/${pkgname}.preset"
 
   # remove build and source links
