@@ -37,7 +37,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.4.10-i915-add-wait_for-in-init_ring_common.patch'
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
-            '8fbc6b0634152efc61d5af84c94cf15515a7135d6d036722de141349e2b0dcf8'
+            '3349fbefd183c2308722f8682c6adf0873c72d4825c780a944d50149ae64897a'
             '9338ca7bb31d95dd72b955fd9e964d796c822e68218ad9b02ac822a3e3671364'
             '9f104acccd85654d3542c52fb8bd5f9e246e01374165301cc76ac76babe62707'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'

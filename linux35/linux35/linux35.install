@@ -1,11 +1,11 @@
 # arg 1:  the new package version
 # arg 2:  the old package version
 
-RELEASE=3.5.6-1
-KERNEL_VERSION=3.5.6-1-MANJARO
+RELEASE=3.5.7-1
+KERNEL_VERSION=3.5.7-1-MANJARO
 KERNEL_BASE=3.5
 BASEVER=35
-ARCH=i686
+ARCH=x86_64
 
 post_install () {
   # updating module dependencies
@@ -33,7 +33,7 @@ post_upgrade() {
   
   # remove old initcpio
   rm -f /boot/initramfs-${KERNEL_BASE}*-${ARCH}*.img
-  rm -f /boot/initramfs-${KERNEL_BASE}*-${ARCH}*-fallback.img
+  rm -f /boot/initramfs-${BASEVER}-${ARCH}*.img
   
   # updating module dependencies
   echo ">>> Updating module dependencies. Please wait ..."
@@ -54,8 +54,7 @@ post_upgrade() {
 
 post_remove() {
   # remove initcpio
-  rm -f /boot/initramfs-${RELEASE}-${ARCH}-manjaro.img
-  rm -f /boot/initramfs-${RELEASE}-${ARCH}-manjaro-fallback.img
+  rm -f /boot/initramfs-${BASEVER}-${ARCH}*.img
   
   # update grub.cfg
   if [ -f /usr/sbin/update-grub ]; then
