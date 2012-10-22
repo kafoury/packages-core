@@ -9,9 +9,6 @@ post_install() {
   systemctl enable getty@.service
 
   systemd-machine-id-setup
-
-  echo ":: Append 'init=/bin/systemd' to your kernel command line in your"
-  echo "   bootloader to replace sysvinit with systemd"
 }
 
 post_upgrade() {

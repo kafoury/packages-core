@@ -1,0 +1,6 @@
+VERSION         DESCRIPTION
+-----------------------------------------------------------------------------
+194-4           -systemd-sysvcompat is now included in systemd package
+                -systemd-manjaro-units IS NEEDED in depends
+                -added python2-cairo and python2-dbus in depends to use systemd-analyze binary
+                -systemd is now in base group as it should be

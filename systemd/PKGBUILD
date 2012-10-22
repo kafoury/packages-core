@@ -4,29 +4,50 @@
 # Maintainer:  Phil Müller <philm@manajro.org>
 # Contributor: Guinux <nuxgui@gmail.com>
 
-pkgbase=systemd
-pkgname=('systemd' 'systemd-sysvcompat')
+pkgname=systemd
 pkgver=194
-pkgrel=2
+pkgrel=4
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
+groups=('base')
 makedepends=('acl' 'cryptsetup' 'dbus-core' 'docbook-xsl' 'gobject-introspection' 'gperf'
              'gtk-doc' 'intltool' 'kmod' 'libcap' 'libgcrypt' 'libxslt' 'linux-api-headers'
              'pam' 'python' 'quota-tools' 'xz')
 options=('!libtool')
+pkgdesc="system and service manager"
+depends=('acl' 'bash' 'dbus-core' 'glib2' 'kbd' 'kmod' 'hwids' 'libcap' 'libgcrypt'
+         'pam' 'util-linux' 'xz' 'sysvinit-tools' 'systemd-manjaro-units'
+         'python2-cairo' 'python2-dbus')
+provides=("libsystemd=$pkgver" "systemd-tools=$pkgver" "udev=$pkgver" "systemd-sysvcompat=$pkgver")
+replaces=('libsystemd' 'systemd-tools' 'udev' 'systemd-sysvcompat')
+conflicts=('libsystemd' 'systemd-tools' 'udev' 'systemd-sysvcompat')
+optdepends=('cryptsetup: required for encrypted block devices'
+            'quota-tools: kernel-level quota management'
+            'python: systemd library bindings')
+backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
+        etc/dbus-1/system.d/org.freedesktop.hostname1.conf
+        etc/dbus-1/system.d/org.freedesktop.login1.conf
+        etc/dbus-1/system.d/org.freedesktop.locale1.conf
+        etc/dbus-1/system.d/org.freedesktop.timedate1.conf
+        etc/systemd/system.conf
+        etc/systemd/user.conf
+        etc/systemd/logind.conf
+        etc/systemd/journald.conf
+        etc/udev/udev.conf)
+install="systemd.install"
 source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-hook-udev'
         'initcpio-install-udev'
         'initcpio-install-timestamp'
         '0001-Reinstate-TIMEOUT-handling.patch'
         'use-split-usr-path.patch')
-md5sums=('0ebb73aea444693b9b86f7a76f5df23c'
-         'e99e9189aa2f6084ac28b8ddf605aeb8'
-         'fb37e34ea006c79be1c54cbb0f803414'
-         'df69615503ad293c9ddf9d8b7755282d'
-         '5543be25f205f853a21fa5ee68e03f0d'
-         'fd5b5f04ab0a847373d357555129d4c0')
+sha256sums=('a275ce044f66f28c5ed0846e7019438ce8b5f596e8255f3455e32b3c0db5f631'
+            '892ce43218e0a458981bbce451252c8987dc398e60b8de288e7542b8f2409c13'
+            'e39a9e3d50024466f5b98486a53858b166953efeee451e386eecac9501696c00'
+            'b6a7cd6512209ea6b53fec2ad4aff23573ecd36d698d7da8baa5c8278fa1a119'
+            'd6e4f76dd01ce21e84b99586d6dab06a826b8455c9d5e8a5c87e55e9a737182d'
+            '7b440cd7e08257ad12766eb39ab3bf25ab232735a93858c9f66886d984780081')
 
 build() {
   cd "$pkgname-$pkgver"
@@ -58,31 +79,7 @@ check() {
   make -C "$pkgname-$pkgver" check
 }
 
-package_systemd() {
-  pkgdesc="system and service manager"
-  depends=('acl' 'bash' 'dbus-core' 'glib2' 'kbd' 'kmod' 'hwids' 'libcap' 'libgcrypt'
-           'pam' 'util-linux' 'xz' "systemd-sysvcompat=$pkgver" 'systemd-manjaro-units')
-  provides=("libsystemd=$pkgver" "systemd-tools=$pkgver" "udev=$pkgver")
-  replaces=('libsystemd' 'systemd-tools' 'udev')
-  conflicts=('libsystemd' 'systemd-tools' 'udev')
-  optdepends=('initscripts: legacy support for /etc/rc.conf'
-              'python2-cairo: systemd-analyze'
-              'python2-dbus: systemd-analyze'
-              'systemd-sysvcompat: symlink package to provide sysvinit binaries'
-              'cryptsetup: required for encrypted block devices'
-              'quota-tools: kernel-level quota management')
-  backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
-          etc/dbus-1/system.d/org.freedesktop.hostname1.conf
-          etc/dbus-1/system.d/org.freedesktop.login1.conf
-          etc/dbus-1/system.d/org.freedesktop.locale1.conf
-          etc/dbus-1/system.d/org.freedesktop.timedate1.conf
-          etc/systemd/system.conf
-          etc/systemd/user.conf
-          etc/systemd/logind.conf
-          etc/systemd/journald.conf
-          etc/udev/udev.conf)
-  install="systemd.install"
-
+package() {
   make -C "$pkgname-$pkgver" DESTDIR="$pkgdir" install
 
   printf "d /run/console 0755 root root\n" > "$pkgdir/usr/lib/tmpfiles.d/console.conf"
@@ -108,9 +105,6 @@ package_systemd() {
   # https://pokersource.info/show_bug.cgi?id=50989
   sed -i '1s/python$/python2/' "$pkgdir/usr/bin/systemd-analyze"
 
-  # Fix local environment in gettys
-  sed -i "s/\(Environment=LANG=\)/#\1/" "$pkgdir"/usr/lib/systemd/system/getty@.service
-
   # the path to udevadm is hardcoded in some places
   install -d "$pkgdir/sbin"
   ln -s ../usr/bin/udevadm "$pkgdir/sbin/udevadm"
@@ -134,30 +128,11 @@ package_systemd() {
   # XXX: kill off coredump rule until the journal can recover coredumps
   rm "$pkgdir/usr/lib/sysctl.d/coredump.conf"
 
-  ### split out manpages for sysvcompat
-  rm -rf "$srcdir/_sysvcompat"
-  install -dm755 "$srcdir"/_sysvcompat/usr/share/man/man8/
-  mv "$pkgdir"/usr/share/man/man8/{telinit,halt,reboot,poweroff,runlevel,shutdown}.8 \
-     "$srcdir"/_sysvcompat/usr/share/man/man8
-}
-
-package_systemd-sysvcompat() {
-  pkgdesc="sysvinit compat for systemd"
-  conflicts=('sysvinit' 'initscripts')
-  depends=('sysvinit-tools')
-
-  # the initscripts conflict here isn't actually needed, but in order to make
-  # this package remove both sysvinit and initscripts, the initscripts conflict
-  # is needed. There's no case in which you would ever want initscripts installed
-  # without sysvinit, and vice versa, as in both cases, they are unusable.
-
-  mv "$srcdir/_sysvcompat"/* "$pkgdir"
-
+  # make sysvcompat symlinks
   install -dm755 "$pkgdir/sbin"
   for tool in runlevel reboot shutdown poweroff halt telinit; do
     ln -s '/usr/bin/systemctl' "$pkgdir/sbin/$tool"
   done
-
   ln -s '../usr/lib/systemd/systemd' "$pkgdir/sbin/init"
 }
 
