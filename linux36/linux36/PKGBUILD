@@ -32,6 +32,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'aufs3-proc_map.patch'
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
+        '3.6-module-init-wait.patch'
+        '3.6-module-symbol-waiting.patch'
         '3.6.3-jbd2-fix-a-potential-fs-corrupting-bug-in-jbd2_mark_journal_empty.patch'
 )
 sha256sums=('4ab9a6ef1c1735713f9f659d67f92efa7c1dfbffb2a2ad544005b30f9791784f'
@@ -47,6 +49,8 @@ sha256sums=('4ab9a6ef1c1735713f9f659d67f92efa7c1dfbffb2a2ad544005b30f9791784f'
             'e071eec6da165981a6bcc9115b13938c43db9e79dba7600b890988e5ba4d8079'
             'cb4aca86bd03a1b46bcacad8e03e254d3fa367bd81ae0c3bac9021ad2d934a4c'
             'b9d79ca33b0b51ff4f6976b7cd6dbb0b624ebf4fbf440222217f8ffc50445de4'
+            'ab786cd6c07e67671ab30806e95d605ca4bb3bd46891f6bc3aef00b710ef75cd'
+            'f0ce56a034312c4d95974ef66487fd42ce4d303cd551e2ca00c04e60d4307ed2'
             '7c9bd33a6a548204501d4143e9676b9eea3929c37a0a4d291f3116eea8d21368'
 )
 
@@ -65,6 +69,11 @@ build() {
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -Np1 -i "${srcdir}/change-default-console-loglevel.patch"
+
+  # fix module initialisation
+  # https://bugs.archlinux.org/task/32122
+  patch -Np1 -i "${srcdir}/3.6-module-symbol-waiting.patch"
+  patch -Np1 -i "${srcdir}/3.6-module-init-wait.patch"
 
   # http://www.spinics.net/lists/linux-ext4/msg34597.html
   patch -Np1 -i "${srcdir}/3.6.3-jbd2-fix-a-potential-fs-corrupting-bug-in-jbd2_mark_journal_empty.patch"
