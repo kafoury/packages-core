@@ -12,7 +12,7 @@ _basekernel=3.4
 _basever=34
 _aufs=20120730
 pkgver=${_basekernel}.15
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -35,6 +35,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'i915-fix-ghost-tv-output.patch'
         '3.4.4-fix-backlight-regression.patch'
         '3.4.10-i915-add-wait_for-in-init_ring_common.patch'
+        '3.4.15-jbd2-fix-a-potential-fs-corrupting-bug-in-jbd2_mark_journal_empty.patch'
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             '68de56cad8afd7cebbf5124a6ef30c0cb151ade7f33142425c96334c8c5f169d'
@@ -53,6 +54,7 @@ sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             '9ccadbe3eb30bb283af3eb869c3a4bdb764628854811cc616a2e02e9ef398705'
             '04d3a4d636950ea8906843274cc6b7b4f745dc65e10f4a9f213dcb5ac9b9f8a8'
             '7685b0815212644787c776058cdadcb59ddaeb8cbc50b3283f81b3fb9c071e52'
+            '7c9bd33a6a548204501d4143e9676b9eea3929c37a0a4d291f3116eea8d21368'
 )
 
 build() {
@@ -81,6 +83,9 @@ build() {
 
   # https://lkml.org/lkml/2012/8/24/463
   patch -Np1 -i "${srcdir}/3.4.10-i915-add-wait_for-in-init_ring_common.patch"
+
+  # http://www.spinics.net/lists/linux-ext4/msg34597.html
+  patch -Np1 -i "${srcdir}/3.4.15-jbd2-fix-a-potential-fs-corrupting-bug-in-jbd2_mark_journal_empty.patch"
 
   # Patch submitted upstream, waiting for inclusion:
   # https://lkml.org/lkml/2012/2/19/51

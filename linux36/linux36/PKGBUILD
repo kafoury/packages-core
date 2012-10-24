@@ -12,7 +12,7 @@ _basekernel=3.6
 _basever=36
 _aufs=20120813
 pkgver=${_basekernel}.3
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -32,6 +32,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'aufs3-proc_map.patch'
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
+        '3.6.3-jbd2-fix-a-potential-fs-corrupting-bug-in-jbd2_mark_journal_empty.patch'
 )
 sha256sums=('4ab9a6ef1c1735713f9f659d67f92efa7c1dfbffb2a2ad544005b30f9791784f'
             '8f61979aecdc32c1a97c68136da57fd857827be9d3205159318f7e65a268560f'
@@ -46,6 +47,7 @@ sha256sums=('4ab9a6ef1c1735713f9f659d67f92efa7c1dfbffb2a2ad544005b30f9791784f'
             'e071eec6da165981a6bcc9115b13938c43db9e79dba7600b890988e5ba4d8079'
             'cb4aca86bd03a1b46bcacad8e03e254d3fa367bd81ae0c3bac9021ad2d934a4c'
             'b9d79ca33b0b51ff4f6976b7cd6dbb0b624ebf4fbf440222217f8ffc50445de4'
+            '7c9bd33a6a548204501d4143e9676b9eea3929c37a0a4d291f3116eea8d21368'
 )
 
 build() {
@@ -63,6 +65,9 @@ build() {
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -Np1 -i "${srcdir}/change-default-console-loglevel.patch"
+
+  # http://www.spinics.net/lists/linux-ext4/msg34597.html
+  patch -Np1 -i "${srcdir}/3.6.3-jbd2-fix-a-potential-fs-corrupting-bug-in-jbd2_mark_journal_empty.patch"
 
   # add aufs3 support
   #patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
