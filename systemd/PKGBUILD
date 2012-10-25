@@ -5,8 +5,8 @@
 # Contributor: Guinux <nuxgui@gmail.com>
 
 pkgname=systemd
-pkgver=194
-pkgrel=4
+pkgver=195
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
@@ -42,7 +42,7 @@ source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-install-timestamp'
         '0001-Reinstate-TIMEOUT-handling.patch'
         'use-split-usr-path.patch')
-sha256sums=('a275ce044f66f28c5ed0846e7019438ce8b5f596e8255f3455e32b3c0db5f631'
+sha256sums=('e9041a8b84ed971d08df2b96f1b7dbb1d49b788e275c7cc39912f656bd826303'
             '892ce43218e0a458981bbce451252c8987dc398e60b8de288e7542b8f2409c13'
             'e39a9e3d50024466f5b98486a53858b166953efeee451e386eecac9501696c00'
             'b6a7cd6512209ea6b53fec2ad4aff23573ecd36d698d7da8baa5c8278fa1a119'
@@ -87,10 +87,12 @@ package() {
   install -dm755 "$pkgdir/bin"
   ln -s ../usr/lib/systemd/systemd "$pkgdir/bin/systemd"
 
-  # move bash-completion and symlink for loginctl
+  # move bash-completion and symlink for *ctl's
   install -Dm644 "$pkgdir/etc/bash_completion.d/systemd-bash-completion.sh" \
     "$pkgdir/usr/share/bash-completion/completions/systemctl"
-  ln -s systemctl "$pkgdir/usr/share/bash-completion/completions/loginctl"
+  for ctl in {login,journal,timedate,locale,hostname}ctl; do
+    ln -s systemctl "$pkgdir/usr/share/bash-completion/completions/$ctl"
+  done
   rm -rf "$pkgdir/etc/bash_completion.d"
 
   # don't write units to /etc by default -- we'll enable this on post_install

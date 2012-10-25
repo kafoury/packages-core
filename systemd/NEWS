@@ -1,5 +1,9 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+195-1		-move bash-completion and symlink for *ctl's
+		-restore reexec on upgrade 
+		-set FS caps on systemd-detect-virt (FS#32178)
+
 194-4           -systemd-sysvcompat is now included in systemd package
                 -systemd-manjaro-units IS NEEDED in depends
                 -added python2-cairo and python2-dbus in depends to use systemd-analyze binary
