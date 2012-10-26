@@ -9,7 +9,7 @@
 pkgbase=catalyst-utils
 pkgname=('catalyst-utils' 'opencl-catalyst' 'mhwd-catalyst')
 pkgver=12.10
-pkgrel=1
+pkgrel=2
 pkgdesc="AMD/ATI Catalyst drivers utilities and libraries with OpenCL implementation"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
@@ -67,7 +67,7 @@ package_catalyst-utils() {
   install -m755 drivers/*.so "${pkgdir}/usr/lib/xorg/modules/drivers/"
   install -m755 linux/*.so "${pkgdir}/usr/lib/xorg/modules/linux/"
   install -m755 extensions/fglrx/fglrx-libglx.so "${pkgdir}/usr/lib/xorg/modules/extensions/fglrx/"
-  ln -s fglrx/fglrx-libglx.so "${pkgdir}/usr/lib/xorg/modules/extensions/libglx.so"
+  ln -s fglrx/fglrx-libglx.so "${pkgdir}/usr/lib/xorg/modules/extensions/libglx.so.catalyst"
   cd ${srcdir}/fglrx-install/arch/${_ARCHDIR}/usr/X11R6/lib${_ARCHLIB}
   install -m755 modules/dri/fglrx_dri.so "${pkgdir}/usr/lib/xorg/modules/dri/"
   ln -s /usr/lib/xorg/modules/dri/fglrx_dri.so "${pkgdir}/usr/lib/dri/"
