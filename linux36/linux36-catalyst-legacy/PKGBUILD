@@ -9,7 +9,7 @@ pkgname=('linux36-catalyst-legacy')
 _pkgname=catalyst-legacy
 groups=('linux36-extramodules')
 pkgver=12.6
-pkgrel=1
+pkgrel=2
 pkgdesc="AMD/ATI Catalyst legacy drivers for linux. fglrx kernel module only (for AMD Radeon HD 2000 - 4000 series)"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
@@ -19,12 +19,12 @@ makedepends=('gcc-libs' 'gcc>4.0.0' 'make' 'linux36-headers')
 conflicts=('linux36-catalyst')
 install=catalyst.install
 
-source=(http://www2.ati.com/drivers/legacy/amd-driver-installer-${pkgver}-legacy-x86.x86_64.zip
+source=(http://www2.ati.com/drivers/legacy/${pkgver/./-}/amd-driver-installer-${pkgver}-legacy-x86.x86_64.zip
         ati_make.sh
         makefile_compat.patch
         3.5-do_mmap.patch)
 
-sha256sums=('5353a3f874d31f0fde46c390ce17cc2f27875156dbf3e7c20b5cca494a058102'
+sha256sums=('fe80c7d49c8be9437985cc873de9f97b14d527f0ed198c07f5538abef0e39e5f'
 	    'e1d3cedbfc6a239d5d71458c458137f1a7404ebddfa838557d25c965dd49c845'
 	    'd344df75ffbe9bd899e288862f41983c2e24b5eff3e7e8cf02d4891eeb137fff'
             '3fc9bae50d25d3bfe76a3a1e89c8d025674a4cb9afd16d3a5d8b3c25a66f536d')
