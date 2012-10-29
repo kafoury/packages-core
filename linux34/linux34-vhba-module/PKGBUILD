@@ -11,7 +11,7 @@ _pkgname=vhba-module
 groups=('linux34-extramodules')
 pkgver=20120422
 _extramodules=extramodules-3.4-MANJARO
-pkgrel=4
+pkgrel=5
 pkgdesc="Kernel module that emulates SCSI devices"
 arch=('i686' 'x86_64')
 url="http://cdemu.sourceforge.net/"
@@ -43,7 +43,7 @@ package() {
 	find "$pkgdir" -name '*.ko' -exec gzip -9 {} \;
 
   install -Dm644 "$srcdir/60-vhba.rules" \
-	  "$pkgdir/usr/lib/udev/rules.d/60-vhba.rules"
+	  "$pkgdir/usr/lib/udev/rules.d/60-$pkgname.rules"
 }
 
 # vim:set ts=2 sw=2 et:

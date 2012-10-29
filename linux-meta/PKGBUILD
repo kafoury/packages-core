@@ -23,11 +23,11 @@ pkgname=('linux'
          'virtualbox-guest-modules')
 
 pkgver=2012.10
-pkgrel=2
+pkgrel=3
 arch=any
 url="www.manjaro.org"
 license=('GPL')
-linuxprefix="linux35"
+linuxprefix="linux34"
 
 
 package_linux() {
