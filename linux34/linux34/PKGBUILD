@@ -12,7 +12,7 @@ _basekernel=3.4
 _basever=34
 _aufs=20120730
 pkgver=${_basekernel}.16
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -37,7 +37,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.4-module-symbol-waiting.patch'
         '3.4.4-fix-backlight-regression.patch'
         '3.4.10-i915-add-wait_for-in-init_ring_common.patch'
-        '3.4.15-jbd2-fix-a-potential-fs-corrupting-bug-in-jbd2_mark_journal_empty.patch'
+        '3.4.16-ext4-fix_unjournaled_inode_bitmap_modification.patch'
+        '3.4.16-fix-regression-bisected_to _Exclude_E820_RESERVED_regions.patch'
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             '0110f0d5b61a808aa18d9470c52ac4d4d47e02bde5457358d15fabdb726e9f9d'
@@ -58,7 +59,8 @@ sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             'f0ce56a034312c4d95974ef66487fd42ce4d303cd551e2ca00c04e60d4307ed2'
             '04d3a4d636950ea8906843274cc6b7b4f745dc65e10f4a9f213dcb5ac9b9f8a8'
             '7685b0815212644787c776058cdadcb59ddaeb8cbc50b3283f81b3fb9c071e52'
-            '7c9bd33a6a548204501d4143e9676b9eea3929c37a0a4d291f3116eea8d21368'
+            '8a0f6df905df0adac31abd400241e38bf67de59a4549902d364c7d494da97809'
+            '45e03387a54874ba7d8396309e48d94ae85ca2f61d88998da7a41b49c5031e43'
 )
 
 build() {
@@ -88,8 +90,13 @@ build() {
   # https://lkml.org/lkml/2012/8/24/463
   patch -Np1 -i "${srcdir}/3.4.10-i915-add-wait_for-in-init_ring_common.patch"
 
-  # http://www.spinics.net/lists/linux-ext4/msg34597.html
-  patch -Np1 -i "${srcdir}/3.4.15-jbd2-fix-a-potential-fs-corrupting-bug-in-jbd2_mark_journal_empty.patch"
+  # fix unjornaled inode bitmap modfication in ext4
+  # http://www.spinics.net/lists/linux-ext4/msg34556.html
+  # http://www.spinics.net/lists/linux-ext4/msg34750.html
+  patch -Np1 -i "${srcdir}/3.4.16-ext4-fix_unjournaled_inode_bitmap_modification.patch"
+
+  # patch already upstream
+  patch -Np1 -i "${srcdir}/3.4.16-fix-regression-bisected_to _Exclude_E820_RESERVED_regions.patch"
 
   # Patch submitted upstream, waiting for inclusion:
   # https://lkml.org/lkml/2012/2/19/51
