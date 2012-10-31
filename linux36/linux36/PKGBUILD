@@ -11,8 +11,8 @@ _kernelname=-MANJARO
 _basekernel=3.6
 _basever=36
 _aufs=20120813
-pkgver=${_basekernel}.4
-pkgrel=2
+pkgver=${_basekernel}.5
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -35,10 +35,9 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.6-module-init-wait.patch'
         '3.6-module-symbol-waiting.patch'
         '3.6.4-ext4-fix_unjournaled_inode_bitmap_modification.patch'
-        '3.6.4-fix-regression-bisected_to _Exclude_E820_RESERVED_regions.patch'
 )
 sha256sums=('4ab9a6ef1c1735713f9f659d67f92efa7c1dfbffb2a2ad544005b30f9791784f'
-            '283f24d813f3b7305d1fc9b3b8aa16c98c51fff3d2852a92e0b5a3491bdbadf9'
+            '4343503007add206f4b6fb12219169b745893da48eefc451fff8cfd16d51121a'
             '0e4ed746019b64c0303ab206a37d85cab15100ddf569ab552574efa111cc8739'
             '2897e2209a90cac19167a1bebdbc40bd6f77cfdc5623be565b59b1473c19a8ef'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
@@ -53,7 +52,6 @@ sha256sums=('4ab9a6ef1c1735713f9f659d67f92efa7c1dfbffb2a2ad544005b30f9791784f'
             'ab786cd6c07e67671ab30806e95d605ca4bb3bd46891f6bc3aef00b710ef75cd'
             'f0ce56a034312c4d95974ef66487fd42ce4d303cd551e2ca00c04e60d4307ed2'
             '8a0f6df905df0adac31abd400241e38bf67de59a4549902d364c7d494da97809'
-            '6a97e7e753c3d4578f8d8ac7d2269cafb60934ef779e57bbef99eb542adb42a9'
 )
 
 build() {
@@ -81,9 +79,6 @@ build() {
   # http://www.spinics.net/lists/linux-ext4/msg34556.html
   # http://www.spinics.net/lists/linux-ext4/msg34750.html
   patch -Np1 -i "${srcdir}/3.6.4-ext4-fix_unjournaled_inode_bitmap_modification.patch"
-
-  # patch already upstream
-  patch -Np1 -i "${srcdir}/3.6.4-fix-regression-bisected_to _Exclude_E820_RESERVED_regions.patch"
 
   # add aufs3 support
   #patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
