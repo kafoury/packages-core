@@ -1,7 +1,10 @@
 ##
 ## Manjaro Linux repository mirrorlist
-## Generated on 2012-09-11
+## Generated on 2012-11-02
 ##
+
+## Brasil
+# Server = http://manjaro.fis.unb.br/$repo/$arch
 
 ## France
 # Server = http://manjarolinux.polymorf.fr/$repo/$arch
