@@ -6,6 +6,7 @@ pkgbase=linux-meta
 pkgname=('linux'
          'linux-headers'
          'bbswitch'
+         'broadcom-wl'
          'catalyst'
          'catalyst-legacy'
          'cdfs'
@@ -22,8 +23,8 @@ pkgname=('linux'
          'virtualbox-host-modules'
          'virtualbox-guest-modules')
 
-pkgver=2012.10
-pkgrel=3
+pkgver=2012.11
+pkgrel=1
 arch=any
 url="www.manjaro.org"
 license=('GPL')
@@ -44,6 +45,11 @@ package_linux-headers() {
 }
 
 package_bbswitch() {
+          pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
+          depends="$linuxprefix-$pkgname"
+}
+
+package_broadcom-wl() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
           depends="$linuxprefix-$pkgname"
 }
