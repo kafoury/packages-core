@@ -11,7 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.6
 _basever=36
 _aufs=20120813
-pkgver=${_basekernel}.5
+pkgver=${_basekernel}.6
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -34,10 +34,9 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'change-default-console-loglevel.patch'
         '3.6-module-init-wait.patch'
         '3.6-module-symbol-waiting.patch'
-        '3.6.4-ext4-fix_unjournaled_inode_bitmap_modification.patch'
 )
 sha256sums=('4ab9a6ef1c1735713f9f659d67f92efa7c1dfbffb2a2ad544005b30f9791784f'
-            '4343503007add206f4b6fb12219169b745893da48eefc451fff8cfd16d51121a'
+            '221a0644f48c4d3d5c3eef63f470c73a2fd1c535280813991a47a4b713f6eae9'
             '0e4ed746019b64c0303ab206a37d85cab15100ddf569ab552574efa111cc8739'
             '2897e2209a90cac19167a1bebdbc40bd6f77cfdc5623be565b59b1473c19a8ef'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
@@ -51,7 +50,6 @@ sha256sums=('4ab9a6ef1c1735713f9f659d67f92efa7c1dfbffb2a2ad544005b30f9791784f'
             'b9d79ca33b0b51ff4f6976b7cd6dbb0b624ebf4fbf440222217f8ffc50445de4'
             'ab786cd6c07e67671ab30806e95d605ca4bb3bd46891f6bc3aef00b710ef75cd'
             'f0ce56a034312c4d95974ef66487fd42ce4d303cd551e2ca00c04e60d4307ed2'
-            '8a0f6df905df0adac31abd400241e38bf67de59a4549902d364c7d494da97809'
 )
 
 build() {
@@ -74,11 +72,6 @@ build() {
   # https://bugs.archlinux.org/task/32122
   patch -Np1 -i "${srcdir}/3.6-module-symbol-waiting.patch"
   patch -Np1 -i "${srcdir}/3.6-module-init-wait.patch"
-
-  # fix unjornaled inode bitmap modfication in ext4
-  # http://www.spinics.net/lists/linux-ext4/msg34556.html
-  # http://www.spinics.net/lists/linux-ext4/msg34750.html
-  patch -Np1 -i "${srcdir}/3.6.4-ext4-fix_unjournaled_inode_bitmap_modification.patch"
 
   # add aufs3 support
   #patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
