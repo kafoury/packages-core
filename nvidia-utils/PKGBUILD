@@ -5,7 +5,7 @@
 # Maintainer: Clittle <philm@manjarolinux.org>
 pkgbase=nvidia-utils
 pkgname=('nvidia-utils' 'opencl-nvidia' 'mhwd-nvidia')
-pkgver=304.60
+pkgver=304.64
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.nvidia.com/"
@@ -16,12 +16,12 @@ if [ "$CARCH" = "i686" ]; then
     _arch='x86'
     _pkg="NVIDIA-Linux-${_arch}-${pkgver}"
     source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
-    sha256sums=('d9aa2c325dd27f76a70e3c430e18c4ad759b3c7773d3e921c67512b863e7c440')
+    sha256sums=('23464129f7ea5a00f724f67627206b322b6d08efb7134192a56ba50ea93d2252')
 elif [ "$CARCH" = "x86_64" ]; then
     _arch='x86_64'
     _pkg="NVIDIA-Linux-${_arch}-${pkgver}-no-compat32"
     source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
-    sha256sums=('f538919fe8d626af072bc3c0eac1b175d5166d8c06ef4f865dc01c76dadd6fca')
+    sha256sums=('b45bbf79599c7344decf79ade1c3d635d20578a0686cda99bc56b39f967163f4')
 fi
 
 create_links() {

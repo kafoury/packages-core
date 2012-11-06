@@ -45,7 +45,7 @@ package() {
 	cd "${srcdir}"
 
 	install -D -m 755 wl.ko "${pkgdir}/usr/lib/modules/${_extramodules}/wl.ko"
-	sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "${startdir}/${_pkgname}.install"
+	sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "${startdir}/install"
 
 	find "$pkgdir" -name '*.ko' -exec gzip -9 {} \;
 
