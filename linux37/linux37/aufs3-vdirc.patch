@@ -1,0 +1,20 @@
+--- /dev/null
++++ linux-3.x-rcN/fs/aufs/vdir.c	2012-11-12 21:48:26.593616567 +0100
+@@ -522,7 +522,7 @@ static int au_handle_shwh(struct super_b
+ 	AuDebugOn(!au_opt_test(au_mntflags(sb), SHWH));
+ 
+ 	err = -ENOMEM;
+-	o = p = __getname_gfp(GFP_NOFS);
++	o = p = (void *)__get_free_page(GFP_NOFS);
+ 	if (unlikely(!p))
+ 		goto out;
+ 
+@@ -542,7 +542,7 @@ static int au_handle_shwh(struct super_b
+ 		}
+ 	}
+ 
+-	__putname(o);
++	free_page((unsigned long)o);
+ 
+ out:
+ 	AuTraceErr(err);
