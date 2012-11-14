@@ -6,7 +6,7 @@
 
 pkgname=linux34-nvidia
 _pkgname=nvidia
-pkgver=304.64
+pkgver=310.19
 _extramodules=extramodules-3.4-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 groups=('linux34-extramodules')
@@ -24,13 +24,13 @@ options=(!strip)
 if [ "$CARCH" = "i686" ]; then
     _arch='x86'
     _pkg="NVIDIA-Linux-${_arch}-${pkgver}"
-    source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
-    sha256sums=('23464129f7ea5a00f724f67627206b322b6d08efb7134192a56ba50ea93d2252')
+    source=("http://download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
+    sha256sums=('85d082c06a1ea07f514d22c0de4d5d2af065bcac37c377c3d755904bbf780c2f')
 elif [ "$CARCH" = "x86_64" ]; then
     _arch='x86_64'
     _pkg="NVIDIA-Linux-${_arch}-${pkgver}-no-compat32"
-    source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
-    sha256sums=('b45bbf79599c7344decf79ade1c3d635d20578a0686cda99bc56b39f967163f4')
+    source=("http://download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
+    sha256sums=('07b59edfaffb178c947af2c083d22dc6af90974aa53a61bb10792a682aaa5c72')
 fi
 
 build() {

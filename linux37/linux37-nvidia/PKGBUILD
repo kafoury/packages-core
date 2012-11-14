@@ -6,7 +6,7 @@
 
 pkgname=linux37-nvidia
 _pkgname=nvidia
-pkgver=304.64
+pkgver=310.19
 _extramodules=extramodules-3.7-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 groups=('linux37-extramodules')
@@ -24,24 +24,19 @@ options=(!strip)
 if [ "$CARCH" = "i686" ]; then
     _arch='x86'
     _pkg="NVIDIA-Linux-${_arch}-${pkgver}"
-    source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
-    sha256sums=('23464129f7ea5a00f724f67627206b322b6d08efb7134192a56ba50ea93d2252')
+    source=("http://download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
+    sha256sums=('85d082c06a1ea07f514d22c0de4d5d2af065bcac37c377c3d755904bbf780c2f')
 elif [ "$CARCH" = "x86_64" ]; then
     _arch='x86_64'
     _pkg="NVIDIA-Linux-${_arch}-${pkgver}-no-compat32"
-    source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
-    sha256sums=('b45bbf79599c7344decf79ade1c3d635d20578a0686cda99bc56b39f967163f4')
+    source=("http://download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
+    sha256sums=('07b59edfaffb178c947af2c083d22dc6af90974aa53a61bb10792a682aaa5c72')
 fi
-
-source=(${source[@]} "conftest.patch" "nv-mmap.patch")
-sha256sums=(${sha256sums[@]} "efc62e0a602b968f8b2f55e60b9fdf3657c4ec4c643443fa65c785ff46c16bce" "98f90f57a4f5188cdacc4114730123b20f3dd48d7043201d3d8843f370ea09f6")
 
 build() {
     cd "${srcdir}"
     sh "${_pkg}.run" --extract-only
     cd "${_pkg}/kernel"
-    patch < "${srcdir}/conftest.patch"
-    patch < "${srcdir}/nv-mmap.patch"
     make SYSSRC=/usr/lib/modules/"${_kernver}/build" module
 }
 
