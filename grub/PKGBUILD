@@ -11,7 +11,7 @@ _grub_915_ver=9
 pkgname=('grub-common' 'grub-bios' 'grub-efi-i386')
 pkgbase=grub
 pkgver=2.00
-pkgrel=3
+pkgrel=4
 url="https://www.gnu.org/software/grub/"
 arch=('i686' 'x86_64')
 license=('GPL3')
@@ -40,7 +40,7 @@ sha256sums=('784ec38e7edc32239ad75b8e66df04dc8bfb26d88681bc9f627133a6eb85c458'
             '04f79ec649764b02444d9bd82b39814bd17f018abf00c8b34bbafa37899c3a3f'
             '1b435e3a2c309afe4cc952dd8c5c7375ca180970b93f128bc283272e72f9928e'
             '1b77925818a4f76df8453c3643513145f46f1738a2684f92304ea60637277d47'
-            '0baf7abdf6ace9b9a863df6345ae5ed6646982f84287ebe5a0823ebc63a06a4c'
+            '720db20a6a1c81864ad6405ef838db02206b53298fda48f383bebdb51eac56a8'
             '7fc95d49c0febe98a76e56b606a280565cb736580adecf163bc6b5aca8e7cbd8'
             '259d7eafa2751dd443cb3a08784ef444565cc487d427afa9a268e41bb6c5aba2'
             '625b5d04726ae7f7af8924916171cc5a6ca30d82045e8ea93ac006a4043c8a54'
