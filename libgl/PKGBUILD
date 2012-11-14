@@ -1,29 +1,28 @@
 # Note: build this package with --force flag
 # Note: keep insync with mesa pkg
 #
+# Maintainer: Clittle <philm@manjaro.org>
 # Maintainer: Roland Singer <roland@manajro.org>
-# Co-Maintainer: Clittle <philm@manjaro.org>
 
 pkgname=('libgl')
-pkgver=8.0.4
-pkgrel=3
+pkgver=9.0
+pkgrel=1
 arch=('i686' 'x86_64')
-depends=('mhwd' 'libdrm>=2.4.31' 'libxxf86vm>=1.1.1' 'libxdamage>=1.1.3' 'expat>=2.0.1' 'libglapi' 'gcc-libs')
+depends=('mhwd' 'libdrm>=2.4.39' 'libxxf86vm>=1.1.2' 'libxdamage>=1.1.3' 'expat>=2.1.0' 'libglapi' 'gcc-libs')
 pkgdesc="Mesa 3-D graphics library and DRI software rasterizer"
-#replaces=('unichrome-dri' 'mach64-dri' 'mga-dri' 'r128-dri' 'savage-dri' 'sis-dri' 'tdfx-dri')
 install=libgl.install
 url="http://mesa3d.sourceforge.net"
 license=('custom')
 source=(http://mirror.us.leaseweb.net/archlinux/extra/os/$CARCH/$pkgname-$pkgver-$pkgrel-$CARCH.pkg.tar.xz)
 if [ "$CARCH" = "i686" ]; then
-   sha256sums=('90c7b76e066be042b378cfd7e58973b028ace03c073697aa71e6d6d52146fe7d')
+   sha256sums=('1156c6e67142aefb6bc9d0fc5b47c8f08546c1889871a5de4191e6aff97c4d6d')
 else
-   sha256sums=('d19f8863613b42cd1afe69dde5cd034a4024ffecf5125ba89d879fe5f66ebfa7')
+   sha256sums=('e98592309d435ce77afd23dc8ef7b473140c2fc8683039787e5be468a6d1aece')
 fi
 
 package() {
   cp -rPf usr ${pkgdir}
-  mv "${pkgdir}/usr/lib/libGL.so.1.2" "${pkgdir}/usr/lib/libGL.so.mesa"
+  mv "${pkgdir}/usr/lib/libGL.so.1.2.0" "${pkgdir}/usr/lib/libGL.so.mesa"
   rm "${pkgdir}/usr/lib/libGL.so.1"
   rm "${pkgdir}/usr/lib/libGL.so"
   rm "${pkgdir}/usr/lib/xorg/modules/extensions/libglx.so"
