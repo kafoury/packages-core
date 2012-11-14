@@ -1,9 +1,10 @@
 # Maintainer: Roland <roland@manjaro.org>
 # Maintainer: Clittle <philm@manjaro.org>
+# Contributor: Samsagax <samsagax@gmail.com>
 
 pkgname=bumblebee
 pkgver=3.0.1
-pkgrel=1
+pkgrel=3
 pkgdesc="Bumblebee brings Optimus Support for Linux through VirtualGL."
 arch=('i686' 'x86_64')
 depends=('virtualgl' 'glib2' 'systemd' 'libbsd')
@@ -18,7 +19,7 @@ license=("GPL3")
 backup=('etc/bumblebee/bumblebee.conf' 
     'etc/bumblebee/xorg.conf.nouveau' 
     'etc/bumblebee/xorg.conf.nvidia')
-source=("10-evdev.conf" "10-quirks.conf" "bumblebee_config_patch.diff" "bumblebee_xorg_config_dir_fix_patch.diff" "https://github.com/downloads/Bumblebee-Project/Bumblebee/${pkgname}-${pkgver}.tar.gz")
+source=("10-evdev.conf" "10-quirks.conf" "bumblebee_xorg_config_dir_fix_patch.diff" "https://github.com/downloads/Bumblebee-Project/Bumblebee/${pkgname}-${pkgver}.tar.gz" '99-remove-nvidia-dev.rules')
 
 
 build() {
@@ -27,9 +28,6 @@ build() {
 	# Patch Xorg config dir patch
 	patch -p0 < "${srcdir}/bumblebee_xorg_config_dir_fix_patch.diff"
 
-	# Patch configs
-	patch -p1 < "${srcdir}/bumblebee_config_patch.diff"
-
     ./configure \
         CONF_DRIVER_MODULE_NVIDIA=nvidia \
         CONF_LDPATH_NVIDIA=/usr/lib/nvidia-bumblebee:/usr/lib32/nvidia-bumblebee \
@@ -37,25 +35,33 @@ build() {
         CONF_GID=users \
         --prefix=/usr \
         --sysconfdir=/etc
+
     make
 }
 
 package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
     make install DESTDIR="$pkgdir"
-    install -D -m755 "scripts/systemd/bumblebeed.service" "$pkgdir/usr/lib/systemd/system/bumblebeed.service"
+
+    # Install systemd unit
+    install -D -m644 "scripts/systemd/bumblebeed.service" "${pkgdir}/usr/lib/systemd/system/bumblebeed.service"    
 
     # Make bash_completion work
     mv -v "${pkgdir}/etc/bash_completion.d/bumblebee" "${pkgdir}/etc/bash_completion.d/optirun"
 
+    #Install udev rule to prevent GH-#144
+    install -D -m644 "$srcdir/99-remove-nvidia-dev.rules" "${pkgdir}/lib/udev/rules.d/99-remove-nvidia-dev.rules"
+
 	# Install bumblebees xorg.conf.d files
 	install -D -m755 "${srcdir}/10-evdev.conf" "${pkgdir}/etc/X11/bumblebee.xorg.conf.d/10-evdev.conf"
 	install -D -m755 "${srcdir}/10-quirks.conf" "${pkgdir}/etc/X11/bumblebee.xorg.conf.d/10-quirks.conf"
+
+	# Adjust ServerGroup to users
+	sed -i "/#/!s|ServerGroup[ ]*=.*|ServerGroup=users|g" "${pkgdir}/etc/bumblebee/bumblebee.conf"
 }
 
-
-md5sums=('198c5598e32818f6524f56c55596378c'
-         'd4f7dfc6be4ef4e2c6dd7632a9d88abe'
-         '20c955c5e40f57e0133a274057dd51f0'
-         'b607b630f620d20484d700a164840286'
-         '7b3fd4bfa0d59e877abdb75cbdba30f8')
+sha256sums=('d4c8044c6b27cdd8e7366127f5ba2f006f7a2e4b7e3b49255d4ba513ab3d334c'
+            '94612f5c0d34a3b7152915c2e285c7b462e9d8e38d3539bd551a339498eac166'
+            'b770378d76dcb0c96512bdb941b3cc39786cbedc175e8888dcd163c47e27f706'
+            '447eebbcfbc8877a7a15126b492f07b9186428e75c768b1eeb86ce71076f3e60'
+            'bd8d8ae490171a9302f85c07e7fc95522dc71615779304f05a01588ae96508cb')
