@@ -9,7 +9,7 @@
 
 pkgbase=linux37-virtualbox-modules
 pkgname=('linux37-virtualbox-host-modules' 'linux37-virtualbox-guest-modules')
-pkgver=4.2.0
+pkgver=4.2.4
 pkgrel=0.1
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
@@ -22,19 +22,11 @@ makedepends=("virtualbox-host-source>=$pkgver"
 _extraver=extramodules-3.7-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extraver}/version)"
 
-source=('linux3.7.patch')
-sha256sums=(4d6597ab85a03e20401a6e9822f7372c3f2c5e07d183816615956b5408b81f2b)
-
 
 build() {
   # dkms need modification to be run as user
   cp -r /var/lib/dkms .
   echo "dkms_tree='$srcdir/dkms'" > dkms.conf
-
-  # patch (enable it and run it once with root rights, deactivate it and rerun with user rights)
-  #cd "$srcdir/dkms/"
-  #patch -p0 -i "$srcdir/linux3.7.patch"
-  #cd ../../
 
   # build host modules
   msg2 'Host modules'

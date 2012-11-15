@@ -9,8 +9,8 @@
 
 pkgbase=linux34-virtualbox-modules
 pkgname=('linux34-virtualbox-host-modules' 'linux34-virtualbox-guest-modules')
-pkgver=4.2.0
-pkgrel=4
+pkgver=4.2.4
+pkgrel=1
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
