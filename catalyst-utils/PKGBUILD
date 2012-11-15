@@ -8,19 +8,21 @@
 
 pkgbase=catalyst-utils
 pkgname=('catalyst-utils' 'opencl-catalyst' 'mhwd-catalyst')
-pkgver=12.10
-pkgrel=2
+pkgver=12.11
+pkgrel=1
 pkgdesc="AMD/ATI Catalyst drivers utilities and libraries with OpenCL implementation"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
 license=('custom')
 
-source=(http://www2.ati.com/drivers/linux/amd-driver-installer-catalyst-${pkgver}-x86.x86_64.zip
+source=(http://www2.ati.com/drivers/beta/amd-driver-installer-catalyst-${pkgver}-beta-x86.x86_64.zip
         atieventsd
-        atieventsd.service)
-sha256sums=('ca2a097324687245801b3350316880d706c82f43684839dcf7f86f55141d835d'
+        atieventsd.service
+        signature.from.12.9)
+sha256sums=('0c3e0c96b3daf8a6647ba2285374c96b7d57bc0ee69fbc7dc0c091cd482caffc'
             '9bc354e36e059cc2d120e35ec0dd893ddee347fdc7f02a9c99cd6569802b152e'
-            'c410dac3cc3c0a468fcb7edfe1d271690eba46179b7dbf0eda8a12544871332f')
+            'c410dac3cc3c0a468fcb7edfe1d271690eba46179b7dbf0eda8a12544871332f'
+            'd6aff2bbed9d1ce24302cda420ca9d4f6d89e27b14ab4e9cc510245bc4aab743')
 
 if [ "${CARCH}" = "i686" ]; then
   _ARCHDIR="x86"
@@ -39,7 +41,7 @@ build() {
 }
 
 package_catalyst-utils() {
-  depends=('xorg-server>=1.12.0' 'xorg-server<1.13.0' 'netkit-bsd-finger' 'libxrandr' 'libsm' 'fontconfig' 'libxcursor' 'libxi' 'gcc-libs' 'libxinerama' 'mhwd' 'libgl')
+  depends=('xorg-server>=1.13.0' 'xorg-server<1.14.0' 'netkit-bsd-finger' 'libxrandr' 'libsm' 'fontconfig' 'libxcursor' 'libxi' 'gcc-libs' 'libxinerama' 'mhwd' 'libgl')
   optdepends=('qt: amdcccle'
               'acpid: acpi event support')
   conflicts=('catalyst-legacy' 'catalyst-legacy-utils')
@@ -102,6 +104,9 @@ package_catalyst-utils() {
 
   # provided in opencl-catalyst package
   rm "${pkgdir}"/usr/lib/lib{amdocl*,OpenCL}.so* 
+
+  # we remove the watermark
+  install -m644 "${srcdir}/signature.from.12.9" "${pkgdir}/etc/ati/signature"
 
   # licenses
   install -Dm644 "${srcdir}/fglrx-install/common/usr/share/doc/fglrx/LICENSE.TXT" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.TXT"
