@@ -4,7 +4,7 @@
 
 pkgbase=mhwd
 pkgname=('mhwd' 'mhwd-db')
-pkgver=0.2.1.90
+pkgver=0.2.1.92
 pkgrel=1
 pkgdesc="Manjaro Linux Hardware Detection"
 arch=('i686' 'x86_64')
@@ -79,4 +79,7 @@ package_mhwd-db() {
 
   # remove catalyst-legacy
   rm -r ${pkgdir}/var/lib/mhwd/db/pci/graphic_drivers/catalyst-legacy
+
+  # remove unichrome
+  rm -r ${pkgdir}/var/lib/mhwd/db/pci/graphic_drivers/xf86-video-unichrome
 }

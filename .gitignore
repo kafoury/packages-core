@@ -10,4 +10,5 @@ pkg
 *.xz
 *.log
 *~
+*patch-old
 aufs3-standalone

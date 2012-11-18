@@ -1,0 +1,48 @@
+# Based on the file created for Arch Linux by:
+# Maintainer : Thomas Baechler <thomas@archlinux.org>
+
+# Maintainer: Guinux <nuxgui@gmail.com>
+# Co-Maintainer: Clittle <philm@manjarolinux.org>
+
+pkgname=linux36-nvidia-legacy
+_pkgname=nvidia
+pkgver=304.64
+_extramodules=extramodules-3.6-MANJARO
+_kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
+groups=('linux36-extramodules')
+pkgrel=1
+pkgdesc="NVIDIA drivers for linux."
+arch=('i686' 'x86_64')
+url="http://www.nvidia.com/"
+depends=('linux36' "nvidia-legacy-utils=${pkgver}")
+makedepends=('linux36-headers')
+conflicts=('nvidia-96xx' 'nvidia-173xx' 'linux36-nvidia')
+license=('custom')
+install=nvidia.install
+options=(!strip)
+
+if [ "$CARCH" = "i686" ]; then
+    _arch='x86'
+    _pkg="NVIDIA-Linux-${_arch}-${pkgver}"
+    source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
+    sha256sums=('23464129f7ea5a00f724f67627206b322b6d08efb7134192a56ba50ea93d2252')
+elif [ "$CARCH" = "x86_64" ]; then
+    _arch='x86_64'
+    _pkg="NVIDIA-Linux-${_arch}-${pkgver}-no-compat32"
+    source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
+    sha256sums=('b45bbf79599c7344decf79ade1c3d635d20578a0686cda99bc56b39f967163f4')
+fi
+
+build() {
+    cd "${srcdir}"
+    sh "${_pkg}.run" --extract-only
+    cd "${_pkg}/kernel"
+    make SYSSRC=/usr/lib/modules/"${_kernver}/build" module
+}
+
+package() {
+    install -D -m644 "${srcdir}/${_pkg}/kernel/nvidia.ko" \
+        "${pkgdir}/usr/lib/modules/${_extramodules}/nvidia.ko"
+    sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='${_extramodules}'/" "${startdir}/nvidia.install"
+    gzip "${pkgdir}/usr/lib/modules/${_extramodules}/nvidia.ko"
+}
