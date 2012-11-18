@@ -11,4 +11,5 @@ pkg
 *.log
 *~
 *patch-old
+*.installe
 aufs3-standalone
