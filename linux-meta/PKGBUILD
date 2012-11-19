@@ -15,6 +15,7 @@ pkgname=('linux'
          'lirc'
          'ndiswrapper'
          'nvidia'
+         'nvidia-legacy'
          'nvidiabl'
          'open-vm-tools-modules'
          'r8168'
@@ -90,6 +91,11 @@ package_ndiswrapper() {
 }
 
 package_nvidia() {
+          pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
+          depends="$linuxprefix-$pkgname"
+}
+
+package_nvidia-legacy() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
           depends="$linuxprefix-$pkgname"
 }

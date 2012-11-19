@@ -6,7 +6,7 @@
 
 pkgname=pacman
 pkgver=4.0.3
-pkgrel=14
+pkgrel=15
 pkgdesc="A library-based package manager with dependency support"
 arch=('i686' 'x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -22,6 +22,7 @@ options=(!libtool)
 source=(ftp://ftp.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz{,.sig}
         0001-Add-conflict-for-replacing-owned-empty-directory.patch
         0002-Check-empty-subdirectory-ownership.patch
+        0003-Ensure-pre_upgrade-scriptlet-gets-old-package-version.patch
         manjaro-rankmirrors.patch
         pacman.conf
         pacman.conf.x86_64
@@ -35,6 +36,7 @@ build() {
 
   patch -p1 -i $srcdir/0001-Add-conflict-for-replacing-owned-empty-directory.patch
   patch -p1 -i $srcdir/0002-Check-empty-subdirectory-ownership.patch
+  patch -p1 -i $srcdir/0003-Ensure-pre_upgrade-scriptlet-gets-old-package-version.patch
   patch -p1 -i $srcdir/manjaro-rankmirrors.patch
 
   ./configure --prefix=/usr --sysconfdir=/etc \
@@ -87,6 +89,7 @@ sha256sums=('a48696ae51aaccf31a69ea7916ba9b06e7836eb933b8a281c666729c9d55ce25'
             '87d0f36ffa218b4bf22b7522d6464ffb47441f7360feb517c05cf82622d122c3'
             '4a64e2aa188314e640e7ed34898b4611aac386fe42a52720d220779a86003c17'
             'a547c8daaf12e79ff8d0fd7a29a5a020095b1ac8eb17b4cc8e572600e08afb7a'
+            '9b3ad2d54046f2268746dd21af3616736a12b69cfcd00bed4ce56dcd28659ea5'
             'b476c7d74e31d53c7ec872e21b3ed420fe248136ef07ff9abcaafba758122110'
             'f0f25c4faa1e8f98c62eb4182fbd1f192117e799395abddb056d26672dea741e'
             'e5a5a8419e1849c84b29e765dec2398d79344e86c2420d24796121624705e2e9'
