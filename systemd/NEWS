@@ -1,5 +1,19 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+196-1		-adjust PKGBUILD
+		-remove kill off coredump rule and 0001-Reinstate-TIMEOUT-handling.patch
+		-udev gained support for loading additional device properties from an 
+		 indexed database that is keyed by vendor/product IDs and similar device identifiers. 
+		 For the beginning this hwdb is populated with data from the well-known PCI and USB 
+		 database, but also includes PNP, ACPI and OID data. In the longer run this indexed 
+		 database shall grow into becoming the one central database for non-essential userspace 
+		 device metadata. Previously, data from the PCI/USB database was only attached to select 
+		 devices, since the lookup was a relatively expensive operation due to O(n) time complexity 
+		 (with n being the number of entries in the database). Since this is now O(1), we decided 
+		 to add in this data for all devices where this is available, by default. Note that the 
+		 indexed database needs to be rebuilt when new data files are installed. To achieve this 
+		 you need to update your packaging scripts to invoke udevadm
+
 195-1		-move bash-completion and symlink for *ctl's
 		-restore reexec on upgrade 
 		-set FS caps on systemd-detect-virt (FS#32178)

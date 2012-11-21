@@ -5,7 +5,7 @@
 # Contributor: Guinux <nuxgui@gmail.com>
 
 pkgname=systemd
-pkgver=195
+pkgver=196
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
@@ -40,20 +40,15 @@ source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-hook-udev'
         'initcpio-install-udev'
         'initcpio-install-timestamp'
-        '0001-Reinstate-TIMEOUT-handling.patch'
         'use-split-usr-path.patch')
-sha256sums=('e9041a8b84ed971d08df2b96f1b7dbb1d49b788e275c7cc39912f656bd826303'
+sha256sums=('6bd4a658a5dd8198235b17ad1b1f0cc56d9e6f00d646ddcffdfc6f058b55e4bf'
             '892ce43218e0a458981bbce451252c8987dc398e60b8de288e7542b8f2409c13'
             'e39a9e3d50024466f5b98486a53858b166953efeee451e386eecac9501696c00'
             'b6a7cd6512209ea6b53fec2ad4aff23573ecd36d698d7da8baa5c8278fa1a119'
-            'd6e4f76dd01ce21e84b99586d6dab06a826b8455c9d5e8a5c87e55e9a737182d'
             '7b440cd7e08257ad12766eb39ab3bf25ab232735a93858c9f66886d984780081')
 
 build() {
   cd "$pkgname-$pkgver"
-
-  # still waiting on ipw2x00, et al to get fixed...
-  patch -Np1 <"$srcdir/0001-Reinstate-TIMEOUT-handling.patch"
 
   # hang onto this until we do the /{,s}bin merge
   patch -Np1 <"$srcdir/use-split-usr-path.patch"
@@ -68,9 +63,7 @@ build() {
       --disable-audit \
       --disable-ima \
       --disable-tcpwrap \
-      --with-distro=arch \
-      --with-usb-ids-path=/usr/share/hwdata/usb.ids \
-      --with-pci-ids-path=/usr/share/hwdata/pci.ids
+      --with-distro=arch
 
   make
 }
@@ -126,9 +119,6 @@ package() {
   install -Dm644 "$srcdir/initcpio-install-udev" "$pkgdir/usr/lib/initcpio/install/udev"
   install -Dm644 "$srcdir/initcpio-hook-udev" "$pkgdir/usr/lib/initcpio/hooks/udev"
   install -Dm644 "$srcdir/initcpio-install-timestamp" "$pkgdir/usr/lib/initcpio/install/timestamp"
-
-  # XXX: kill off coredump rule until the journal can recover coredumps
-  rm "$pkgdir/usr/lib/sysctl.d/coredump.conf"
 
   # make sysvcompat symlinks
   install -dm755 "$pkgdir/sbin"
