@@ -6,23 +6,24 @@
 
 pkgname=systemd
 pkgver=196
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
 groups=('base')
 makedepends=('acl' 'cryptsetup' 'dbus-core' 'docbook-xsl' 'gobject-introspection' 'gperf'
-             'gtk-doc' 'intltool' 'kmod' 'libcap' 'libgcrypt' 'libxslt' 'linux-api-headers'
-             'pam' 'python' 'quota-tools' 'xz')
+             'gtk-doc' 'intltool' 'kmod' 'libcap' 'libgcrypt' 'libmicrohttpd' 'libxslt'
+             'linux-api-headers' 'pam' 'python' 'quota-tools' 'xz')
 options=('!libtool')
 pkgdesc="system and service manager"
 depends=('acl' 'bash' 'dbus-core' 'glib2' 'kbd' 'kmod' 'hwids' 'libcap' 'libgcrypt'
          'pam' 'util-linux' 'xz' 'sysvinit-tools' 'systemd-manjaro-units'
-         'python2-cairo' 'python2-dbus')
+         'python2-cairo' 'python2-gobject' 'python2-dbus')
 provides=("libsystemd=$pkgver" "systemd-tools=$pkgver" "udev=$pkgver" "systemd-sysvcompat=$pkgver")
 replaces=('libsystemd' 'systemd-tools' 'udev' 'systemd-sysvcompat')
 conflicts=('libsystemd' 'systemd-tools' 'udev' 'systemd-sysvcompat')
 optdepends=('cryptsetup: required for encrypted block devices'
+            'libmicrohttpd: systemd-journal-gatewayd'
             'quota-tools: kernel-level quota management'
             'python: systemd library bindings')
 backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
@@ -83,10 +84,16 @@ package() {
   # move bash-completion and symlink for *ctl's
   install -Dm644 "$pkgdir/etc/bash_completion.d/systemd-bash-completion.sh" \
     "$pkgdir/usr/share/bash-completion/completions/systemctl"
-  for ctl in {login,journal,timedate,locale,hostname}ctl; do
+  for ctl in {login,journal,timedate,locale,hostname,systemd-coredump}ctl udevadm; do
     ln -s systemctl "$pkgdir/usr/share/bash-completion/completions/$ctl"
   done
   rm -rf "$pkgdir/etc/bash_completion.d"
+
+  # zsh completion isn't installed as part of 196
+  # http://i.imgur.com/hMJgX.jpg
+  # TODO: remove this for 197
+  install -Dm644 "$pkgname-$pkgver/shell-completion/systemd-zsh-completion.zsh" \
+  "$pkgdir/usr/share/zsh/site-functions/_systemd"
 
   # don't write units to /etc by default -- we'll enable this on post_install
   # as a sane default

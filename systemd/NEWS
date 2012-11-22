@@ -1,5 +1,12 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+196-2		- add libmicrohttpd support (FS#32181)
+		- update optdeps for systemd-analyze (FS#32784)
+		- add fallback for setcap failure (FS#32493)
+		- add ZSH completion - update bash completion symlinks
+		- run journalctl
+		--update-catalog on post_upgrade/post_install
+
 196-1		-adjust PKGBUILD
 		-remove kill off coredump rule and 0001-Reinstate-TIMEOUT-handling.patch
 		-udev gained support for loading additional device properties from an 
