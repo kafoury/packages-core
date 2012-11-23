@@ -1,32 +1,24 @@
-# Based on the file created for Arch Linux by:
-# Dave Reisner <d@falconindy.com>
-
 # Maintainer: Guinux <nuxgui@gmail.com>
 # Maintainer: Roland Singer <roland@manjaro.org>
 
 pkgname=systemd-manjaro-units
-pkgver=20120915
-pkgrel=2
+pkgver=20121123
+pkgrel=1
 pkgdesc="Manjaro specific Systemd unit files"
 arch=('any')
 url="http://github.com/falconindy/systemd-arch-units"
 license=('MIT')
 depends=('systemd')
 install=systemd-manjaro-units.install
-source=("systemd-arch-units-$pkgver.tar.gz::https://www.github.com/falconindy/systemd-arch-units/tarball/$pkgver"
-        'rc-local.service'
+source=('rc-local.service'
         'rc-local-shutdown.service')
 
 
 package() {
-  make -C "$(tar tf "$srcdir/systemd-arch-units-$pkgver.tar.gz" | sed 1q)" DESTDIR="$pkgdir" install
-
-  rm $pkgdir/usr/lib/systemd/scripts/postgresql-initdb
-
+  mkdir -p "${pkgdir}/usr/lib/systemd/system"
   install -Dm644 "${srcdir}/rc-local.service" "${pkgdir}/usr/lib/systemd/system/rc-local.service"
   install -Dm644 "${srcdir}/rc-local-shutdown.service" "${pkgdir}/usr/lib/systemd/system/rc-local-shutdown.service"
 }
 
-sha256sums=('c982cacb0d6d883ba276d38baa68f7ece7f510cfac2f99d6caaea89094db3f8a'
-            '2e27fd62ec5e579e65f779710db2ddb10adf744077caabc2c15b44d040d0fc97'
+sha256sums=('2e27fd62ec5e579e65f779710db2ddb10adf744077caabc2c15b44d040d0fc97'
             '308cd05122a3d30529e74b8562f89ee8abda9b40e4c2f890262ccb25097087b0')
