@@ -1,6 +1,8 @@
 # Maintainer: Philip Müller <philm@manjaro.org>
 # Maintainer: Roland Singer <roland@manjaro.org>
 
+# Disabled modules ('catalyst-legacy')
+
 pkgbase=linux-meta
 
 pkgname=('linux'
@@ -8,7 +10,6 @@ pkgname=('linux'
          'bbswitch'
          'broadcom-wl'
          'catalyst'
-         'catalyst-legacy'
          'cdfs'
          'fcpci'
          'fcpcmcia'
@@ -25,11 +26,11 @@ pkgname=('linux'
          'virtualbox-guest-modules')
 
 pkgver=2012.11
-pkgrel=1
+pkgrel=2
 arch=any
 url="www.manjaro.org"
 license=('GPL')
-linuxprefix="linux34"
+linuxprefix="linux35"
 
 
 package_linux() {
