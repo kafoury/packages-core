@@ -4,7 +4,7 @@
 
 pkgname=bumblebee
 pkgver=3.0.1
-pkgrel=3
+pkgrel=4
 pkgdesc="Bumblebee brings Optimus Support for Linux through VirtualGL."
 arch=('i686' 'x86_64')
 depends=('virtualgl' 'glib2' 'systemd' 'libbsd')
@@ -19,7 +19,7 @@ license=("GPL3")
 backup=('etc/bumblebee/bumblebee.conf' 
     'etc/bumblebee/xorg.conf.nouveau' 
     'etc/bumblebee/xorg.conf.nvidia')
-source=("10-evdev.conf" "10-quirks.conf" "bumblebee_xorg_config_dir_fix_patch.diff" "https://github.com/downloads/Bumblebee-Project/Bumblebee/${pkgname}-${pkgver}.tar.gz" '99-remove-nvidia-dev.rules')
+source=("10-evdev.conf" "10-quirks.conf" "bumblebee_xorg_config_dir_fix_patch.diff" "https://github.com/downloads/Bumblebee-Project/Bumblebee/${pkgname}-${pkgver}.tar.gz" '99-remove-nvidia-dev.rules' 'remove_rmmod_wait_option.fix.patch')
 
 
 build() {
@@ -27,6 +27,9 @@ build() {
 
 	# Patch Xorg config dir patch
 	patch -p0 < "${srcdir}/bumblebee_xorg_config_dir_fix_patch.diff"
+
+	#Remove rmod wait until it get's fixed upstream
+	patch -Np1 < ../remove_rmmod_wait_option.fix.patch
 
     ./configure \
         CONF_DRIVER_MODULE_NVIDIA=nvidia \
@@ -64,4 +67,5 @@ sha256sums=('d4c8044c6b27cdd8e7366127f5ba2f006f7a2e4b7e3b49255d4ba513ab3d334c'
             '94612f5c0d34a3b7152915c2e285c7b462e9d8e38d3539bd551a339498eac166'
             'b770378d76dcb0c96512bdb941b3cc39786cbedc175e8888dcd163c47e27f706'
             '447eebbcfbc8877a7a15126b492f07b9186428e75c768b1eeb86ce71076f3e60'
-            'bd8d8ae490171a9302f85c07e7fc95522dc71615779304f05a01588ae96508cb')
+            'bd8d8ae490171a9302f85c07e7fc95522dc71615779304f05a01588ae96508cb'
+            'bdbb4383a6464b6929537f58582ff0c26218d4a03671753559e9fb3fb741dd48')
