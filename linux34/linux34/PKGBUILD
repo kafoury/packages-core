@@ -11,7 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.4
 _basever=34
 _aufs=20121126
-pkgver=${_basekernel}.20
+pkgver=${_basekernel}.21
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -37,9 +37,10 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.4-module-symbol-waiting.patch'
         '3.4.4-fix-backlight-regression.patch'
         '3.4.10-i915-add-wait_for-in-init_ring_common.patch'
+        '3.4.21-x86-32-export-kernel_stack_pointer-for-modules.patch'
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
-            'ff8e6174193b3e4bbf523ad05ee6718a1eb53142cab409862076f789f72656c4'
+            '81b88b6b9993b16ac5e0b81643e7b325e3e0f093b974834dcd6236f60f4411cb'
             'e333b9c854f88089bad370e84623d263484fbf8546b7b7259959f3384320fcc2'
             '9f246f27a4cf2486cb048c864d7a591fdcef152f12fcbe4e2150b727995c459f'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
@@ -57,6 +58,7 @@ sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             'f0ce56a034312c4d95974ef66487fd42ce4d303cd551e2ca00c04e60d4307ed2'
             '04d3a4d636950ea8906843274cc6b7b4f745dc65e10f4a9f213dcb5ac9b9f8a8'
             '7685b0815212644787c776058cdadcb59ddaeb8cbc50b3283f81b3fb9c071e52'
+            '66cc96dd9671c9212de5b1d506f610138fe6f5c581ef20a504f7fb752fe0bf91'
 )
 
 build() {
@@ -64,6 +66,7 @@ build() {
 
   # add upstream patch
   patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/3.4.21-x86-32-export-kernel_stack_pointer-for-modules.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
