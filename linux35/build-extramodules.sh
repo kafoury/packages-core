@@ -11,6 +11,7 @@ echo 'cleaning environment'
 rm -R ${pwd}/*/{src,pkg} -f
 echo 'building extramodules'
 cd ${pwd}/*bbswitch && makepkg --sign -s --noconfirm
+cd ${pwd}/*broadcom-wl && makepkg --sign -s --noconfirm
 cd ${pwd}/*catalyst && makepkg --sign -s --noconfirm
 #cd ${pwd}/*catalyst-legacy && makepkg --sign -d --noconfirm
 cd ${pwd}/*cdfs && makepkg --sign -s --noconfirm

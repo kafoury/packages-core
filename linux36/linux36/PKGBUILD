@@ -12,7 +12,7 @@ _basekernel=3.6
 _basever=36
 _aufs=20121126
 pkgver=${_basekernel}.9
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -34,6 +34,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.6-module-init-wait.patch'
         '3.6-module-symbol-waiting.patch'
         '3.6.6-irq_cfg_pointer.patch'
+        '3.6.9-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch'
 )
 sha256sums=('4ab9a6ef1c1735713f9f659d67f92efa7c1dfbffb2a2ad544005b30f9791784f'
             '2b96d71cf7409e27175f7ef20d6ccdc2cdadf74ce0980a2252b693ed5091859f'
@@ -51,6 +52,7 @@ sha256sums=('4ab9a6ef1c1735713f9f659d67f92efa7c1dfbffb2a2ad544005b30f9791784f'
             'ab786cd6c07e67671ab30806e95d605ca4bb3bd46891f6bc3aef00b710ef75cd'
             'f0ce56a034312c4d95974ef66487fd42ce4d303cd551e2ca00c04e60d4307ed2'
             'f8ad2c448acc1a0ebde6bbe0394c012357e71a0f999b9276141039cbb4019564'
+            '0ba36591bb38fdb6465bd39a9957295d436591df8b6c3c8e3e4ba0d3b007724b'
 )
 
 build() {
@@ -76,6 +78,10 @@ build() {
 
   # fix FS#32615 - Check for valid irq_cfg pointer in smp_irq_move_cleanup_interrupt
   patch -Np1 -i "${srcdir}/3.6.6-irq_cfg_pointer.patch"
+
+  # fix dvb issues
+  # see: http://forum.manjaro.org/index.php?topic=1108.0
+  patch -Np1 -i "${srcdir}/3.6.9-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch"
 
   # add aufs3 support
   patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"

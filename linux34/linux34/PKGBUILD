@@ -12,7 +12,7 @@ _basekernel=3.4
 _basever=34
 _aufs=20121126
 pkgver=${_basekernel}.21
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -38,6 +38,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.4.4-fix-backlight-regression.patch'
         '3.4.10-i915-add-wait_for-in-init_ring_common.patch'
         '3.4.21-x86-32-export-kernel_stack_pointer-for-modules.patch'
+        '3.4.21-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch'
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             '81b88b6b9993b16ac5e0b81643e7b325e3e0f093b974834dcd6236f60f4411cb'
@@ -59,6 +60,7 @@ sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             '04d3a4d636950ea8906843274cc6b7b4f745dc65e10f4a9f213dcb5ac9b9f8a8'
             '7685b0815212644787c776058cdadcb59ddaeb8cbc50b3283f81b3fb9c071e52'
             '66cc96dd9671c9212de5b1d506f610138fe6f5c581ef20a504f7fb752fe0bf91'
+            '0ba36591bb38fdb6465bd39a9957295d436591df8b6c3c8e3e4ba0d3b007724b'
 )
 
 build() {
@@ -103,6 +105,10 @@ build() {
   # https://bugs.archlinux.org/task/32122
   patch -Np1 -i "${srcdir}/3.4-module-symbol-waiting.patch"
   patch -Np1 -i "${srcdir}/3.4-module-init-wait.patch"
+
+  # fix dvb issues
+  # see: http://forum.manjaro.org/index.php?topic=1108.0
+  patch -Np1 -i "${srcdir}/3.4.21-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch"
 
   # add aufs3 support
   patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
