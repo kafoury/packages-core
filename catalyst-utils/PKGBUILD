@@ -9,17 +9,18 @@
 pkgbase=catalyst-utils
 pkgname=('catalyst-utils' 'opencl-catalyst' 'mhwd-catalyst')
 pkgver=12.11
-pkgrel=1
+_beta=beta11
+pkgrel=2
 pkgdesc="AMD/ATI Catalyst drivers utilities and libraries with OpenCL implementation"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
 license=('custom')
 
-source=(http://www2.ati.com/drivers/beta/amd-driver-installer-catalyst-${pkgver}-beta-x86.x86_64.zip
+source=(http://www2.ati.com/drivers/beta/amd-driver-installer-catalyst-${pkgver}-${_beta}-x86.x86_64.zip
         atieventsd
         atieventsd.service
         signature.from.12.9)
-sha256sums=('0c3e0c96b3daf8a6647ba2285374c96b7d57bc0ee69fbc7dc0c091cd482caffc'
+sha256sums=('d76edd98ed2ca4dfda63cff9060a3e367f32b4cc9a13590f91aba853d85b847b'
             '9bc354e36e059cc2d120e35ec0dd893ddee347fdc7f02a9c99cd6569802b152e'
             'c410dac3cc3c0a468fcb7edfe1d271690eba46179b7dbf0eda8a12544871332f'
             'd6aff2bbed9d1ce24302cda420ca9d4f6d89e27b14ab4e9cc510245bc4aab743')
