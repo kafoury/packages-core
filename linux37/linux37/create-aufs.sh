@@ -29,7 +29,7 @@ mv *.bz2 $OLDPWD
 cd $OLDPWD
 mv *patch* ..
 cd ..
-#rm -rf tmp aufs3-standalone
+rm -rf tmp aufs3-standalone
 
 
 # the patch is created in ../tmp
