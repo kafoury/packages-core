@@ -101,10 +101,10 @@ index 8b20ab7..11a9854 100644
  				atomic_dec(&inode->i_writecount);
  			mutex_lock(&mapping->i_mmap_mutex);
 diff --git a/mm/memory.c b/mm/memory.c
-index fb135ba..77defcc 100644
+index 221fc9f..a55a613 100644
 --- a/mm/memory.c
 +++ b/mm/memory.c
-@@ -3370,6 +3370,8 @@ static int __do_fault(struct mm_struct *mm, struct vm_area_struct *vma,
+@@ -3368,6 +3368,8 @@ static int __do_fault(struct mm_struct *mm, struct vm_area_struct *vma,
  		/* file_update_time outside page_lock */
  		if (vma->vm_file && !page_mkwrite)
  			file_update_time(vma->vm_file);
@@ -114,7 +114,7 @@ index fb135ba..77defcc 100644
  		unlock_page(vmf.page);
  		if (anon)
 diff --git a/mm/mmap.c b/mm/mmap.c
-index 2d94235..8009bcc 100644
+index 9a796c4..8f3271e 100644
 --- a/mm/mmap.c
 +++ b/mm/mmap.c
 @@ -227,6 +227,8 @@ static struct vm_area_struct *remove_vma(struct vm_area_struct *vma)
@@ -126,7 +126,7 @@ index 2d94235..8009bcc 100644
  	mpol_put(vma_policy(vma));
  	kmem_cache_free(vm_area_cachep, vma);
  	return next;
-@@ -665,6 +667,8 @@ again:			remove_next = 1 + (end > next->vm_end);
+@@ -667,6 +669,8 @@ again:			remove_next = 1 + (end > next->vm_end);
  		if (file) {
  			uprobe_munmap(next, next->vm_start, next->vm_end);
  			fput(file);
@@ -135,7 +135,7 @@ index 2d94235..8009bcc 100644
  		}
  		if (next->anon_vma)
  			anon_vma_merge(vma, next);
-@@ -2017,6 +2021,8 @@ static int __split_vma(struct mm_struct * mm, struct vm_area_struct * vma,
+@@ -2019,6 +2023,8 @@ static int __split_vma(struct mm_struct * mm, struct vm_area_struct * vma,
  
  	if (new->vm_file)
  		get_file(new->vm_file);
@@ -144,7 +144,7 @@ index 2d94235..8009bcc 100644
  
  	if (new->vm_ops && new->vm_ops->open)
  		new->vm_ops->open(new);
-@@ -2036,6 +2042,8 @@ static int __split_vma(struct mm_struct * mm, struct vm_area_struct * vma,
+@@ -2038,6 +2044,8 @@ static int __split_vma(struct mm_struct * mm, struct vm_area_struct * vma,
  		new->vm_ops->close(new);
  	if (new->vm_file)
  		fput(new->vm_file);
@@ -153,7 +153,7 @@ index 2d94235..8009bcc 100644
  	unlink_anon_vmas(new);
   out_free_mpol:
  	mpol_put(pol);
-@@ -2433,6 +2441,8 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+@@ -2435,6 +2443,8 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
  				goto out_free_mempol;
  			if (new_vma->vm_file)
  				get_file(new_vma->vm_file);

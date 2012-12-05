@@ -10,17 +10,17 @@
 pkgbase=linux35-virtualbox-modules
 pkgname=('linux35-virtualbox-host-modules' 'linux35-virtualbox-guest-modules')
 pkgver=4.2.4
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
 makedepends=("virtualbox-host-source>=$pkgver"
              "virtualbox-guest-source>=$pkgver"
-             'dkms' 'expac'
-             'linux35' 'linux35-headers')
+             'dkms' 'linux35' 'linux35-headers')
 
-_kernver=$(expac -Q '%v' linux35-headers)-MANJARO
-_extraver=extramodules-${_kernver%.*}-MANJARO
+_extraver=extramodules-3.5-MANJARO
+_kernver="$(cat /usr/lib/modules/$_extraver/version)"
+
 
 
 build() {
