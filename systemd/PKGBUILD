@@ -6,7 +6,7 @@
 
 pkgname=systemd
 pkgver=196
-pkgrel=2
+pkgrel=3
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
@@ -41,18 +41,23 @@ source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-hook-udev'
         'initcpio-install-udev'
         'initcpio-install-timestamp'
-        'use-split-usr-path.patch')
+        'use-split-usr-path.patch'
+        'fix-unmount-msg.patch')
 sha256sums=('6bd4a658a5dd8198235b17ad1b1f0cc56d9e6f00d646ddcffdfc6f058b55e4bf'
             '892ce43218e0a458981bbce451252c8987dc398e60b8de288e7542b8f2409c13'
             'e39a9e3d50024466f5b98486a53858b166953efeee451e386eecac9501696c00'
             'b6a7cd6512209ea6b53fec2ad4aff23573ecd36d698d7da8baa5c8278fa1a119'
-            '7b440cd7e08257ad12766eb39ab3bf25ab232735a93858c9f66886d984780081')
+            '7b440cd7e08257ad12766eb39ab3bf25ab232735a93858c9f66886d984780081'
+            '9a762c146a6e2858e2e2d3d502bf7bec318bcac3d33cb401f552ff569dd27fe5'
+)
 
 build() {
   cd "$pkgname-$pkgver"
 
   # hang onto this until we do the /{,s}bin merge
   patch -Np1 <"$srcdir/use-split-usr-path.patch"
+  # fixed alread for 197
+  patch -Np1 <"$srcdir/fix-unmount-msg.patch"
 
   ./configure \
       --libexecdir=/usr/lib \

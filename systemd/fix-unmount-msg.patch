@@ -1,0 +1,45 @@
+From 140883405e429d9f8d3480a2701d8904f97e4a98 Mon Sep 17 00:00:00 2001
+From: Tom Gundersen <teg@jklm.no>
+Date: Wed, 28 Nov 2012 17:08:54 +0000
+Subject: shutdown: don't consider umounting of / and /usr failed
+
+In the words of Homer: If you don't try, you can't fail.
+
+This is a revert of 9279749b84cc87c7830280b7895a48bed03c9429.
+
+It used to be necessary to consider the umounting failed to make sure /
+and /usr were remounted read-only, but that is no longer necessary as
+everything is now remounted read-only anyway.
+
+Moreover, this avoids a warning at shutdown saying a filesystem was not
+unmounted. As the umounting of / is never attempted there was no
+corresponding warning message saying which fs that failed. This caused some
+spurious bug-reports from concerned users.
+
+Cc: Michael Biebl <biebl@debian.org>
+---
+diff --git a/src/core/umount.c b/src/core/umount.c
+index e794057..5989a4c 100644
+--- a/src/core/umount.c
++++ b/src/core/umount.c
+@@ -433,15 +433,14 @@ static int mount_points_list_umount(MountPoint **head, bool *changed, bool log_e
+                 }
+ 
+                 /* Skip / and /usr since we cannot unmount that
+-                 * anyway, since we are running from it */
++                 * anyway, since we are running from it. They have already been
++                 * remounte ro. */
+                 if (path_equal(m->path, "/")
+ #ifndef HAVE_SPLIT_USR
+                     || path_equal(m->path, "/usr")
+ #endif
+-                ) {
+-                        n_failed++;
++                )
+                         continue;
+-                }
+ 
+                 /* Trying to umount. Forcing to umount if busy (only for NFS mounts) */
+                 if (umount2(m->path, MNT_FORCE) == 0) {
+--
+cgit v0.9.0.2-2-gbebe
