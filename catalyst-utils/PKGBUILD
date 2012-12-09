@@ -10,20 +10,21 @@ pkgbase=catalyst-utils
 pkgname=('catalyst-utils' 'opencl-catalyst' 'mhwd-catalyst')
 pkgver=12.11
 _beta=beta11
-pkgrel=2
+pkgrel=3
 pkgdesc="AMD/ATI Catalyst drivers utilities and libraries with OpenCL implementation"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
 license=('custom')
 
 source=(http://www2.ati.com/drivers/beta/amd-driver-installer-catalyst-${pkgver}-${_beta}-x86.x86_64.zip
-        atieventsd
         atieventsd.service
-        signature.from.12.9)
+        signature.from.12.9
+        fglrx-authfile-locations.patch)
 sha256sums=('d76edd98ed2ca4dfda63cff9060a3e367f32b4cc9a13590f91aba853d85b847b'
-            '9bc354e36e059cc2d120e35ec0dd893ddee347fdc7f02a9c99cd6569802b152e'
             'c410dac3cc3c0a468fcb7edfe1d271690eba46179b7dbf0eda8a12544871332f'
-            'd6aff2bbed9d1ce24302cda420ca9d4f6d89e27b14ab4e9cc510245bc4aab743')
+            'd6aff2bbed9d1ce24302cda420ca9d4f6d89e27b14ab4e9cc510245bc4aab743'
+            '4f445d5248d3fd1bf030e1b4e47c1dacceef7cd61a435c71e880c908fb6264ec'
+)
 
 if [ "${CARCH}" = "i686" ]; then
   _ARCHDIR="x86"
@@ -39,6 +40,7 @@ build() {
   cd ${srcdir}
 
   sh ./amd-driver-installer*.run --extract fglrx-install
+  patch -Np0 -i fglrx-authfile-locations.patch
 }
 
 package_catalyst-utils() {
@@ -51,7 +53,7 @@ package_catalyst-utils() {
   install -dm755 "${pkgdir}"/usr/{bin,sbin}
   install -dm755 "${pkgdir}"/usr/lib/{dri,xorg/modules/{dri,drivers,extensions/fglrx,linux},systemd/system}
   install -dm755 "${pkgdir}"/usr/include/GL
-  install -dm755 "${pkgdir}"/etc/{ati,acpi/events,security/console.apps,rc.d}
+  install -dm755 "${pkgdir}"/etc/{ati,acpi/events,security/console.apps}
   install -dm755 "${pkgdir}"/usr/share/{applications,ati/amdcccle,man/man8,pixmaps}
   
   # binaries
@@ -93,14 +95,12 @@ package_catalyst-utils() {
   install -m644 usr/share/icons/* "${pkgdir}/usr/share/pixmaps/"
   install -m644 usr/share/ati/amdcccle/* "${pkgdir}/usr/share/ati/amdcccle/"
   install -m644 etc/ati/* "${pkgdir}/etc/ati/"
-  install -m755 "${srcdir}/fglrx-install/packages/Ubuntu/dists/source/replacements/authatieventsd.sh" "${pkgdir}/etc/ati/"
   install -m644 etc/security/console.apps/amdcccle-su "${pkgdir}/etc/security/console.apps/"
   install -m644 usr/share/applications/*.desktop "${pkgdir}/usr/share/applications/"
   # use ACPI example files
   install -m755 usr/share/doc/fglrx/examples/etc/acpi/*.sh "${pkgdir}/etc/acpi/"
   install -m644 usr/share/doc/fglrx/examples/etc/acpi/events/* "${pkgdir}/etc/acpi/events/"
-  # systemd and rc.d scripts
-  install -m755 "${srcdir}/atieventsd" "${pkgdir}/etc/rc.d/"
+  # systemd script
   install -m644 "${srcdir}/atieventsd.service" "${pkgdir}/usr/lib/systemd/system/"
 
   # provided in opencl-catalyst package
