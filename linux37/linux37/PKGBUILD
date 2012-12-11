@@ -12,7 +12,7 @@ _basekernel=3.7
 _basever=37
 _aufs=20121210
 pkgver=${_basekernel}.0
-pkgrel=1
+pkgrel=0
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -32,6 +32,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'aufs3-proc_map.patch'
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
+        '3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch'
         '3.7.0-fat.patch'
 )
 sha256sums=('60a64d0bf76eeec3355f115c577935757b84629c8c129ce5b8bb02075f6b9458'
@@ -47,6 +48,7 @@ sha256sums=('60a64d0bf76eeec3355f115c577935757b84629c8c129ce5b8bb02075f6b9458'
             'c9ead3c5485999adeef0accd43363bfb33906b7d7e414577ac7b5954699d13c5'
             '73a8e038b07b8ec8b73c4ac74a42955ff10ef34efb621621671275d7975163c1'
             'b9d79ca33b0b51ff4f6976b7cd6dbb0b624ebf4fbf440222217f8ffc50445de4'
+            '611d11b5346e52e957d9690b7fac2464d83f1c67fe64a943b0026ffb466a5798'
             '3190cffd7bf4906cb85632764d4c5ec22e8da5ccda4daf1f6f8666c6e2c39d52'
 )
 
@@ -65,6 +67,10 @@ build() {
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -Np1 -i "${srcdir}/change-default-console-loglevel.patch"
+
+  # fix dvb issues
+  # see: http://forum.manjaro.org/index.php?topic=1108.0
+  patch -Np1 -i "${srcdir}/3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch"
 
   # fix cosmetic fat issue
   # https://bugs.archlinux.org/task/32916
