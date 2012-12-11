@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PACKAGEVERSION="20120916"
+PACKAGEVERSION="20121210"
 SYSTEMVERSION="$PACKAGEVERSION"
 
 if [ -f /var/lib/manjaro-system/version ]; then
@@ -9,11 +9,15 @@ fi
 
 
 post_install() {
-	echo "SYSTEMVERSION=\"$PACKAGEVERSION\"" > /var/lib/manjaro-system/version
+	post_upgrade
 }
 
 post_upgrade() {
-	if [ "$SYSTEMVERSION" -lt "20120916" ]; then
+	# replace 'fw mmc pata sata scsi usb virtio' with 'block'
+	hooks=$(cat /etc/mkinitcpio.conf | grep HOOKS= | grep -v '#' | cut -d'"' -f2 | sed 's/fw //g' | sed 's/mmc //g' | sed 's/pata //g' | sed 's/sata //g' | sed 's/scsi //g' | sed 's/usb //g' | sed 's/virtio //g' | sed 's/filesystems /modconf block filesystems /g')
+	sed -i -e "s/^HOOKS=.*/HOOKS=\"${hooks}\"/g" /etc/mkinitcpio.conf
+	# remove symlinks if fontconfig < 2.10.1
+	if [ $(pacman -Q fontconfig | cut -d- -f1 | cut -d" " -f2 | sed -e 's/\.//g') -lt "2101" ]; then
 		# System operation
 		rm -f /etc/fonts/conf.d/20-unhint-small-vera.conf
 		rm -f /etc/fonts/conf.d/29-replace-bitmap-fonts.conf
