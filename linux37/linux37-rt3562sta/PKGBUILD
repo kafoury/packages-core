@@ -8,7 +8,7 @@
 pkgbase=rt3562sta
 pkgname=('linux37-rt3562sta' 'rt3562sta-common')
 pkgver=2.4.1.1
-pkgrel=0.2
+pkgrel=1
 _subpkgrel=2
 arch=(i686 x86_64)
 url="http://www.mediatek.com/en/Products/support.php?sn=501"
