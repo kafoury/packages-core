@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PACKAGEVERSION="20121210"
+PACKAGEVERSION="20121212"
 SYSTEMVERSION="$PACKAGEVERSION"
 
 if [ -f /var/lib/manjaro-system/version ]; then
