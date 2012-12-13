@@ -9,18 +9,19 @@ pkgbase=linux35
 pkgname=('linux35' 'linux35-headers')
 _kernelname=-MANJARO
 _basekernel=3.5
-_subver=1
+_subver=2
 _basever=35
 _aufs=20121126
 pkgver=${_basekernel}.7.${_subver}
-pkgrel=3
+pkgrel=0
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl')
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.7.tar.xz"
-        "${pkgver}.patch"
+        #"${pkgver}.patch"
+        "3.5.7.1.patch"
         # the main kernel config files
         'config' 'config.x86_64' 'config.aufs'
         # standard config files for mkinitcpio ramdisk
@@ -36,8 +37,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.7.tar.
         'i915-i2c-crash-3.5.x.patch'
         '3.5-module-init-wait.patch'
         '3.5-module-symbol-waiting.patch'
-        '3.5.7.1-ACPI-video-Ignore-errors-after-_DOD-evaluation.patch'
         '3.5.7.1-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch'
+        '3.5.7.2-review.patch'
 )
 sha256sums=('d1c68906ca31165d6771996141ec9fe978bf7d228c385ec6f4c73e473306794c'
             '886927060f148d703950bcffe32b4794ea97be9be2ea18d6d3df33442194c43e'
@@ -56,24 +57,22 @@ sha256sums=('d1c68906ca31165d6771996141ec9fe978bf7d228c385ec6f4c73e473306794c'
             'bc9be7e4e5bc81aa30754a96f6a94c2e6eb6a147165a2ac50972c1fd59ef9964'
             'ab786cd6c07e67671ab30806e95d605ca4bb3bd46891f6bc3aef00b710ef75cd'
             'f0ce56a034312c4d95974ef66487fd42ce4d303cd551e2ca00c04e60d4307ed2'
-            '37fecadcf43727dec21af95bef733e94103a44f0b821946371f1ab2609a5002e'
             '0ba36591bb38fdb6465bd39a9957295d436591df8b6c3c8e3e4ba0d3b007724b'
+            'ea57cd5576d777ba55d1dd889a90ad5506d71d4a33d019f6af042de5a3054d26'
 )
 
 build() {
   cd "${srcdir}/linux-${_basekernel}.7"
 
   # add upstream patch
-  #patch -p1 -i "${srcdir}/patch-${pkgver}.patch"
-  patch -p1 -i "${srcdir}/${pkgver}.patch"
+  #patch -p1 -i "${srcdir}/${pkgver}.patch"
+  patch -p1 -i "${srcdir}/3.5.7.1.patch"
+  patch -p1 -i "${srcdir}/3.5.7.2-review.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
   # enable only if you have "gen-stable-queue-patch.sh" executed before
   #patch -Np1 -i "${srcdir}/../prepatch-${_basekernel}-`date +%Y%m%d`"
-
-  # add missed stable patches
-  patch -Np1 -i "${srcdir}/3.5.7.1-ACPI-video-Ignore-errors-after-_DOD-evaluation.patch"
 
   # fix broken watchdog
   # https://bugzilla.kernel.org/show_bug.cgi?id=44991
