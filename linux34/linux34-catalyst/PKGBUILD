@@ -7,9 +7,9 @@ _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 
 pkgname=linux34-catalyst
 _pkgname=catalyst
-#_beta=beta11
-pkgver=12.12
-pkgrel=1
+_beta=beta11
+pkgver=12.11
+pkgrel=2
 pkgdesc="AMD/ATI Catalyst drivers for linux. fglrx kernel module only"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
@@ -20,12 +20,11 @@ conflicts=('linux34-catalyst-legacy')
 groups=('linux34-extramodules')
 install=catalyst.install
 
-source=(http://www2.ati.com/drivers/embedded/9.01-121106a-150335C-EDG_Direct.zip
-        #http://www2.ati.com/drivers/beta/amd-driver-installer-catalyst-${pkgver}-${_beta}-x86.x86_64.zip
+source=(http://www2.ati.com/drivers/beta/amd-driver-installer-catalyst-${pkgver}-${_beta}-x86.x86_64.zip
         ati_make.sh
         makefile_compat.patch)
 
-sha256sums=('b6759f3a1eefef3c722f080a72226638abf719695cb05f027200ff9bbe27ecfa'
+sha256sums=('d76edd98ed2ca4dfda63cff9060a3e367f32b4cc9a13590f91aba853d85b847b'
 	 'e1d3cedbfc6a239d5d71458c458137f1a7404ebddfa838557d25c965dd49c845'
 	 'd344df75ffbe9bd899e288862f41983c2e24b5eff3e7e8cf02d4891eeb137fff')
 
