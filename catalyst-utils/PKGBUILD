@@ -10,7 +10,7 @@ pkgbase=catalyst-utils
 pkgname=('catalyst-utils' 'opencl-catalyst' 'mhwd-catalyst')
 pkgver=12.12
 #_beta=beta11
-pkgrel=1
+pkgrel=2
 pkgdesc="AMD/ATI Catalyst drivers utilities and libraries with OpenCL implementation"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
@@ -19,11 +19,9 @@ license=('custom')
 source=(http://www2.ati.com/drivers/embedded/9.01-121106a-150335C-EDG_Direct.zip
         #http://www2.ati.com/drivers/beta/amd-driver-installer-catalyst-${pkgver}-${_beta}-x86.x86_64.zip
         atieventsd.service
-        signature.from.12.9
         fglrx-authfile-locations.patch)
 sha256sums=('b6759f3a1eefef3c722f080a72226638abf719695cb05f027200ff9bbe27ecfa'
             'c410dac3cc3c0a468fcb7edfe1d271690eba46179b7dbf0eda8a12544871332f'
-            'd6aff2bbed9d1ce24302cda420ca9d4f6d89e27b14ab4e9cc510245bc4aab743'
             '4f445d5248d3fd1bf030e1b4e47c1dacceef7cd61a435c71e880c908fb6264ec'
 )
 
@@ -105,10 +103,7 @@ package_catalyst-utils() {
   install -m644 "${srcdir}/atieventsd.service" "${pkgdir}/usr/lib/systemd/system/"
 
   # provided in opencl-catalyst package
-  rm "${pkgdir}"/usr/lib/lib{amdocl*,OpenCL}.so* 
-
-  # we remove the watermark
-  install -m644 "${srcdir}/signature.from.12.9" "${pkgdir}/etc/ati/signature"
+  rm "${pkgdir}"/usr/lib/lib{amdocl*,OpenCL}.so*
 
   # licenses
   install -Dm644 "${srcdir}/fglrx-install/common/usr/share/doc/fglrx/LICENSE.TXT" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.TXT"
