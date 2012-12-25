@@ -9,13 +9,13 @@
 
 pkgbase=linux36-virtualbox-modules
 pkgname=('linux36-virtualbox-host-modules' 'linux36-virtualbox-guest-modules')
-pkgver=4.2.4
+pkgver=4.2.6
 pkgrel=1
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
-makedepends=("virtualbox-host-source>=$pkgver"
-             "virtualbox-guest-source>=$pkgver"
+makedepends=("virtualbox-host-dkms>=$pkgver"
+             "virtualbox-guest-dkms>=$pkgver"
              'dkms' 'expac'
              'linux36' 'linux36-headers')
 
@@ -40,6 +40,7 @@ package_linux36-virtualbox-host-modules(){
   depends=('linux36')
   replaces=('linux36-virtualbox-modules')
   conflicts=('linux36-virtualbox-modules')
+  provides=('virtualbox-host-modules')
   install=virtualbox-host-modules.install
   groups=('linux36-extramodules')
 
@@ -63,6 +64,7 @@ package_linux36-virtualbox-guest-modules(){
   depends=('linux36')
   replaces=('linux36-virtualbox-manjaro-modules')
   conflicts=('linux36-virtualbox-manjaro-modules')
+  provides=('virtualbox-guest-modules')
   install=virtualbox-guest-modules.install
   groups=('linux36-extramodules')
 

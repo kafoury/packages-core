@@ -9,13 +9,13 @@
 
 pkgbase=linux34-virtualbox-modules
 pkgname=('linux34-virtualbox-host-modules' 'linux34-virtualbox-guest-modules')
-pkgver=4.2.4
+pkgver=4.2.6
 pkgrel=1
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
-makedepends=("virtualbox-host-source>=$pkgver"
-             "virtualbox-guest-source>=$pkgver"
+makedepends=("virtualbox-host-dkms>=$pkgver"
+             "virtualbox-guest-dkms>=$pkgver"
              'dkms' 'expac'
              'linux34' 'linux34-headers')
 
@@ -40,6 +40,7 @@ package_linux34-virtualbox-host-modules(){
   depends=('linux34')
   replaces=('linux34-virtualbox-modules')
   conflicts=('linux34-virtualbox-modules')
+  provides=('virtualbox-host-modules')
   install=virtualbox-host-modules.install
   groups=('linux34-extramodules')
 
@@ -63,6 +64,7 @@ package_linux34-virtualbox-guest-modules(){
   depends=('linux34')
   replaces=('linux34-virtualbox-manjaro-modules')
   conflicts=('linux34-virtualbox-manjaro-modules')
+  provides=('virtualbox-guest-modules')
   install=virtualbox-guest-modules.install
   groups=('linux34-extramodules')
 
