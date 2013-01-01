@@ -7,15 +7,16 @@
 
 pkgname=linux34-cdfs
 _pkgname=cdfs
-groups=('linux34-extramodules')
 pkgver=2.6.27
-pkgrel=5
+pkgrel=6
 pkgdesc="File system module that 'exports' all tracks and boot images on a CD as normal files."
 arch=(i686 x86_64)
 url="http://www.elis.UGent.be/~ronsse/cdfs/"
 license=('GPL')
 depends=('linux34')
 makedepends=('linux34-headers')
+provides=("$_pkgname=$pkgver")
+groups=('linux34-extramodules')
 install=cdfs.install
 source=("http://www.elis.UGent.be/~ronsse/cdfs/download/$_pkgname-$pkgver.tar.bz2"
 	"cdfs-3.0.patch"

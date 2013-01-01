@@ -9,13 +9,14 @@ pkgname=linux34-catalyst
 _pkgname=catalyst
 _beta=beta11
 pkgver=12.11
-pkgrel=2
+pkgrel=3
 pkgdesc="AMD/ATI Catalyst drivers for linux. fglrx kernel module only"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
 license=('custom')
 depends=('linux34' 'catalyst-utils')
 makedepends=('gcc-libs' 'gcc>4.0.0' 'make' 'linux34-headers')
+provides=("$_pkgname=$pkgver")
 conflicts=('linux34-catalyst-legacy')
 groups=('linux34-extramodules')
 install=catalyst.install

@@ -4,7 +4,7 @@
 pkgname=linux34-nvidiabl
 _pkgname=nvidiabl
 pkgver=0.76
-pkgrel=2
+pkgrel=3
 epoch=
 pkgdesc="Driver to adjust display backlight on modern mobile NVidia graphics adapters."
 arch=('x86_64' 'i686')
@@ -12,6 +12,8 @@ url="https://github.com/guillaumezin/nvidiabl"
 license=('GPL')
 depends=()
 makedepends=("linux34-headers")
+provides=("$_pkgname=$pkgver")
+groups=('linux34-extramodules')
 optdepends=()
 conflicts=(nvidia-bl)
 options=()

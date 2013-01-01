@@ -7,15 +7,16 @@ _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 
 pkgname=('linux34-catalyst-legacy')
 _pkgname=catalyst-legacy
-groups=('linux34-extramodules')
 pkgver=12.6
-pkgrel=5
+pkgrel=6
 pkgdesc="AMD/ATI Catalyst legacy drivers for linux. fglrx kernel module only (for AMD Radeon HD 2000 - 4000 series)"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
 license=('custom')
 depends=('linux34' 'catalyst-legacy-utils')
 makedepends=('gcc-libs' 'gcc>4.0.0' 'make' 'linux34-headers')
+provides=("$_pkgname=$pkgver")
+groups=('linux34-extramodules')
 conflicts=('linux34-catalyst')
 install=catalyst.install
 

@@ -7,7 +7,7 @@
 pkgbase=lirc
 pkgname=('linux34-lirc' 'lirc-utils')
 pkgver=0.9.0
-pkgrel=5
+pkgrel=6
 epoch=1
 _extramodules=extramodules-3.4-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
@@ -66,6 +66,7 @@ package_linux34-lirc() {
   pkgdesc="Linux Infrared Remote Control kernel modules for stock arch kernel"
   depends=('lirc-utils' 'linux34')
   replaces=('lirc+pctv')
+  provides=("$_pkgname=$pkgver")
   groups=('linux34-extramodules')
   install=lirc.install
 

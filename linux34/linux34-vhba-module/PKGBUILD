@@ -8,16 +8,17 @@
 
 pkgname=linux34-vhba-module
 _pkgname=vhba-module
-groups=('linux34-extramodules')
 pkgver=20120422
 _extramodules=extramodules-3.4-MANJARO
-pkgrel=5
+pkgrel=6
 pkgdesc="Kernel module that emulates SCSI devices"
 arch=('i686' 'x86_64')
 url="http://cdemu.sourceforge.net/"
 license=('GPL')
 depends=('linux34')
 makedepends=('linux34-headers')
+provides=("$_pkgname=$pkgver")
+groups=('linux34-extramodules')
 install=$_pkgname.install
 source=("http://downloads.sourceforge.net/cdemu/$_pkgname-$pkgver.tar.bz2"
         '60-vhba.rules')

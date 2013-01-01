@@ -11,9 +11,8 @@ _kver="$(cat /usr/lib/modules/${_extramodules}/version)"
 _pkgname=ndiswrapper
 pkgbase=ndiswrapper
 pkgname=('linux34-ndiswrapper' 'ndiswrapper-utils')
-groups=('linux34-extramodules')
 pkgver=1.57
-pkgrel=6
+pkgrel=7
 pkgdesc="Module for NDIS (Windows Network Drivers) drivers supplied by vendors."
 license=('GPL')
 arch=('i686' 'x86_64')
@@ -39,6 +38,8 @@ build() {
 }
 
 package_linux34-ndiswrapper() {
+  provides=("$_pkgname=$pkgver")
+  groups=('linux34-extramodules')
   cd "$srcdir/$_pkgname-$pkgver"
 
   make INST_DIR="usr/lib/modules/$_extramodules" \
