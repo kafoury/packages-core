@@ -38,6 +38,8 @@ build() {
 }
 
 package_linux37-ndiswrapper() {
+  provides=("$_pkgname=$pkgver")
+  groups=('linux37-extramodules')
   install=ndiswrapper.install
   cd "$srcdir/$_pkgname-$pkgver"
 

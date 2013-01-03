@@ -4,7 +4,7 @@
 pkgname=linux35-nvidiabl
 _pkgname=nvidiabl
 pkgver=0.76
-pkgrel=5
+pkgrel=6
 epoch=
 pkgdesc="Driver to adjust display backlight on modern mobile NVidia graphics adapters."
 arch=('x86_64' 'i686')
@@ -14,6 +14,8 @@ depends=()
 makedepends=("linux35-headers")
 optdepends=()
 conflicts=(nvidia-bl)
+provides=("$_pkgname=$pkgver")
+groups=('linux35-extramodules')
 options=()
 install=nvidiabl.install
 changelog=

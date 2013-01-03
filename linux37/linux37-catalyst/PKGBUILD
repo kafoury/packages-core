@@ -9,7 +9,7 @@ pkgname=linux37-catalyst
 _pkgname=catalyst
 _beta=beta11
 pkgver=12.11
-pkgrel=1
+pkgrel=2
 pkgdesc="AMD/ATI Catalyst drivers for linux. fglrx kernel module only"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
@@ -17,6 +17,7 @@ license=('custom')
 depends=('linux37' 'catalyst-utils')
 makedepends=('gcc-libs' 'gcc>4.0.0' 'make' 'linux37-headers')
 conflicts=('linux37-catalyst-legacy')
+provides=("$_pkgname=$pkgver")
 groups=('linux37-extramodules')
 install=catalyst.install
 

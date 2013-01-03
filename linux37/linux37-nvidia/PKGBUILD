@@ -9,14 +9,15 @@ _pkgname=nvidia
 pkgver=310.19
 _extramodules=extramodules-3.7-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
-groups=('linux37-extramodules')
-pkgrel=1
+pkgrel=2
 pkgdesc="NVIDIA drivers for linux."
 arch=('i686' 'x86_64')
 url="http://www.nvidia.com/"
 depends=('linux37' "nvidia-utils=${pkgver}")
 makedepends=('linux37-headers')
 conflicts=('nvidia-96xx' 'nvidia-173xx')
+provides=("$_pkgname=$pkgver")
+groups=('linux37-extramodules')
 license=('custom')
 install=nvidia.install
 options=(!strip)

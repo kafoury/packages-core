@@ -7,16 +7,17 @@
 
 pkgname=linux35-open-vm-tools-modules
 _pkgname=open-vm-tools-modules
-groups=('linux35-extramodules')
 pkgver=2012.05.21
 _pkgsubver=724730
-pkgrel=5
+pkgrel=6
 pkgdesc="kernel modules for the open source implementation of VMware Tools"
 arch=('i686' 'x86_64')
 url="http://open-vm-tools.sourceforge.net/"
 license=('GPL')
 makedepends=('libdnet' 'icu' 'uriparser' 'linux35-headers')
 depends=("linux35")
+provides=("$_pkgname=$pkgver")
+groups=('linux35-extramodules')
 install=$_pkgname.install
 options=('!strip')
 source=("http://downloads.sourceforge.net/open-vm-tools/open-vm-tools-$pkgver-${_pkgsubver}.tar.gz"

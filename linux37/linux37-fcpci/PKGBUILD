@@ -6,9 +6,8 @@
 
 pkgname=linux37-fcpci
 _pkgname=fcpci
-groups=('linux37-extramodules')
 pkgver=31107
-pkgrel=1
+pkgrel=2
 _extramodules=extramodules-3.7-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 pkgdesc="AVM ISDN driver for FRITZ PCI isdn cards"
@@ -17,6 +16,8 @@ license=('custom:"AVM"' 'LGPL')
 url="http://www.avm.de"
 depends=('isdn4k-utils' 'linux37')
 makedepends=('linux37' 'linux37-headers')
+provides=("$_pkgname=$pkgver")
+groups=('linux37-extramodules')
 
 if [ "$CARCH" = "i686" ]; then
   source=(ftp://ftp.avm.de/cardware/fritzcrd.pci/linux/suse.93/fcpci-suse93-3.11-07.tar.gz 

@@ -8,7 +8,7 @@
 pkgbase=rt3562sta
 pkgname=('linux37-rt3562sta' 'rt3562sta-common')
 pkgver=2.4.1.1
-pkgrel=1
+pkgrel=2
 _subpkgrel=2
 arch=(i686 x86_64)
 url="http://www.mediatek.com/en/Products/support.php?sn=501"
@@ -71,6 +71,8 @@ package_rt3562sta-common() {
 }
 
 package_linux37-rt3562sta() {
+	provides=("$_pkgname=$pkgver")
+	groups=('linux37-extramodules')
 	pkgdesc="Ralink RT3562 PCI WLAN adaptors kernel module"
 	depends=('linux37' 'rt3562sta-common')
 	groups=('linux37-extramodules')
