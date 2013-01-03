@@ -20,9 +20,11 @@ arch=('i686' 'x86_64')
 url="http://ndiswrapper.sourceforge.net"
 depends=('linux37' 'wireless_tools' 'perl' "$_pkgname-utils")
 makedepends=('linux37-headers')
-source=("http://downloads.sourceforge.net/sourceforge/$_pkgname/$_pkgname-$pkgver.tar.gz" 'linux33.patch')
+source=("http://downloads.sourceforge.net/sourceforge/$_pkgname/$_pkgname-$pkgver.tar.gz" 'linux33.patch' 'linux37.patch')
 options=('!strip')
-md5sums=('7a401dc540938bf07893c67f418b6152' '567050289e1a7c80b3274a3668253c71')
+sha256sums=('208699faa01ab8ca707cb8a28db20417d07887f993c0830dd34c7d9c4f84a56c'
+         '4fa188b35ab6330cf8e514868ee5c113d7377f2c4e6aadec393d8483544da894'
+         '3e94b838ec38bb43340b4d2b3f887ec3112d93803d4aa51230a6e0b0ff8ef789')
 
 build() {
   cd "$srcdir/$_pkgname-$pkgver"
@@ -30,6 +32,10 @@ build() {
   # modinfo path fix
   sed -i "/modinfo/s/s/usr\//" driver/Makefile
   patch -i $srcdir/linux33.patch -N -p0
+
+  # fix linux37
+  sed -i "s|/include/linux/version.h|/include/generated/uapi/linux/version.h|g" driver/Makefile
+  patch -i $srcdir/linux37.patch -N -p1
 
   # make sure we point to the right build directory
   sed -i "/^KBUILD/ s,.*,KBUILD = $(readlink -f /usr/lib/modules/$_kver/build)," driver/Makefile
