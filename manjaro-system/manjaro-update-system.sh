@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PACKAGEVERSION="20130102"
+PACKAGEVERSION="20130107"
 SYSTEMVERSION="$PACKAGEVERSION"
 
 err() {
@@ -41,14 +41,14 @@ post_upgrade() {
 	if [ "x${removepkgs}" != "x" ]; then
 		msg "Removing linux-meta pkgs ..."
 		rm /var/lib/pacman/db.lck
-		pacman --noconfirm --noprogress -Rdd ${removepkgs}
+		pacman --noconfirm --noprogress -Rdd ${removepkgs} > /dev/null 2>&1
 		msg "Removing linux-meta pkgs - done"
 	fi
 
 	# replace 'fw mmc pata sata scsi usb virtio' with 'block'
 	if [ "x$(cat /etc/mkinitcpio.conf | grep HOOKS= | grep -v '#' | grep block)" == "x" ]; then
 		msg "Adjusting to 'block' hook ..."
-		hooks=$(cat /etc/mkinitcpio.conf | grep HOOKS= | grep -v '#' | cut -d'"' -f2 | sed 's/fw //g' | sed 's/mmc //g' | sed 's/pata //g' | sed 's/sata //g' | sed 's/scsi //g' | sed 's/usb //g' | sed 's/virtio //g' | sed 's/filesystems /modconf block filesystems /g')
+		hooks=$(cat /etc/mkinitcpio.conf | grep HOOKS= | grep -v '#' | cut -d'"' -f2 | sed 's/fw//g' | sed 's/mmc//g' | sed 's/pata//g' | sed 's/sata//g' | sed 's/scsi//g' | sed 's/usb//g' | sed 's/virtio//g' | sed 's/filesystems/ modconf block filesystems /g' | sed 's/  / /g')
 		sed -i -e "s/^HOOKS=.*/HOOKS=\"${hooks}\"/g" /etc/mkinitcpio.conf
 	fi
 
