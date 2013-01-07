@@ -54,7 +54,7 @@ post_upgrade() {
 
 	# remove multible 'modconf block'
 	if [ "x$(cat /etc/mkinitcpio.conf | grep HOOKS= | grep -v '#' | grep 'block modconf block')" != "x" ]; then
-		hooks=$(cat /etc/mkinitcpio.conf | grep HOOKS= | grep -v '#' | cut -d'"' -f2 | sed 's/modconf //g' | sed 's/block //g' | sed 's/filesystems /modconf block filesystems /g')
+		hooks=$(cat /etc/mkinitcpio.conf | grep HOOKS= | grep -v '#' | cut -d'"' -f2 | sed 's/modconf//g' | sed 's/block//g' | sed 's/filesystems/ modconf block filesystems /g' | sed 's/  / /g')
 		sed -i -e "s/^HOOKS=.*/HOOKS=\"${hooks}\"/g" /etc/mkinitcpio.conf
 	fi
 
