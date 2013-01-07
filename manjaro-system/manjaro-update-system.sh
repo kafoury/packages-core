@@ -48,7 +48,19 @@ post_upgrade() {
 	# replace 'fw mmc pata sata scsi usb virtio' with 'block'
 	if [ "x$(cat /etc/mkinitcpio.conf | grep HOOKS= | grep -v '#' | grep block)" == "x" ]; then
 		msg "Adjusting to 'block' hook ..."
-		hooks=$(cat /etc/mkinitcpio.conf | grep HOOKS= | grep -v '#' | cut -d'"' -f2 | sed 's/fw/block/g' | sed 's/mmc/block/g' | sed 's/pata/block/g' | sed 's/sata/block/g' | sed 's/scsi/block/g' | sed 's/usb/block/g' | sed 's/virtio/block/g' | sed 's/^block*//;s/block*$//;s/block\{1,\}/block/g' | sed 's/^ *//;s/ *$//;s/ \{1,\}/ /g')
+		hooks=""
+		for hook in $(cat /etc/mkinitcpio.conf | grep HOOKS= | grep -v '#' | cut -d'"' -f2 | awk 'IGNORECASE = 1 {gsub(/fw|mmc|pata|sata|scsi|usb|virtio/,".")}1' | sed 's/.input/usbinput/g') ; do
+			if [ "$hook" == "filesystems" ]; then
+				hook="modconf block filesystems"
+			fi
+			if [ "$hook" != "." ]; then
+				hooks="${hooks} ${hook}"
+			fi		
+		done
+		hooks=$(echo "${hooks}" | sed 's/^ *//;s/ *$//;s/ \{1,\}/ /g')
+		if [ "x$(echo \"${hooks}\" | grep block)" == "x" ]; then
+			hooks="${hooks} block"
+		fi
 		sed -i -e "s/^HOOKS=.*/HOOKS=\"${hooks}\"/g" /etc/mkinitcpio.conf
 	fi
 
