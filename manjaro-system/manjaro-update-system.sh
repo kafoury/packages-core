@@ -50,8 +50,9 @@ post_upgrade() {
 		msg "Adjusting to 'block' hook ..."
 		hooks=""
 		for hook in $(cat /etc/mkinitcpio.conf | grep HOOKS= | grep -v '#' | cut -d'"' -f2 | awk 'IGNORECASE = 1 {gsub(/fw|mmc|pata|sata|scsi|usb|virtio/,".")}1' | sed 's/.input/usbinput/g') ; do
-			if [ "$hook" == "filesystems" ]; then
-				hook="modconf block filesystems"
+			if [ "$hook" == "." ] && [ "$replaced" == "" ]; then
+				hook="block"
+				replaced="1"
 			fi
 			if [ "$hook" != "." ]; then
 				hooks="${hooks} ${hook}"
