@@ -1,0 +1,58 @@
+# Based on the file created for Arch Linux by:
+# Sergej Pupykin <pupykin.s+arch@gmail.com>
+# Krzysztof Raczkowski <raczkow@gmail.com>
+
+# Maintainer: Guinux <nuxgui@gmail.com>
+# Co-Maintainer: Clittle <philm@manjarolinux.org>
+
+pkgname=linux38-open-vm-tools-modules
+_pkgname=open-vm-tools-modules
+groups=('linux38-extramodules')
+pkgver=2012.05.21
+_pkgsubver=724730
+pkgrel=0.1
+pkgdesc="kernel modules for the open source implementation of VMware Tools"
+arch=('i686' 'x86_64')
+url="http://open-vm-tools.sourceforge.net/"
+license=('GPL')
+makedepends=('libdnet' 'icu' 'uriparser' 'linux38-headers')
+depends=("linux38")
+provides=("$_pkgname=$pkgver")
+groups=('linux38-extramodules')
+install=$_pkgname.install
+options=('!strip')
+source=("http://downloads.sourceforge.net/open-vm-tools/open-vm-tools-$pkgver-${_pkgsubver}.tar.gz"
+	"modprobe.conf"
+	"linux-3.6-build-fix.patch")
+sha256sums=('c7daaaf0ed031cd36295cf10d51dbbdedeb1eb0015e49f0806620792f8dab71b'
+         '27b83062b8b6a279e8bfb13f10566467377f38ac077e75933211912cac4a085d'
+         '84e75fbee9de9af606c582337321e88927086d43292f11cf778d9bdba1065f2f')
+
+_extramodules=extramodules-3.8-MANJARO
+_kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
+
+build() {
+  cd "$srcdir/open-vm-tools-${pkgver}-${_pkgsubver}"
+  sed -i 's|proc-3.2.8|procps|g' configure
+  patch -p1 <$srcdir/linux-3.6-build-fix.patch
+  [ $NOEXTRACT -eq 1 ] || ./configure \
+      --prefix=/usr \
+      --without-x \
+      --with-linuxdir=/usr/lib/modules/$_kernver
+
+  make -C modules modules
+}
+
+package() {
+  depends=("linux38")
+
+  cd "$srcdir/open-vm-tools-${pkgver}-${_pkgsubver}"
+  mkdir -p $pkgdir/usr/lib/modules/${_extramodules}/
+  for MOD in `find -type f -name '*.ko'`; do
+    install -Dm644 $MOD $pkgdir/usr/lib/modules/${_extramodules}/
+  done
+  gzip $pkgdir/usr/lib/modules/${_extramodules}/*.ko
+
+  install -D -m 644 ${srcdir}/modprobe.conf ${pkgdir}/etc/modprobe.d/${pkgname}.conf
+  sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "${startdir}/${_pkgname}.install"
+}

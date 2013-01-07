@@ -1,0 +1,77 @@
+# Based on the file created for Arch Linux by:
+# Thorsten Töpper <atsutane-tu@freethoughts.de>
+# SpepS <dreamspepser at yahoo dot it>
+# Tobias Powalowski <tpowa@archlinux.org>
+
+# Maintainer: Guinux <nuxgui@gmail.com>
+# Co-Maintainer: Clittle <philm@manjarolinux.org>
+
+_extramodules=extramodules-3.8-MANJARO
+_kver="$(cat /usr/lib/modules/${_extramodules}/version)"
+_pkgname=ndiswrapper
+pkgbase=ndiswrapper
+pkgname=('linux38-ndiswrapper' 'ndiswrapper-utils')
+groups=('linux38-extramodules')
+pkgver=1.57
+pkgrel=0.1
+pkgdesc="Module for NDIS (Windows Network Drivers) drivers supplied by vendors."
+license=('GPL')
+arch=('i686' 'x86_64')
+url="http://ndiswrapper.sourceforge.net"
+depends=('linux38' 'wireless_tools' 'perl' "$_pkgname-utils")
+makedepends=('linux38-headers')
+source=("http://downloads.sourceforge.net/sourceforge/$_pkgname/$_pkgname-$pkgver.tar.gz" 'linux33.patch' 'linux37.patch')
+options=('!strip')
+sha256sums=('208699faa01ab8ca707cb8a28db20417d07887f993c0830dd34c7d9c4f84a56c'
+         '4fa188b35ab6330cf8e514868ee5c113d7377f2c4e6aadec393d8483544da894'
+         '3e94b838ec38bb43340b4d2b3f887ec3112d93803d4aa51230a6e0b0ff8ef789')
+
+build() {
+  cd "$srcdir/$_pkgname-$pkgver"
+
+  # modinfo path fix
+  sed -i "/modinfo/s/s/usr\//" driver/Makefile
+  patch -i $srcdir/linux33.patch -N -p0
+
+  # fix linux38
+  sed -i "s|/include/linux/version.h|/include/generated/uapi/linux/version.h|g" driver/Makefile
+  patch -i $srcdir/linux37.patch -N -p1
+
+  # make sure we point to the right build directory
+  sed -i "/^KBUILD/ s,.*,KBUILD = $(readlink -f /usr/lib/modules/$_kver/build)," driver/Makefile
+
+  make KVERS=$_kver
+}
+
+package_linux38-ndiswrapper() {
+  provides=("$_pkgname=$pkgver")
+  groups=('linux38-extramodules')
+  install=ndiswrapper.install
+  cd "$srcdir/$_pkgname-$pkgver"
+
+  make INST_DIR="usr/lib/modules/$_extramodules" \
+    KVERS=$_kver DESTDIR="$pkgdir/" install
+
+  # set the kernel we've built for inside the install script
+  sed -i -e "s/EXTRAMODULES=.*/EXTRAMODULES=${_extramodules}/g" "${startdir}/${_pkgname}.install"
+
+  gzip "$pkgdir/usr/lib/modules/$_extramodules/$_pkgname.ko"
+
+  # mv ndiswrapper-utils
+  mkdir -p $srcdir/tmp-ndis-utils/usr/{share,sbin}
+  mv -v "$pkgdir/usr/share" "$srcdir/tmp-ndis-utils/usr/share"
+  mv -v "$pkgdir/usr/sbin" "$srcdir/tmp-ndis-utils/usr/sbin"
+  mv -v "$pkgdir/sbin" "$srcdir/tmp-ndis-utils"
+}
+
+package_ndiswrapper-utils() {
+  pkgdesc="Utils for NDIS (Windows Network Drivers) drivers supplied by vendors."
+  pkgrel=2
+  depends=()
+  groups=()
+  cd $srcdir/tmp-ndis-utils
+  mv -v usr "$pkgdir"
+  mv -v sbin "$pkgdir"
+}
+
+# vim:set ts=2 sw=2 et:

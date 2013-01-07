@@ -1,0 +1,85 @@
+# Based on the file created for Arch Linux by:
+# Ionut Biru <ibiru@archlinux.org>
+# Sébastien Luttringer <seblu@aur.archlinux.org>
+
+# Maintainer: Philip Müller <philm@manjaro.org>
+# Maintainer: Guinux <guillaume@manjaro.org>
+# Maintainer: Roland Singer <roland@manjaro.org>
+
+
+pkgbase=linux38-virtualbox-modules
+pkgname=('linux38-virtualbox-host-modules' 'linux38-virtualbox-guest-modules')
+pkgver=4.2.6
+pkgrel=0.1
+arch=('i686' 'x86_64')
+url='http://virtualbox.org'
+license=('GPL')
+makedepends=("virtualbox-host-dkms>=$pkgver"
+             "virtualbox-guest-dkms>=$pkgver"
+             'dkms'
+             'linux38' 'linux38-headers')
+
+_extraver=extramodules-3.8-MANJARO
+_kernver="$(cat /usr/lib/modules/${_extraver}/version)"
+
+
+build() {
+  # dkms need modification to be run as user
+  cp -r /var/lib/dkms .
+  echo "dkms_tree='$srcdir/dkms'" > dkms.conf
+
+  # build host modules
+  msg2 'Host modules'
+  dkms --dkmsframework dkms.conf build "vboxhost/$pkgver" -k "$_kernver"
+  # build guest modules
+  msg2 'Guest modules'
+  dkms --dkmsframework dkms.conf build "vboxguest/$pkgver" -k "$_kernver"
+}
+
+package_linux38-virtualbox-host-modules(){
+  pkgdesc='Host kernel modules for VirtualBox'
+  depends=('linux38')
+  replaces=('linux38-virtualbox-modules')
+  conflicts=('linux38-virtualbox-modules')
+  provides=('virtualbox-host-modules')
+  install=virtualbox-host-modules.install
+  groups=('linux38-extramodules')
+
+
+  install -dm755 "$pkgdir/usr/lib/modules/$_extraver"
+  cd "dkms/vboxhost/$pkgver/$_kernver/$CARCH/module"
+  install -m644 * "$pkgdir/usr/lib/modules/$_extraver"
+  find "$pkgdir" -name '*.ko' -exec gzip -9 {} +
+  sed -ie "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extraver'/" "$startdir/virtualbox-host-modules.install"
+
+  mkdir -p "$pkgdir/etc/modules-load.d"
+  echo "vboxdrv" > "$pkgdir/etc/modules-load.d/linux38-virtualbox-host-modules.conf"
+  echo "vboxnetadp" >> "$pkgdir/etc/modules-load.d/linux38-virtualbox-host-modules.conf"
+  echo "vboxnetflt" >> "$pkgdir/etc/modules-load.d/linux38-virtualbox-host-modules.conf"
+  echo "vboxpci" >> "$pkgdir/etc/modules-load.d/linux38-virtualbox-host-modules.conf"
+}
+
+package_linux38-virtualbox-guest-modules(){
+  pkgdesc='Guest kernel modules for VirtualBox'
+  license=('GPL')
+  depends=('linux38')
+  replaces=('linux38-virtualbox-manjaro-modules')
+  conflicts=('linux38-virtualbox-manjaro-modules')
+  provides=('virtualbox-guest-modules')
+  install=virtualbox-guest-modules.install
+  groups=('linux38-extramodules')
+
+
+  install -dm755 "$pkgdir/usr/lib/modules/$_extraver"
+  cd "dkms/vboxguest/$pkgver/$_kernver/$CARCH/module"
+  install -m644 * "$pkgdir/usr/lib/modules/$_extraver"
+  find "$pkgdir" -name '*.ko' -exec gzip -9 {} +
+  sed -ie "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extraver'/" "$startdir/virtualbox-guest-modules.install"
+
+  mkdir -p "$pkgdir/etc/modules-load.d"
+  echo "vboxguest" > "$pkgdir/etc/modules-load.d/linux38-virtualbox-guest-modules.conf"
+  echo "vboxsf" >> "$pkgdir/etc/modules-load.d/linux38-virtualbox-guest-modules.conf"
+  echo "vboxvideo" >> "$pkgdir/etc/modules-load.d/linux38-virtualbox-guest-modules.conf"
+}
+
+# vim:set ts=2 sw=2 et:
