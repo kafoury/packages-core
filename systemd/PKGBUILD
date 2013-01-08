@@ -5,8 +5,8 @@
 # Contributor: Guinux <nuxgui@gmail.com>
 
 pkgname=systemd
-pkgver=196
-pkgrel=3
+pkgver=197
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
@@ -19,9 +19,9 @@ pkgdesc="system and service manager"
 depends=('acl' 'bash' 'dbus-core' 'glib2' 'kbd' 'kmod' 'hwids' 'libcap' 'libgcrypt'
          'pam' 'util-linux' 'xz' 'sysvinit-tools' 'systemd-manjaro-units'
          'python2-cairo' 'python2-gobject' 'python2-dbus')
-provides=("libsystemd=$pkgver" "systemd-tools=$pkgver" "udev=$pkgver" "systemd-sysvcompat=$pkgver")
-replaces=('libsystemd' 'systemd-tools' 'udev' 'systemd-sysvcompat')
-conflicts=('libsystemd' 'systemd-tools' 'udev' 'systemd-sysvcompat')
+provides=("libsystemd=$pkgver" 'nss-myhostname' "systemd-tools=$pkgver" "udev=$pkgver" "systemd-sysvcompat=$pkgver" 'systemd-manjaro-units')
+replaces=('libsystemd' 'nss-myhostname' 'systemd-tools' 'udev' 'systemd-sysvcompat' 'systemd-manjaro-units')
+conflicts=('libsystemd' 'nss-myhostname' 'systemd-tools' 'udev' 'systemd-sysvcompat' 'systemd-manjaro-units')
 optdepends=('cryptsetup: required for encrypted block devices'
             'libmicrohttpd: systemd-journal-gatewayd'
             'quota-tools: kernel-level quota management'
@@ -42,13 +42,13 @@ source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-install-udev'
         'initcpio-install-timestamp'
         'use-split-usr-path.patch'
-        'fix-unmount-msg.patch')
-sha256sums=('6bd4a658a5dd8198235b17ad1b1f0cc56d9e6f00d646ddcffdfc6f058b55e4bf'
+        'rc-local-shutdown.service')
+sha256sums=('e6857ea21ae24d7056e7b0f4c2aaaba73b8bf57025b8949c0a8af0c1bc9774b5'
             '892ce43218e0a458981bbce451252c8987dc398e60b8de288e7542b8f2409c13'
             'e39a9e3d50024466f5b98486a53858b166953efeee451e386eecac9501696c00'
             'b6a7cd6512209ea6b53fec2ad4aff23573ecd36d698d7da8baa5c8278fa1a119'
             '7b440cd7e08257ad12766eb39ab3bf25ab232735a93858c9f66886d984780081'
-            '9a762c146a6e2858e2e2d3d502bf7bec318bcac3d33cb401f552ff569dd27fe5'
+            '308cd05122a3d30529e74b8562f89ee8abda9b40e4c2f890262ccb25097087b0'
 )
 
 build() {
@@ -56,20 +56,21 @@ build() {
 
   # hang onto this until we do the /{,s}bin merge
   patch -Np1 <"$srcdir/use-split-usr-path.patch"
-  # fixed alread for 197
-  patch -Np1 <"$srcdir/fix-unmount-msg.patch"
 
   ./configure \
+      PYTHON=python2 \
+      PYTHON_CONFIG=python2-config \
       --libexecdir=/usr/lib \
       --localstatedir=/var \
       --sysconfdir=/etc \
       --enable-introspection \
       --enable-gtk-doc \
-      --enable-plymouth \
       --disable-audit \
       --disable-ima \
-      --disable-tcpwrap \
-      --with-distro=arch
+      --disable-tcpwrap
+
+# can't use py3k yet with systemd-analyze -- the 'plot' verb will not work.
+# https://pokersource.info/show_bug.cgi?id=50989
 
   make
 }
@@ -94,12 +95,6 @@ package() {
   done
   rm -rf "$pkgdir/etc/bash_completion.d"
 
-  # zsh completion isn't installed as part of 196
-  # http://i.imgur.com/hMJgX.jpg
-  # TODO: remove this for 197
-  install -Dm644 "$pkgname-$pkgver/shell-completion/systemd-zsh-completion.zsh" \
-  "$pkgdir/usr/share/zsh/site-functions/_systemd"
-
   # don't write units to /etc by default -- we'll enable this on post_install
   # as a sane default
   rm "$pkgdir/etc/systemd/system/getty.target.wants/getty@tty1.service"
@@ -107,10 +102,6 @@ package() {
 
   # get rid of RPM macros
   rm -r "$pkgdir/etc/rpm"
-
-  # can't use py3k yet with systemd-analyze -- the 'plot' verb will not work.
-  # https://pokersource.info/show_bug.cgi?id=50989
-  sed -i '1s/python$/python2/' "$pkgdir/usr/bin/systemd-analyze"
 
   # the path to udevadm is hardcoded in some places
   install -d "$pkgdir/sbin"
@@ -138,6 +129,9 @@ package() {
     ln -s '/usr/bin/systemctl' "$pkgdir/sbin/$tool"
   done
   ln -s '../usr/lib/systemd/systemd' "$pkgdir/sbin/init"
+
+  # install rc-local-shutdown.service
+  install -Dm644 "${srcdir}/rc-local-shutdown.service" "${pkgdir}/usr/lib/systemd/system/rc-local-shutdown.service"
 }
 
 # vim: ft=sh syn=sh et

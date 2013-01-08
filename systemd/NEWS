@@ -1,5 +1,8 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+197-1		-merge manjaro-systemd-units with systemd
+		-nss-myhostname got merged by upstream
+
 196-3		-fix unmount msg issue
 
 196-2		-add libmicrohttpd support (FS#32181)
