@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PACKAGEVERSION="20130107"
+PACKAGEVERSION="20130110"
 SYSTEMVERSION="$PACKAGEVERSION"
 
 err() {
@@ -46,10 +46,10 @@ post_upgrade() {
 	fi
 
 	# replace 'fw mmc pata sata scsi usb virtio' with 'block'
-	if [ "x$(cat /etc/mkinitcpio.conf | grep HOOKS= | grep -v '#' | grep block)" == "x" ]; then
+	if [ "x$(cat /etc/mkinitcpio.conf | grep '^HOOKS=' | grep -v '^#' | grep block)" == "x" ]; then
 		msg "Adjusting to 'block' hook ..."
 		hooks=""
-		for hook in $(cat /etc/mkinitcpio.conf | grep HOOKS= | grep -v '#' | cut -d'"' -f2 | awk 'IGNORECASE = 1 {gsub(/fw|mmc|pata|sata|scsi|usb|virtio/,".")}1' | sed 's/.input/usbinput/g') ; do
+		for hook in $(cat /etc/mkinitcpio.conf | grep '^HOOKS=' | grep -v '^#' | cut -d'"' -f2 | awk 'IGNORECASE = 1 {gsub(/fw|mmc|pata|sata|scsi|usb|virtio/,".")}1' | sed 's/.input/usbinput/g') ; do
 			if [ "$hook" == "." ] && [ "$replaced" == "" ]; then
 				hook="block"
 				replaced="1"
