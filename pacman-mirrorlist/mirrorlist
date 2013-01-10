@@ -1,6 +1,6 @@
 ##
 ## Manjaro Linux repository mirrorlist
-## Generated on 2012-11-08
+## Generated on 2013-01-10
 ##
 
 ## Brasil
@@ -25,3 +25,4 @@
 
 ## United States
 # Server = http://mirror.dacentec.com/manjaro/$repo/$arch
+# Server = http://spiralinear.org/manjaro/$repo/$arch

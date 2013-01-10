@@ -45,26 +45,6 @@ post_upgrade() {
 		msg "Removing linux-meta pkgs - done"
 	fi
 
-	# replace 'fw mmc pata sata scsi usb virtio' with 'block'
-	if [ "x$(cat /etc/mkinitcpio.conf | grep '^HOOKS=' | grep -v '^#' | grep block)" == "x" ]; then
-		msg "Adjusting to 'block' hook ..."
-		hooks=""
-		for hook in $(cat /etc/mkinitcpio.conf | grep '^HOOKS=' | grep -v '^#' | cut -d'"' -f2 | awk 'IGNORECASE = 1 {gsub(/fw|mmc|pata|sata|scsi|usb|virtio/,".")}1' | sed 's/.input/usbinput/g') ; do
-			if [ "$hook" == "." ] && [ "$replaced" == "" ]; then
-				hook="block"
-				replaced="1"
-			fi
-			if [ "$hook" != "." ]; then
-				hooks="${hooks} ${hook}"
-			fi		
-		done
-		hooks=$(echo "${hooks}" | sed 's/^ *//;s/ *$//;s/ \{1,\}/ /g')
-		if [ "x$(echo \"${hooks}\" | grep block)" == "x" ]; then
-			hooks="${hooks} block"
-		fi
-		sed -i -e "s/^HOOKS=.*/HOOKS=\"${hooks}\"/g" /etc/mkinitcpio.conf
-	fi
-
 	# remove symlinks if fontconfig < 2.10.1
 	if [ $(pacman -Q fontconfig | cut -d- -f1 | cut -d" " -f2 | sed -e 's/\.//g') -lt "2101" ]; then
 		msg "fixing fontconfig ..."
