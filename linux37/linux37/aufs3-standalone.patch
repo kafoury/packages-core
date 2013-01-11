@@ -1,4 +1,4 @@
-aufs3.x-rcN standalone patch
+aufs3.7 standalone patch
 
 diff --git a/fs/file_table.c b/fs/file_table.c
 index dac6792..e3f2c15 100644
@@ -22,7 +22,7 @@ index dac6792..e3f2c15 100644
  
  /*
 diff --git a/fs/inode.c b/fs/inode.c
-index ee497f9..5e7eee7 100644
+index ad73fc3..108ff2b 100644
 --- a/fs/inode.c
 +++ b/fs/inode.c
 @@ -56,6 +56,7 @@ static struct hlist_head *inode_hashtable __read_mostly;
@@ -33,7 +33,7 @@ index ee497f9..5e7eee7 100644
  
  /*
   * Empty aops. Can be used for the cases where the user does not
-@@ -1507,6 +1508,7 @@ int update_time(struct inode *inode, struct timespec *time, int flags)
+@@ -1519,6 +1520,7 @@ int update_time(struct inode *inode, struct timespec *time, int flags)
  	mark_inode_dirty_sync(inode);
  	return 0;
  }

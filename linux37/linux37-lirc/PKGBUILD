@@ -7,7 +7,7 @@
 pkgbase=lirc
 pkgname=('linux37-lirc' 'lirc-utils')
 pkgver=0.9.0
-pkgrel=2
+pkgrel=3
 epoch=1
 _extramodules=extramodules-3.7-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
@@ -40,6 +40,9 @@ build() {
   patch -Np1 -i "${srcdir}/lircd-handle-large-config.patch"
   patch -Np1 -i "${srcdir}/lirc_atiusb-kfifo.patch"
   patch -Np1 -i "${srcdir}/kernel-2.6.39.patch"
+
+  # Fix the AM_CONFIG_HEADER obsolete error
+  sed -i 's/AM_CONFIG_HEADER(config.h)/AC_CONFIG_HEADERS(\[config.h\])/' configure.ac
 
   sed -i '/AC_PATH_XTRA/d' configure.ac
   sed -e 's/@X_CFLAGS@//g' \

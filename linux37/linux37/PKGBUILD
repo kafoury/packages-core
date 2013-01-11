@@ -10,9 +10,9 @@ pkgname=('linux37' 'linux37-headers')
 _kernelname=-MANJARO
 _basekernel=3.7
 _basever=37
-_aufs=20121210
-pkgver=${_basekernel}.1
-pkgrel=2
+_aufs=20130107
+pkgver=${_basekernel}.2
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -24,8 +24,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'config' 'config.x86_64' 'config.aufs'
         # standard config files for mkinitcpio ramdisk
         "${pkgname}.preset"
-        #"aufs${_basekernel}-${_aufs}.patch.bz2"
-        "aufs3.x-rcN-${_aufs}.patch.bz2"
+        "aufs${_basekernel}-${_aufs}.patch.bz2"
         'aufs3-base.patch'
         'aufs3-kbuild.patch'
         'aufs3-loopback.patch'
@@ -35,23 +34,27 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch'
         '3.7.0-fat.patch'
         '3.7.1-watchdog-fix-disable-enable-regression.patch'
+        '3.7.2-drm-Only-evict-the-blocks-required-to-create-the-req.patch'
+        '3.7.2-drm-i915-Revert-shrinker-changes-from-Track-unbound-pages.patch'
 )
 sha256sums=('60a64d0bf76eeec3355f115c577935757b84629c8c129ce5b8bb02075f6b9458'
-            '459097bb9e3d61b1ab33140017110669dfd6676813de89e55cf988a8f0ac6ec1'
-            '22147160c1037f5902c739b1df5ee9e966cfe1589563fe7b2e1bdd719fc6394b'
-            '1981080655cd03f10f2e66d707fe236e2c65f3201f12a74ebe7d38670faeea30'
+            '72e15cf7d63ceed597727f349a60a72508ee317bb80bf28ee33dbe21255e6e7a'
+            '2bf7b8ea32743341d8887f7fd877e3115d24804a8645945ea59628b5206217ad'
+            '56f71665b76fe73527ca081f97ddea2c0fc34b521bd70133a8a1dc1d1be9d424'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            'a10781cbc1ce19c7910c696fb6fa243083e57434150ec464d5a836201f7f9d80'
-            '604881ec4e3fcce4fe8cec256f18faa1034714cf4fdcdf0fc13dda0fc8cc809d'
-            '51850f44cdc8c04d45614e2216e80a734c5b43f12b5461010475cd4a355362e0'
-            '70bdd0c9d7ce53cb719e4f17b7dad2927f8eee01d714c8cb8715ec40d01aff55'
-            'c9ead3c5485999adeef0accd43363bfb33906b7d7e414577ac7b5954699d13c5'
-            '73a8e038b07b8ec8b73c4ac74a42955ff10ef34efb621621671275d7975163c1'
+            '5b28b6e48c7f1daac1d97c6a6838ae766aa3451e9fff1078b71d5060037a45b7'
+            'c85d53a088671a740588fa004aad48c761e0e0da54b517d6daca38589b7b73c6'
+            'f99d25bca725dda947d1694d08fd4891b4c2bb47de82202fa6e7fe44a44b9876'
+            '7d9303fa64b952c6be987ffac50673744d2430e617c56e1fa9673f724f6606cc'
+            'd57f84eb1d3bb57c95d0f2fb349cd6bb0496afb38aba22e3f0f688424ab886b9'
+            'b57c083e218b4849ddc1deacacf399e9aae5892a04e7b6f4f43eee92b1cd72de'
             'b9d79ca33b0b51ff4f6976b7cd6dbb0b624ebf4fbf440222217f8ffc50445de4'
             '611d11b5346e52e957d9690b7fac2464d83f1c67fe64a943b0026ffb466a5798'
             '3190cffd7bf4906cb85632764d4c5ec22e8da5ccda4daf1f6f8666c6e2c39d52'
             'e7b668224e995a69b3fc3724cee15d9820629d858ad20b347d05409709305d46'
+            'a378567483c837f3634503b6a56572877a3bdf6e40f6f1441315233a7cf575b3'
+            'd9492b4950b09b8a3625e08006ce30570b6e2fe1618b69cb3800212edbebbaff'
 )
 
 build() {
@@ -74,17 +77,20 @@ build() {
   # see: http://forum.manjaro.org/index.php?topic=1108.0
   patch -Np1 -i "${srcdir}/3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch"
 
-  # fix watchdog enable/disable regression
-  # https://bugs.archlinux.org/task/33095
-  patch -Np1 -i "${srcdir}/3.7.1-watchdog-fix-disable-enable-regression.patch"
-
   # fix cosmetic fat issue
   # https://bugs.archlinux.org/task/32916
   patch -Np1 -i "${srcdir}/3.7.0-fat.patch"
 
+  # fix watchdog enable/disable regression
+  # https://bugs.archlinux.org/task/33095
+  patch -Np1 -i "${srcdir}/3.7.1-watchdog-fix-disable-enable-regression.patch"
+
+  # fixes the ILK hang (https://lkml.org/lkml/2013/1/11/400)
+  patch -Np1 -i "${srcdir}/3.7.2-drm-Only-evict-the-blocks-required-to-create-the-req.patch"
+  patch -Np1 -i "${srcdir}/3.7.2-drm-i915-Revert-shrinker-changes-from-Track-unbound-pages.patch"
+
   # add aufs3 support
-  #patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
-  patch -Np1 -i "${srcdir}/aufs3.x-rcN-${_aufs}.patch"
+  patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
   patch -Np1 -i "${srcdir}/aufs3-base.patch"
   patch -Np1 -i "${srcdir}/aufs3-kbuild.patch"
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
