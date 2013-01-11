@@ -8,7 +8,7 @@
 pkgname=linux34-cdfs
 _pkgname=cdfs
 pkgver=2.6.27
-pkgrel=6
+pkgrel=7
 pkgdesc="File system module that 'exports' all tracks and boot images on a CD as normal files."
 arch=(i686 x86_64)
 url="http://www.elis.UGent.be/~ronsse/cdfs/"

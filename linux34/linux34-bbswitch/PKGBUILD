@@ -18,7 +18,7 @@ provides=("$_pkgname=$pkgver")
 groups=('linux34-extramodules')
 install=bbswitch.install
 source=("https://github.com/downloads/Bumblebee-Project/bbswitch/${_pkgname}-${pkgver}.tar.gz")
-md5sums=('0db72765c6accb49426a40c4cb1556d3')
+sha256sums=('fb3621e9e6fa57d6201a24678985dcea2520a303237bb5b41eb438bd462ee7a4')
 
 build() {
   cd ${srcdir}/${_pkgname}-${pkgver}
