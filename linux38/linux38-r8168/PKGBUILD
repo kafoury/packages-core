@@ -9,7 +9,7 @@
 pkgname=linux38-r8168
 _pkgname=r8168
 pkgver=8.031.00
-pkgrel=0.1
+pkgrel=0.2
 pkgdesc="A kernel module for Realtek 8168 network cards"
 url="http://www.realtek.com.tw"
 license=("GPL")

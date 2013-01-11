@@ -1,5 +1,8 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+197-2		-update rc-local-shutdown.service
+		-fix systemd.install
+
 197-1		-merge manjaro-systemd-units with systemd
 		-nss-myhostname got merged by upstream
 

@@ -6,7 +6,7 @@
 
 pkgname=systemd
 pkgver=197
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
@@ -35,7 +35,9 @@ backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
         etc/systemd/user.conf
         etc/systemd/logind.conf
         etc/systemd/journald.conf
-        etc/udev/udev.conf)
+        etc/udev/udev.conf
+        etc/rc.local
+        etc/rc.local.shutdown)
 install="systemd.install"
 source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-hook-udev'
@@ -48,7 +50,7 @@ sha256sums=('e6857ea21ae24d7056e7b0f4c2aaaba73b8bf57025b8949c0a8af0c1bc9774b5'
             'e39a9e3d50024466f5b98486a53858b166953efeee451e386eecac9501696c00'
             'b6a7cd6512209ea6b53fec2ad4aff23573ecd36d698d7da8baa5c8278fa1a119'
             '7b440cd7e08257ad12766eb39ab3bf25ab232735a93858c9f66886d984780081'
-            '308cd05122a3d30529e74b8562f89ee8abda9b40e4c2f890262ccb25097087b0'
+            '9ffae90f53644a6c1f81c82d28cce2533a5c5365ec34976af7aa13bf59aff7b3'
 )
 
 build() {
