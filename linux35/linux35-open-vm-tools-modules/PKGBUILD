@@ -7,9 +7,10 @@
 
 pkgname=linux35-open-vm-tools-modules
 _pkgname=open-vm-tools-modules
-pkgver=2012.05.21
-_pkgsubver=724730
-pkgrel=6
+epoch=1
+pkgver=9.2.2
+_pkgsubver=893683
+pkgrel=0
 pkgdesc="kernel modules for the open source implementation of VMware Tools"
 arch=('i686' 'x86_64')
 url="http://open-vm-tools.sourceforge.net/"
@@ -22,8 +23,8 @@ install=$_pkgname.install
 options=('!strip')
 source=("http://downloads.sourceforge.net/open-vm-tools/open-vm-tools-$pkgver-${_pkgsubver}.tar.gz"
 	"modprobe.conf")
-md5sums=('91affb5b23db8abceff930613845f434'
-         'ac9b8e3cb798f5056ca92767ec705117')
+sha256sums=('1ae795e75bf4b38185f39083b8075686d3bab4c1222f4e39c863aeccb2f5f387'
+         '27b83062b8b6a279e8bfb13f10566467377f38ac077e75933211912cac4a085d')
 
 _extramodules=extramodules-3.5-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
