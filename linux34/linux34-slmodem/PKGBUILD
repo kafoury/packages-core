@@ -38,7 +38,7 @@ build() {
   cd $srcdir/ungrab-winmodem-20080126
   make KERNEL_DIR=/lib/modules/${_kver}/build
   install -D -m644 ungrab-winmodem.ko $pkgdir/lib/modules/${_extramodules}/ungrab-winmodem.ko
-  cd $srcdir/$pkgname-$pkgver-20080126
+  cd $srcdir/$_pkgname-$pkgver-20080126
   patch -Np0 -i $srcdir/kernel-2.6.24.patch
   patch -Np0 -i $srcdir/kernel-2.6.33.patch
   patch -Np0 -i $srcdir/kernel-2.6.36.patch

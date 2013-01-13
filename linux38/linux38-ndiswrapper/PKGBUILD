@@ -59,14 +59,14 @@ package_linux38-ndiswrapper() {
 
   # mv ndiswrapper-utils
   mkdir -p $srcdir/tmp-ndis-utils/usr/{share,sbin}
-  mv -v "$pkgdir/usr/share" "$srcdir/tmp-ndis-utils/usr/share"
-  mv -v "$pkgdir/usr/sbin" "$srcdir/tmp-ndis-utils/usr/sbin"
+  mv -v "$pkgdir/usr/share" "$srcdir/tmp-ndis-utils/usr"
+  mv -v "$pkgdir/usr/sbin" "$srcdir/tmp-ndis-utils/usr"
   mv -v "$pkgdir/sbin" "$srcdir/tmp-ndis-utils"
 }
 
 package_ndiswrapper-utils() {
   pkgdesc="Utils for NDIS (Windows Network Drivers) drivers supplied by vendors."
-  pkgrel=2
+  pkgrel=3
   depends=()
   groups=()
   cd $srcdir/tmp-ndis-utils
