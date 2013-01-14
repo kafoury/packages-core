@@ -58,7 +58,7 @@ package_linux37-ndiswrapper() {
   gzip "$pkgdir/usr/lib/modules/$_extramodules/$_pkgname.ko"
 
   # mv ndiswrapper-utils
-  mkdir -p $srcdir/tmp-ndis-utils/usr/{share,sbin}
+  mkdir -p $srcdir/tmp-ndis-utils/usr
   mv -v "$pkgdir/usr/share" "$srcdir/tmp-ndis-utils/usr"
   mv -v "$pkgdir/usr/sbin" "$srcdir/tmp-ndis-utils/usr"
   mv -v "$pkgdir/sbin" "$srcdir/tmp-ndis-utils"

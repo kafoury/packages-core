@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PACKAGEVERSION="20130110"
+PACKAGEVERSION="20130114"
 SYSTEMVERSION="$PACKAGEVERSION"
 
 err() {
@@ -46,7 +46,8 @@ post_upgrade() {
 	fi
 
 	# remove symlinks if fontconfig < 2.10.1
-	if [ $(pacman -Q fontconfig | cut -d- -f1 | cut -d" " -f2 | sed -e 's/\.//g') -lt "2101" ]; then
+	if [ "$(pacman -Qq fontconfig | grep 'fontconfig')" == "fontconfig" ]; then
+	if [ "$(pacman -Q fontconfig | cut -d- -f1 | cut -d" " -f2 | sed -e 's/\.//g')" -lt "2101" ]; then
 		msg "fixing fontconfig ..."
 		# System operation
 		rm -f /etc/fonts/conf.d/20-unhint-small-vera.conf
@@ -64,6 +65,7 @@ post_upgrade() {
 		rm -f /etc/fonts/conf.d/69-unifont.conf
 		rm -f /etc/fonts/conf.d/80-delicious.conf
 		rm -f /etc/fonts/conf.d/90-synthetic.conf 
+	fi
 	fi
 
 	# Update system version
