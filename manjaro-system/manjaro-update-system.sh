@@ -41,7 +41,7 @@ post_upgrade() {
 	if [ "x${removepkgs}" != "x" ]; then
 		msg "Removing linux-meta pkgs ..."
 		rm /var/lib/pacman/db.lck
-		pacman --noconfirm --noprogress -Rdd ${removepkgs} > /dev/null 2>&1
+		pacman --noconfirm -Rdd ${removepkgs}
 		msg "Removing linux-meta pkgs - done"
 	fi
 
