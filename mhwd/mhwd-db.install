@@ -1,0 +1,59 @@
+#!/bin/sh
+# arg 1:  the new package version
+# arg 2:  the old package version
+
+local_config_dir="/var/lib/mhwd/local/pci"
+db_config_dir="/var/lib/mhwd/db/pci"
+dkmod_configs="video-catalyst video-nvidia-legacy video-nvidia video-virtualbox"
+dkmod_version="20130101"
+blist_configs="video-hybrid-intel-nouveau-bumblebee video-hybrid-intel-nvidia-bumblebee video-intel"
+blist_version="20130112"
+
+err() {
+    ALL_OFF="\e[1;0m"
+    BOLD="\e[1;1m"
+    RED="${BOLD}\e[1;31m"
+	local mesg=$1; shift
+	printf "${RED}==>${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
+}
+
+msg() {
+    ALL_OFF="\e[1;0m"
+    BOLD="\e[1;1m"
+    GREEN="${BOLD}\e[1;32m"
+	local mesg=$1; shift
+	printf "${GREEN}==>${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
+}
+
+update_configs() {
+   dkmod_config=""
+   blist_config=""
+
+   # check for dkmod-configs
+   for dkmod_config in ${dkmod_configs} ; do
+      if [ -e "${local_config_dir}/${dkmod_config}/MHWDCONFIG" ] ; then
+         . "${local_config_dir}/${dkmod_config}/MHWDCONFIG"
+         if [ "$(echo ${VERSION} | sed -e 's/\.//g')" -lt "${dkmod_version}" ]; then
+            msg "Updating Config: '${dkmod_config}'"
+            cp ${db_config_dir}/graphic_drivers/$(echo ${dkmod_config} | sed -e 's/video-//g')/MHWDCONFIG ${local_config_dir}/${dkmod_config}
+         fi
+      fi
+   done
+
+   # check for blist-configs
+   for blist_config in ${blist_configs} ; do
+      if [ -e "${local_config_dir}/${blist_config}/MHWDCONFIG" ] ; then
+         . "${local_config_dir}/${blist_config}/MHWDCONFIG"
+         if [ "$(echo ${VERSION} | sed -e 's/\.//g')" -lt "${blist_version}" ]; then
+            msg "Updating Config: '${blist_config}'"
+            cp ${db_config_dir}/graphic_drivers/$(echo ${blist_config} | sed -e 's/video-//g')/MHWDCONFIG ${local_config_dir}/${blist_config}
+         fi
+      fi
+   done
+}
+
+post_upgrade() {
+    if [ "$(vercmp $2 0.2.3-3)" -lt 0 ]; then
+        update_configs
+    fi 
+}

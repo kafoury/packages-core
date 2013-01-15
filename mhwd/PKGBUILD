@@ -5,14 +5,14 @@
 pkgbase=mhwd
 pkgname=('mhwd' 'mhwd-db')
 pkgver=0.2.3
-pkgrel=1
+pkgrel=4
 pkgdesc="Manjaro Linux Hardware Detection"
 arch=('i686' 'x86_64')
 url="http://git.manjaro.org"
 license=('GPL')
 depends=('gcc-libs' 'hwinfo')
 makedepends=('git' 'cmake')
-_git=no
+_git=yes
 
 getsource() {
   cd "$srcdir"
@@ -50,7 +50,7 @@ build() {
 
 package_mhwd() {
   pkgdesc="Manjaro Linux Hardware Detection library and application"
-  depends=('hwinfo' 'mhwd-db' 'v86d')
+  depends=('hwinfo' 'mhwd-db' 'v86d' 'manjaro-system>=20130115-1')
 
   cd ${srcdir}/${pkgname}
 
@@ -62,6 +62,7 @@ package_mhwd-db() {
   pkgdesc="Manjaro Linux Hardware Detection Database"
   depends=('mhwd-nvidia' 'mhwd-catalyst' 'mhwd-nvidia-legacy') # 'mhwd-catalyst-legacy'
   arch='any'
+  install=mhwd-db.install
 
   getsource "mhwd-db" "git://git.manjaro.org/core/mhwd-db.git"
 
