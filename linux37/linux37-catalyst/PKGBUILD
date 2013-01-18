@@ -7,9 +7,8 @@ _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 
 pkgname=linux37-catalyst
 _pkgname=catalyst
-_beta=beta11
-pkgver=12.11
-pkgrel=3
+pkgver=13.1
+pkgrel=1
 pkgdesc="AMD/ATI Catalyst drivers for linux. fglrx kernel module only"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
@@ -21,12 +20,12 @@ provides=("$_pkgname=$pkgver")
 groups=('linux37-extramodules')
 install=catalyst.install
 
-source=(http://www2.ati.com/drivers/beta/amd-driver-installer-catalyst-${pkgver}-${_beta}-x86.x86_64.zip
+source=(http://www2.ati.com/drivers/linux/amd-driver-installer-catalyst-${pkgver}-linux-x86.x86_64.zip
         ati_make.sh
         makefile_compat.patch
         arch-fglrx-3.7.patch)
 
-sha256sums=('d76edd98ed2ca4dfda63cff9060a3e367f32b4cc9a13590f91aba853d85b847b'
+sha256sums=('67898a922b6b58f25a276a144f16b19014f79c39e4d44d8d2883a467d31e34ad'
 	 'e1d3cedbfc6a239d5d71458c458137f1a7404ebddfa838557d25c965dd49c845'
 	 'd344df75ffbe9bd899e288862f41983c2e24b5eff3e7e8cf02d4891eeb137fff'
          '4a93aab0f829be4474a869fa43dd80e2d43348929e2236872a70040c3bbee4f5'

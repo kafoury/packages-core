@@ -9,11 +9,11 @@ pkgbase=linux35
 pkgname=('linux35' 'linux35-headers')
 _kernelname=-MANJARO
 _basekernel=3.5
-_subver=2
+_subver=3
 _basever=35
-_aufs=20121126
+_aufs=20130114
 pkgver=${_basekernel}.7.${_subver}
-pkgrel=1
+pkgrel=0
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -38,16 +38,17 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.7.tar.
         '3.5.7.1.patch'
         '3.5.7.1-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch'
         '3.5.7.2.patch'
+        '3.5.7.3-review.patch'
 )
 sha256sums=('d1c68906ca31165d6771996141ec9fe978bf7d228c385ec6f4c73e473306794c'
-            'ede0fccc4e53b0ddccc1865e23d579cdae76dd5ed09292ea787b6ac1e51f35c5'
-            '87e3ad8120ab0ed02a41993ac0a9b911a862383bf78cd5754ba9287c9b3bd7d3'
+            '5a8630a5c7cc7431832fdc42912a7d3e1384f5edc16507faf442d9c13431465c'
+            'a1e9175c91f1b1bef0062a67f1c3bab5f7c52434f2bb23dc1fe67640232a8a93'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '16aeb69df8cdf168ce8cd3d4ffbb0e5d911ab952600e2cda54bbafc45abe86b1'
+            '67e7b4cf26353ffade3ed051833e2ae48e6ffa61139512f1519ef1bb49414289'
             'e214c467b7540ac5555dd14baa48baf1c6e222a907894a96fb9809d8d438487b'
             '259b32348a2a5e21ea3a1e0fc9fe17ddcbc41828e01351ccb514e594a31a512c'
-            '6ff59a3a8960cb3730ef80726423cc8933cc96338e88e61ce58711006de65b2a'
+            'a7b8d78b20f0afd5f125a966e9c4953b1b27614284adb20faec2b6864abc46f3'
             '176a57988463d2782e96f50924908fca436926925ed6b351d495094f47d0fcd0'
             'e0fb2734008ec0db548182164c730a51fee81802a720960d104c4e3d2c2c3025'
             'b9d79ca33b0b51ff4f6976b7cd6dbb0b624ebf4fbf440222217f8ffc50445de4'  
@@ -58,6 +59,7 @@ sha256sums=('d1c68906ca31165d6771996141ec9fe978bf7d228c385ec6f4c73e473306794c'
             '886927060f148d703950bcffe32b4794ea97be9be2ea18d6d3df33442194c43e'
             '0ba36591bb38fdb6465bd39a9957295d436591df8b6c3c8e3e4ba0d3b007724b'
             'd7b2b883e1b65381337da4e4f4938cde8012c23fc066d99cce61e43f96d300e3'
+            'a947b62c00d60df5794ad5e423b2a8abbbb67e84b48b63593f0cd016e88ef4e5'
 )
 
 build() {
@@ -66,6 +68,7 @@ build() {
   # add upstream patches
   patch -p1 -i "${srcdir}/3.5.7.1.patch"
   patch -p1 -i "${srcdir}/3.5.7.2.patch"
+  patch -p1 -i "${srcdir}/3.5.7.3-review.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
