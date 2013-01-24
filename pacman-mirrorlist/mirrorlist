@@ -1,10 +1,14 @@
 ##
 ## Manjaro Linux repository mirrorlist
-## Generated on 2013-01-10
+## Generated on 2013-01-24
 ##
 
 ## Brasil
 # Server = http://manjaro.fis.unb.br/$repo/$arch
+
+## Dutch
+# Server = ftp://ftp.nluug.nl/pub/os/Linux/distr/manjaro
+# Server = http://ftp.nluug.nl/pub/os/Linux/distr/manjaro
 
 ## France
 # Server = http://manjarolinux.polymorf.fr/$repo/$arch
@@ -14,15 +18,11 @@
 # Server = http://ftp.halifax.rwth-aachen.de/manjaro/$repo/$arch
 # Server = http://mirror.vinzv.de/manjaro/repo/$repo/$arch
 
-
 ## Greece
 # Server = http://ftp.cc.uoc.gr/mirrors/linux/manjaro/$repo/$arch
-
 
 ## United Kingdom
 # Server = http://repo.manjaro.org.uk/$repo/$arch
 
-
 ## United States
 # Server = http://mirror.dacentec.com/manjaro/$repo/$arch
-# Server = http://spiralinear.org/manjaro/$repo/$arch

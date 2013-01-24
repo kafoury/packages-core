@@ -11,7 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.4
 _basever=34
 _aufs=20130114
-pkgver=${_basekernel}.26
+pkgver=${_basekernel}.27
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -40,7 +40,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.4.23-fat.patch'
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
-            'be154c179ae1151884c539c78167e1a413055cc6b004d3b5fafae3aa2e7506fa'
+            '258466aba0fef5582bab1e85245c07c71e48bc2099802572d1662f6f38d6c190'
             'c5277a50aef982f8da93a183b0d40b6aacf7911ac2d0990123a4026a6bc7eb8f'
             '52a362cf3d3db9e06075ced095e44a9c9620b2abdf570967274ff0a8cb468818'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'

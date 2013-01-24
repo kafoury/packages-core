@@ -5,7 +5,7 @@
 # Maintainer: Roland Singer <roland@manajro.org>
 
 pkgname=('libgl')
-pkgver=9.0.1
+pkgver=9.0.2
 pkgrel=1
 arch=('i686' 'x86_64')
 depends=('mhwd' 'libdrm>=2.4.39' 'libxxf86vm>=1.1.2' 'libxdamage>=1.1.3' 'expat>=2.1.0' 'libglapi' 'gcc-libs')
@@ -15,9 +15,9 @@ url="http://mesa3d.sourceforge.net"
 license=('custom')
 source=(http://mirror.us.leaseweb.net/archlinux/extra/os/$CARCH/$pkgname-$pkgver-$pkgrel-$CARCH.pkg.tar.xz)
 if [ "$CARCH" = "i686" ]; then
-   sha256sums=('e6f7a06a43932c930c971d890d03af8e221b09316f40b396a0202e7b74215d79')
+   sha256sums=('e5d1bdc300f26d32a99ff1646c46132afe93b22dc683501aad816c31412fcc85')
 else
-   sha256sums=('3eee871198af5f4cee688a8faadea80d61ef1b6ca57f80d9e7283d7e6db14310')
+   sha256sums=('b513731708c273e9656cacb3b845843de7dca8a729a934cd694a26c456f6ac51')
 fi
 
 package() {
