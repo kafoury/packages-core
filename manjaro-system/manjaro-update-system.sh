@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PACKAGEVERSION="20130114"
+PACKAGEVERSION="20130128"
 SYSTEMVERSION="$PACKAGEVERSION"
 
 err() {
@@ -24,10 +24,6 @@ if [ -f /var/lib/manjaro-system/version ]; then
 	. /var/lib/manjaro-system/version
 fi
 
-
-post_install() {
-	post_upgrade
-}
 
 post_upgrade() {
 	# remove linux-meta

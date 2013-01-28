@@ -17,7 +17,7 @@ makedepends=('acl' 'cryptsetup' 'dbus-core' 'docbook-xsl' 'gobject-introspection
 options=('!libtool')
 pkgdesc="system and service manager"
 depends=('acl' 'bash' 'dbus-core' 'glib2' 'kbd' 'kmod' 'hwids' 'libcap' 'libgcrypt'
-         'pam' 'util-linux' 'xz' 'sysvinit-tools' 'systemd-manjaro-units'
+         'pam' 'util-linux' 'xz' 'sysvinit-tools'
          'python2-cairo' 'python2-gobject' 'python2-dbus')
 provides=("libsystemd=$pkgver" 'nss-myhostname' "systemd-tools=$pkgver" "udev=$pkgver" "systemd-sysvcompat=$pkgver" 'systemd-manjaro-units')
 replaces=('libsystemd' 'nss-myhostname' 'systemd-tools' 'udev' 'systemd-sysvcompat' 'systemd-manjaro-units')

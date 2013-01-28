@@ -9,7 +9,7 @@ pkgbase=linux35
 pkgname=('linux35' 'linux35-headers')
 _kernelname=-MANJARO
 _basekernel=3.5
-_subver=3
+_subver=4
 _basever=35
 _aufs=20130114
 pkgver=${_basekernel}.7.${_subver}
@@ -39,6 +39,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.7.tar.
         '3.5.7.1-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch'
         '3.5.7.2.patch'
         '3.5.7.3.patch'
+        '3.5.7.4.patch'
 )
 sha256sums=('d1c68906ca31165d6771996141ec9fe978bf7d228c385ec6f4c73e473306794c'
             '5a8630a5c7cc7431832fdc42912a7d3e1384f5edc16507faf442d9c13431465c'
@@ -60,6 +61,7 @@ sha256sums=('d1c68906ca31165d6771996141ec9fe978bf7d228c385ec6f4c73e473306794c'
             '0ba36591bb38fdb6465bd39a9957295d436591df8b6c3c8e3e4ba0d3b007724b'
             'd7b2b883e1b65381337da4e4f4938cde8012c23fc066d99cce61e43f96d300e3'
             '3d2cce5b5f5a12ef1519e5cf3ebdb956c74f19d22175c6b5aa9c0f4806ee8017'
+            'df8ef63de1b3aaea2129f6af1f13a12e1bde3b62003bfe4511bd53f2d6a58dc8'
 )
 
 build() {
@@ -69,6 +71,7 @@ build() {
   patch -p1 -i "${srcdir}/3.5.7.1.patch"
   patch -p1 -i "${srcdir}/3.5.7.2.patch"
   patch -p1 -i "${srcdir}/3.5.7.3.patch"
+  patch -p1 -i "${srcdir}/3.5.7.4.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
