@@ -7,7 +7,7 @@
 pkgname=linux38-fcpcmcia
 _pkgname=fcpcmcia
 pkgver=31107
-pkgrel=0.2
+pkgrel=0.3
 _extramodules=extramodules-3.8-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 pkgdesc="AVM ISDN driver for FRITZ PCMCIA isdn cards"

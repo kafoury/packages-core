@@ -9,7 +9,7 @@ _pkgname=nvidia
 pkgver=304.64
 _extramodules=extramodules-3.8-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
-pkgrel=0.2
+pkgrel=0.1
 pkgdesc="NVIDIA drivers for linux."
 arch=('i686' 'x86_64')
 url="http://www.nvidia.com/"
@@ -34,11 +34,16 @@ elif [ "$CARCH" = "x86_64" ]; then
     sha256sums=('b45bbf79599c7344decf79ade1c3d635d20578a0686cda99bc56b39f967163f4')
 fi
 
+source=(${source[@]})
+sha256sums=(${sha256sums[@]})
+source=(${source[@]} "linux37.patch")
+sha256sums=(${sha256sums[@]} "52b285f15427085c0004e2f8b123de3ab12e2fe028603b8b8428f76529c5cc1d")
+
 build() {
     cd "${srcdir}"
     sh "${_pkg}.run" --extract-only
     cd "${_pkg}/kernel"
-    patch -Np1 -i ${srcdir}/../linux38.patch
+    patch < "${srcdir}/linux37.patch"
     make SYSSRC=/usr/lib/modules/"${_kernver}/build" module
 }
 

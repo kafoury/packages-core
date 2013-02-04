@@ -13,7 +13,7 @@ pkgbase=ndiswrapper
 pkgname=('linux37-ndiswrapper' 'ndiswrapper-utils')
 groups=('linux37-extramodules')
 pkgver=1.57
-pkgrel=2
+pkgrel=4
 pkgdesc="Module for NDIS (Windows Network Drivers) drivers supplied by vendors."
 license=('GPL')
 arch=('i686' 'x86_64')
@@ -66,7 +66,7 @@ package_linux37-ndiswrapper() {
 
 package_ndiswrapper-utils() {
   pkgdesc="Utils for NDIS (Windows Network Drivers) drivers supplied by vendors."
-  pkgrel=3
+  pkgrel=4
   depends=()
   groups=()
   cd $srcdir/tmp-ndis-utils
