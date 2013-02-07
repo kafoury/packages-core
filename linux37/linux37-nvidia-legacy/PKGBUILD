@@ -40,7 +40,7 @@ build() {
     cd "${_pkg}/kernel"
     patch -Np1 -i ${srcdir}/../linux37.patch
     # fix 3.7.6 build
-    sed -ie 's|linux/version.h|generated/uapi/linux/version.h|g' conftest.sh
+    sed -i 's|linux/version.h|generated/uapi/linux/version.h|g' conftest.sh
     make SYSSRC=/usr/lib/modules/"${_kernver}/build" module
 }
 
