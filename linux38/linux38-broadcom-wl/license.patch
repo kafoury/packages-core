@@ -5,7 +5,7 @@ diff -aur old/src/wl/sys/wl_linux.c new/src/wl/sys/wl_linux.c
  
  static int nompc = 0;
  module_param(nompc, int, 0);
-+MODULE_LICENSE("Mixed/Proprietary");
++MODULE_LICENSE("MIXED/Proprietary");
  
  #ifdef quote_str
  #undef quote_str

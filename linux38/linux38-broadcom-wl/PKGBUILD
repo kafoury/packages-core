@@ -23,7 +23,7 @@ source=("http://www.broadcom.com/docs/linux_sta/hybrid-portsrc_${ARCH}-v${pkgver
         '3.8.0.patch')
 sha1sums=('01aa32f9e85621253a3f15cf4361bb80d41da3e8'
           '89bf92286ede30dd85304c6c4e42e89cfdc0f60a'
-          'ea7b67982ddc0f56fd3becb9914fd4458fe7d373'
+          '562c1947171338751f57a074ff10c254151250f4'
           'e0366dd15ea5b25aae0f61bec6be7a203dfca7e4'
           'df3cd65e24beed349a40abcf476bdaa82bbc57d3'
           '009d50f8f56d6dcfe2799d233f04973a5e410bde')
