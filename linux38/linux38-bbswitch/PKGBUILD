@@ -6,7 +6,7 @@ pkgname=linux38-bbswitch
 _pkgname=bbswitch
 _extramodules=extramodules-3.8-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
-pkgver=0.4.2
+pkgver=0.5
 pkgrel=1
 pkgdesc="kernel module allowing to switch dedicated graphics card on Optimus laptops"
 arch=('i686' 'x86_64')
@@ -18,7 +18,7 @@ provides=("$_pkgname=$pkgver")
 groups=('linux38-extramodules')
 install=bbswitch.install
 source=("https://github.com/downloads/Bumblebee-Project/bbswitch/${_pkgname}-${pkgver}.tar.gz")
-md5sums=('0db72765c6accb49426a40c4cb1556d3')
+sha256sums=('fb3621e9e6fa57d6201a24678985dcea2520a303237bb5b41eb438bd462ee7a4')
 
 build() {
   cd ${srcdir}/${_pkgname}-${pkgver}

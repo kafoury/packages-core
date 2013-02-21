@@ -24,6 +24,7 @@ source=(
 	$pkgbase-$pkgver-return_nonvoid.patch
 	$pkgbase-$pkgver-reduce_debug_output.patch
 	$pkgbase-$pkgver-remove_date_time.patch
+	$pkgbase-$pkgver-linux38.patch
 )
 
 _extramodules=extramodules-3.8-MANJARO
@@ -39,6 +40,7 @@ build() {
 	patch -p0 -i "$srcdir/$pkgbase-$pkgver-return_nonvoid.patch"
 	patch -p0 -i "$srcdir/$pkgbase-$pkgver-reduce_debug_output.patch"
 	patch -p0 -i "$srcdir/$pkgbase-$pkgver-remove_date_time.patch"
+	patch -p1 -i "$srcdir/$pkgbase-$pkgver-linux38.patch"
 
 	# clean up this mess of mixing RT2860STA with RT3562STA
 	# in documentation files
@@ -95,4 +97,5 @@ md5sums=('a5e9af70abccdb7b86d1ef605bb34491'
          '874619383576e38c5c048f0a068c9844'
          '466df4e09896836082db417e52f0224e'
          'edc79dd0de1e8fabcec1e4791feb4391'
-         'c8e174ea362bf94ce46038f8388439b6')
+         'c8e174ea362bf94ce46038f8388439b6'
+         '727fb2448ada63df0a745d3773c93f29')
