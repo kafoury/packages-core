@@ -11,25 +11,23 @@ _kver="$(cat /usr/lib/modules/${_extramodules}/version)"
 _pkgname=ndiswrapper
 pkgbase=ndiswrapper
 pkgname=('linux34-ndiswrapper' 'ndiswrapper-utils')
-pkgver=1.57
-pkgrel=9
+pkgver=1.58
+pkgrel=1
 pkgdesc="Module for NDIS (Windows Network Drivers) drivers supplied by vendors."
 license=('GPL')
 arch=('i686' 'x86_64')
 url="http://ndiswrapper.sourceforge.net"
 depends=('linux34' 'wireless_tools' 'perl' "$_pkgname-utils")
 makedepends=('linux34-headers')
-source=("http://downloads.sourceforge.net/sourceforge/$_pkgname/$_pkgname-$pkgver.tar.gz" 'linux33.patch')
+source=("http://downloads.sourceforge.net/sourceforge/$_pkgname/$_pkgname-$pkgver.tar.gz")
 options=('!strip')
-md5sums=('7a401dc540938bf07893c67f418b6152' '567050289e1a7c80b3274a3668253c71')
+sha256sums=('cbd225ecb0b835be7d05012483f61518fe97a52c67f20b35846412c692be24aa')
 
 build() {
-  install=ndiswrapper.install
   cd "$srcdir/$_pkgname-$pkgver"
 
   # modinfo path fix
   sed -i "/modinfo/s/s/usr\//" driver/Makefile
-  patch -i $srcdir/linux33.patch -N -p0
 
   # make sure we point to the right build directory
   sed -i "/^KBUILD/ s,.*,KBUILD = $(readlink -f /usr/lib/modules/$_kver/build)," driver/Makefile
@@ -59,7 +57,7 @@ package_linux34-ndiswrapper() {
 
 package_ndiswrapper-utils() {
   pkgdesc="Utils for NDIS (Windows Network Drivers) drivers supplied by vendors."
-  pkgrel=3
+  pkgrel=1
   depends=()
   groups=()
   cd $srcdir/tmp-ndis-utils

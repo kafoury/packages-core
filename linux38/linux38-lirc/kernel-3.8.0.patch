@@ -1,0 +1,37 @@
+--- lirc-0.9.0/drivers/lirc_wpc8769l/lirc_wpc8769l.c~	2013-02-21 00:25:44.426868184 +0100
++++ lirc-0.9.0/drivers/lirc_wpc8769l/lirc_wpc8769l.c	2013-02-21 00:35:29.817808347 +0100
+@@ -923,12 +923,20 @@ static int wpc8769l_acpi_detect(void)
+ #ifdef MODULE
+ static struct platform_device *lirc_wpc8769l_platform_dev;
+ 
+-static int __devinit lirc_wpc8769l_probe(struct platform_device *dev)
++static int 
++#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 8, 0)
++__devinit
++#endif
++lirc_wpc8769l_probe(struct platform_device *dev)
+ {
+ 	return 0;
+ }
+ 
+-static int __devexit lirc_wpc8769l_remove(struct platform_device *dev)
++static int
++#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 8, 0)
++__devexit
++#endif
++lirc_wpc8769l_remove(struct platform_device *dev)
+ {
+ 	return 0;
+ }
+@@ -964,7 +964,11 @@ static int lirc_wpc8769l_resume(struct p
+ 
+ static struct platform_driver lirc_wpc8769l_platform_driver = {
+ 	.probe		= lirc_wpc8769l_probe,
++#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 8, 0)
+ 	.remove		= __devexit_p(lirc_wpc8769l_remove),
++#else
++	.remove		= lirc_wpc8769l_remove,
++#endif
+ 	.suspend	= lirc_wpc8769l_suspend,
+ 	.resume		= lirc_wpc8769l_resume,
+ 	.driver		= {

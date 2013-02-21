@@ -1,7 +1,7 @@
 aufs3.x-rcN proc_map patch
 
 diff --git a/fs/buffer.c b/fs/buffer.c
-index c017a2d..ea5535c 100644
+index 7a75c3e..b9c3f3c 100644
 --- a/fs/buffer.c
 +++ b/fs/buffer.c
 @@ -2380,6 +2380,8 @@ int block_page_mkwrite(struct vm_area_struct *vma, struct vm_fault *vmf,
@@ -88,7 +88,7 @@ index f8f5162..25ce88d 100644
  
  #ifndef CONFIG_MMU
 diff --git a/kernel/fork.c b/kernel/fork.c
-index 65ca6d2..d3c9c0e 100644
+index c535f33..76da22a 100644
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
 @@ -417,6 +417,8 @@ static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
@@ -101,10 +101,10 @@ index 65ca6d2..d3c9c0e 100644
  				atomic_dec(&inode->i_writecount);
  			mutex_lock(&mapping->i_mmap_mutex);
 diff --git a/mm/memory.c b/mm/memory.c
-index e0a9b0c..62bfade 100644
+index bb1369f..105c729 100644
 --- a/mm/memory.c
 +++ b/mm/memory.c
-@@ -3368,6 +3368,8 @@ static int __do_fault(struct mm_struct *mm, struct vm_area_struct *vma,
+@@ -3373,6 +3373,8 @@ static int __do_fault(struct mm_struct *mm, struct vm_area_struct *vma,
  		/* file_update_time outside page_lock */
  		if (vma->vm_file && !page_mkwrite)
  			file_update_time(vma->vm_file);
@@ -114,7 +114,7 @@ index e0a9b0c..62bfade 100644
  		unlock_page(vmf.page);
  		if (anon)
 diff --git a/mm/mmap.c b/mm/mmap.c
-index f54b235..dc88e09b 100644
+index 35730ee..a8c385b 100644
 --- a/mm/mmap.c
 +++ b/mm/mmap.c
 @@ -242,6 +242,8 @@ static struct vm_area_struct *remove_vma(struct vm_area_struct *vma)

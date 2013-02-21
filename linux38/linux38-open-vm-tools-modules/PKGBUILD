@@ -8,9 +8,10 @@
 pkgname=linux38-open-vm-tools-modules
 _pkgname=open-vm-tools-modules
 groups=('linux38-extramodules')
-pkgver=2012.05.21
-_pkgsubver=724730
-pkgrel=0.3
+epoch=1
+pkgver=9.2.2
+_pkgsubver=893683
+pkgrel=1
 pkgdesc="kernel modules for the open source implementation of VMware Tools"
 arch=('i686' 'x86_64')
 url="http://open-vm-tools.sourceforge.net/"
@@ -22,11 +23,10 @@ groups=('linux38-extramodules')
 install=$_pkgname.install
 options=('!strip')
 source=("http://downloads.sourceforge.net/open-vm-tools/open-vm-tools-$pkgver-${_pkgsubver}.tar.gz"
-	"modprobe.conf"
-	"linux-3.6-build-fix.patch")
-sha256sums=('c7daaaf0ed031cd36295cf10d51dbbdedeb1eb0015e49f0806620792f8dab71b'
+	"modprobe.conf" "linux-3.8-build-fix.patch")
+sha256sums=('1ae795e75bf4b38185f39083b8075686d3bab4c1222f4e39c863aeccb2f5f387'
          '27b83062b8b6a279e8bfb13f10566467377f38ac077e75933211912cac4a085d'
-         '84e75fbee9de9af606c582337321e88927086d43292f11cf778d9bdba1065f2f')
+         '0414929ab8f14c7892ef9272ee41d3e65ea1a20cdf33fa09b812e05cddfb4b49')
 
 _extramodules=extramodules-3.8-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
@@ -34,7 +34,9 @@ _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 build() {
   cd "$srcdir/open-vm-tools-${pkgver}-${_pkgsubver}"
   sed -i 's|proc-3.2.8|procps|g' configure
-  patch -p1 <$srcdir/linux-3.6-build-fix.patch
+
+  patch -Np1 -i ../../linux-3.8-build-fix.patch
+
   [ $NOEXTRACT -eq 1 ] || ./configure \
       --prefix=/usr \
       --without-x \

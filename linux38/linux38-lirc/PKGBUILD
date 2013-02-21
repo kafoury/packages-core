@@ -7,7 +7,7 @@
 pkgbase=lirc
 pkgname=('linux38-lirc' 'lirc-utils')
 pkgver=0.9.0
-pkgrel=0.3
+pkgrel=1
 epoch=1
 _extramodules=extramodules-3.8-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
@@ -21,7 +21,8 @@ source=(http://prdownloads.sourceforge.net/${pkgbase}/${pkgbase}-${pkgver}.tar.b
         lircd-handle-large-config.patch
         lirc_atiusb-kfifo.patch
         kernel-2.6.39.patch
-	lircd lircmd lirc.logrotate lircd.conf irexec.conf irexecd)
+	lircd lircmd lirc.logrotate lircd.conf irexec.conf irexecd
+	kernel-3.8.0.patch)
 md5sums=('b232aef26f23fe33ea8305d276637086'
          '1cce37e18e3f6f46044abab29016d18f'
          'b70cc9640505205446ec47b7d4779f38'
@@ -32,7 +33,8 @@ md5sums=('b232aef26f23fe33ea8305d276637086'
          '3deb02604b37811d41816e9b4385fcc3'
          '5b1f8c9cd788a39a6283f93302ce5c6e'
          'f0c0ac930326168035f0c8e24357ae55'
-         '69d099e6deedfa3c1ee2b6e82d9b8bfb')
+         '69d099e6deedfa3c1ee2b6e82d9b8bfb'
+         '85b2c027d4346f0053847c64eaefed55')
 
 build() {
   cd "${srcdir}/lirc-${pkgver}"
@@ -40,6 +42,10 @@ build() {
   patch -Np1 -i "${srcdir}/lircd-handle-large-config.patch"
   patch -Np1 -i "${srcdir}/lirc_atiusb-kfifo.patch"
   patch -Np1 -i "${srcdir}/kernel-2.6.39.patch"
+  patch -Np1 -i "${srcdir}/kernel-3.8.0.patch"
+
+  # Fix the AM_CONFIG_HEADER obsolete error
+  sed -i 's/AM_CONFIG_HEADER(config.h)/AC_CONFIG_HEADERS(\[config.h\])/' configure.ac
 
   sed -i '/AC_PATH_XTRA/d' configure.ac
   sed -e 's/@X_CFLAGS@//g' \
