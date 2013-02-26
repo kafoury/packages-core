@@ -4,20 +4,22 @@
 # Maintainer: Clittle <philm@manjaro.org>
 # Maintainer: Roland Singer <roland@manajro.org>
 
-pkgname=('libgl')
-pkgver=9.0.2
-pkgrel=1
+pkgname=('mesa-libgl')
+pkgver=9.1
+pkgrel=2
 arch=('i686' 'x86_64')
-depends=('mhwd' 'libdrm>=2.4.39' 'libxxf86vm>=1.1.2' 'libxdamage>=1.1.3' 'expat>=2.1.0' 'libglapi' 'gcc-libs')
+depends=('mhwd' "mesa=${pkgver}")
 pkgdesc="Mesa 3-D graphics library and DRI software rasterizer"
+provides=("libgl=${pkgver}")
+replaces=('libgl')
 install=libgl.install
 url="http://mesa3d.sourceforge.net"
 license=('custom')
 source=(http://mirror.us.leaseweb.net/archlinux/extra/os/$CARCH/$pkgname-$pkgver-$pkgrel-$CARCH.pkg.tar.xz)
 if [ "$CARCH" = "i686" ]; then
-   sha256sums=('e5d1bdc300f26d32a99ff1646c46132afe93b22dc683501aad816c31412fcc85')
+   sha256sums=('67118adaf1055761d27d0e81f4fa164fa6e4b058699ed733ab28515c677e15af')
 else
-   sha256sums=('b513731708c273e9656cacb3b845843de7dca8a729a934cd694a26c456f6ac51')
+   sha256sums=('fdec6927602410a3896d13c85b03415ec034e771f511cc4306244c08930d35a1')
 fi
 
 package() {
