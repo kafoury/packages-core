@@ -44,7 +44,7 @@
  
  	ssid = &wl->profile->ssid;
  	bss = cfg80211_get_bss(wl_to_wiphy(wl), NULL, (s8 *)&wl->bssid,
-@@ -2079,8 +2088,22 @@ static s32 wl_update_bss_info(struct wl_
+@@ -2079,8 +2088,19 @@ static s32 wl_update_bss_info(struct wl_
  		beacon_interval = cpu_to_le16(bi->beacon_period);
  	} else {
  		WL_DBG(("Found the AP in the list - BSSID %pM\n", bss->bssid));
@@ -54,18 +54,17 @@
 + 		ie = bss->information_elements;
 + 		ie_len = bss->len_information_elements;
 +#else
-+		rcu_read_lock();
 +		ies = (const struct cfg80211_bss_ies*)rcu_dereference(bss->ies);
 +		if (!ies) {
 +			/* This should never happen */
-+			rcu_read_unlock();
 +			err = -EIO;
 +			goto update_bss_info_out;
 +		}
 +		ie = ies->data;
 +		ie_len = (size_t)(ies->len);
-+		rcu_read_unlock();
 +#endif
  		beacon_interval = bss->beacon_interval;
  		cfg80211_put_bss(bss);
  	}
+ 	
+ 	

@@ -26,7 +26,7 @@ sha1sums=('01aa32f9e85621253a3f15cf4361bb80d41da3e8'
           '11b87e28f527e111a50b3f5b6b998933a826d205'
           'e0366dd15ea5b25aae0f61bec6be7a203dfca7e4'
           'df3cd65e24beed349a40abcf476bdaa82bbc57d3'
-          '009d50f8f56d6dcfe2799d233f04973a5e410bde')
+          '6f7235d24b18e1550ffc027e6d6fdba44a58dc7c')
 [[ $CARCH = x86_64 ]] && sha1sums[0]='5bd78c20324e6a4aa9f3fafdc6f0155e884d5131'
 
 backup=('etc/modprobe.d/broadcom-wl.conf')
