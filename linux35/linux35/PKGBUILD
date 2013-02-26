@@ -13,7 +13,7 @@ _subver=6
 _basever=35
 _aufs=20130204
 pkgver=${_basekernel}.7.${_subver}
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -40,11 +40,12 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.7.tar.
         '3.5.7.4.patch'
         '3.5.7.5.patch'
         '3.5.7.6.patch'
+        'CVE-2013-1763.patch'
 )
 sha256sums=('d1c68906ca31165d6771996141ec9fe978bf7d228c385ec6f4c73e473306794c'
             'd09306b40987af01a55068b5c05d59a5ac75b8e7b850c33934717fa2ef523992'
-            'c8b4713a30e966fb7e0f7b5ffb1059dcca2f33b183a964e159572ea4d5cfc169'
-            'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
+            '19b90047cb17cecff2aff0c7b98e37cbfc903fb90337029ca053a09d925f28d4'
+            '81a42a9cfd3b24e5c4c3f66a6a61ef4c7758ba6801df5f973ec9612b82f88d46'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
             '0a688c8789d23ea384a36879f4d04712a8a5bce33b87cef29c886d20e65e6ca3'
             'e214c467b7540ac5555dd14baa48baf1c6e222a907894a96fb9809d8d438487b'
@@ -62,6 +63,7 @@ sha256sums=('d1c68906ca31165d6771996141ec9fe978bf7d228c385ec6f4c73e473306794c'
             'df8ef63de1b3aaea2129f6af1f13a12e1bde3b62003bfe4511bd53f2d6a58dc8'
             '1ec916de81014b63cd8b9b04076974e31b908975c00d3e3b509b45fb320f37a0'
             'a769b470d7863bdd9952a1436567f7d727842d80fb336b1ed77fedc34b026a38'
+            'd002d25ffb4619da7ac6a71b6f0849d202fb3cd64c3283d5342cc19f6fa360f4'
 )
 
 build() {
@@ -79,6 +81,10 @@ build() {
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
   # enable only if you have "gen-stable-queue-patch.sh" executed before
   #patch -Np1 -i "${srcdir}/../prepatch-${_basekernel}-`date +%Y%m%d`"
+
+  # Fix security vulnetability CVE-2013-1763.patch
+  # https://bugs.archlinux.org/task/34005
+  patch -Np1 -i "${srcdir}/CVE-2013-1763.patch"
 
   # fix broken watchdog
   # https://bugzilla.kernel.org/show_bug.cgi?id=44991
