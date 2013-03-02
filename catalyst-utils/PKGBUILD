@@ -9,18 +9,20 @@
 pkgbase=catalyst-utils
 pkgname=('catalyst-utils' 'opencl-catalyst' 'mhwd-catalyst')
 pkgver=13.1
-pkgrel=1
-pkgdesc="AMD/ATI Catalyst drivers utilities and libraries with OpenCL implementation"
+pkgrel=2
+pkgdesc="AMD Catalyst drivers utilities and libraries with OpenCL implementation"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
 license=('custom')
 
 source=("http://www2.ati.com/drivers/linux/amd-driver-installer-catalyst-${pkgver}-linux-x86.x86_64.zip"
         atieventsd.service
-        fglrx-authfile-locations.patch)
+        fglrx-authfile-locations.patch
+        authatieventsd.sh)
 sha256sums=('67898a922b6b58f25a276a144f16b19014f79c39e4d44d8d2883a467d31e34ad'
             'c410dac3cc3c0a468fcb7edfe1d271690eba46179b7dbf0eda8a12544871332f'
             '4f445d5248d3fd1bf030e1b4e47c1dacceef7cd61a435c71e880c908fb6264ec'
+            '6e1b031d47d5199ba289789e639b4678ed45b9eafcc371c78e957f25148f5ffb'
 )
 
 if [ "${CARCH}" = "i686" ]; then
@@ -41,7 +43,8 @@ build() {
 }
 
 package_catalyst-utils() {
-  depends=('xorg-server>=1.13.0' 'xorg-server<1.14.0' 'netkit-bsd-finger' 'libxrandr' 'libsm' 'fontconfig' 'libxcursor' 'libxi' 'gcc-libs' 'libxinerama' 'mhwd' 'libgl')
+  pkgdesc="AMD Catalyst drivers utilities and libraries."
+  depends=('xorg-server>=1.13.0' 'xorg-server<1.14.0' 'gcc-libs' 'libxinerama' 'libxcursor' 'libxxf86vm' 'libxrandr' 'libsm' 'fontconfig' 'libxi' 'xorg-xauth' 'which' 'netkit-bsd-finger' 'mhwd' 'libgl')
   optdepends=('qt4: amdcccle'
               'acpid: acpi event support')
   conflicts=('catalyst-legacy' 'catalyst-legacy-utils')
@@ -99,6 +102,9 @@ package_catalyst-utils() {
   install -m644 usr/share/doc/fglrx/examples/etc/acpi/events/* "${pkgdir}/etc/acpi/events/"
   # systemd script
   install -m644 "${srcdir}/atieventsd.service" "${pkgdir}/usr/lib/systemd/system/"
+
+  # (FS#33542) also use ps instead of pidof
+  install -m755 "${srcdir}/authatieventsd.sh" "${pkgdir}/etc/ati/authatieventsd.sh"
 
   # provided in opencl-catalyst package
   rm "${pkgdir}"/usr/lib/lib{amdocl*,OpenCL}.so* 
