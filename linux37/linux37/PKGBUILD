@@ -12,16 +12,14 @@ _basekernel=3.7
 _basever=37
 _aufs=20130204
 pkgver=${_basekernel}.10
-pkgrel=0
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl')
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
-        #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
-        "http://www.kernel.org/pub/linux/kernel/v3.x/patch-3.7.9.xz"
-        "http://www.kernel.org/pub/linux/kernel/v3.x/stable-review/patch-3.7.10-rc1.bz2"
+        "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config' 'config.x86_64' 'config.aufs'
         # standard config files for mkinitcpio ramdisk
@@ -36,11 +34,9 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch'
         '3.7.0-fat.patch'
         '3.7.8-3.9-backported-external-HDD-in-USB3-enclosure-cannot-be-dynamically-removed.patch'
-        'CVE-2013-1763.patch'
 )
 sha256sums=('60a64d0bf76eeec3355f115c577935757b84629c8c129ce5b8bb02075f6b9458'
-            '9f10f53c3cf6dbb4378a3799750b4d0a818f8f5ac112372498d533f4e475cea6'
-            '37b6f880ff851ebf0193a42d8a70aae609431ed7ed9476ed3da6218f1ba08673'
+            'e5db8a0f0fb0a7ad466b4673489c1a438fe7e6482203e34702e7180d6e2e515a'
             '4501c94df3a7ddd3ac0ef45c0b0e2b41fa8295e5fac1149c5a3d9c885e806050'
             '02dd3e20ff7de5ad665a9f6cd1024f929e55fe7bedf2dad9f31b22f94833e53d'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
@@ -55,20 +51,13 @@ sha256sums=('60a64d0bf76eeec3355f115c577935757b84629c8c129ce5b8bb02075f6b9458'
             '611d11b5346e52e957d9690b7fac2464d83f1c67fe64a943b0026ffb466a5798'
             '3190cffd7bf4906cb85632764d4c5ec22e8da5ccda4daf1f6f8666c6e2c39d52'
             'd6e8487e370809718d12a74c11a6616b07fb71edfd07efcd2a6643f4f871eb12'
-            'd002d25ffb4619da7ac6a71b6f0849d202fb3cd64c3283d5342cc19f6fa360f4'
 )
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  #patch -p1 -i "${srcdir}/patch-${pkgver}"
-  patch -p1 -i "${srcdir}/patch-3.7.9"
-  patch -p1 -i "${srcdir}/patch-3.7.10-rc1"
-
-  # Fix security vulnetability CVE-2013-1763.patch
-  # https://bugs.archlinux.org/task/34005
-  patch -Np1 -i "${srcdir}/CVE-2013-1763.patch"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git

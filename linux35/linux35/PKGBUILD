@@ -9,11 +9,11 @@ pkgbase=linux35
 pkgname=('linux35' 'linux35-headers')
 _kernelname=-MANJARO
 _basekernel=3.5
-_subver=6
+_subver=7
 _basever=35
 _aufs=20130204
 pkgver=${_basekernel}.7.${_subver}
-pkgrel=2
+pkgrel=0
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -40,7 +40,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.7.tar.
         '3.5.7.4.patch'
         '3.5.7.5.patch'
         '3.5.7.6.patch'
-        'CVE-2013-1763.patch'
+        '3.5.7.7-review.patch'
 )
 sha256sums=('d1c68906ca31165d6771996141ec9fe978bf7d228c385ec6f4c73e473306794c'
             '19b90047cb17cecff2aff0c7b98e37cbfc903fb90337029ca053a09d925f28d4'
@@ -63,7 +63,7 @@ sha256sums=('d1c68906ca31165d6771996141ec9fe978bf7d228c385ec6f4c73e473306794c'
             'df8ef63de1b3aaea2129f6af1f13a12e1bde3b62003bfe4511bd53f2d6a58dc8'
             '1ec916de81014b63cd8b9b04076974e31b908975c00d3e3b509b45fb320f37a0'
             'a769b470d7863bdd9952a1436567f7d727842d80fb336b1ed77fedc34b026a38'
-            'd002d25ffb4619da7ac6a71b6f0849d202fb3cd64c3283d5342cc19f6fa360f4'
+            '0393d95d3e18e8bb31b1041154425c46877ea38e6ffbddfa93e68cc158a9dffd'
 )
 
 build() {
@@ -76,15 +76,12 @@ build() {
   patch -p1 -i "${srcdir}/3.5.7.4.patch"
   patch -p1 -i "${srcdir}/3.5.7.5.patch"
   patch -p1 -i "${srcdir}/3.5.7.6.patch"
+  patch -p1 -i "${srcdir}/3.5.7.7-review.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
   # enable only if you have "gen-stable-queue-patch.sh" executed before
   #patch -Np1 -i "${srcdir}/../prepatch-${_basekernel}-`date +%Y%m%d`"
-
-  # Fix security vulnetability CVE-2013-1763.patch
-  # https://bugs.archlinux.org/task/34005
-  patch -Np1 -i "${srcdir}/CVE-2013-1763.patch"
 
   # fix broken watchdog
   # https://bugzilla.kernel.org/show_bug.cgi?id=44991

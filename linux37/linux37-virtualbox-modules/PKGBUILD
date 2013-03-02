@@ -9,8 +9,8 @@
 
 pkgbase=linux37-virtualbox-modules
 pkgname=('linux37-virtualbox-host-modules' 'linux37-virtualbox-guest-modules')
-pkgver=4.2.6
-pkgrel=4
+pkgver=4.2.8
+pkgrel=1
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
@@ -50,7 +50,7 @@ package_linux37-virtualbox-host-modules(){
   cd "dkms/vboxhost/$pkgver/$_kernver/$CARCH/module"
   install -m644 * "$pkgdir/usr/lib/modules/$_extraver"
   find "$pkgdir" -name '*.ko' -exec gzip -9 {} +
-  sed -ie "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extraver'/" "$startdir/virtualbox-host-modules.install"
+  sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extraver'/" "$startdir/virtualbox-host-modules.install"
 
   mkdir -p "$pkgdir/etc/modules-load.d"
   echo "vboxdrv" > "$pkgdir/etc/modules-load.d/linux37-virtualbox-host-modules.conf"
@@ -74,7 +74,7 @@ package_linux37-virtualbox-guest-modules(){
   cd "dkms/vboxguest/$pkgver/$_kernver/$CARCH/module"
   install -m644 * "$pkgdir/usr/lib/modules/$_extraver"
   find "$pkgdir" -name '*.ko' -exec gzip -9 {} +
-  sed -ie "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extraver'/" "$startdir/virtualbox-guest-modules.install"
+  sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extraver'/" "$startdir/virtualbox-guest-modules.install"
 
   mkdir -p "$pkgdir/etc/modules-load.d"
   echo "vboxguest" > "$pkgdir/etc/modules-load.d/linux37-virtualbox-guest-modules.conf"

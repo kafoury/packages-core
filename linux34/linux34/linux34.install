@@ -1,8 +1,8 @@
 # arg 1:  the new package version
 # arg 2:  the old package version
 
-RELEASE=3.4.33-2
-KERNEL_VERSION=3.4.33-2-MANJARO
+RELEASE=3.4.34-1
+KERNEL_VERSION=3.4.34-1-MANJARO
 KERNEL_BASE=3.4
 BASEVER=34
 ARCH=i686

@@ -42,7 +42,7 @@ build() {
 
 package_catalyst-utils() {
   depends=('xorg-server>=1.13.0' 'xorg-server<1.14.0' 'netkit-bsd-finger' 'libxrandr' 'libsm' 'fontconfig' 'libxcursor' 'libxi' 'gcc-libs' 'libxinerama' 'mhwd' 'libgl')
-  optdepends=('qt: amdcccle'
+  optdepends=('qt4: amdcccle'
               'acpid: acpi event support')
   conflicts=('catalyst-legacy' 'catalyst-legacy-utils')
   provides=("libatical=${pkgver}")
