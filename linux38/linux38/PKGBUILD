@@ -11,7 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.8
 _basever=38
 _aufs=20130204
-pkgver=${_basekernel}.1
+pkgver=${_basekernel}.2
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -35,7 +35,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch'
 )
 sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
-            '4228a6e00561113c78aa99a71c952dfd2fc59ce10dcc6de4938a22490c4ca32f'
+            '2bd1a39db4608a03250bfef11d3b7894ab1f0ebcb5316bafeeed23535822fd9c'
             'aacbf3406677a4760600adf2ea50416c552fe3cd71b96ccc6e7ca43d75af4dd5'
             '7cd134b538b6c0065dc5b6298933eaa82d4102b5dc1ee6bbe313bf3f5b9b56e8'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'

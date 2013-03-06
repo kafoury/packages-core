@@ -6,7 +6,7 @@
 
 pkgname=linux38-nvidia-legacy
 _pkgname=nvidia
-pkgver=304.64
+pkgver=304.84
 _extramodules=extramodules-3.8-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 pkgrel=1
@@ -26,24 +26,19 @@ if [ "$CARCH" = "i686" ]; then
     _arch='x86'
     _pkg="NVIDIA-Linux-${_arch}-${pkgver}"
     source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
-    sha256sums=('23464129f7ea5a00f724f67627206b322b6d08efb7134192a56ba50ea93d2252')
+    sha256sums=('4182f09c6c7d7246a373bf616c85c8a1bc2c272e1f4e3a471f6e0f07f3e80e92')
 elif [ "$CARCH" = "x86_64" ]; then
     _arch='x86_64'
     _pkg="NVIDIA-Linux-${_arch}-${pkgver}-no-compat32"
     source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
-    sha256sums=('b45bbf79599c7344decf79ade1c3d635d20578a0686cda99bc56b39f967163f4')
+    sha256sums=('00d5b5a2349cca94684e06975a019fe3be4755df579d511e39e8a143a79fbdc7')
 fi
-
-source=(${source[@]})
-sha256sums=(${sha256sums[@]})
-source=(${source[@]} "linux37.patch")
-sha256sums=(${sha256sums[@]} "52b285f15427085c0004e2f8b123de3ab12e2fe028603b8b8428f76529c5cc1d")
 
 build() {
     cd "${srcdir}"
     sh "${_pkg}.run" --extract-only
     cd "${_pkg}/kernel"
-    patch < "${srcdir}/linux37.patch"
+
     make SYSSRC=/usr/lib/modules/"${_kernver}/build" module
 }
 
