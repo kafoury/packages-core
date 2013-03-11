@@ -3,7 +3,7 @@
 
 pkgname=('keyboardctl')
 pkgver=0.1.0
-pkgrel=2
+pkgrel=3
 arch=('any')
 url="https://git.manjaro.org/core/keyboardctl"
 license=('GPL')
@@ -44,7 +44,7 @@ package() {
   conflicts=('console-setup')
   replaces=('console-setup')
   provides=('console-setup')
+  backup=('etc/keyboard.conf')
   cd ${srcdir}/${pkgname}
-  mkdir -p "$pkgdir"/var/lib/keyboardctl
   make DESTDIR="$pkgdir" install
 }

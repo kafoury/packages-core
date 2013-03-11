@@ -6,6 +6,6 @@ post_upgrade() {
     systemctl reenable keyboardctl.service
 }
 
-post_remove() {
+pre_remove() {
     systemctl disable keyboardctl.service
 }
