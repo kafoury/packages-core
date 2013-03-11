@@ -1,0 +1,50 @@
+#
+# maintainer: Philip Müller <philm[at]manjaro[dog]org>
+
+pkgname=('keyboardctl')
+pkgver=0.1.0
+pkgrel=2
+arch=('any')
+url="https://git.manjaro.org/core/keyboardctl"
+license=('GPL')
+options=('emptydirs')
+makedepends=('git')
+install=keyboardctl.install
+_git=yes
+
+getsource() {
+  cd "$srcdir"
+  msg "Connecting to GIT server...."
+
+  if [ -d $1 ] ; then
+    if [ "$_git" == "yes" ] ; then
+       cd $1 && git pull origin master
+    else
+       cd $1 && git pull origin master && git checkout -b $pkgver $pkgver
+    fi
+    msg "The local files are updated."
+  else
+    git clone $2 $1
+    if [ "$_git" != "yes" ] ; then
+       cd $1 && git checkout -b $pkgver $pkgver
+    fi
+  fi
+
+  msg "GIT checkout done or server timeout"
+}
+
+build() {
+  cd "$srcdir"
+  getsource "keyboardctl" "git://git.manjaro.org/core/keyboardctl.git"
+}
+
+package() {
+  pkgdesc="Manjaro Linux keymap setup program"
+  depends=('kbd' 'xkeyboard-config')
+  conflicts=('console-setup')
+  replaces=('console-setup')
+  provides=('console-setup')
+  cd ${srcdir}/${pkgname}
+  mkdir -p "$pkgdir"/var/lib/keyboardctl
+  make DESTDIR="$pkgdir" install
+}

@@ -5,20 +5,19 @@
 # Contributor: Guinux <nuxgui@gmail.com>
 
 pkgname=systemd
-pkgver=197
-pkgrel=2
+pkgver=198
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
 groups=('base')
 makedepends=('acl' 'cryptsetup' 'dbus-core' 'docbook-xsl' 'gobject-introspection' 'gperf'
-             'gtk-doc' 'intltool' 'kmod' 'libcap' 'libgcrypt' 'libmicrohttpd' 'libxslt'
+             'intltool' 'kmod' 'libcap' 'libgcrypt' 'libmicrohttpd' 'libxslt' #'gtk-doc'
              'linux-api-headers' 'pam' 'python' 'quota-tools' 'xz')
 options=('!libtool')
 pkgdesc="system and service manager"
 depends=('acl' 'bash' 'dbus-core' 'glib2' 'kbd' 'kmod' 'hwids' 'libcap' 'libgcrypt'
-         'pam' 'util-linux' 'xz' 'sysvinit-tools'
-         'python2-cairo' 'python2-gobject' 'python2-dbus')
+         'pam' 'util-linux' 'xz' 'sysvinit-tools')
 provides=("libsystemd=$pkgver" 'nss-myhostname' "systemd-tools=$pkgver" "udev=$pkgver" "systemd-sysvcompat=$pkgver" 'systemd-manjaro-units')
 replaces=('libsystemd' 'nss-myhostname' 'systemd-tools' 'udev' 'systemd-sysvcompat' 'systemd-manjaro-units')
 conflicts=('libsystemd' 'nss-myhostname' 'systemd-tools' 'udev' 'systemd-sysvcompat' 'systemd-manjaro-units')
@@ -39,13 +38,13 @@ backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
         etc/rc.local
         etc/rc.local.shutdown)
 install="systemd.install"
-source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
+source=("http://cgit.freedesktop.org/$pkgname/$pkgname/snapshot/$pkgname-198.tar.gz"
         'initcpio-hook-udev'
         'initcpio-install-udev'
         'initcpio-install-timestamp'
         'use-split-usr-path.patch'
         'rc-local-shutdown.service')
-sha256sums=('e6857ea21ae24d7056e7b0f4c2aaaba73b8bf57025b8949c0a8af0c1bc9774b5'
+sha256sums=('89f2d733468b99a59347521b38d6569d9424f7183726e8143fe848860d224651'
             '892ce43218e0a458981bbce451252c8987dc398e60b8de288e7542b8f2409c13'
             'e39a9e3d50024466f5b98486a53858b166953efeee451e386eecac9501696c00'
             'b6a7cd6512209ea6b53fec2ad4aff23573ecd36d698d7da8baa5c8278fa1a119'
@@ -59,20 +58,19 @@ build() {
   # hang onto this until we do the /{,s}bin merge
   patch -Np1 <"$srcdir/use-split-usr-path.patch"
 
+  ./autogen.sh
   ./configure \
-      PYTHON=python2 \
-      PYTHON_CONFIG=python2-config \
+      --enable-static \
       --libexecdir=/usr/lib \
       --localstatedir=/var \
       --sysconfdir=/etc \
       --enable-introspection \
-      --enable-gtk-doc \
+      --disable-gtk-doc \
       --disable-audit \
       --disable-ima \
+      --with-sysvinit-path= \
+      --with-sysvrcnd-path= \
       --disable-tcpwrap
-
-# can't use py3k yet with systemd-analyze -- the 'plot' verb will not work.
-# https://pokersource.info/show_bug.cgi?id=50989
 
   make
 }
@@ -88,14 +86,6 @@ package() {
 
   install -dm755 "$pkgdir/bin"
   ln -s ../usr/lib/systemd/systemd "$pkgdir/bin/systemd"
-
-  # move bash-completion and symlink for *ctl's
-  install -Dm644 "$pkgdir/etc/bash_completion.d/systemd-bash-completion.sh" \
-    "$pkgdir/usr/share/bash-completion/completions/systemctl"
-  for ctl in {login,journal,timedate,locale,hostname,systemd-coredump}ctl udevadm; do
-    ln -s systemctl "$pkgdir/usr/share/bash-completion/completions/$ctl"
-  done
-  rm -rf "$pkgdir/etc/bash_completion.d"
 
   # don't write units to /etc by default -- we'll enable this on post_install
   # as a sane default

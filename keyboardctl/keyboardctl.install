@@ -1,0 +1,11 @@
+post_install() {
+    systemctl enable keyboardctl.service
+}
+
+post_upgrade() {
+    systemctl reenable keyboardctl.service
+}
+
+post_remove() {
+    systemctl disable keyboardctl.service
+}
