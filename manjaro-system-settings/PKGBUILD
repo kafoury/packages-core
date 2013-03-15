@@ -1,0 +1,53 @@
+# maintainer: Philip Müller <philm[at]manjaro[dog]org>
+# maintainer: Roland Singer <roland[at]manjaro[dog]org>
+
+pkgname=manjaro-system-settings
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Manjaro System Settings"
+arch=('i686' 'x86_64')
+url="http://git.manjaro.org"
+license=('GPL')
+depends=('qt4' 'keyboardctl' 'pacman')
+install=install
+_git=yes
+
+getsource() {
+  cd "$srcdir"
+  msg "Connecting to GIT server...."
+
+  if [ -d $1 ] ; then
+    if [ "$_git" == "yes" ] ; then
+       cd $1 && git pull origin master
+    else
+       cd $1 && git pull origin master && git checkout -b $pkgver
+    fi
+    msg "The local files are updated."
+  else
+    git clone $2 $1
+    if [ "$_git" != "yes" ] ; then
+       cd $1 && git checkout -b $pkgver $pkgver
+    fi
+  fi
+
+  msg "GIT checkout done or server timeout"
+}
+
+build() {
+  getsource "manjaro-system-settings" "git://git.manjaro.org/core/manjaro-system-settings.git"
+
+  cd "${srcdir}/${pkgname}/src"
+
+  qmake-qt4
+
+  # Build fix
+  make sub-global-all
+  cp global/libglobal.a libglobal.a
+
+  make all
+}
+
+package() {
+  cd "${srcdir}/${pkgname}/src"
+  make INSTALL_ROOT="${pkgdir}" install
+}
