@@ -6,8 +6,8 @@
 # Maintainer: Philip Müller <philm@manjaro.org>
 
 pkgname=filesystem
-pkgver=2013.01
-pkgrel=3
+pkgver=2013.03
+pkgrel=1
 pkgdesc='Base filesystem'
 arch=('i686' 'x86_64')
 license=('GPL')
@@ -19,14 +19,14 @@ depends=('iana-etc')
 backup=('etc/fstab' 'etc/crypttab' 'etc/group' 'etc/hosts' 'etc/ld.so.conf' 'etc/passwd'
         'etc/shadow' 'etc/gshadow' 'etc/resolv.conf' 'etc/motd' 'etc/nsswitch.conf'
         'etc/shells' 'etc/host.conf' 'etc/securetty' 'etc/profile' 'etc/issue' 'etc/rc.local'
-        'etc/rc.local.shutdown' 'etc/hostname' 'etc/vconsole.conf' 'etc/locale.conf' 'etc/modules-load.d/modules.conf')
+        'etc/rc.local.shutdown' 'etc/hostname' 'etc/locale.conf' 'etc/modules-load.d/modules.conf')
 source=('crypttab' 'fstab' 'group' 'gshadow' 'host.conf' 'hostname' 'hosts' 'issue' 'ld.so.conf' 'locale.conf'
         'locale.sh' 'manjaro.7.txt' 'modprobe.d.usb-load-ehci-first' 'modules.conf' 'motd' 'nsswitch.conf' 'os-release'
-        'passwd' 'profile' 'rc.local' 'rc.local.shutdown' 'resolv.conf' 'securetty' 'shadow' 'shells' 'vconsole.conf')
+        'passwd' 'profile' 'rc.local' 'rc.local.shutdown' 'resolv.conf' 'securetty' 'shadow' 'shells')
 sha256sums=(ea8c67a34a0a8a41beabe3ceb5733c9e8b84b27c569c11ddbfd8395fce99d8dd
             86dff00854a7f2280bb799484ccc39ad449a171448926880742ae64f41666a43
-            ba0a11a3b21e66137fd486d667ef01c59a70cd9f52942ef89dd8ea25d1a5e6b2
-            9910787faf457cd978d06b53700941e603651987ec222cf3c357da570b540d7b
+            4767285e8b29bb09c96ed6b4c03e0f866a31ea60a45ce0a20ba8cc199ce7bcbd
+            2c4f081e1db3c855b8ab43514275a82263d50ac68b16c5eb5fcc2149c6b42aed
             f21f35e7d3083aeee19beb48478130d119b2572922a4889df98326d551540eda
             295a881e674d14ee0c0e77f25236a8fd99a9453e5c33f635f55d2e8c6959c7ea
             13d1f59c1d0860bf43da996e2b9a6ab2744791614241ed9a1376b7e7e30de3a8
@@ -47,8 +47,7 @@ sha256sums=(ea8c67a34a0a8a41beabe3ceb5733c9e8b84b27c569c11ddbfd8395fce99d8dd
             74d2be3dd69600bcf0da751a1804a386bf4ad143b76d79c336acaa5c600e7991
             f7b38167196943d8fb9d2e75358c7262d5fe1082b257c4c8caffe3b6de429cb5
             bdf92c2a97996eb1b3be24090ca94100f16232290010a7395e44c5c92bd38027
-            6cff886fe9e23096d5f67b7857a747ebaf10431be5a2afc40236de5ad13a654f
-            cd4a55177020a436254bb4baf84e068b98b3b0f6644173a7c853d58d236e00f1)
+            6cff886fe9e23096d5f67b7857a747ebaf10431be5a2afc40236de5ad13a654f)
 
 build() {
 	cd ${srcdir}
@@ -73,7 +72,7 @@ package() {
 
 	# setup /etc
 	install -d etc/{ld.so.conf.d,skel,profile.d}
-	for f in fstab group host.conf hosts issue ld.so.conf motd nsswitch.conf os-release passwd resolv.conf securetty shells profile hostname locale.conf vconsole.conf; do
+	for f in fstab group host.conf hosts issue ld.so.conf motd nsswitch.conf os-release passwd resolv.conf securetty shells profile hostname locale.conf; do
 		install -m644 ${srcdir}/${f} etc/
 	done
 	ln -s /proc/self/mounts etc/mtab
@@ -122,8 +121,8 @@ package() {
 	#
 	ln -s usr/lib ${pkgdir}/lib
 	[[ ${CARCH} = "x86_64" ]] && (
-	ln -s usr/lib ${pkgdir}/lib64
-	ln -s lib ${pkgdir}/usr/lib64
+		ln -s usr/lib ${pkgdir}/lib64
+		ln -s lib ${pkgdir}/usr/lib64
 	)
 
 	#
