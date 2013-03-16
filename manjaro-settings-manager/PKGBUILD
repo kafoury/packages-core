@@ -1,14 +1,17 @@
 # maintainer: Philip Müller <philm[at]manjaro[dog]org>
 # maintainer: Roland Singer <roland[at]manjaro[dog]org>
 
-pkgname=manjaro-system-settings
+pkgname=manjaro-settings-manager
 pkgver=0.1.0
 pkgrel=1
-pkgdesc="Manjaro System Settings"
+pkgdesc="Manjaro Linux System Settings Tool"
 arch=('i686' 'x86_64')
 url="http://git.manjaro.org"
 license=('GPL')
 depends=('qt4' 'keyboardctl' 'pacman')
+replaces=('manjaro-system-settings')
+provides=('manjaro-system-settings')
+conflicts=('manjaro-system-settings')
 install=install
 _git=yes
 
@@ -34,7 +37,7 @@ getsource() {
 }
 
 build() {
-  getsource "manjaro-system-settings" "git://git.manjaro.org/core/manjaro-system-settings.git"
+  getsource "manjaro-settings-manager" "git://git.manjaro.org/core/manjaro-settings-manager.git"
 
   cd "${srcdir}/${pkgname}/src"
 
