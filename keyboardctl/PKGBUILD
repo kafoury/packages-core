@@ -2,12 +2,13 @@
 # maintainer: Philip Müller <philm[at]manjaro[dog]org>
 
 pkgname=('keyboardctl')
-pkgver=0.1.4
+pkgver=0.1.5
 pkgrel=1
 arch=('any')
 url="https://git.manjaro.org/core/keyboardctl"
 license=('GPL')
 options=('emptydirs')
+depends=('kbd' 'xkeyboard-config' 'systemd')
 makedepends=('git')
 groups=('base')
 install=keyboardctl.install
