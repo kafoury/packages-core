@@ -24,13 +24,15 @@ source=(http://www2.ati.com/drivers/legacy/${pkgver/./-}/amd-driver-installer-${
         ati_make.sh
         makefile_compat.patch
         3.5-do_mmap.patch
-        arch-fglrx-3.7.patch)
+        arch-fglrx-3.7.patch
+        arch-fglrx-3.8.patch)
 
 sha256sums=('fe80c7d49c8be9437985cc873de9f97b14d527f0ed198c07f5538abef0e39e5f'
 	    'e1d3cedbfc6a239d5d71458c458137f1a7404ebddfa838557d25c965dd49c845'
 	    'd344df75ffbe9bd899e288862f41983c2e24b5eff3e7e8cf02d4891eeb137fff'
             '3fc9bae50d25d3bfe76a3a1e89c8d025674a4cb9afd16d3a5d8b3c25a66f536d'
-            '4a93aab0f829be4474a869fa43dd80e2d43348929e2236872a70040c3bbee4f5')
+            '4a93aab0f829be4474a869fa43dd80e2d43348929e2236872a70040c3bbee4f5'
+            'e21a2732c18fb2c059b2f20d2e5175cdd30a042e50f34f77da555bf175d25bfb')
 
 
 
@@ -64,6 +66,7 @@ build() {
     patch -Np1 -i ../makefile_compat.patch
     patch -Np1 -i ../3.5-do_mmap.patch
     patch -Np1 -i ../arch-fglrx-3.7.patch || return 1
+    patch -Np1 -i ../arch-fglrx-3.8.patch || return 1
 
 #    if [[ ${_kernver:0:6} < "2.6.39" ]] && [[ `cat /usr/lib/modules/${_kernver}/build/.config | grep -c CONFIG_BKL=y` = 0 ]]; then
 #	patch -Np1 -i ../no_bkl.patch

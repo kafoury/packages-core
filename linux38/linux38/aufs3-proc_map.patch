@@ -1,4 +1,4 @@
-aufs3.x-rcN proc_map patch
+aufs3.8 proc_map patch
 
 diff --git a/fs/buffer.c b/fs/buffer.c
 index 7a75c3e..b9c3f3c 100644
@@ -114,7 +114,7 @@ index bb1369f..105c729 100644
  		unlock_page(vmf.page);
  		if (anon)
 diff --git a/mm/mmap.c b/mm/mmap.c
-index 35730ee..a8c385b 100644
+index d1e4124..1ecbb55 100644
 --- a/mm/mmap.c
 +++ b/mm/mmap.c
 @@ -242,6 +242,8 @@ static struct vm_area_struct *remove_vma(struct vm_area_struct *vma)

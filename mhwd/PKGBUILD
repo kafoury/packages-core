@@ -3,9 +3,9 @@
 # maintainer: Roland Singer <roland[at]manjaro[dog]org>
 
 pkgbase=mhwd
-pkgname=('mhwd' 'mhwd-db')
+pkgname=('mhwd' 'mhwd-db' 'mhwd-db-catalyst')
 pkgver=0.2.4
-pkgrel=1
+pkgrel=2
 pkgdesc="Manjaro Linux Hardware Detection"
 arch=('i686' 'x86_64')
 url="http://git.manjaro.org"
@@ -51,6 +51,7 @@ build() {
 package_mhwd() {
   pkgdesc="Manjaro Linux Hardware Detection library and application"
   depends=('hwinfo' 'mhwd-db' 'v86d' 'manjaro-system>=20130115-1')
+  optdepends=('mhwd-db-catalyst: Catalyst support')
 
   cd ${srcdir}/${pkgname}
 
@@ -60,7 +61,7 @@ package_mhwd() {
 
 package_mhwd-db() {
   pkgdesc="Manjaro Linux Hardware Detection Database"
-  depends=('mhwd-nvidia' 'mhwd-catalyst' 'mhwd-nvidia-legacy') # 'mhwd-catalyst-legacy'
+  depends=('mhwd-nvidia' 'mhwd-nvidia-legacy') # 'mhwd-catalyst-legacy' 'mhwd-catalyst'
   arch='any'
   install=mhwd-db.install
 
@@ -80,7 +81,25 @@ package_mhwd-db() {
 
   # remove catalyst-legacy
   rm -r ${pkgdir}/var/lib/mhwd/db/pci/graphic_drivers/catalyst-legacy
+  # remove catalyst
+  rm -r ${pkgdir}/var/lib/mhwd/db/pci/graphic_drivers/catalyst
 
   # remove unichrome
   rm -r ${pkgdir}/var/lib/mhwd/db/pci/graphic_drivers/xf86-video-unichrome
+}
+
+package_mhwd-db-catalyst() {
+  pkgdesc="Manjaro Linux Hardware Detection Database"
+  depends=("mhwd-db=${pkgver}")
+  conflicts=("mhwd-db<${pkgver}")
+  arch='any'
+  install=mhwd-db.install
+
+  getsource "mhwd-db" "git://git.manjaro.org/core/mhwd-db.git"
+
+  cd ${srcdir}/mhwd-db/
+
+  mkdir -p ${pkgdir}/var/lib/mhwd/db/pci/graphic_drivers
+
+  cp -r pci/graphic_drivers/catalyst* ${pkgdir}/var/lib/mhwd/db/pci/graphic_drivers
 }

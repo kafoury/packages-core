@@ -1,4 +1,4 @@
-aufs3.x-rcN loopback patch
+aufs3.8 loopback patch
 
 diff --git a/drivers/block/loop.c b/drivers/block/loop.c
 index ae12512..ed8295b 100644
@@ -196,10 +196,10 @@ index 5c35454..88f507b 100644
  		if (file->f_mapping != h_file->f_mapping) {
  			file->f_mapping = h_file->f_mapping;
 diff --git a/fs/aufs/loop.c b/fs/aufs/loop.c
-index 4fa75a4..a923899 100644
+index ccae19c..15dc5c2 100644
 --- a/fs/aufs/loop.c
 +++ b/fs/aufs/loop.c
-@@ -131,3 +131,19 @@ void au_loopback_fin(void)
+@@ -133,3 +133,19 @@ void au_loopback_fin(void)
  {
  	kfree(au_warn_loopback_array);
  }

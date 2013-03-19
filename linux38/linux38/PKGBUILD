@@ -10,8 +10,8 @@ pkgname=('linux38' 'linux38-headers')
 _kernelname=-MANJARO
 _basekernel=3.8
 _basever=38
-_aufs=20130204
-pkgver=${_basekernel}.2
+_aufs=20130318
+pkgver=${_basekernel}.3
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -24,8 +24,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'config' 'config.x86_64' 'config.aufs'
         # standard config files for mkinitcpio ramdisk
         "${pkgname}.preset"
-        #"aufs${_basekernel}-${_aufs}.patch.bz2"
-        "aufs3.x-rcN-${_aufs}.patch.bz2"
+        "aufs${_basekernel}-${_aufs}.patch.bz2"
         'aufs3-base.patch'
         'aufs3-kbuild.patch'
         'aufs3-loopback.patch'
@@ -33,21 +32,25 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
         '3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch'
+        '3.8.3-drm-i915-enable-irqs-earlier-when-resuming.patch'
+        '3.8.3-drm-i915-reorder-setup-sequence-to-have-irqs-for-output-setup.patch'
 )
 sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
-            '2bd1a39db4608a03250bfef11d3b7894ab1f0ebcb5316bafeeed23535822fd9c'
+            '02b70097dcfbce05ccbfbd5fae6449a811b26a776f89d3c2fdd155b7d086ea82'
             'aacbf3406677a4760600adf2ea50416c552fe3cd71b96ccc6e7ca43d75af4dd5'
             '7cd134b538b6c0065dc5b6298933eaa82d4102b5dc1ee6bbe313bf3f5b9b56e8'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '1075cb8a3d1b04b36bc0278b35647a868d4e60a41cc4340c86461ce69db2cad9'
-            'ab1f6f0bdd1dd33a2d00d8c4dcd24ebef7308dfd0ab0620c55ad6af450d9201d'
-            '7b4dfac28ce8d6ce71621ee03f75acd88e4ab2cc699f8f3dae8b0a591b16b126'
-            '93915968cc735a2a299628b41e08ff3cc931a550cdb0eff71260dacf82920b7d'
-            '0d2aefe7c814999e12a56f8643fd5b0200fabd6f474b54380791479618f3eb8e'
-            '753ab00198a3224ef64228ca91359aaae349390e95e67acf870261542463e9c2'
+            '96a790e04e43918c8e0bcd9c6a97086b5e080fcab2b5ee43afd5c0fe34fc608b'
+            '6f473f3faef88393a3bedf57c30487ff64b0b4173270e05280a796023c29d491'
+            '2178505b162ac3b152bdac70f3291f5a0985bd5a3a3dec42882e5dd2f8e12ab6'
+            'c048da019b1e440a7635e4ea3607f3ce6da14c82625fc36ae8eac126fb423149'
+            '22d7177f49ab3642e3227d1fe0fd6f1e9019ad83dab9b1412cb227c9c144faf1'
+            '6e26cf4252c8a84a0a5d835b2376f18408adf5540a1ed0b9e1e3b96ab0c0eaf9'
             'b9d79ca33b0b51ff4f6976b7cd6dbb0b624ebf4fbf440222217f8ffc50445de4'
             '611d11b5346e52e957d9690b7fac2464d83f1c67fe64a943b0026ffb466a5798'
+            '5bb4beb1f97348887ae20c4f01b3c80ba29982d650ae4cc3a7c3bc1e5a9c1735'
+            'a21ae0c6bea68cef46074c913e38b5320ef3b3506d8963faa5cf753ef03c7c21'
 )
 
 build() {
@@ -55,6 +58,11 @@ build() {
 
   # add upstream patch
   patch -p1 -i "${srcdir}/patch-${pkgver}"
+
+  # revert 2 patches which breaks displays
+  # FS 34327
+  patch -Rp1 -i "${srcdir}/3.8.3-drm-i915-enable-irqs-earlier-when-resuming.patch"
+  patch -Rp1 -i "${srcdir}/3.8.3-drm-i915-reorder-setup-sequence-to-have-irqs-for-output-setup.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -71,8 +79,7 @@ build() {
   patch -Np1 -i "${srcdir}/3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch"
 
   # add aufs3 support
-  #patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
-  patch -Np1 -i "${srcdir}/aufs3.x-rcN-${_aufs}.patch"
+  patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
   patch -Np1 -i "${srcdir}/aufs3-base.patch"
   patch -Np1 -i "${srcdir}/aufs3-kbuild.patch"
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"

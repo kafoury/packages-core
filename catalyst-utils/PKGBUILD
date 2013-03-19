@@ -9,7 +9,7 @@
 pkgbase=catalyst-utils
 pkgname=('catalyst-utils' 'opencl-catalyst' 'mhwd-catalyst')
 pkgver=13.1
-pkgrel=2
+pkgrel=3
 pkgdesc="AMD Catalyst drivers utilities and libraries with OpenCL implementation"
 arch=('i686' 'x86_64')
 url="http://www.ati.amd.com"
@@ -44,7 +44,7 @@ build() {
 
 package_catalyst-utils() {
   pkgdesc="AMD Catalyst drivers utilities and libraries."
-  depends=('xorg-server>=1.13.0' 'xorg-server<1.14.0' 'gcc-libs' 'libxinerama' 'libxcursor' 'libxxf86vm' 'libxrandr' 'libsm' 'fontconfig' 'libxi' 'xorg-xauth' 'which' 'netkit-bsd-finger' 'mhwd' 'libgl')
+  depends=('xorg-server>=1.12.0' 'xorg-server<1.14.0' 'gcc-libs' 'libxinerama' 'libxcursor' 'libxxf86vm' 'libxrandr' 'libsm' 'fontconfig' 'libxi' 'xorg-xauth' 'which' 'netkit-bsd-finger' 'mhwd' 'libgl')
   optdepends=('qt4: amdcccle'
               'acpid: acpi event support')
   conflicts=('catalyst-legacy' 'catalyst-legacy-utils')

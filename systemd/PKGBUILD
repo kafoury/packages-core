@@ -6,7 +6,7 @@
 
 pkgname=systemd
 pkgver=198
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
@@ -38,13 +38,13 @@ backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
         etc/rc.local
         etc/rc.local.shutdown)
 install="systemd.install"
-source=("http://cgit.freedesktop.org/$pkgname/$pkgname/snapshot/$pkgname-198.tar.gz"
+source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-hook-udev'
         'initcpio-install-udev'
         'initcpio-install-timestamp'
         'use-split-usr-path.patch'
         'rc-local-shutdown.service')
-sha256sums=('89f2d733468b99a59347521b38d6569d9424f7183726e8143fe848860d224651'
+sha256sums=('444492355e5ff0ad99e0691ecaff1081ee8d45901580f47ba8b74e56107c71bf'
             '892ce43218e0a458981bbce451252c8987dc398e60b8de288e7542b8f2409c13'
             'e39a9e3d50024466f5b98486a53858b166953efeee451e386eecac9501696c00'
             'b6a7cd6512209ea6b53fec2ad4aff23573ecd36d698d7da8baa5c8278fa1a119'
@@ -58,7 +58,6 @@ build() {
   # hang onto this until we do the /{,s}bin merge
   patch -Np1 <"$srcdir/use-split-usr-path.patch"
 
-  ./autogen.sh
   ./configure \
       --enable-static \
       --libexecdir=/usr/lib \
@@ -68,8 +67,6 @@ build() {
       --disable-gtk-doc \
       --disable-audit \
       --disable-ima \
-      --with-sysvinit-path= \
-      --with-sysvrcnd-path= \
       --disable-tcpwrap
 
   make

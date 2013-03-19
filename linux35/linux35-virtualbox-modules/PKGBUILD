@@ -9,8 +9,8 @@
 
 pkgbase=linux35-virtualbox-modules
 pkgname=('linux35-virtualbox-host-modules' 'linux35-virtualbox-guest-modules')
-pkgver=4.2.8
-pkgrel=1
+pkgver=4.2.10
+pkgrel=2
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
