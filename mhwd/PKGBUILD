@@ -5,7 +5,7 @@
 pkgbase=mhwd
 pkgname=('mhwd' 'mhwd-db' 'mhwd-db-catalyst')
 pkgver=0.2.4
-pkgrel=2
+pkgrel=4
 pkgdesc="Manjaro Linux Hardware Detection"
 arch=('i686' 'x86_64')
 url="http://git.manjaro.org"
@@ -61,7 +61,7 @@ package_mhwd() {
 
 package_mhwd-db() {
   pkgdesc="Manjaro Linux Hardware Detection Database"
-  depends=('mhwd-nvidia' 'mhwd-nvidia-legacy') # 'mhwd-catalyst-legacy' 'mhwd-catalyst'
+  depends=('mhwd-nvidia' 'mhwd-nvidia-legacy')
   arch='any'
   install=mhwd-db.install
 
@@ -89,9 +89,9 @@ package_mhwd-db() {
 }
 
 package_mhwd-db-catalyst() {
-  pkgdesc="Manjaro Linux Hardware Detection Database"
-  depends=("mhwd-db=${pkgver}")
-  conflicts=("mhwd-db<${pkgver}")
+  pkgdesc="Manjaro Linux Hardware Detection Database (Catalyst)"
+  depends=("mhwd-db>=0.2.4-2" 'mhwd-catalyst-legacy' 'mhwd-catalyst')
+  conflicts=("mhwd-db<0.2.4-2")
   arch='any'
   install=mhwd-db.install
 
