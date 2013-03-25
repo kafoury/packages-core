@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PACKAGEVERSION="20130128"
+PACKAGEVERSION="20130325"
 SYSTEMVERSION="$PACKAGEVERSION"
 
 err() {
@@ -26,6 +26,15 @@ fi
 
 
 post_upgrade() {
+	# remove 99-manjaro.rules
+	if [ "$(pacman -Qq manjaro-hotfixes | grep 'manjaro-hotfixes')" == "manjaro-hotfixes" ]; then
+	if [ "$(pacman -Q manjaro-hotfixes | cut -d- -f2 | cut -d" " -f2 | sed -e 's/\.//g')" -lt "201303" ]; then
+		msg "fixing manjaro-hotfixes ..."
+		# System operation
+		rm -f /etc/polkit-1/rules.d/99-manjaro.rules
+	fi
+	fi
+
 	# remove linux-meta
 	for pkg in $(echo "linux linux-headers bbswitch broadcom-wl catalyst catalyst-legacy cdfs fcpci fcpcmcia lirc ndiswrapper nvidia nvidia-legacy nvidiabl open-vm-tools-modules r8168 rt3562sta vhba-module virtualbox-host-modules virtualbox-guest-modules") ; do
 		for rmpkg in $(pacman -Qq | grep ${pkg}) ; do
