@@ -1,0 +1,103 @@
+#
+# maintainer: Philip Müller <philm[at]manjaro[dog]org>
+# maintainer: Roland Singer <roland[at]manjaro[dog]org>
+
+_extramodules=extramodules-3.9-MANJARO
+_kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
+
+pkgname=('linux39-catalyst-legacy')
+_pkgname=catalyst-legacy
+pkgver=12.6
+pkgrel=0.1
+pkgdesc="AMD/ATI Catalyst legacy drivers for linux. fglrx kernel module only (for AMD Radeon HD 2000 - 4000 series)"
+arch=('i686' 'x86_64')
+url="http://www.ati.amd.com"
+license=('custom')
+depends=('linux39' 'catalyst-legacy-utils')
+makedepends=('gcc-libs' 'gcc>4.0.0' 'make' 'linux39-headers')
+conflicts=('linux39-catalyst')
+provides=("$_pkgname=$pkgver")
+groups=('linux39-extramodules')
+install=catalyst.install
+
+source=(http://www2.ati.com/drivers/legacy/${pkgver/./-}/amd-driver-installer-${pkgver}-legacy-x86.x86_64.zip
+        ati_make.sh
+        makefile_compat.patch
+        3.5-do_mmap.patch
+        arch-fglrx-3.7.patch
+        arch-fglrx-3.8.patch)
+
+sha256sums=('fe80c7d49c8be9437985cc873de9f97b14d527f0ed198c07f5538abef0e39e5f'
+	    'e1d3cedbfc6a239d5d71458c458137f1a7404ebddfa838557d25c965dd49c845'
+	    'd344df75ffbe9bd899e288862f41983c2e24b5eff3e7e8cf02d4891eeb137fff'
+            '3fc9bae50d25d3bfe76a3a1e89c8d025674a4cb9afd16d3a5d8b3c25a66f536d'
+            '4a93aab0f829be4474a869fa43dd80e2d43348929e2236872a70040c3bbee4f5'
+            'e21a2732c18fb2c059b2f20d2e5175cdd30a042e50f34f77da555bf175d25bfb')
+
+
+
+build() {
+
+    msg "Setting compilation variables ..."
+  ## include ati_make.sh and use _ati_check function from it
+    . ati_make.sh
+    _ati_check
+
+
+    msg "Unpacking archive ..."
+    /bin/sh ./amd-driver-installer-${pkgver}-legacy-x86.x86_64.run --extract archive_files
+
+
+    if [ "${CARCH}" = "x86_64" ]; then
+	BUILDARCH=x86_64
+	_archdir=x86_64
+    fi
+    if [ "${CARCH}" = "i686" ]; then
+	BUILDARCH=i386
+	_archdir=x86
+    fi
+
+    cd "${srcdir}/archive_files/"
+
+
+    msg "Applying patch(es) ..."
+   ## makefile patch to choose arch_compat_alloc_user_space or older compat_alloc_user_space
+   ## works only in combination with ati_make.sh script
+    patch -Np1 -i ../makefile_compat.patch
+    patch -Np1 -i ../3.5-do_mmap.patch
+    patch -Np1 -i ../arch-fglrx-3.7.patch || return 1
+    patch -Np1 -i ../arch-fglrx-3.8.patch || return 1
+
+#    if [[ ${_kernver:0:6} < "2.6.39" ]] && [[ `cat /usr/lib/modules/${_kernver}/build/.config | grep -c CONFIG_BKL=y` = 0 ]]; then
+#	patch -Np1 -i ../no_bkl.patch
+#    fi
+
+#    if [[ ${_kernver:0:6} == "2.6.39" ]] || [[ ${_kernver:0:6} > "2.6.39" ]]; then
+#	patch -Np1 -i ../no_bkl.patch
+#        patch -Np1 -i ../2.6.39_bkl.patch
+#    fi
+
+    cd "${srcdir}/archive_files/common/lib/modules/fglrx/build_mod"
+    cp "${srcdir}/archive_files/arch/${_archdir}/lib/modules/fglrx/build_mod/libfglrx_ip.a" .
+    cp 2.6.x/Makefile .
+
+
+    msg "Compiling fglrx module ..."
+   ## Compile module using _ati_check variables
+    make -C /usr/lib/modules/${_kernver}/build SUBDIRS="`pwd`" ARCH=${BUILDARCH} \
+      MODFLAGS="-DMODULE -DATI -DFGL -DPAGE_ATTR_FIX=$PAGE_ATTR_FIX -DCOMPAT_ALLOC_USER_SPACE=$COMPAT_ALLOC_USER_SPACE $def_smp $def_modversions" \
+      PAGE_ATTR_FIX=$PAGE_ATTR_FIX COMPAT_ALLOC_USER_SPACE=$COMPAT_ALLOC_USER_SPACE modules
+}
+
+package() {
+    cd "${srcdir}/archive_files/common/lib/modules/fglrx/build_mod"
+    install -m755 -d "${pkgdir}/usr/lib/modules/${_extramodules}/"
+    install -m644 fglrx.ko "${pkgdir}/usr/lib/modules/${_extramodules}/"
+    find "${pkgdir}" -name '*.ko' -exec gzip -9 {} \;
+    sed -i -e "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/" $startdir/*.install
+    sed -i -e "s/EXTRAMODULES=.*/EXTRAMODULES=${_extramodules}/" $startdir/*.install
+
+    ## License
+    install -m755 -d "${pkgdir}/usr/share/licenses/${pkgname}"
+    install -m644 "${srcdir}/archive_files/LICENSE.TXT" "${pkgdir}/usr/share/licenses/${pkgname}/"
+}
