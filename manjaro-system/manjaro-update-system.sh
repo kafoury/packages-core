@@ -29,10 +29,17 @@ post_upgrade() {
 	# remove 99-manjaro.rules
 	if [ "$(pacman -Qq manjaro-hotfixes | grep 'manjaro-hotfixes')" == "manjaro-hotfixes" ]; then
 	if [ "$(pacman -Q manjaro-hotfixes | cut -d- -f2 | cut -d" " -f2 | sed -e 's/\.//g')" -lt "201303" ]; then
-		msg "fixing manjaro-hotfixes ..."
+		msg "Fixing manjaro-hotfixes ..."
 		# System operation
 		rm -f /etc/polkit-1/rules.d/99-manjaro.rules
 	fi
+	else
+		# No manjaro-hotfixes installed
+		msg "Installing manjaro-hotfixes ..."
+		# System operation
+		rm -f /etc/polkit-1/rules.d/99-manjaro.rules
+		rm /var/lib/pacman/db.lck
+		pacman --noconfirm -S manjaro-hotfixes
 	fi
 
 	# remove linux-meta
@@ -53,7 +60,7 @@ post_upgrade() {
 	# remove symlinks if fontconfig < 2.10.1
 	if [ "$(pacman -Qq fontconfig | grep 'fontconfig')" == "fontconfig" ]; then
 	if [ "$(pacman -Q fontconfig | cut -d- -f1 | cut -d" " -f2 | sed -e 's/\.//g')" -lt "2101" ]; then
-		msg "fixing fontconfig ..."
+		msg "Fixing fontconfig ..."
 		# System operation
 		rm -f /etc/fonts/conf.d/20-unhint-small-vera.conf
 		rm -f /etc/fonts/conf.d/29-replace-bitmap-fonts.conf
