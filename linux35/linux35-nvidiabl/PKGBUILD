@@ -4,7 +4,7 @@
 pkgname=linux35-nvidiabl
 _pkgname=nvidiabl
 pkgver=0.76
-pkgrel=8
+pkgrel=9
 epoch=
 pkgdesc="Driver to adjust display backlight on modern mobile NVidia graphics adapters."
 arch=('x86_64' 'i686')
