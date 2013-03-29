@@ -12,8 +12,8 @@ rm -R ${pwd}/*/{src,pkg} -f
 echo 'building extramodules'
 cd ${pwd}/*bbswitch && makepkg --sign -sf --noconfirm
 cd ${pwd}/*broadcom-wl && makepkg --sign -sf --noconfirm
-cd ${pwd}/*catalyst && makepkg --sign -sf --noconfirm
-#cd ${pwd}/*catalyst-legacy && makepkg --sign -df --noconfirm
+cd ${pwd}/*catalyst && makepkg --sign -df --noconfirm
+cd ${pwd}/*catalyst-legacy && makepkg --sign -df --noconfirm
 cd ${pwd}/*cdfs && makepkg --sign -sf --noconfirm
 cd ${pwd}/*fcpci && makepkg --sign -sf --noconfirm
 cd ${pwd}/*fcpcmcia && makepkg --sign -sf --noconfirm
