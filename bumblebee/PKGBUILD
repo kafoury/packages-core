@@ -1,17 +1,16 @@
 # Maintainer: Roland <roland@manjaro.org>
 # Maintainer: Clittle <philm@manjaro.org>
-# Contributor: Samsagax <samsagax@gmail.com>
 
 pkgname=bumblebee
-pkgver=3.0.1
-pkgrel=4
-pkgdesc="Bumblebee brings Optimus Support for Linux through VirtualGL."
+pkgver=3.1
+pkgrel=2
+pkgdesc="Bumblebee brings Optimus Support for Linux Through VirtualGL or Primus."
 arch=('i686' 'x86_64')
-depends=('virtualgl' 'glib2' 'systemd' 'libbsd')
-optdepends=('xf86-video-nouveau: Nouveau driver' 'nouveau-dri: 3D acceleration features fo Nouveau' 'mesa: 3D acceleration features for Nouveau'  'bbswitch: switch on/off discrete card' 'nvidia: Nvidia kernel driver')
-
+depends=('primus' 'libbsd' 'glib2')
+optdepends=('bbswitch: switch on/off discrete card' 'virtualgl: alternative back-end for optirun')
 if [ "$CARCH" = "x86_64" ]; then
-     optdepends[${#optdepends[@]}]='lib32-virtualgl: run 32bit applications with optirun'
+	depends[${#depends[@]}]='lib32-primus'
+	optdepends[${#optdepends[@]}]='lib32-virtualgl: alternative back-end for optirun to run 32bit applications'
 fi
 
 url="http://www.Bumblebee-Project.org"
@@ -19,7 +18,8 @@ license=("GPL3")
 backup=('etc/bumblebee/bumblebee.conf' 
     'etc/bumblebee/xorg.conf.nouveau' 
     'etc/bumblebee/xorg.conf.nvidia')
-source=("10-evdev.conf" "10-quirks.conf" "bumblebee_xorg_config_dir_fix_patch.diff" "https://github.com/downloads/Bumblebee-Project/Bumblebee/${pkgname}-${pkgver}.tar.gz" '99-remove-nvidia-dev.rules' 'remove_rmmod_wait_option.fix.patch')
+source=("http://www.bumblebee-project.org/${pkgname}-${pkgver}.tar.gz" "10-evdev.conf" "10-quirks.conf" "bumblebee_xorg_config_dir_fix_patch.diff")
+
 
 
 build() {
@@ -27,9 +27,6 @@ build() {
 
 	# Patch Xorg config dir patch
 	patch -p0 < "${srcdir}/bumblebee_xorg_config_dir_fix_patch.diff"
-
-	#Remove rmod wait until it get's fixed upstream
-	patch -Np1 < ../remove_rmmod_wait_option.fix.patch
 
     ./configure \
         CONF_DRIVER_MODULE_NVIDIA=nvidia \
@@ -42,20 +39,19 @@ build() {
     make
 }
 
+
+
 package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
     make install DESTDIR="$pkgdir"
 
     # Install systemd unit
-    install -D -m644 "scripts/systemd/bumblebeed.service" "${pkgdir}/usr/lib/systemd/system/bumblebeed.service"    
+    install -D -m644 "scripts/systemd/bumblebeed.service" "${pkgdir}/usr/lib/systemd/system/bumblebeed.service"
 
     # Make bash_completion work
     mv -v "${pkgdir}/etc/bash_completion.d/bumblebee" "${pkgdir}/etc/bash_completion.d/optirun"
 
-    #Install udev rule to prevent GH-#144
-    install -D -m644 "$srcdir/99-remove-nvidia-dev.rules" "${pkgdir}/lib/udev/rules.d/99-remove-nvidia-dev.rules"
-
-	# Install bumblebees xorg.conf.d files
+    # Install bumblebees xorg.conf.d files
 	install -D -m755 "${srcdir}/10-evdev.conf" "${pkgdir}/etc/X11/bumblebee.xorg.conf.d/10-evdev.conf"
 	install -D -m755 "${srcdir}/10-quirks.conf" "${pkgdir}/etc/X11/bumblebee.xorg.conf.d/10-quirks.conf"
 
@@ -63,9 +59,8 @@ package() {
 	sed -i "/#/!s|ServerGroup[ ]*=.*|ServerGroup=users|g" "${pkgdir}/etc/bumblebee/bumblebee.conf"
 }
 
-sha256sums=('d4c8044c6b27cdd8e7366127f5ba2f006f7a2e4b7e3b49255d4ba513ab3d334c'
+
+sha256sums=('586214b17072cadd0d9e2851c58e01763c1251231672d05297a2916f8dba76cc'
+            '979ae1ed10ece98fdf9812ae3fe7198859703e6b96829373f7b7bf445a7cf6b1'
             '94612f5c0d34a3b7152915c2e285c7b462e9d8e38d3539bd551a339498eac166'
-            'b770378d76dcb0c96512bdb941b3cc39786cbedc175e8888dcd163c47e27f706'
-            '447eebbcfbc8877a7a15126b492f07b9186428e75c768b1eeb86ce71076f3e60'
-            'bd8d8ae490171a9302f85c07e7fc95522dc71615779304f05a01588ae96508cb'
-            'bdbb4383a6464b6929537f58582ff0c26218d4a03671753559e9fb3fb741dd48')
+            'b770378d76dcb0c96512bdb941b3cc39786cbedc175e8888dcd163c47e27f706')
