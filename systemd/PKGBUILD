@@ -5,7 +5,7 @@
 # Contributor: Guinux <nuxgui@gmail.com>
 
 pkgname=systemd
-pkgver=199
+pkgver=200
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
@@ -38,14 +38,13 @@ backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
         etc/rc.local
         etc/rc.local.shutdown)
 install="systemd.install"
-source=("systemd-199-g590888a.tar.gz"
-#"http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
+source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-hook-udev'
         'initcpio-install-udev'
         'initcpio-install-timestamp'
         'use-split-usr-path.patch'
         'rc-local-shutdown.service')
-sha256sums=('9e4c4e2d804a684d9c44001cde02122d7497cad164b34a038910ef779098658a'
+sha256sums=('9a08baa8fa5c48f0aab683b2f771e4be75c3c852afc45e5cb4df06428ac8c217'
             '892ce43218e0a458981bbce451252c8987dc398e60b8de288e7542b8f2409c13'
             'e39a9e3d50024466f5b98486a53858b166953efeee451e386eecac9501696c00'
             'b6a7cd6512209ea6b53fec2ad4aff23573ecd36d698d7da8baa5c8278fa1a119'
@@ -58,9 +57,6 @@ build() {
 
   # hang onto this until we do the /{,s}bin merge
   patch -Np1 <"$srcdir/use-split-usr-path.patch"
-
-  # see: http://lists.freedesktop.org/archives/systemd-devel/2013-March/009934.html
-  ./autogen.sh
 
   ./configure \
       --enable-static \
@@ -76,9 +72,9 @@ build() {
   make
 }
 
-check() {
-  make -C "$pkgname-$pkgver" check
-}
+#check() {
+#  make -C "$pkgname-$pkgver" check
+#}
 
 package() {
   make -C "$pkgname-$pkgver" DESTDIR="$pkgdir" install
