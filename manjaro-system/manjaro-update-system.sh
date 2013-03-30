@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PACKAGEVERSION="20130325"
+PACKAGEVERSION="20130329"
 SYSTEMVERSION="$PACKAGEVERSION"
 
 err() {
@@ -26,6 +26,23 @@ fi
 
 
 post_upgrade() {
+	# fix turbojpeg
+	if [ "x`pacman -Qo /usr/bin/tjbench | grep libjpeg-turbo`" != "x" ]; then
+		msg "Fixing turbojpeg ..."
+		rm -f /usr/bin/tjbench
+		rm -f /usr/include/turbojpeg.h
+		rm -f /usr/lib/libturbojpeg.a
+		rm -f /usr/lib/libturbojpeg.so
+		rm /var/lib/pacman/db.lck
+		pacman --noconfirm -S libjpeg-turbo
+	fi
+	if [ "x`uname -m`" == "xx86_64" ] && [ "x`pacman -Qo /usr/lib32/libturbojpeg.so | grep libjpeg-turbo`" != "x" ]; then
+		msg "Fixing lib32-turbojpeg ..."
+		rm -f /usr/lib32/libturbojpeg.{so,a}
+		rm /var/lib/pacman/db.lck
+		pacman --noconfirm -S lib32-libjpeg-turbo
+	fi
+
 	# remove 99-manjaro.rules
 	if [ "$(pacman -Qq manjaro-hotfixes | grep 'manjaro-hotfixes')" == "manjaro-hotfixes" ]; then
 	if [ "$(pacman -Q manjaro-hotfixes | cut -d- -f2 | cut -d" " -f2 | sed -e 's/\.//g')" -lt "201303" ]; then

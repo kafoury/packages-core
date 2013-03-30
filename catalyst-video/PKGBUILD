@@ -1,0 +1,61 @@
+#
+# Maintainer: Clittle <philm@manjaro.org>
+# Maintainer: Roland Singer <roland@manajro.org>
+
+pkgname=('catalyst-video')
+pkgver=2013.03
+_fbdev=0.4.3-1
+_intel=2.20.2-2
+_v4l=0.2.0-10
+_vesa=2.3.2-1
+pkgrel=1
+arch=('i686' 'x86_64')
+depends=(glibc 
+         intel-dri
+         libxvmc
+         libpciaccess
+         libdrm
+         'xcb-util>=0.3.9'
+         libxfixes
+         systemd-tools
+         'catalyst-server<1.13.0'
+)
+provides=(xf86-video-fbdev=$_fbdev
+          xf86-video-intel=$_intel
+          xf86-video-v4l=$_v4l
+          xf86-video-vesa=$_vesa
+          xf86-video-intel-uxa
+          xf86-video-intel-sna)
+conflicts=(xf86-video-fbdev
+           xf86-video-intel
+           xf86-video-v4l
+           xf86-video-vesa
+           xf86-video-intel-sna
+           xf86-video-intel-uxa
+           xf86-video-i810
+           xf86-video-intel-legacy)
+replaces=(xf86-video-intel-uxa xf86-video-intel-sna)
+groups=(xorg12-drivers xorg12)
+pkgdesc="xf86-video drivers for Catalyst"
+url="http://manjaro.org"
+license=('custom')
+source=(http://catalyst.wirephire.com/repo/xorg112/$CARCH/xf86-video-fbdev-$_fbdev-$CARCH.pkg.tar.xz
+        http://catalyst.wirephire.com/repo/xorg112/$CARCH/xf86-video-intel-$_intel-$CARCH.pkg.tar.xz
+        http://catalyst.wirephire.com/repo/xorg112/$CARCH/xf86-video-v4l-$_v4l-$CARCH.pkg.tar.xz
+        http://catalyst.wirephire.com/repo/xorg112/$CARCH/xf86-video-vesa-$_vesa-$CARCH.pkg.tar.xz)
+if [ "$CARCH" = "i686" ]; then
+   sha256sums=(4ee877ce45477ac280fb7eb01636d656ef51bdd0cd99259746116eae1311be4d
+               d61e790e590f882a556bda391354a2cec3fec67665faf2043f0731bdced7aa3a
+               87de0e5c482e92603b9b70c04183de232fa7396a613f660395a0f432fa3bcd60
+               d23fd2ea89c546bc036449a03e7ab497916f901d361b8d113751c15bd231bf3a)
+else
+   sha256sums=(f4e6fb713c20235e4f59e1e60ee6375698ee6ba7de427f1e786777e7327f6d3a
+               3f779b957d3ec52715e7efe696c9bbe9f2c9a0af0acfe27ad2147071a5a07272
+               a1a0cc032ac65b12fc88c976a7239598502da7004a8eb4863e1935d009d580ac
+               abe1b865c15eae2bcabf574e3b48dc9138d774b1bb6fbc2240ab7b8fd36a8618)
+fi
+
+package() {
+  cp -rPf usr ${pkgdir}
+}
+

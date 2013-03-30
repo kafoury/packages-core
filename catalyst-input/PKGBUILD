@@ -1,0 +1,72 @@
+#
+# Maintainer: Clittle <philm@manjaro.org>
+# Maintainer: Roland Singer <roland@manajro.org>
+
+pkgname=('catalyst-input')
+pkgver=2013.03
+_acecad=1.5.0-3
+_aiptek=1.4.1-3
+_elographics=1.4.1-1
+_evdev=2.7.3-1
+_joystick=1.6.1-1
+_keyboard=1.6.2-1
+_mouse=1.8.1-1
+_synaptics=1.6.2-1     
+_void=1.4.0-3
+_wacom=0.17.0-1
+pkgrel=1
+arch=('i686' 'x86_64')
+depends=(sysfsutils glibc systemd-tools mtdev libxi libxrandr libxinerama 'catalyst-server<1.13.0')
+provides=(xf86-input-acecad=$_acecad xf86-input-aiptek=$_aiptek xf86-input-elographics=$_elographics
+          xf86-input-evdev=$_evdev xf86-input-joystick=$_joystick xf86-input-keyboard=$_keyboard
+          xf86-input-mouse=$_mouse xf86-input-synaptics=$_synaptics xf86-input-void=$_void
+          xf86-input-wacom=$_wacom)
+conflicts=(synaptics xf86-input-acecad xf86-input-aiptek xf86-input-elographics
+          xf86-input-evdev xf86-input-joystick xf86-input-keyboard
+          xf86-input-mouse xf86-input-synaptics xf86-input-void
+          xf86-input-wacom)
+groups=(xorg12-drivers xorg12)
+backup=(etc/X11/xorg.conf.d/10-synaptics.conf etc/X11/xorg.conf.d/50-joystick.conf etc/X11/xorg.conf.d/50-wacom.conf)
+pkgdesc="xf86-input drivers for Catalyst"
+url="http://manjaro.org"
+license=('custom')
+source=(http://catalyst.wirephire.com/repo/xorg112/$CARCH/xf86-input-acecad-$_acecad-$CARCH.pkg.tar.xz
+        http://catalyst.wirephire.com/repo/xorg112/$CARCH/xf86-input-aiptek-$_aiptek-$CARCH.pkg.tar.xz
+        http://catalyst.wirephire.com/repo/xorg112/$CARCH/xf86-input-elographics-$_elographics-$CARCH.pkg.tar.xz
+        http://catalyst.wirephire.com/repo/xorg112/$CARCH/xf86-input-evdev-$_evdev-$CARCH.pkg.tar.xz
+        http://catalyst.wirephire.com/repo/xorg112/$CARCH/xf86-input-joystick-$_joystick-$CARCH.pkg.tar.xz
+        http://catalyst.wirephire.com/repo/xorg112/$CARCH/xf86-input-keyboard-$_keyboard-$CARCH.pkg.tar.xz
+        http://catalyst.wirephire.com/repo/xorg112/$CARCH/xf86-input-mouse-$_mouse-$CARCH.pkg.tar.xz
+        http://catalyst.wirephire.com/repo/xorg112/$CARCH/xf86-input-synaptics-$_synaptics-$CARCH.pkg.tar.xz
+        http://catalyst.wirephire.com/repo/xorg112/$CARCH/xf86-input-void-$_void-$CARCH.pkg.tar.xz
+        http://catalyst.wirephire.com/repo/xorg112/$CARCH/xf86-input-wacom-$_wacom-$CARCH.pkg.tar.xz)
+if [ "$CARCH" = "i686" ]; then
+   sha256sums=('d9ece13246964deaaabe3aae3c902950befe962bbd221dfa5fbb0b5f7d32b314'
+               '3755503d69f576ef898ced9112296e18c2adc2f772f86e2b5c53da8b38e840eb'
+               'a50f3667ccbce3fa606294f90d50297d9588829a5f667dd66e9a46aa4710bd7b'
+               'a36ca3c5569277ee4e3f08cb198a23ad686c88ef49df209bc329fb4717085471'
+               '5d845d831f97aa5cbf0f11930c428ede5b27b5a43d51efef534036a109326113'
+               '92931d9faed64e507cd4772323ad067ab9bc8f2618f331ae07130ebad5f84e7d'
+               '34611ece7d700a6043d9f8f845fad4877fcbcbbbed6de2b955440a183da1f9fe'
+               'affddecbfe188994123f4b2652572dafdc7e99f06487ea6b0cb0354875de4de1'
+               'c5912811f091c8488babe673f4ed73187ed61f4bb904a6ee60eed57a398cc4b2'
+               'a95290c1c394d281a4bd5917b9a97b02a73cb8f229790bf5d1c31666f2961d59'
+)
+else
+   sha256sums=('06e9ba18eea4964e509ef82f649172e4158d8f785e78400d47b14985bb058aa2'
+               'cd6c565a37642c2f3692184335e4da8afdb6c722c9420c1ee371e8f7534c56f0'
+               '6af09cf6748c58d4771ceae6f436683f02c32fd2909769d626ff56f6d54f8398'
+               '0b3a0c87913434c76ade9ea20684c2feddfc58c08eb7bca5ba6520d9c9b4bb46'
+               'd2f788365112aa893df68080e310200fb6960de1d218d33301feefdbdd659682'
+               '09a262921e07f7826c86dbe3232eeda3bbba26ac54e604ebf345c3b562137997'
+               '4002b82bbb33eec3e9d9b7966132ebe31cb0a0a37003f64a218171f927e66dbf'
+               '43c69dbd1c622a8958fda3cfcc64cf2840839610d5a357d35a049745ba4a0b7b'
+               '8409a58a1a675244d7504da63a4e698e46f0164326e195d8a5b3d9eeb94f7ecd'
+               'b64e590f53d87be150c4dfbca7a390068851a646deaac3b3ae872d96e0967e0f')
+fi
+
+package() {
+  cp -rPf usr ${pkgdir}
+  cp -rPf etc ${pkgdir}
+}
+
