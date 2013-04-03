@@ -42,7 +42,7 @@ index 0b99538..46a6995 100644
  /**
   *	touch_atime	-	update the access time
 diff --git a/fs/namespace.c b/fs/namespace.c
-index 50ca17d..9a5ee1f 100644
+index 50ca17d..1548ce4 100644
 --- a/fs/namespace.c
 +++ b/fs/namespace.c
 @@ -52,6 +52,7 @@ EXPORT_SYMBOL_GPL(fs_kobj);
@@ -53,7 +53,15 @@ index 50ca17d..9a5ee1f 100644
  
  static inline unsigned long hash(struct vfsmount *mnt, struct dentry *dentry)
  {
-@@ -1413,6 +1414,7 @@ int iterate_mounts(int (*f)(struct vfsmount *, void *), void *arg,
+@@ -425,6 +426,7 @@ void __mnt_drop_write(struct vfsmount *mnt)
+ 	mnt_dec_writers(real_mount(mnt));
+ 	preempt_enable();
+ }
++EXPORT_SYMBOL_GPL(__mnt_drop_write);
+ 
+ /**
+  * mnt_drop_write - give up write access to a mount
+@@ -1413,6 +1415,7 @@ int iterate_mounts(int (*f)(struct vfsmount *, void *), void *arg,
  	}
  	return 0;
  }

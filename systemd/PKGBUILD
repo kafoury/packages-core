@@ -67,7 +67,8 @@ build() {
       --disable-gtk-doc \
       --disable-audit \
       --disable-ima \
-      --disable-tcpwrap
+      --disable-tcpwrap \
+      --disable-qrencode
 
   make
 }
