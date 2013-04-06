@@ -1,0 +1,109 @@
+From 49e5de64e22ea4794092b91393545ab08e658e0a Mon Sep 17 00:00:00 2001
+From: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
+Date: Wed, 27 Mar 2013 01:07:46 +0000
+Subject: tests: skip bus test if bus cannot be opened
+
+To make the result more visible, special return value
+is used to tell automake that the test was skipped. While
+at it, use the same return value in other skipped tests.
+---
+diff --git a/src/libsystemd-bus/test-bus-chat.c b/src/libsystemd-bus/test-bus-chat.c
+index bdcca18..e124b24 100644
+--- a/src/libsystemd-bus/test-bus-chat.c
++++ b/src/libsystemd-bus/test-bus-chat.c
+@@ -27,6 +27,7 @@
+ 
+ #include "log.h"
+ #include "util.h"
++#include "macro.h"
+ 
+ #include "sd-bus.h"
+ #include "bus-message.h"
+@@ -543,8 +544,10 @@ int main(int argc, char *argv[]) {
+         int q, r;
+ 
+         r = server_init(&bus);
+-        if (r < 0)
+-                return EXIT_FAILURE;
++        if (r < 0) {
++                log_info("Failed to connect to bus, skipping tests.");
++                return EXIT_TEST_SKIP;
++        }
+ 
+         log_info("Initialized...");
+ 
+diff --git a/src/shared/macro.h b/src/shared/macro.h
+index 80cb2f0..898784a 100644
+--- a/src/shared/macro.h
++++ b/src/shared/macro.h
+@@ -46,6 +46,9 @@
+ #define _introspect_(x) __attribute__((section("introspect." x)))
+ #define _alignas_(x) __attribute__((aligned(__alignof(x))))
+ 
++/* automake test harness */
++#define EXIT_TEST_SKIP 77
++
+ #define XSTRINGIFY(x) #x
+ #define STRINGIFY(x) XSTRINGIFY(x)
+ 
+diff --git a/src/test/test-sched-prio.c b/src/test/test-sched-prio.c
+index c57f6a3..ba0aacf 100644
+--- a/src/test/test-sched-prio.c
++++ b/src/test/test-sched-prio.c
+@@ -22,7 +22,7 @@
+ #include <sched.h>
+ 
+ #include "manager.h"
+-
++#include "macro.h"
+ 
+ int main(int argc, char *argv[]) {
+         Manager *m;
+@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
+         r = manager_new(SYSTEMD_USER, &m);
+         if (r == -EPERM) {
+                 puts("manager_new: Permission denied. Skipping test.");
+-                return EXIT_SUCCESS;
++                return EXIT_TEST_SKIP;
+         }
+         assert(r >= 0);
+         assert_se(manager_startup(m, serial, fdset) >= 0);
+diff --git a/src/test/test-unit-name.c b/src/test/test-unit-name.c
+index 0b6b563..aba36e4 100644
+--- a/src/test/test-unit-name.c
++++ b/src/test/test-unit-name.c
+@@ -108,7 +108,7 @@ static void test_replacements(void) {
+ #undef expect
+ }
+ 
+-static void test_unit_printf(void) {
++static int test_unit_printf(void) {
+         Manager *m;
+         Unit *u, *u2;
+         int r;
+@@ -126,7 +126,7 @@ static void test_unit_printf(void) {
+         r = manager_new(SYSTEMD_USER, &m);
+         if (r == -EPERM) {
+                 puts("manager_new: Permission denied. Skipping test.");
+-                return;
++                return EXIT_TEST_SKIP;
+         }
+         assert(r == 0);
+ 
+@@ -189,11 +189,11 @@ static void test_unit_printf(void) {
+         expect(u2, "%b", bid);
+         expect(u2, "%H", host);
+         expect(u2, "%t", "/run/user/*");
++
++        return 0;
+ }
+ 
+ int main(int argc, char* argv[]) {
+         test_replacements();
+-        test_unit_printf();
+-
+-        return 0;
++        return test_unit_printf();
+ }
+--
+cgit v0.9.0.2-2-gbebe

@@ -6,10 +6,10 @@
 
 pkgname=linux35-nvidia-legacy
 _pkgname=nvidia
-pkgver=304.84
+pkgver=304.88
 _extramodules=extramodules-3.5-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
-pkgrel=2
+pkgrel=1
 pkgdesc="NVIDIA drivers for linux."
 arch=('i686' 'x86_64')
 url="http://www.nvidia.com/"
@@ -26,12 +26,12 @@ if [ "$CARCH" = "i686" ]; then
     _arch='x86'
     _pkg="NVIDIA-Linux-${_arch}-${pkgver}"
     source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
-    sha256sums=('4182f09c6c7d7246a373bf616c85c8a1bc2c272e1f4e3a471f6e0f07f3e80e92')
+    sha256sums=('71e10294f073e31a387da4282b95cdde5fbfc996cb1c564f290eb0df1289b7cb')
 elif [ "$CARCH" = "x86_64" ]; then
     _arch='x86_64'
     _pkg="NVIDIA-Linux-${_arch}-${pkgver}-no-compat32"
     source=("http://us.download.nvidia.com/XFree86/Linux-${_arch}/${pkgver}/${_pkg}.run")
-    sha256sums=('00d5b5a2349cca94684e06975a019fe3be4755df579d511e39e8a143a79fbdc7')
+    sha256sums=('4372cc7b82ed3b5fde41e9bf0e0c1899cfbc3e79d4ed422c499b6d41b557d2c9')
 fi
 
 build() {

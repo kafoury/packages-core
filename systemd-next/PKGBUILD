@@ -4,9 +4,10 @@
 # Maintainer:  Phil Müller <philm@manajro.org>
 # Contributor: Guinux <nuxgui@gmail.com>
 
-pkgname=systemd
-pkgver=198
-pkgrel=4
+pkgname=systemd-next
+_pkgname=systemd
+pkgver=200
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
@@ -18,9 +19,9 @@ options=('!libtool')
 pkgdesc="system and service manager"
 depends=('acl' 'bash' 'dbus-core' 'glib2' 'kbd' 'kmod' 'hwids' 'libcap' 'libgcrypt'
          'pam' 'util-linux' 'xz' 'sysvinit-tools')
-provides=("libsystemd=$pkgver" 'nss-myhostname' "systemd-tools=$pkgver" "udev=$pkgver" "systemd-sysvcompat=$pkgver" 'systemd-manjaro-units')
+provides=("libsystemd=$pkgver" 'nss-myhostname' "systemd-tools=$pkgver" "udev=$pkgver" "systemd-sysvcompat=$pkgver" 'systemd-manjaro-units' "systemd=$pkgver")
 replaces=('libsystemd' 'nss-myhostname' 'systemd-tools' 'udev' 'systemd-sysvcompat' 'systemd-manjaro-units')
-conflicts=('libsystemd' 'nss-myhostname' 'systemd-tools' 'udev' 'systemd-sysvcompat' 'systemd-manjaro-units')
+conflicts=('libsystemd' 'nss-myhostname' 'systemd-tools' 'udev' 'systemd-sysvcompat' 'systemd-manjaro-units' 'systemd')
 optdepends=('cryptsetup: required for encrypted block devices'
             'libmicrohttpd: systemd-journal-gatewayd'
             'quota-tools: kernel-level quota management'
@@ -38,46 +39,25 @@ backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
         etc/rc.local
         etc/rc.local.shutdown)
 install="systemd.install"
-source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
+source=("http://www.freedesktop.org/software/$_pkgname/$_pkgname-$pkgver.tar.xz"
         'initcpio-hook-udev'
         'initcpio-install-udev'
         'initcpio-install-timestamp'
         'use-split-usr-path.patch'
-        'rc-local-shutdown.service'
-        '0001-journal-pass-the-pid-to-sd_pid_get_owner_uid.patch'
-        '0001-strv-fix-STRV_FOREACH_PAIR-macro-definition.patch'
-        '0001-rules-move-builtin-calls-before-the-permissions-sect.patch'
-        '0001-Fix-vacuum-logic-error.patch')
-sha256sums=('444492355e5ff0ad99e0691ecaff1081ee8d45901580f47ba8b74e56107c71bf'
+        'rc-local-shutdown.service')
+sha256sums=('9a08baa8fa5c48f0aab683b2f771e4be75c3c852afc45e5cb4df06428ac8c217'
             '892ce43218e0a458981bbce451252c8987dc398e60b8de288e7542b8f2409c13'
             'e39a9e3d50024466f5b98486a53858b166953efeee451e386eecac9501696c00'
             'b6a7cd6512209ea6b53fec2ad4aff23573ecd36d698d7da8baa5c8278fa1a119'
             '7b440cd7e08257ad12766eb39ab3bf25ab232735a93858c9f66886d984780081'
             '9ffae90f53644a6c1f81c82d28cce2533a5c5365ec34976af7aa13bf59aff7b3'
-            '4d4e82a1ec89143c5a19f832e449817f03f6f14e0934e593807e130e9af1a9e8'
-            '9169bc5afbdbf7e12543fe5e0eb6f11e4d8009e1e549e750a4ebae7a14460f7d'
-            '30dc207f927a957d41cb889f8ce973df2a8503b329b60224a12245f5bb23f4ba'
-            '73631bdb8973596f7d095639e2f773ebf02b5578331baaecb996a161d41ca215'
 )
 
 build() {
-  cd "$pkgname-$pkgver"
+  cd "$_pkgname-$pkgver"
 
   # hang onto this until we do the /{,s}bin merge
   patch -Np1 <"$srcdir/use-split-usr-path.patch"
-
-  # upstream commit 83d7d83bcc6c462ecbb4c8003e3a8b41f3b88d46
-  patch -Np1 <"$srcdir"/0001-journal-pass-the-pid-to-sd_pid_get_owner_uid.patch
-
-  # upstream commit 961e4526925b7b1e1d3582f2fc9fb38035e2b5fb
-  patch -Np1 <"$srcdir"/0001-strv-fix-STRV_FOREACH_PAIR-macro-definition.patch
-
-  # upstream commit bbb7f2ae5035105575365750592caa87213d7072
-  # - modified to avoid pulling in disabling of firmware loading
-  patch -Np1 <"$srcdir"/0001-rules-move-builtin-calls-before-the-permissions-sect.patch
-
-  # upstream commit 6c142648aaced56ab681fcc97a71b06d588122a9
-  patch -Np1 <"$srcdir"/0001-Fix-vacuum-logic-error.patch
 
   ./configure \
       --enable-static \
@@ -94,12 +74,12 @@ build() {
   make
 }
 
-check() {
-  make -C "$pkgname-$pkgver" check
-}
+#check() {
+#  make -C "$_pkgname-$pkgver" check
+#}
 
 package() {
-  make -C "$pkgname-$pkgver" DESTDIR="$pkgdir" install
+  make -C "$_pkgname-$pkgver" DESTDIR="$pkgdir" install
 
   printf "d /run/console 0755 root root\n" > "$pkgdir/usr/lib/tmpfiles.d/console.conf"
 

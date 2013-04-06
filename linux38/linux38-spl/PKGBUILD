@@ -1,0 +1,51 @@
+# Based on the file created for Arch Linux by:
+# Maintainer: Jesus Alvarez <jeezusjr at gmail dot com>
+# Contributor: Kyle Fuller <inbox at kylefuller dot co dot uk>
+
+# Maintainer: Guinux <nuxgui@gmail.com>
+# Co-Maintainer: Clittle <philm@manjarolinux.org>
+
+_extramodules=extramodules-3.8-MANJARO
+_kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
+
+pkgname=('linux38-spl')
+pkgver=0.6.1
+pkgrel=1
+pkgdesc='Solaris Porting Layer kernel modules.'
+depends=('linux38' 'spl-utils')
+makedepends=('linux38-headers')
+provides=("spl-modules=pkgver")
+arch=('i686' 'x86_64')
+url='http://zfsonlinux.org/'
+source=(http://archive.zfsonlinux.org/downloads/zfsonlinux/spl/spl-$pkgver.tar.gz)
+groups=('manjarozfs' 'linux38-extramodules')
+md5sums=('0f58806d9fd9cab900181b59b21bae50')
+license=('GPL')
+install=spl.install
+
+build() {
+  cd ${srcdir}/spl-$pkgver
+  ./autogen.sh
+  if [[ $CARCH == i686 ]]; then
+    ./configure --prefix=/usr --libdir=/usr/lib --sbindir=/usr/sbin \
+                --with-config=kernel --enable-atomic-spinlocks \
+                --with-linux=/usr/src/linux-$_kernver \
+                --with-linux-obj=/usr/src/linux-$_kernver
+  else
+    ./configure --prefix=/usr --libdir=/usr/lib --sbindir=/usr/sbin \
+                --with-config=kernel --with-linux=/usr/src/linux-$_kernver \
+                --with-linux-obj=/usr/src/linux-$_kernver
+  fi
+  make
+}
+
+package() {
+  cd ${srcdir}/spl-$pkgver
+  make DESTDIR=${pkgdir} install
+  sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='${_extramodules}'/" "${startdir}/spl.install"
+  sed -i -e "s|${srcdir}/||g" "${pkgdir}/usr/src/spl-$pkgver/${_kernver}/Module.symvers"
+  mkdir -p "${pkgdir}/usr/lib/modules/${_extramodules}"
+  mv ${pkgdir}/lib/modules/${_kernver}/extra/{splat,spl}/*.ko "${pkgdir}/usr/lib/modules/${_extramodules}"
+  gzip ${pkgdir}/usr/lib/modules/${_extramodules}/*.ko
+  rm -R "${pkgdir}/lib"
+}
