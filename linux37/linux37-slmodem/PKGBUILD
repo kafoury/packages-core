@@ -52,8 +52,8 @@ build() {
   sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "${startdir}/${_pkgname}.install"
 
   # license
-  mkdir -p $pkgdir/usr/share/licenses/slmodem/
-  cat >$pkgdir/usr/share/licenses/slmodem/license.txt <<EOF
+  mkdir -p $pkgdir/usr/share/licenses/${pkgname}/
+  cat >$pkgdir/usr/share/licenses/${pkgname}/license.txt <<EOF
 ******************************************************************************
 
 TERMS AND CONDITIONS OF USE FOR SMART LINK LINUX SOFTWARE DRIVERS
