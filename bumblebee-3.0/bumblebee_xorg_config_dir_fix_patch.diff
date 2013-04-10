@@ -1,0 +1,22 @@
+diff -ur src/bbsecondary.c srcnew/bbsecondary.c
+--- src/bbsecondary.c	2012-01-17 00:14:56.745242600 +0100
++++ srcnew/bbsecondary.c	2012-06-26 18:08:28.000000000 +0200
+@@ -146,6 +146,7 @@
+       XORG_BINARY,
+       bb_config.x_display,
+       "-config", x_conf_file,
++      "-configdir", XORG_CONFIG_DIR,
+       "-sharevts",
+       "-nolisten", "tcp",
+       "-noreset",
+diff -ur src/bbsecondary.h srcnew/bbsecondary.h
+--- src/bbsecondary.h	2012-01-15 00:07:23.308458401 +0100
++++ srcnew/bbsecondary.h	2012-06-26 18:07:54.000000000 +0200
+@@ -29,6 +29,7 @@
+  *         /etc/X11/X -> /usr/bin/Xorg
+  */
+ #define XORG_BINARY "Xorg"
++#define XORG_CONFIG_DIR "bumblebee.xorg.conf.d"
+ 
+ /* PCI Bus ID of the discrete video card */
+ struct pci_bus_id *pci_bus_id_discrete;

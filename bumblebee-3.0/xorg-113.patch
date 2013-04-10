@@ -1,0 +1,12 @@
+--- bumblebee-3.0.1/conf/xorg.conf.nouveau	2013-04-11 00:40:54.306372287 +0200
++++ bumblebee-3.0.1/conf/xorg.conf.nouveau	2013-04-11 00:42:50.661180097 +0200
+@@ -2,6 +2,8 @@ Section "ServerLayout"
+     Identifier     "Layout0"
+     Screen         "Screen0"
+     Option         "AutoAddDevices" "false"
++    # Prevent device detection from failing in Xorg 1.13
++    Option      "AutoAddGPU" "false"
+ EndSection
+ 
+ Section "Device"
+
