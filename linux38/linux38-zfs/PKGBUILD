@@ -6,7 +6,7 @@ _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 
 pkgname=('linux38-zfs')
 pkgver=0.6.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Kernel modules for the Zettabyte File System."
 depends=(linux38-spl=$pkgver zfs-utils=$pkgver 'linux38' 'mkinitcpio')
 makedepends=('linux38-headers')

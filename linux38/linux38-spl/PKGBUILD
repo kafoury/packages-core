@@ -10,7 +10,7 @@ _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 
 pkgname=('linux38-spl')
 pkgver=0.6.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Solaris Porting Layer kernel modules.'
 depends=('linux38' 'spl-utils')
 makedepends=('linux38-headers')

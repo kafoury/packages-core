@@ -9,7 +9,7 @@ pkgbase=linux35
 pkgname=('linux35' 'linux35-headers')
 _kernelname=-MANJARO
 _basekernel=3.5
-_subver=9
+_subver=10
 _basever=35
 _aufs=20130325
 pkgver=${_basekernel}.7.${_subver}
@@ -43,6 +43,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.7.tar.
         '3.5.7.7.patch'
         '3.5.7.8.patch'
         '3.5.7.9.patch'
+        '3.5.7.10.patch'
 )
 sha256sums=('d1c68906ca31165d6771996141ec9fe978bf7d228c385ec6f4c73e473306794c'
             '19b90047cb17cecff2aff0c7b98e37cbfc903fb90337029ca053a09d925f28d4'
@@ -68,6 +69,7 @@ sha256sums=('d1c68906ca31165d6771996141ec9fe978bf7d228c385ec6f4c73e473306794c'
             '4031988ca9bb6c786189cfc1529151ca51cfc0e96555e098fc691f86f226afe2'
             '095fe38de72361a55ef70a9399ea0d00b54e9c2474b3cf1ee6ac0bb87e72054d'
             'cc6ab138c487b184db7a497082ed711e6e8ac8cf2ae838554a038fb19b5c2aed'
+            '7d231e004cf8e7d022ad88ea0d9408e7b4d1a417fdf656549e94d7efff60ec2a'
 )
 
 build() {
@@ -83,6 +85,7 @@ build() {
   patch -p1 -i "${srcdir}/3.5.7.7.patch"
   patch -p1 -i "${srcdir}/3.5.7.8.patch"
   patch -p1 -i "${srcdir}/3.5.7.9.patch"
+  patch -p1 -i "${srcdir}/3.5.7.10.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git

@@ -31,6 +31,8 @@ fi
 cd ${pwd}/*tp_smapi && makepkg --sign -sf --noconfirm
 cd ${pwd}/*vhba-module && makepkg --sign -sf --noconfirm
 cd ${pwd}/*virtualbox-modules && makepkg --sign -sf --noconfirm
+cd ${pwd}/*spl && makepkg --sign -sfi --noconfirm
+cd ${pwd}/*zfs && makepkg --sign -sf --noconfirm
 echo 'create repo'
 mkdir -p ${pwd}/repo-`uname -m`
 mv ${pwd}/*/*`uname -m`.pkg* ${pwd}/repo-`uname -m`
