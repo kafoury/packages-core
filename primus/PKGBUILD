@@ -3,7 +3,7 @@
 # Contributor: Alexander Monakov <amonakov@gmail.com>
 
 pkgname=primus
-pkgver=20130329
+pkgver=20130410
 pkgrel=1
 pkgdesc="Faster OpenGL offloading for Bumblebee"
 arch=('i686' 'x86_64')

@@ -3,10 +3,16 @@
 
 pkgname=bumblebee
 pkgver=3.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Bumblebee brings Optimus Support for Linux Through VirtualGL or Primus."
 arch=('i686' 'x86_64')
-makedepends=('virtualgl' 'libbsd' 'glib2')
+depends=('primus' 'glib2' 'mesa-libgl')
+optdepends=('bbswitch: switch on/off discrete card' 'virtualgl: alternative back-end for optirun')
+if [ "$CARCH" = "x86_64" ]; then
+	depends[${#depends[@]}]='lib32-primus'
+	optdepends[${#optdepends[@]}]='lib32-virtualgl: alternative back-end for optirun to run 32bit applications'
+fi
+makedepends=('virtualgl' 'help2man')
 
 url="http://www.Bumblebee-Project.org"
 license=("GPL3")
@@ -25,11 +31,12 @@ build() {
 
     ./configure \
         CONF_DRIVER_MODULE_NVIDIA=nvidia \
-        CONF_LDPATH_NVIDIA=/usr/lib/nvidia-bumblebee:/usr/lib32/nvidia-bumblebee \
-        CONF_MODPATH_NVIDIA=/usr/lib/nvidia-bumblebee/xorg/,/usr/lib/xorg/modules \
+        CONF_LDPATH_NVIDIA=/usr/lib/nvidia:/usr/lib32/nvidia \
+        CONF_MODPATH_NVIDIA=/usr/lib/nvidia/xorg/,/usr/lib/xorg/modules \
         CONF_GID=users \
         --prefix=/usr \
-        --sysconfdir=/etc
+        --sysconfdir=/etc \
+        --without-pidfile
 
     make
 }
@@ -37,12 +44,6 @@ build() {
 
 
 package() {
-    depends=('primus' 'libbsd' 'glib2')
-    optdepends=('bbswitch: switch on/off discrete card' 'virtualgl: alternative back-end for optirun')
-    if [ "$CARCH" = "x86_64" ]; then
-	depends[${#depends[@]}]='lib32-primus'
-	optdepends[${#optdepends[@]}]='lib32-virtualgl: alternative back-end for optirun to run 32bit applications'
-    fi
     cd "${srcdir}/${pkgname}-${pkgver}"
     make install DESTDIR="$pkgdir"
 
