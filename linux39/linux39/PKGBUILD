@@ -10,7 +10,7 @@ pkgname=('linux39' 'linux39-headers')
 _kernelname=-MANJARO
 _basekernel=3.9
 _basever=39
-_rc=rc5
+_rc=rc6
 _aufs=20130325
 #pkgver=${_basekernel}.3
 pkgver=${_basekernel}${_rc}
@@ -36,7 +36,7 @@ source=(#"http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.x
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
 )
-sha256sums=('ad62af3631c945e0136209b897b802df4809aa34649b9592f97adc9f48b3af3e'
+sha256sums=('809b35b55db9ce99593dd291c78cdf700bfd279a2f1c223be6a3b789de4a507e'
             '6631c0a5c6bd1bfbea98c3b9f94a83488a2eafa62eb2ac0ca3aa29491e867a84'
             '23de8558e64e571b10d14bd2c5c6a8e906af05b7d6f36c0588427fa75ac397d6'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'

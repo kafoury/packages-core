@@ -1,0 +1,716 @@
+diff -Npur po.orig/ca.po pacman-4.1.0/src/pacman/po/ca.po
+--- po.orig/ca.po	2013-04-01 07:58:00.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/ca.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1148,8 +1024,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Han ocorregut errors, no s'ha actualitzat cap paquet.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "S'estan sincronitzant les bases de dades de paquets...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "S'estan sincronitzant les bases de dades de paquets...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Primer s'han d'actualitzar els següents paquets:\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Voleu cancel·lar l'operació actual i\n"
++":: actualitzar primer aquests paquets?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/cs.po pacman-4.1.0/src/pacman/po/cs.po
+--- po.orig/cs.po	2013-04-01 07:58:00.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/cs.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1129,8 +1006,18 @@ msgid "Errors occurred, no packages were
+ msgstr "Vyskytly se chyby, žádné balíčky nebyly aktualizovány.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Synchronizuje se databáze balíčků...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Synchronizuje se databáze balíčků...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Následující balíčky by měly být aktualizovány nejdříve:\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr "Chcete zrušit současnou operaci a aktualizovat tyto balíčky?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/da.po pacman-4.1.0/src/pacman/po/da.po
+--- po.orig/da.po	2013-04-01 07:58:00.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/da.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1126,8 +1003,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Der opstod fejl, ingen pakker blev opgraderet.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Synkroniserer pakkedatabaser...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Synkroniserer pakkedatabaser...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: De følgende pakker skal opgraderes først:\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Ønsker du at afbryde den aktuelle handling\n"
++":: og opgradere disse pakker nu?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/de.po pacman-4.1.0/src/pacman/po/de.po
+--- po.orig/de.po	2013-04-01 07:58:00.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/de.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1160,8 +1031,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Fehler sind aufgetreten, keine Pakete wurden aktualisiert.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Synchronisiere Paketdatenbanken...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Synchronisiere Paketdatenbanken...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Die folgenden Pakete sollten zuerst aktualisiert werden :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Möchten Sie den laufenden Prozess abbrechen\n"
++":: und diese Pakete nun aktualisieren?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/el.po pacman-4.1.0/src/pacman/po/el.po
+--- po.orig/el.po	2013-04-01 07:58:00.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/el.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1120,8 +994,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Προέκυψαν σφάλματα, δεν αναβαθμίστηκαν πακέτα.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Συγχρονισμός βάσης πακέτων...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Συγχρονισμός βάσης πακέτων...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Τα ακόλουθα πακέτα πρέπει να αναβαθμιστούν πρώτα :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Ακύρωση τρέχουσας λειτουργίας\n"
++":: και αναβάθμιση αυτών των πακέτων τώρα;"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/en_GB.po pacman-4.1.0/src/pacman/po/en_GB.po
+--- po.orig/en_GB.po	2013-04-01 07:58:00.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/en_GB.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1109,8 +986,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Errors occurred, no packages were upgraded.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Synchronising package databases...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Synchronising package databases...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: The following packages should be upgraded first :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/es.po pacman-4.1.0/src/pacman/po/es.po
+--- po.orig/es.po	2013-04-01 07:58:00.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/es.po	1970-01-01 01:00:00.000000000 +0100
+@@ -1179,8 +1052,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Ocurrieron errores, no se actualizaron paquetes\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Sincronizando las bases de datos de paquetes...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Sincronizando las bases de datos de paquetes...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Los siguientes paquetes deben actualizarse primero:\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"¿Desea cancelar la operación actual\n"
++":: y actualizar estos paquetes ahora?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/fi.po pacman-4.1.0/src/pacman/po/fi.po
+--- po.orig/fi.po	2013-04-01 07:58:00.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/fi.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1133,8 +1011,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Yhtään pakettia ei päivitetty tapahtuneiden virheiden vuoksi.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Päivitetään pakettitietokantoja...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Päivitetään pakettitietokantoja...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Seuraavat paketit tulisi päivittää ennen muita:\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Haluatko peruuttaa nykyisen operaation\n"
++":: ja päivittää nämä paketit nyt?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/fr.po pacman-4.1.0/src/pacman/po/fr.po
+--- po.orig/fr.po	2013-04-01 07:58:00.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/fr.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1160,8 +1038,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Des erreurs se sont produites, aucun paquet n'a été mis à jour.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Synchronisation des bases de données de paquets...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Synchronisation des bases de données de paquets...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Les paquets suivants devraient être mis à jour en premier :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Voulez-vous annuler l'opération courante et\n"
++":: mettre à jour ces paquets maintenant ?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/hu.po pacman-4.1.0/src/pacman/po/hu.po
+--- po.orig/hu.po	2013-04-01 07:58:00.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/hu.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1138,8 +1012,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Hibák léptek fel, nem frissült csomag.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "A csomagadatbázisok szinkronizálása...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "A csomagadatbázisok szinkronizálása...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: A következő csomagok telepítése javasolt elsőként:\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Megszakítja a jelenlegi műveletet,\n"
++":: és telepíti ezeket a csomagokat most?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/it.po pacman-4.1.0/src/pacman/po/it.po
+--- po.orig/it.po	2013-04-01 07:58:00.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/it.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1157,8 +1037,20 @@ msgstr ""
+ "Si sono verificati degli errori, nessun pacchetto è stato aggiornato.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Sincronizzazione dei database in corso...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Sincronizzazione dei database in corso...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: I seguenti pacchetti dovrebbero essere aggiornati prima :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Vuoi annullare l'operazione corrente\n"
++":: e aggiornare adesso questi pacchetti?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/kk.po pacman-4.1.0/src/pacman/po/kk.po
+--- po.orig/kk.po	2013-04-01 07:58:00.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/kk.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1100,8 +982,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Қателер табылды, дестелер жаңартылмады.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Дестелер дерекқоры синхрондалуда...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Дестелер дерекқоры синхрондалуда...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Бұл дестелер бірінші болып жаңартылады :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Сіз ағымдағы әрекетті үзу мен бұл дестелерді\n"
++":: қазір жаңартуды қалайсыз ба?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/lt.po pacman-4.1.0/src/pacman/po/lt.po
+--- po.orig/lt.po	2013-04-01 07:58:00.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/lt.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1137,8 +1004,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Buvo klaidų, paketai nebuvo atnaujinti.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Sinchronizuojamos paketų duomenų bazės...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Sinchronizuojamos paketų duomenų bazės...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Šie paketai turėtų būti atnaujinti pirmiausia :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Ar norite atšaukti dabartinę užduotį\n"
++":: ir atnaujinti šiuos paketus dabar?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/nb.po pacman-4.1.0/src/pacman/po/nb.po
+--- po.orig/nb.po	2013-04-01 07:58:00.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/nb.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1127,8 +1004,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Feil oppstod, ingen pakker ble oppgradert.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Synkroniserer pakkedatabaser...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Synkroniserer pakkedatabaser...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Følgende pakker bør oppgraderes først :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Vil du avbryte den nåværende handlingen\n"
++":: og oppgradere disse pakkene nå?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/pl.po pacman-4.1.0/src/pacman/po/pl.po
+--- po.orig/pl.po	2013-04-01 07:58:00.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/pl.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1134,8 +1012,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Wystąpiły błędy, nie zaktualizowano żadnego pakietu.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Synchronizowanie baz danych z pakietami...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Synchronizowanie baz danych z pakietami...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Następujące pakiety powinny być zaktualizowane najpierw :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Czy chcesz anulować obecną operację\n"
++":: i zaktualizować te pakiety teraz?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/pt.po pacman-4.1.0/src/pacman/po/pt.po
+--- po.orig/pt.po	2013-04-01 07:58:00.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/pt.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1174,8 +1054,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Ocorreram alguns erros, portanto, nenhum pacote foi actualizado.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "A sincronizar a base de dados de pacotes...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "A sincronizar a base de dados de pacotes...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Os seguintes pacotes precisam actualização primeiro :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Deseja cancelar a operação actual\n"
++":: e actualizar este(s) pacote(s) agora?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/pt_BR.po pacman-4.1.0/src/pacman/po/pt_BR.po
+--- po.orig/pt_BR.po	2013-04-01 07:58:01.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/pt_BR.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1166,8 +1043,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Ocorreram erros e, portanto, nenhum pacote foi atualizado.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Sincronizando a base de dados de pacotes...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Sincronizando a base de dados de pacotes...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Os seguintes pacotes precisam ser atualizados antes :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Você deseja cancelar a operação atual\n"
++":: e atualizar estes pacotes agora?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/ro.po pacman-4.1.0/src/pacman/po/ro.po
+--- po.orig/ro.po	2013-04-01 07:58:01.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/ro.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1163,8 +1037,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Au apărut erori, niciun pachet nu a fost actualizat.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Se sincronizează bazele de date cu pachete...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Se sincronizează bazele de date cu pachete...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Următoarele pachete ar trebui actualizate mai întai :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Vreți să întrerupeți operațiunea curentă\n"
++":: și să actualizați aceste pachete acum?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/ru.po pacman-4.1.0/src/pacman/po/ru.po
+--- po.orig/ru.po	2013-04-01 07:58:01.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/ru.po	2013-03-10 00:25:49.000000000 +0100
+The following packages should be upgraded first
+@@ -1134,8 +1012,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Обнаружены ошибки, пакеты не были обновлены.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Синхронизируются базы данных пакетов...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Синхронизируются базы данных пакетов...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Эти пакеты будут обновлены в первую очередь :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Хотите прервать текущую операцию\n"
++":: и обновить эти пакеты сейчас?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/sk.po pacman-4.1.0/src/pacman/po/sk.po
+--- po.orig/sk.po	2013-04-01 07:58:01.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/sk.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1138,8 +1011,18 @@ msgid "Errors occurred, no packages were
+ msgstr "Vyskytli sa chyby, žiadne balíčky neboli aktualizované.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Synchronizujem databázu balíčkov...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Synchronizujem databázu balíčkov...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Nasledujúce balíčky by mali byť aktualizované ako prvé:\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr "Chcete zrušiť súčasnú operáciu a aktualizovať tieto balíčky?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/sr.po pacman-4.1.0/src/pacman/po/sr.po
+--- po.orig/sr.po	2013-04-01 07:58:01.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/sr.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1118,11 +996,23 @@ msgstr "%s је неисправан и\D0
+ 
+ #, c-format
+ msgid "Errors occurred, no packages were upgraded.\n"
+-msgstr "Дошло је до грешке, пакети нису надограђени.\n"
++msgstr "Дошло је до грешке, пакети нису надограђени.\n"
++
++#, c-format
++msgid "Synchronizing package databases...\n"
++msgstr "Синхронизујем базе пакета...\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Синхронизујем базе пакета...\n"
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Следеће пакете би требало прве надоградити :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Желите ли да откажете тренутну операцију\n"
++":: и надоградите ове пакете одмах?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/sr@latin.po pacman-4.1.0/src/pacman/po/sr@latin.po
+--- po.orig/sr@latin.po	2013-04-01 07:58:01.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/sr@latin.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1120,11 +998,23 @@ msgstr "%s je neispravan ili oštećen\n
+ 
+ #, c-format
+ msgid "Errors occurred, no packages were upgraded.\n"
+-msgstr "Došlo je do greške, paketi nisu nadograđeni.\n"
++msgstr "Došlo je do greške, paketi nisu nadograđeni.\n"
++
++#, c-format
++msgid "Synchronizing package databases...\n"
++msgstr "Sinhronizujem baze paketa...\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Sinhronizujem baze paketa...\n"
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Sledeće pakete bi trebalo prve nadograditi :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Želite li da otkažete trenutnu operaciju\n"
++":: i nadogradite ove pakete odmah?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/sv.po pacman-4.1.0/src/pacman/po/sv.po
+--- po.orig/sv.po	2013-04-01 07:58:01.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/sv.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1118,8 +997,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Fel uppstod, inga paket uppgraderades.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Synkroniserar paketdatabasen...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Synkroniserar paketdatabasen...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Följande paket borde uppgraderas först :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Vill du avbryta den nuvarande operationen\n"
++":: och uppgradera dessa paket nu?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/tr.po pacman-4.1.0/src/pacman/po/tr.po
+--- po.orig/tr.po	2013-04-01 07:58:01.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/tr.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1123,8 +996,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Hata oluştu, hiçbir paket güncellenmedi.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Paket veritabanları senkronize ediliyor...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Paket veritabanları senkronize ediliyor...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Öncelikle şu paketler güncellenmelidir :\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Yürütülen işlemi şimdi durdurup\n"
++":: yeni sürümün yüklenmesini ister misiniz?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/uk.po pacman-4.1.0/src/pacman/po/uk.po
+--- po.orig/uk.po	2013-04-01 07:58:01.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/uk.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1138,8 +1017,20 @@ msgid "Errors occurred, no packages were
+ msgstr "Виникли помилки, пакунки не оновлено.\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "Синхронізування бази даних пакунків...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "Синхронізування бази даних пакунків...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: Спершу будуть оновлені такі пакунки: \n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"Бажаєте скасувати операцію\n"
++":: та оновити ці пакунки зараз?"
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/zh_CN.po pacman-4.1.0/src/pacman/po/zh_CN.po
+--- po.orig/zh_CN.po	2013-04-01 07:58:01.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/zh_CN.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1080,8 +956,20 @@ msgid "Errors occurred, no packages were
+ msgstr "发生错误，没有软件包被更新。\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "正在同步软件包数据库...\n"
++msgid "Synchronizing package databases...\n"
++msgstr "正在同步软件包数据库...\n"
++
++#, c-format
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: 下列软件包应当首先更新：\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"打算取消当前操作\n"
++":: 并马上安装这些软件包吗？ "
+ 
+ #, c-format
+ msgid "loading packages...\n"
+diff -Npur po.orig/zh_TW.po pacman-4.1.0/src/pacman/po/zh_TW.po
+--- po.orig/zh_TW.po	2013-04-01 07:58:01.000000000 +0200
++++ pacman-4.1.0/src/pacman/po/zh_TW.po	2013-03-10 00:25:49.000000000 +0100
+@@ -1079,15 +959,27 @@ msgstr "%s 無效或已損壞\n"
+ 
+ #, c-format
+ msgid "Errors occurred, no packages were upgraded.\n"
+-msgstr "發生錯誤，沒有軟體包被更新。\n"
++msgstr "發生錯誤，沒有軟件包被更新。\n"
++
++#, c-format
++msgid "Synchronizing package databases...\n"
++msgstr "正在同步軟體包資料庫...\n"
+ 
+ #, c-format
+-msgid "Synchronizing package databases...\n"
+-msgstr "正在同步軟體包資料庫...\n"
++msgid ":: The following packages should be upgraded first :\n"
++msgstr ":: 下列軟件包應當首先更新：\n"
++
++#, c-format
++msgid ""
++"Do you want to cancel the current operation\n"
++":: and upgrade these packages now?"
++msgstr ""
++"打算取消當前操作\n"
++":: 並馬上安裝這些軟件包嗎？ "
+ 
+ #, c-format
+ msgid "loading packages...\n"
+-msgstr "正在載入軟體包...\n"
++msgstr "正在載入軟體包...\n"
+ 
+ #, c-format
+ msgid "failed to init transaction (%s)\n"

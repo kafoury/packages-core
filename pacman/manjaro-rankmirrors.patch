@@ -1,5 +1,5 @@
---- a/scripts/rankmirrors.sh.in	2011-10-12 21:04:25.000000000 +0200
-+++ b/scripts/rankmirrors.sh.in	2012-08-16 13:26:17.718893567 +0200
+--- a/contrib/rankmirrors.sh.in	2011-10-12 21:04:25.000000000 +0200
++++ b/contrib/rankmirrors.sh.in	2012-08-16 13:26:17.718893567 +0200
 @@ -4,6 +4,7 @@
  #   @configure_input@
  #
