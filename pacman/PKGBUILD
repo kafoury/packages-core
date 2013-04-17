@@ -1,18 +1,20 @@
-# vim: set ts=2 sw=2 et:
-# $Id: PKGBUILD 181841 2013-04-04 12:29:36Z allan $
-# Maintainer: Dan McGee <dan@archlinux.org>
-# Maintainer: Dave Reisner <dreisner@archlinux.org>
+# Based on the file created for Arch Linux by:
+# Dan McGee <dan@archlinux.org>
+# Dave Reisner <dreisner@archlinux.org>
+
+# Maintainer: Philip Müller <philm@manjaro.org>
+# Maintainer: Guinux <guillaume@manjaro.org>
 
 pkgname=pacman
 pkgver=4.1.0
-pkgrel=0.1
+pkgrel=1
 pkgdesc="A library-based package manager with dependency support"
 arch=('i686' 'x86_64')
 url="http://www.archlinux.org/pacman/"
 license=('GPL')
 groups=('base' 'base-devel')
 depends=('bash>=4.2.042-2' 'glibc>=2.17-2' 'libarchive>=3.1.2' 'curl>=7.19.4'
-         'gpgme' 'pacman-mirrorlist' 'archlinux-keyring')
+         'gpgme' 'pacman-mirrorlist' 'archlinux-keyring' 'manjaro-keyring')
 checkdepends=('python2' 'fakechroot')
 optdepends=('fakeroot: for makepkg usage as normal user')
 provides=('pacman-contrib')
@@ -37,7 +39,7 @@ md5sums=('a0f2b3148bee4784f21cf373cf59a0bc'
          'e1b63fe10602f7fa042fcf9da1c34f0e'
          '5df35e06808e1b235518fcf610454f8e')
 
-build() {
+prepare() {
   cd $srcdir/$pkgname-$pkgver
 
   patch -p1 -i $srcdir/manjaro-rankmirrors.patch
@@ -51,7 +53,10 @@ build() {
   rm src/pacman/po/*gmo
   cd src/pacman/po/
   make update-gmo
-  cd ../../..
+}
+
+build() {
+  cd $srcdir/$pkgname-$pkgver
   make
   make -C contrib
 }

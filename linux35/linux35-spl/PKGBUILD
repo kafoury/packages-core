@@ -1,0 +1,65 @@
+# Based on the file created for Arch Linux by:
+# Maintainer: Jesus Alvarez <jeezusjr at gmail dot com>
+# Contributor: Kyle Fuller <inbox at kylefuller dot co dot uk>
+
+# Maintainer: Guinux <nuxgui@gmail.com>
+# Co-Maintainer: Clittle <philm@manjarolinux.org>
+
+_extramodules=extramodules-3.5-MANJARO
+_kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
+
+pkgbase=('spl')
+pkgname=('linux35-spl' 'spl-common')
+pkgver=0.6.1
+pkgrel=1
+makedepends=('linux35-headers')
+provides=("spl-modules=pkgver")
+arch=('i686' 'x86_64')
+url='http://zfsonlinux.org/'
+source=(http://archive.zfsonlinux.org/downloads/zfsonlinux/spl/spl-$pkgver.tar.gz)
+groups=('manjarozfs' 'linux35-extramodules')
+md5sums=('0f58806d9fd9cab900181b59b21bae50')
+license=('GPL')
+
+build() {
+  cd ${srcdir}/spl-$pkgver
+  ./autogen.sh
+  if [[ $CARCH == i686 ]]; then
+    ./configure --prefix=/usr --libdir=/usr/lib --sbindir=/usr/sbin \
+                --with-config=kernel --enable-atomic-spinlocks \
+                --with-linux=/usr/src/linux-$_kernver \
+                --with-linux-obj=/usr/src/linux-$_kernver
+  else
+    ./configure --prefix=/usr --libdir=/usr/lib --sbindir=/usr/sbin \
+                --with-config=kernel --with-linux=/usr/src/linux-$_kernver \
+                --with-linux-obj=/usr/src/linux-$_kernver
+  fi
+  make
+}
+
+package_linux35-spl() {
+  pkgdesc='Solaris Porting Layer kernel modules.'
+  depends=('linux35' 'spl-utils' "spl-common=$pkgver")
+  install=spl.install
+  cd ${srcdir}/spl-$pkgver
+  make DESTDIR=${pkgdir} install
+  sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='${_extramodules}'/" "${startdir}/spl.install"
+  sed -i -e "s|${srcdir}/||g" "${pkgdir}/usr/src/spl-$pkgver/${_kernver}/Module.symvers"
+  mkdir -p "${pkgdir}/usr/lib/modules/${_extramodules}"
+  mv ${pkgdir}/lib/modules/${_kernver}/extra/{splat,spl}/*.ko "${pkgdir}/usr/lib/modules/${_extramodules}"
+  gzip ${pkgdir}/usr/lib/modules/${_extramodules}/*.ko
+  rm -R "${pkgdir}/lib"
+  mkdir -p "${srcdir}/_tmp/"
+  mv "${pkgdir}/usr/src/spl-${pkgver}/include" "${srcdir}/_tmp/include"
+  mv "${pkgdir}/usr/src/spl-${pkgver}/spl_config.h.in" "${srcdir}/_tmp"
+  mv "${pkgdir}/usr/src/spl-${pkgver}/spl.release.in" "${srcdir}/_tmp"
+}
+
+package_spl-common() {
+  pkgdesc='Solaris Porting Layer kernel sources'
+  pkgrel=1
+  mkdir -p "${pkgdir}/usr/src/spl-${pkgver}/"
+  mv "${srcdir}/_tmp/spl_config.h.in" "${pkgdir}/usr/src/spl-${pkgver}"
+  mv "${srcdir}/_tmp/spl.release.in" "${pkgdir}/usr/src/spl-${pkgver}"
+  mv "${srcdir}/_tmp/include" "${pkgdir}/usr/src/spl-${pkgver}/include"
+}
