@@ -2,7 +2,7 @@
 
 rm -Rf aufs3-standalone
 # clone the aufs repository to the local disk
-git clone git://aufs.git.sourceforge.net/gitroot/aufs/aufs3-standalone.git
+git clone git://git.code.sf.net/p/aufs/aufs3-standalone aufs3-standalone
 cd aufs3-standalone
 git branch -r
 git checkout origin/aufs3.7

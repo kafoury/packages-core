@@ -72,7 +72,7 @@ sha256sums=('d1c68906ca31165d6771996141ec9fe978bf7d228c385ec6f4c73e473306794c'
             '7d231e004cf8e7d022ad88ea0d9408e7b4d1a417fdf656549e94d7efff60ec2a'
 )
 
-build() {
+prepare() {
   cd "${srcdir}/linux-${_basekernel}.7"
 
   # add upstream patches
@@ -137,7 +137,10 @@ build() {
 
   # don't run depmod on 'make install'. We'll do this ourselves in packaging
   sed -i '2iexit 0' scripts/depmod.sh
+}
 
+build() {
+  cd "${srcdir}/linux-${_basekernel}.7"
   # get kernel version
   make prepare
 

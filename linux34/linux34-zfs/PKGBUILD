@@ -1,19 +1,19 @@
 # Maintainer: Jesus Alvarez <jeezusjr at gmail dot com>
 # Contributor: Kyle Fuller <inbox at kylefuller dot co dot uk>
 
-_extramodules=extramodules-3.8-MANJARO
+_extramodules=extramodules-3.4-MANJARO
 _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 
 pkgbase=('zfs')
-pkgname=('linux38-zfs' 'zfs-common')
+pkgname=('linux34-zfs' 'zfs-common')
 pkgver=0.6.1
-pkgrel=3
-makedepends=('linux38-headers' "spl-common=$pkgver")
+pkgrel=1
+makedepends=('linux34-headers' "spl-common=$pkgver")
 provides=("zfs-modules=$pkgver")
 arch=('i686' 'x86_64')
 url='http://zfsonlinux.org/'
 source=(http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-$pkgver.tar.gz)
-groups=('manjarozfs' 'linux38-extramodules')
+groups=('manjarozfs' 'linux34-extramodules')
 md5sums=('822cd73c139d89369d6c3944f8afe659')
 license=('CDDL')
 
@@ -34,14 +34,14 @@ build() {
   make
 }
 
-package_linux38-zfs() {
+package_linux34-zfs() {
   pkgdesc="Kernel modules for the Zettabyte File System."
-  depends=(linux38-zfs=$pkgver zfs-utils=$pkgver 'linux38' 'mkinitcpio' "zfs-common=$pkgver")
+  depends=(linux34-zfs=$pkgver zfs-utils=$pkgver 'linux34' 'mkinitcpio' "zfs-common=$pkgver")
   install=zfs.install
   cd ${srcdir}/zfs-$pkgver
   make DESTDIR=${pkgdir} install
   sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='${_extramodules}'/" "${startdir}/zfs.install"
-  sed -i -e "s/linux='.*'/linux=38/" "${startdir}/zfs.install"
+  sed -i -e "s/linux='.*'/linux=34/" "${startdir}/zfs.install"
   sed -i -e "s|${srcdir}/||g" "${pkgdir}/usr/src/zfs-$pkgver/${_kernver}/Module.symvers"
   mkdir -p "${pkgdir}/usr/lib/modules/${_extramodules}"
   for i in avl  nvpair  unicode  zcommon  zfs  zpios; do

@@ -7,11 +7,10 @@
 pkgname=systemd-next
 _pkgname=systemd
 pkgver=201
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
-groups=('base')
 makedepends=('acl' 'cryptsetup' 'dbus-core' 'docbook-xsl' 'gobject-introspection' 'gperf'
              'intltool' 'kmod' 'libcap' 'libgcrypt' 'libmicrohttpd' 'libxslt' #'gtk-doc'
              'linux-api-headers' 'pam' 'python' 'quota-tools' 'xz')

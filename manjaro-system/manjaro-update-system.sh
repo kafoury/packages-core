@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PACKAGEVERSION="20130329"
+PACKAGEVERSION="20130415"
 SYSTEMVERSION="$PACKAGEVERSION"
 
 err() {
@@ -27,6 +27,7 @@ fi
 
 post_upgrade() {
 	# fix turbojpeg
+	if [ -e /usr/bin/tjbench ] ; then
 	if [ "x`pacman -Qo /usr/bin/tjbench | grep libjpeg-turbo`" != "x" ]; then
 		msg "Fixing turbojpeg ..."
 		rm -f /usr/bin/tjbench
@@ -36,11 +37,14 @@ post_upgrade() {
 		rm /var/lib/pacman/db.lck
 		pacman --noconfirm -S libjpeg-turbo
 	fi
-	if [ "x`uname -m`" == "xx86_64" ] && [ "x`pacman -Qo /usr/lib32/libturbojpeg.so | grep libjpeg-turbo`" != "x" ]; then
+	fi
+	if [ "x`uname -m`" == "xx86_64" ] && [ -e /usr/lib32/libturbojpeg.so ] ; then
+	if [ "x`pacman -Qo /usr/lib32/libturbojpeg.so | grep libjpeg-turbo`" != "x" ]; then
 		msg "Fixing lib32-turbojpeg ..."
 		rm -f /usr/lib32/libturbojpeg.{so,a}
 		rm /var/lib/pacman/db.lck
 		pacman --noconfirm -S lib32-libjpeg-turbo
+	fi
 	fi
 
 	# remove 99-manjaro.rules

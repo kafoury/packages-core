@@ -10,13 +10,13 @@ pkgname=('linux34' 'linux34-headers')
 _kernelname=-MANJARO
 _basekernel=3.4
 _basever=34
-_aufs=20130325
-pkgver=${_basekernel}.39
+_aufs=20130401
+pkgver=${_basekernel}.41
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
-makedepends=('xmlto' 'docbook-xsl')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils')
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
@@ -40,18 +40,18 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.4.23-fat.patch'
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
-            '10086ec3f8cedd30585e012577684f53b89d1782bf0879e29fc64d3b09cfe185'
-            '97ca579261bcd001588217c82dce55736f676bc7e81a7953968d13d69f53695e'
-            'd3ec0ecc0900c584799885be3a5ecbce6ea3e0c258f81bf756eebcee743dfc58'
+            '8b3f33a2546b43215ece4a76970ef1cb228c7da7f1a286dcecfacc7ecc0fa497'
+            '32cb6f5076e78dac4158748e524ee048e422a58a08b0d590c795ecb6e369a76b'
+            'ac8ee2dc5b9e64bf9cfa2bcbc48ea88e53626faaf190c4f4f03dfd0f67fa3f93'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '36b6015482584bd5dea171f48420d58ccb30cfdcaea799f59f61a81d9b5066ac'
+            '5ada2da0772f4e030d542e8c9fcdb9d88565bc6bba8a62a036b4c00fbeeefcee'
             '874493462520e2323b973cb330e527bd629907bf9cc9ed0f1cea575628b0011e'
             'ec736c824f61c212c8bc79898b7727ed4b4b1c3b72a78bd0e221ae568a66192a'
             'e240dd45e5a2f0f0b7afa9bdb6cc1139b75616202a795f4c6a1e19fccbe0f5f4'
             'd027d9f63f15ab287050f5971ff1e3361870c73360fc919e5b729de8bd5fba91'
             'cb2ba16d0769905d75c027c2e4261293ef5b42e2bf9c569fd7a8b1e66aa3aa29'
-            'b9d79ca33b0b51ff4f6976b7cd6dbb0b624ebf4fbf440222217f8ffc50445de4'  
+            '56bd99e54429a25a144f2d221718b67f516344ffd518fd7dcdd752206ec5be69'  
             '763eb938442e3112aa63c8e5153361254d9b2c9b20adce66c67892f14b89d1d4'
             '9ccadbe3eb30bb283af3eb869c3a4bdb764628854811cc616a2e02e9ef398705'
             'ab786cd6c07e67671ab30806e95d605ca4bb3bd46891f6bc3aef00b710ef75cd'
@@ -61,7 +61,7 @@ sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             '3190cffd7bf4906cb85632764d4c5ec22e8da5ccda4daf1f6f8666c6e2c39d52'
 )
 
-build() {
+prepare() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
@@ -133,7 +133,10 @@ build() {
 
   # don't run depmod on 'make install'. We'll do this ourselves in packaging
   sed -i '2iexit 0' scripts/depmod.sh
+}
 
+build() {
+  cd "${srcdir}/linux-${_basekernel}"
   # get kernel version
   make prepare
 
