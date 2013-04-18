@@ -11,6 +11,7 @@ msg() {
 # arg 1:  the new package version
 # arg 2:  the old package version
 post_upgrade() {
+    PACMAN_OLD="$(date +%m%d%M%S)"
     # one time stuff for md5sum issue with older pacman versions
     if [ "$(vercmp $2 3.0.2)" -lt 0 ]; then
         _resetbackups
@@ -26,12 +27,18 @@ post_upgrade() {
         sed -i -e 's/SyncFirst   = pacman/SyncFirst   = manjaro-system pacman/g' /etc/pacman.conf
     fi
     if [ "$(vercmp $2 4.1.0-2)" -lt 0 ]; then
-        msg " >>> You had an old pacman.conf. We updated it for you."
-        pacman-old=$(date +%m%d%M%S)
-        msg " >>> You can find your old pacman.conf saved as /etc/pacman-old-${pacman-old}.conf"
-        msg " >>> Use 'pacman-mirrors' to generate and updated the pacman mirrorlist."
-        mv /etc/pacman.conf /etc/pacman-old-${pacman-old}.conf
+        msg "You had an old pacman.conf. We updated it for you."
+        msg "You can find your old pacman.conf saved as \`/etc/pacman-old-${PACMAN_OLD}.conf\`"
+        mv /etc/pacman.conf /etc/pacman-old-${PACMAN_OLD}.conf
         mv /etc/pacman.conf.pacnew /etc/pacman.conf
+    fi
+    if [ -z "`cat /etc/pacman.d/mirrorlist | grep branch`" ]; then
+        msg "Your current mirrorlist was saved as \`/etc/pacman.d/mirrorlist-old-${PACMAN_OLD}\`"
+        msg "A generic mirrorlist, set to our default server, was generated!"
+        msg "Use \`pacman-mirrors\` to generate and update your pacman mirrorlist."
+        mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-old-${PACMAN_OLD}
+        echo '# file generated due pacman update' > /etc/pacman.d/mirrorlist
+        echo 'Server = http://mirror.dacentec.com/manjaro/stable/$repo/$arch' >> /etc/pacman.d/mirrorlist
     fi
 }
 
@@ -40,29 +47,29 @@ post_install() {
 }
 
 _check_pubring() {
-    msg " >>> To import the data required by pacman for package verification run:"
-    msg " >>> \`pacman-key --init; pacman-key --populate archlinux manjaro\`"
-    msg " >>> See: https://www.archlinux.org/news/having-pacman-verify-packages"
+    msg "To import the data required by pacman for package verification run:"
+    msg "\`pacman-key --init; pacman-key --populate archlinux manjaro\`"
+    msg "See: https://www.archlinux.org/news/having-pacman-verify-packages"
 }
 
 _warnupgrade() {
-    msg ">>> The pacman database format has changed as of pacman 3.5.0."
-    msg ">>> You will need to run \`pacman-db-upgrade\` as root."
-    msg ">>>"
+    msg "The pacman database format has changed as of pacman 3.5.0."
+    msg "You will need to run \`pacman-db-upgrade\` as root."
+    msg ""
 }
 
 _resetbackups() {
-    msg ">>> Performing one-time reset of NoUpgrade md5sums. After this reset"
-    msg ">>> you are able to remove all NoUpgrade lines of already protected"
-    msg ">>> files from pacman.conf."
-    msg ">>>"
+    msg "Performing one-time reset of NoUpgrade md5sums. After this reset"
+    msg "you are able to remove all NoUpgrade lines of already protected"
+    msg "files from pacman.conf."
+    msg ""
 
     # path variables
     pacconf="/etc/pacman.conf"
     dbpath="/var/lib/pacman/local"
 
     # get a list of NoUpgrade files from the user's pacman.conf
-    echo ">>> Retrieving pacman.conf NoUpgrade list..."
+    msg "Retrieving pacman.conf NoUpgrade list..."
     config=$(grep "^NoUpgrade" $pacconf | cut -d'=' -f2)
     # add the standard list of files, even if they are already above
     config="$config \
@@ -76,7 +83,7 @@ _resetbackups() {
     zeroes='00000000000000000000000000000000'
 
     for file in $config; do
-        echo ">>> -> finding owner of /$file..."
+        echo " -> finding owner of /$file..."
         line=$(LC_ALL=C LANG=C pacman -Qo /$file 2>/dev/null)
         # if file is owned by a package, go find its incorrectly stored sum
         if [ ! -z "$line" ]; then
@@ -87,10 +94,10 @@ _resetbackups() {
             path="$dbpath/$name-$version/files"
             # run a sed on the path to reset the line containing $file
             # NOTE: literal tab characters in sed expression after $file
-            echo ">>> -> resetting sum of /$file..."
+            echo " -> resetting sum of /$file..."
             sed -i "s#$file [0-9a-fA-F]*#$file  $zeroes#" $path
         else
-            echo ">>> -> $file is unowned."
+            echo " -> $file is unowned."
         fi
     done
 }

@@ -4,7 +4,7 @@ post_install() {
 	/usr/bin/pacman-mirrors -g
 
 	echo ""
-	echo "hint: use pacman-mirrors to generate and updated the pacman mirrorlist."
+	echo "hint: use \`pacman-mirrors\` to generate and update your pacman mirrorlist."
 }
 
 

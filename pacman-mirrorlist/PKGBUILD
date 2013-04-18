@@ -10,6 +10,7 @@ arch=('any')
 url="https://git.manjaro.org/core/pacman-mirrors"
 license=('GPL')
 install=pacman-mirrorlist.install
+backup=(etc/pacman-mirrors.conf)
 _git=yes
 
 
