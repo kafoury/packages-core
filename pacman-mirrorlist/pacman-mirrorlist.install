@@ -1,8 +1,13 @@
 #!/bin/sh
 
 post_install() {
-	/usr/bin/pacman-mirrors -g -m random
+	/usr/bin/pacman-mirrors -g
 
 	echo ""
 	echo "hint: use pacman-mirrors to generate and updated the pacman mirrorlist."
+}
+
+
+post_upgrade() {
+	post_install
 }
