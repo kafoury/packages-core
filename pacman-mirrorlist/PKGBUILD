@@ -34,10 +34,11 @@ getsource() {
   msg "GIT checkout done or server timeout"
 }
 
-
-build() {
+prepare() {
   getsource "pacman-mirrors" "git://git.manjaro.org/core/pacman-mirrors.git"
+}
 
+package() {
   cd "${srcdir}"/pacman-mirrors
   make DESTDIR="${pkgdir}" install
 }

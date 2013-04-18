@@ -1,4 +1,13 @@
 #!/bin/sh
+
+msg() {
+    ALL_OFF="\e[1;0m"
+    BOLD="\e[1;1m"
+    GREEN="${BOLD}\e[1;32m"
+	local mesg=$1; shift
+	printf "${GREEN}==>${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
+}
+
 # arg 1:  the new package version
 # arg 2:  the old package version
 post_upgrade() {
@@ -16,6 +25,12 @@ post_upgrade() {
         sed -i -e 's/HoldPkg     = pacman glibc/HoldPkg     = pacman glibc manjaro-system/g' /etc/pacman.conf
         sed -i -e 's/SyncFirst   = pacman/SyncFirst   = manjaro-system pacman/g' /etc/pacman.conf
     fi
+    if [ "$(vercmp $2 4.1.0-2)" -lt 0 ]; then
+        msg " >>> You had an old pacman.conf. We updated it for you."
+        msg " >>> You can find your old pacman.conf saved as /etc/pacman-old-$(date +%m%d%M%S).conf"
+        mv /etc/pacman.conf /etc/pacman-old-$(date +%m%d%M%S).conf
+        mv /etc/pacman.conf.pacnew /etc/pacman.conf
+    fi
 }
 
 post_install() {
@@ -23,22 +38,22 @@ post_install() {
 }
 
 _check_pubring() {
-    echo " >>> To import the data required by pacman for package verification run:"
-    echo " >>> \`pacman-key --init; pacman-key --populate archlinux manjaro\`"
-    echo " >>> See: https://www.archlinux.org/news/having-pacman-verify-packages"
+    msg " >>> To import the data required by pacman for package verification run:"
+    msg " >>> \`pacman-key --init; pacman-key --populate archlinux manjaro\`"
+    msg " >>> See: https://www.archlinux.org/news/having-pacman-verify-packages"
 }
 
 _warnupgrade() {
-    echo ">>> The pacman database format has changed as of pacman 3.5.0."
-    echo ">>> You will need to run \`pacman-db-upgrade\` as root."
-    echo ">>>"
+    msg ">>> The pacman database format has changed as of pacman 3.5.0."
+    msg ">>> You will need to run \`pacman-db-upgrade\` as root."
+    msg ">>>"
 }
 
 _resetbackups() {
-    echo ">>> Performing one-time reset of NoUpgrade md5sums. After this reset"
-    echo ">>> you are able to remove all NoUpgrade lines of already protected"
-    echo ">>> files from pacman.conf."
-    echo ">>>"
+    msg ">>> Performing one-time reset of NoUpgrade md5sums. After this reset"
+    msg ">>> you are able to remove all NoUpgrade lines of already protected"
+    msg ">>> files from pacman.conf."
+    msg ">>>"
 
     # path variables
     pacconf="/etc/pacman.conf"

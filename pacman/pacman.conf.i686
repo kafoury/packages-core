@@ -66,15 +66,7 @@ LocalFileSigLevel = Optional
 # uncommented to enable the repo.
 #
 
-[basis]
-SigLevel = PackageRequired
-Include = /etc/pacman.d/mirrorlist
-
-[platform]
-SigLevel = PackageRequired
-Include = /etc/pacman.d/mirrorlist
-
-[addon]
+[core]
 SigLevel = PackageRequired
 Include = /etc/pacman.d/mirrorlist
 

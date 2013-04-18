@@ -7,7 +7,7 @@
 
 pkgname=pacman
 pkgver=4.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A library-based package manager with dependency support"
 arch=('i686' 'x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -32,8 +32,8 @@ source=(ftp://ftp.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz{,.sig}
         pacman-remove-sync-first-option.patch)
 md5sums=('a0f2b3148bee4784f21cf373cf59a0bc'
          '4959b8d00056398195f4e549e7bdd346'
-         '42c99e01f01087d7fca517f2991fdd0b'
-         '0caefb490a1d8c23fabee06ee23b438a'
+         '7e2c5c9770b4dc61486a79fe03f71086'
+         '3d734602b8a13ec55cd31d81b62fdde9'
          '883292a326d2b3e0d9e7c3ec576263f5'
          'e899437595ba21f50ace6a90f6a75f18'
          'e1b63fe10602f7fa042fcf9da1c34f0e'
@@ -102,4 +102,8 @@ package() {
   for f in makepkg pacman-key; do
     ln -s pacman "$pkgdir/usr/share/bash-completion/completions/$f"
   done
+
+  # replace rankmirrors
+  rm "$pkgdir/usr/bin/rankmirrors"
+  ln -sfv "/usr/bin/pacman-mirrors" "$pkgdir/usr/bin/rankmirrors"
 }
