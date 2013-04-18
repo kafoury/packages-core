@@ -28,6 +28,7 @@ post_upgrade() {
     if [ "$(vercmp $2 4.1.0-2)" -lt 0 ]; then
         msg " >>> You had an old pacman.conf. We updated it for you."
         msg " >>> You can find your old pacman.conf saved as /etc/pacman-old-$(date +%m%d%M%S).conf"
+        msg " >>> Use 'pacman-mirrors' to generate and updated the pacman mirrorlist."
         mv /etc/pacman.conf /etc/pacman-old-$(date +%m%d%M%S).conf
         mv /etc/pacman.conf.pacnew /etc/pacman.conf
     fi
