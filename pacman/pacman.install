@@ -31,14 +31,14 @@ post_upgrade() {
         msg "You can find your old pacman.conf saved as \`/etc/pacman-old-${PACMAN_OLD}.conf\`"
         mv /etc/pacman.conf /etc/pacman-old-${PACMAN_OLD}.conf
         mv /etc/pacman.conf.pacnew /etc/pacman.conf
-    fi
-    if [ -z "`cat /etc/pacman.d/mirrorlist | grep branch`" ]; then
-        msg "Your current mirrorlist was saved as \`/etc/pacman.d/mirrorlist-old-${PACMAN_OLD}\`"
-        msg "A generic mirrorlist, set to our default server, was generated!"
-        msg "Use \`pacman-mirrors\` to generate and update your pacman mirrorlist."
-        mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-old-${PACMAN_OLD}
-        echo '# file generated due pacman update' > /etc/pacman.d/mirrorlist
-        echo 'Server = http://mirror.dacentec.com/manjaro/stable/$repo/$arch' >> /etc/pacman.d/mirrorlist
+        if [ ! -f "usr/bin/pacman-mirrors" ]; then
+           msg "Your current mirrorlist was saved as \`/etc/pacman.d/mirrorlist-old-${PACMAN_OLD}\`"
+           msg "A generic mirrorlist, set to our default server, was generated!"
+           msg "Use \`pacman-mirrors\` to generate and update your pacman mirrorlist."
+           mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-old-${PACMAN_OLD}
+           echo '# file generated due pacman update' > /etc/pacman.d/mirrorlist
+           echo 'Server = http://mirror.dacentec.com/manjaro/stable/$repo/$arch' >> /etc/pacman.d/mirrorlist
+        fi
     fi
 }
 
