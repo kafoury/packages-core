@@ -21,6 +21,6 @@ sha256sum=(b6d14727ec465bb66d0a0358163b1bbfafcb4eaed55a0f57c30aabafae7eed68
 package() {
   # install Arch specific stuff
   install -dm755 $pkgdir/usr/lib/systemd/system/
-  install -m644 $srcdir/etc-pacman.d-gnupg.mount $pkgdir/usr/lib/systemd/system//etc-pacman.d-gnupg.mount
+  install -m644 $srcdir/etc-pacman.d-gnupg.mount $pkgdir/usr/lib/systemd/system/etc-pacman.d-gnupg.mount
   install -m644 $srcdir/pacman-init.service $pkgdir/usr/lib/systemd/system/pacman-init.service
 }
