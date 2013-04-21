@@ -8,20 +8,45 @@ msg() {
 	printf "${GREEN}==>${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
 }
 
+err() {
+    ALL_OFF="\e[1;0m"
+    BOLD="\e[1;1m"
+    RED="${BOLD}\e[1;31m"
+	local mesg=$1; shift
+	printf "${RED}==>${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
+}
+
 post_install() {
     ln -s '/usr/lib/systemd/system/pacman-init.service' '/etc/systemd/system/multi-user.target.wants/pacman-init.service'
     msg "Initialize a new random GnuPG key for pacman"
     rm -rf /etc/pacman.d/gnupg
+    # Generate initial keychain, use haveged then no user interaction is required
+    if [[ -f /var/run/haveged.pid ]]; then
+	kill $(cat /var/run/haveged.pid)
+    fi
+    haveged
     pacman-key --init
+    msg "Importing trusted keys"
+    ### HACK: fix accept of master keys!
+    sed -i -e 's#"${GPG_PACMAN\[\@\]}" --quiet --lsign-key "${key_id}"#"${GPG_PACMAN\[\@\]}" --batch --yes --quiet --lsign-key "${key_id}"#g' /usr/bin/pacman-key
     pacman-key --populate archlinux manjaro
+    ### HACK: fix accept of master keys!
+    sed -i -e 's#"${GPG_PACMAN\[\@\]}" --batch --yes --quiet --lsign-key "${key_id}"#"${GPG_PACMAN\[\@\]}" --quiet --lsign-key "${key_id}"#g' /usr/bin/pacman-key
+    kill $(cat /var/run/haveged.pid)
     msg "Generation complete."
 }
 
 post_upgrade() {
-    rm '/etc/systemd/system/multi-user.target.wants/pacman-init.service'
-    ln -s '/usr/lib/systemd/system/pacman-init.service' '/etc/systemd/system/multi-user.target.wants/pacman-init.service'
+    if [ ! -e '/etc/systemd/system/multi-user.target.wants/pacman-init.service' ]; then
+       err "pacman-init service is disabled. You may want to activate it with:"
+       err "'sudo systemctl enable pacman-init'"
+    else
+       rm '/etc/systemd/system/multi-user.target.wants/pacman-init.service'
+       ln -s '/usr/lib/systemd/system/pacman-init.service' '/etc/systemd/system/multi-user.target.wants/pacman-init.service'
+    fi
 }
 
 pre_remove() {
+    umount /etc/pacman.d/gnupg
     rm '/etc/systemd/system/multi-user.target.wants/pacman-init.service'
 }

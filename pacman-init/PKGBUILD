@@ -5,7 +5,7 @@
 
 pkgname=pacman-init
 pkgver=4.1.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A systemd service that initializes a new random GnuPG key on every boot"
 arch=('any')
 url='https://projects.archlinux.org/archiso.git/'
