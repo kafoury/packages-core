@@ -17,7 +17,6 @@ err() {
 }
 
 post_install() {
-    ln -s '/usr/lib/systemd/system/pacman-init.service' '/etc/systemd/system/multi-user.target.wants/pacman-init.service'
     msg "Initialize a new random GnuPG key for pacman"
     rm -rf /etc/pacman.d/gnupg
     # Generate initial keychain, use haveged then no user interaction is required
@@ -37,16 +36,19 @@ post_install() {
 }
 
 post_upgrade() {
-    if [ ! -e '/etc/systemd/system/multi-user.target.wants/pacman-init.service' ]; then
-       err "pacman-init service is disabled. You may want to activate it with:"
-       err "'sudo systemctl enable pacman-init'"
-    else
-       rm '/etc/systemd/system/multi-user.target.wants/pacman-init.service'
-       ln -s '/usr/lib/systemd/system/pacman-init.service' '/etc/systemd/system/multi-user.target.wants/pacman-init.service'
+    if [ -e '/etc/systemd/system/multi-user.target.wants/pacman-init.service' ]; then
+       err "pacman-init service is enabled. You may want to disable it with:"
+       err "'sudo systemctl disable pacman-init'"
+    fi
+    umount /etc/pacman.d/gnupg &>/dev/null
+    if [ ! -e '/etc/pacman.d/gnupg/random_seed' ]; then
+       post_install
     fi
 }
 
 pre_remove() {
-    umount /etc/pacman.d/gnupg
-    rm '/etc/systemd/system/multi-user.target.wants/pacman-init.service'
+    umount /etc/pacman.d/gnupg &>/dev/null
+    if [ -e '/etc/systemd/system/multi-user.target.wants/pacman-init.service' ]; then
+       rm '/etc/systemd/system/multi-user.target.wants/pacman-init.service'
+    fi
 }
