@@ -1,0 +1,27 @@
+#!/bin/sh
+
+msg() {
+    ALL_OFF="\e[1;0m"
+    BOLD="\e[1;1m"
+    GREEN="${BOLD}\e[1;32m"
+	local mesg=$1; shift
+	printf "${GREEN}==>${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
+}
+
+post_install() {
+    ln -s '/usr/lib/systemd/system/pacman-init.service' '/etc/systemd/system/multi-user.target.wants/pacman-init.service'
+    msg "Initialize a new random GnuPG key for pacman"
+    rm -rf /etc/pacman.d/gnupg
+    pacman-key --init
+    pacman-key --populate archlinux manjaro
+    msg "Generation complete."
+}
+
+post_upgrade() {
+    rm '/etc/systemd/system/multi-user.target.wants/pacman-init.service'
+    ln -s '/usr/lib/systemd/system/pacman-init.service' '/etc/systemd/system/multi-user.target.wants/pacman-init.service'
+}
+
+pre_remove() {
+    rm '/etc/systemd/system/multi-user.target.wants/pacman-init.service'
+}

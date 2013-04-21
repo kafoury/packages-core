@@ -3,7 +3,7 @@
 
 pkgname=('keyboardctl')
 pkgver=0.1.5
-pkgrel=1
+pkgrel=2
 arch=('any')
 url="https://git.manjaro.org/core/keyboardctl"
 license=('GPL')

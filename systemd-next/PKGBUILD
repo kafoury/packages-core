@@ -6,8 +6,8 @@
 
 pkgname=systemd-next
 _pkgname=systemd
-pkgver=201
-pkgrel=2
+pkgver=202
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
@@ -44,7 +44,7 @@ source=("http://www.freedesktop.org/software/$_pkgname/$_pkgname-$pkgver.tar.xz"
         'initcpio-install-timestamp'
         'use-split-usr-path.patch'
         'rc-local-shutdown.service')
-sha256sums=('d6299f1a0bc2122002d731808d3825c6b566d1ffe899c03ed5ebec7e70c8cc10'
+sha256sums=('8c43073252a52eb9f9ab9bd698be0192bcb2175ba5daba6057250083dd64e059'
             '892ce43218e0a458981bbce451252c8987dc398e60b8de288e7542b8f2409c13'
             'e39a9e3d50024466f5b98486a53858b166953efeee451e386eecac9501696c00'
             'b6a7cd6512209ea6b53fec2ad4aff23573ecd36d698d7da8baa5c8278fa1a119'
@@ -52,11 +52,15 @@ sha256sums=('d6299f1a0bc2122002d731808d3825c6b566d1ffe899c03ed5ebec7e70c8cc10'
             '9ffae90f53644a6c1f81c82d28cce2533a5c5365ec34976af7aa13bf59aff7b3'
 )
 
-build() {
+prepare() {
   cd "$_pkgname-$pkgver"
 
   # hang onto this until we do the /{,s}bin merge
   patch -Np1 <"$srcdir/use-split-usr-path.patch"
+}
+
+build() {
+  cd "$_pkgname-$pkgver"
 
   ./configure \
       --enable-static \
@@ -73,9 +77,9 @@ build() {
   make
 }
 
-#check() {
-#  make -C "$_pkgname-$pkgver" check
-#}
+check() {
+  make -C "$_pkgname-$pkgver" check
+}
 
 package() {
   make -C "$_pkgname-$pkgver" DESTDIR="$pkgdir" install
