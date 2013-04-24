@@ -26,6 +26,12 @@ fi
 
 
 post_upgrade() {
+	# Install systemd-sysvcompat
+	if [ "$(pacman -Qq | grep systemd-sysvcompat)" == "" ]; then
+		rm /var/lib/pacman/db.lck
+		pacman --noconfirm -S systemd-sysvcompat
+	fi
+
 	# fix turbojpeg
 	if [ -e /usr/bin/tjbench ] ; then
 	if [ "x`pacman -Qo /usr/bin/tjbench | grep libjpeg-turbo`" != "x" ]; then

@@ -1,8 +1,6 @@
 # Maintainer: Philip Müller <philm@manjaro.org>
 # Maintainer: Roland Singer <roland@manjaro.org>
 
-# Disabled modules ('catalyst-legacy')
-
 pkgbase=linux-meta
 
 pkgname=('linux'
@@ -10,6 +8,7 @@ pkgname=('linux'
          'bbswitch'
          'broadcom-wl'
          'catalyst'
+         'catalyst-legacy'
          'cdfs'
          'fcpci'
          'fcpcmcia'
@@ -21,16 +20,21 @@ pkgname=('linux'
          'open-vm-tools-modules'
          'r8168'
          'rt3562sta'
+         'slmodem'
+         'spl'
+         'tp_smapi'
          'vhba-module'
          'virtualbox-host-modules'
-         'virtualbox-guest-modules')
+         'virtualbox-guest-modules'
+         'zfs')
 
-pkgver=2012.11
-pkgrel=2
+groups=('base')
+pkgver=2013.04
+pkgrel=1
 arch=any
 url="www.manjaro.org"
 license=('GPL')
-linuxprefix="linux35"
+linuxprefix="linux37"
 
 
 package_linux() {
@@ -121,6 +125,21 @@ package_rt3562sta() {
           depends="$linuxprefix-$pkgname"
 }
 
+package_slmodem() {
+          pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
+          depends="$linuxprefix-$pkgname"
+}
+
+package_spl() {
+          pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
+          depends="$linuxprefix-$pkgname"
+}
+
+package_tp_smapi() {
+          pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
+          depends="$linuxprefix-$pkgname"
+}
+
 package_vhba-module() {
           pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
           depends="$linuxprefix-$pkgname"
@@ -129,13 +148,14 @@ package_vhba-module() {
 package_virtualbox-host-modules() {
           pkgdesc="Manjaro Stable Linux Kernel extramodules (Meta-PKG)"
           depends="$linuxprefix-$pkgname"
-          replaces=('virtualbox-modules')
-          conflicts=('virtualbox-modules')
 }
 
 package_virtualbox-guest-modules() {
           pkgdesc="Manjaro Stable Linux Kernel extramodules (Meta-PKG)"
           depends="$linuxprefix-$pkgname"
-          replaces=('virtualbox-manjaro-modules')
-          conflicts=('virtualbox-manjaro-modules')
+}
+
+package_zfs() {
+          pkgdesc="Manjaro Stable Linux Kernel extramodule (Meta-PKG)"
+          depends="$linuxprefix-$pkgname"
 }
