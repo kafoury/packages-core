@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PACKAGEVERSION="20130420"
+PACKAGEVERSION="20130425"
 SYSTEMVERSION="$PACKAGEVERSION"
 
 err() {
@@ -26,8 +26,23 @@ fi
 
 
 post_upgrade() {
+	# remove systemd-next
+	if [ "$(pacman -Qq | grep systemd-next)" != "" ]; then
+		msg "Replacing systemd-next with systemd ..."
+		rm /var/lib/pacman/db.lck
+		pacman --noconfirm -Rdd systemd-next
+		pacman --noconfirm -S systemd systemd-sysvcompat
+	fi
+	if [ "$(pacman -Qq | grep lib32-systemd-next)" != "" ]; then
+		msg "Replacing lib32-systemd-next with lib32-systemd ..."
+		rm /var/lib/pacman/db.lck
+		pacman --noconfirm -Rdd lib32-systemd-next
+		pacman --noconfirm -S lib32-systemd
+	fi
+
 	# Install systemd-sysvcompat
 	if [ "$(pacman -Qq | grep systemd-sysvcompat)" == "" ]; then
+		msg "Installing missing systemd-sysvcompat ..."
 		rm /var/lib/pacman/db.lck
 		pacman --noconfirm -S systemd systemd-sysvcompat
 	fi
