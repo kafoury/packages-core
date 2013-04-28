@@ -1,7 +1,5 @@
 src
 pkg
-repo*
-
 *.pkg.*
 *.src.*
 *.tar.*
@@ -11,6 +9,3 @@ repo*
 *.xz
 *.log
 *~
-*patch-old
-*.installe
-aufs3-standalone

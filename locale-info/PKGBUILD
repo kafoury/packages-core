@@ -1,0 +1,34 @@
+pkgname=locale-info
+pkgver=2.17
+pkgrel=1
+pkgdesc="Locale informations"
+arch=('any')
+url="http://www.gnu.org/software/libc"
+license=('GPL' 'LGPL')
+groups=('base')
+depends=("glibc=${pkgver}")
+
+source=(http://ftp.gnu.org/gnu/libc/glibc-${pkgver}.tar.xz{,.sig}
+        localeinfo.sh)
+
+sha256sums=('6914e337401e0e0ade23694e1b2c52a5f09e4eda3270c67e7c3ba93a89b5b23e'
+            '8a741af26c29c4f6f880a395fd80d2e1270c4ec3a9e277bd48a496e360eb67d8'
+            '3c96d41a85f3b83debe4133cc922b08904960e15bff38ad9600ef4093d0c4646')
+
+
+build() {
+  cd ${srcdir}
+
+  echo "building LOCALESINFO file..."
+  ./localeinfo.sh "glibc-${pkgver}/localedata/locales" LOCALESINFO
+}
+
+
+package() {
+  cd ${srcdir}/glibc-${pkgver}
+
+  install -dm755 ${pkgdir}/usr/share/i18n
+  install -m644 localedata/SUPPORTED ${pkgdir}/usr/share/i18n/
+  install -m644 ${srcdir}/LOCALESINFO ${pkgdir}/usr/share/i18n/
+}
+
