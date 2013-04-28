@@ -28,6 +28,7 @@ msg() {
 post_upgrade() {
 	# Remove libGl symlinks
 	if [ -e /usr/lib/libGL.so.mesa ]; then
+		msg "Removing libGL symlinks..."
 		rm -f /usr/lib/libGL.so
 		rm -f /usr/lib/libGL.so.1
 		rm -f /usr/lib/libGL.so.1.2.0
