@@ -1,7 +1,11 @@
 #!/bin/bash
 
-PACKAGEVERSION="20130425"
+PACKAGEVERSION="20130428"
 SYSTEMVERSION="$PACKAGEVERSION"
+
+if [ -f /var/lib/manjaro-system/version ]; then
+	. /var/lib/manjaro-system/version
+fi
 
 err() {
     ALL_OFF="\e[1;0m"
@@ -20,12 +24,23 @@ msg() {
 }
 
 
-if [ -f /var/lib/manjaro-system/version ]; then
-	. /var/lib/manjaro-system/version
-fi
-
 
 post_upgrade() {
+	# Remove libGl symlinks
+	if [ -e /usr/lib/libGL.so.mesa ]; then
+		rm -f /usr/lib/libGL.so
+		rm -f /usr/lib/libGL.so.1
+		rm -f /usr/lib/libGL.so.1.2.0
+		rm -f /usr/lib32/libGL.so
+		rm -f /usr/lib32/libGL.so.1
+		rm -f /usr/lib32/libGL.so.1.2.0
+		rm -f /usr/lib/xorg/modules/extensions/libglx.so
+
+		if [ -e /etc/modprobe.d/mhwd-gpu.conf ]; then
+			rm -f /etc/modprobe.d/mhwd-gpu.conf
+		fi
+	fi
+
 	# remove systemd-next
 	if [ "$(pacman -Qq | grep systemd-next)" != "" ]; then
 		msg "Replacing systemd-next with systemd ..."
