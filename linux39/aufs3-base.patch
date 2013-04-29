@@ -14,7 +14,7 @@ index cd4d87a..ca5948f 100644
  /* SLAB cache for file structures */
  static struct kmem_cache *filp_cachep __read_mostly;
 diff --git a/fs/inode.c b/fs/inode.c
-index f5f7c06..0b99538 100644
+index a898b3d..e83cd1e 100644
 --- a/fs/inode.c
 +++ b/fs/inode.c
 @@ -1498,7 +1498,7 @@ static int relatime_need_update(struct vfsmount *mnt, struct inode *inode,
@@ -27,10 +27,10 @@ index f5f7c06..0b99538 100644
  	if (inode->i_op->update_time)
  		return inode->i_op->update_time(inode, time, flags);
 diff --git a/fs/splice.c b/fs/splice.c
-index 718bd00..c717dbb 100644
+index 29e394e..7117387 100644
 --- a/fs/splice.c
 +++ b/fs/splice.c
-@@ -1093,8 +1093,8 @@ EXPORT_SYMBOL(generic_splice_sendpage);
+@@ -1095,8 +1095,8 @@ EXPORT_SYMBOL(generic_splice_sendpage);
  /*
   * Attempt to initiate a splice from pipe to file.
   */
@@ -41,7 +41,7 @@ index 718bd00..c717dbb 100644
  {
  	ssize_t (*splice_write)(struct pipe_inode_info *, struct file *,
  				loff_t *, size_t, unsigned int);
-@@ -1121,9 +1121,9 @@ static long do_splice_from(struct pipe_inode_info *pipe, struct file *out,
+@@ -1123,9 +1123,9 @@ static long do_splice_from(struct pipe_inode_info *pipe, struct file *out,
  /*
   * Attempt to initiate a splice from a file to a pipe.
   */

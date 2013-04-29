@@ -22,7 +22,7 @@ index ca5948f..b553610 100644
  
  /*
 diff --git a/fs/inode.c b/fs/inode.c
-index 0b99538..46a6995 100644
+index e83cd1e..fa2245a 100644
 --- a/fs/inode.c
 +++ b/fs/inode.c
 @@ -56,6 +56,7 @@ static struct hlist_head *inode_hashtable __read_mostly;
@@ -42,7 +42,7 @@ index 0b99538..46a6995 100644
  /**
   *	touch_atime	-	update the access time
 diff --git a/fs/namespace.c b/fs/namespace.c
-index 50ca17d..1548ce4 100644
+index 341d3f5..18f5bb0 100644
 --- a/fs/namespace.c
 +++ b/fs/namespace.c
 @@ -52,6 +52,7 @@ EXPORT_SYMBOL_GPL(fs_kobj);
@@ -61,7 +61,7 @@ index 50ca17d..1548ce4 100644
  
  /**
   * mnt_drop_write - give up write access to a mount
-@@ -1413,6 +1415,7 @@ int iterate_mounts(int (*f)(struct vfsmount *, void *), void *arg,
+@@ -1417,6 +1419,7 @@ int iterate_mounts(int (*f)(struct vfsmount *, void *), void *arg,
  	}
  	return 0;
  }
@@ -154,10 +154,10 @@ index 6835446..df2262a 100644
  long vfs_truncate(struct path *path, loff_t length)
  {
 diff --git a/fs/splice.c b/fs/splice.c
-index c717dbb..f9c3c18 100644
+index 7117387..af8fd2d 100644
 --- a/fs/splice.c
 +++ b/fs/splice.c
-@@ -1117,6 +1117,7 @@ long do_splice_from(struct pipe_inode_info *pipe, struct file *out,
+@@ -1119,6 +1119,7 @@ long do_splice_from(struct pipe_inode_info *pipe, struct file *out,
  
  	return splice_write(pipe, out, ppos, len, flags);
  }
@@ -165,7 +165,7 @@ index c717dbb..f9c3c18 100644
  
  /*
   * Attempt to initiate a splice from a file to a pipe.
-@@ -1143,6 +1144,7 @@ long do_splice_to(struct file *in, loff_t *ppos,
+@@ -1145,6 +1146,7 @@ long do_splice_to(struct file *in, loff_t *ppos,
  
  	return splice_read(in, ppos, pipe, len, flags);
  }
@@ -210,7 +210,7 @@ index 1c69e38..7392d19 100644
  int devcgroup_inode_mknod(int mode, dev_t dev)
  {
 diff --git a/security/security.c b/security/security.c
-index 7b88c6a..5d00a30 100644
+index 03f248b..892e803 100644
 --- a/security/security.c
 +++ b/security/security.c
 @@ -396,6 +396,7 @@ int security_path_rmdir(struct path *dir, struct dentry *dentry)

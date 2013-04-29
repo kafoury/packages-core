@@ -10,18 +10,15 @@ pkgname=('linux39' 'linux39-headers')
 _kernelname=-MANJARO
 _basekernel=3.9
 _basever=39
-_rc=rc6
-_aufs=20130325
-#pkgver=${_basekernel}.3
-pkgver=${_basekernel}${_rc}
+_aufs=20130429
+pkgver=${_basekernel}.0
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl')
 options=('!strip')
-source=(#"http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
-        "http://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-${_basekernel}-${_rc}.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
         #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config' 'config.x86_64' 'config.aufs'
@@ -35,24 +32,25 @@ source=(#"http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.x
         'aufs3-proc_map.patch'
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
+        '3.8.10-alsa-firmware-loading.patch'
 )
-sha256sums=('809b35b55db9ce99593dd291c78cdf700bfd279a2f1c223be6a3b789de4a507e'
-            '6631c0a5c6bd1bfbea98c3b9f94a83488a2eafa62eb2ac0ca3aa29491e867a84'
-            '23de8558e64e571b10d14bd2c5c6a8e906af05b7d6f36c0588427fa75ac397d6'
+sha256sums=('60bc3e64ee5dc778de2cd7cd7640abf518a4c9d4f31b8ed624e16fad53f54541'
+            '89a6b12a81c115a5214f228dc6fdb33aead69dfc764072d1fa422cafd725bd88'
+            '757d22957027a31455915eed863e450b91a801cf30ce9769c3cb4966846535d6'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '56ca2f223b30a4c3e9490dd3ddaf3e3e6ffe48e7a258cc89ae0c8d3eaa06a973'
-            '33aa1bcf5762115ecfe2fcf467fca2eb8eb3ead14518d6be6edae15ca3c2939b'
+            '4aad2f1bc1d1c889215ab6da10f02f5611c34116d47886c7fa8b54a1084c8af0'
+            'aec8ffb4b73ae747b8a0fc56c346090fb163506358efefccadaadad094543b08'
             'fa45a7d5bce5a512486ad61d4c4ce524ba57a939ad0e42cebc0b845727d63e8f'
-            '0663b21fe5e5d391af0669943e63b735dc7c75efc0f9deea15fb87ce977cdc08'
-            'a961376751d7f9e5c0f2bb1aea9e2294149543c57890f22370131e5b38b3ba9e'
-            '7f1b3d3e49a5ecbca276de3772c86d688b60c5f96efb8ea67ce11f65bb6d83f9'
-            'b9d79ca33b0b51ff4f6976b7cd6dbb0b624ebf4fbf440222217f8ffc50445de4'
+            '21ab1eb6bfa91c9d61bf768f35b882ecb99ceb3d79f7e6b7819f257399723160'
+            'eec35effdf87e470001ce8f591b9620aff8bbf07bb2a1eac088f7b769ae9e0bc'
+            '6d1f5dc0ec91cef7059da81b14eaa9f321de8d5bd646a16550cca52465cd7b09'
+            '56bd99e54429a25a144f2d221718b67f516344ffd518fd7dcdd752206ec5be69'
+            'ac2059c0c13fa5297b166e505f0fc2531272a02e2b9d01716dc415de6e910ba4'
 )
 
 build() {
-  #cd "${srcdir}/linux-${_basekernel}"
-  cd "${srcdir}/linux-${_basekernel}-${_rc}"
+  cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
   #patch -p1 -i "${srcdir}/patch-${pkgver}"
@@ -66,6 +64,9 @@ build() {
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -Np1 -i "${srcdir}/change-default-console-loglevel.patch"
+
+  # fix alsa firmware loading #34865
+  patch -Np1 -i "${srcdir}/3.8.10-alsa-firmware-loading.patch"
 
   # add aufs3 support
   #patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
@@ -125,8 +126,7 @@ package_linux39() {
   provides=("linux=$pkgver")
   install=${pkgname}.install
 
-  #cd "${srcdir}/linux-${_basekernel}"
-  cd "${srcdir}/linux-${_basekernel}-${_rc}"
+  cd "${srcdir}/linux-${_basekernel}"
 
   KARCH=x86
 
@@ -192,8 +192,7 @@ package_linux39-headers() {
   cd "${pkgdir}/usr/lib/modules/${_kernver}"
   ln -sf ../../../src/linux-${_kernver} build
 
-  #cd "${srcdir}/linux-${_basekernel}"
-  cd "${srcdir}/linux-${_basekernel}-${_rc}"
+  cd "${srcdir}/linux-${_basekernel}"
   install -D -m644 Makefile \
     "${pkgdir}/usr/src/linux-${_kernver}/Makefile"
   install -D -m644 kernel/Makefile \
