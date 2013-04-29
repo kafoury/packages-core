@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PACKAGEVERSION="20130428"
+PACKAGEVERSION="20130429"
 SYSTEMVERSION="$PACKAGEVERSION"
 
 if [ -f /var/lib/manjaro-system/version ]; then
@@ -24,25 +24,39 @@ msg() {
 }
 
 
+set_Gl() {
+	ln -sf "$1" /usr/lib/libGL.so
+	ln -sf "$1" /usr/lib/libGL.so.1
+	ln -sf "$1" /usr/lib/libGL.so.1.2.0
+
+	ln -sf "$2" /usr/lib/xorg/modules/extensions/libglx.so
+
+	if [ -d "/usr/lib32" ]; then
+		ln -sf "$3" /usr/lib32/libGL.so
+		ln -sf "$3" /usr/lib32/libGL.so.1
+		ln -sf "$3" /usr/lib32/libGL.so.1.2.0
+	fi
+}
+
+
 
 post_upgrade() {
-	# Remove libGl symlinks
-	if [ -e /usr/lib/libGL.so.mesa ]; then
-		msg "Removing libGL symlinks..."
-		rm -f /usr/lib/libGL.so
-		rm -f /usr/lib/libGL.so.1
-		rm -f /usr/lib/libGL.so.1.2.0
-		rm -f /usr/lib32/libGL.so
-		rm -f /usr/lib32/libGL.so.1
-		rm -f /usr/lib32/libGL.so.1.2.0
-		rm -f /usr/lib/xorg/modules/extensions/libglx.so
-
-		if [ -e /etc/modprobe.d/mhwd-gpu.conf ]; then
-			rm -f /etc/modprobe.d/mhwd-gpu.conf
-		fi
+	# Update libGL
+	local _libGL="$(readlink /usr/lib/libGL.so)"
+	if [ "${_libGL}" == "/usr/lib/libGL.so.mesa" ]; then
+		msg "Updating libGL symlinks ..."
+		set_Gl "/usr/lib/mesa-libGL.so.1.2.0" "/usr/lib/xorg/modules/extensions/libglx.xorg" "/usr/lib32/mesa-libGL.so.1.2.0"
+	fi
+	if [ "${_libGL}" == "/usr/lib/libGL.so.nvidia" ]; then
+		msg "Updating libGL symlinks ..."
+		set_Gl "/usr/lib/nvidia/libGL.so" "/usr/lib/nvidia/xorg/modules/extensions/libglx.so" "/usr/lib32/nvidia/libGL.so"
+	fi
+	if [ "${_libGL}" == "/usr/lib/libGL.so.catalyst" ]; then
+		msg "Updating libGL symlinks ..."
+		set_Gl "/usr/lib/fglrx/libGL.so" "/usr/lib/fglrx/xorg/modules/extensions/libglx.so" "/usr/lib32/fglrx/libGL.so"
 	fi
 
-	# remove systemd-next
+	# Remove systemd-next
 	if [ "$(pacman -Qq | grep systemd-next)" != "" ]; then
 		msg "Replacing systemd-next with systemd ..."
 		rm /var/lib/pacman/db.lck
@@ -63,7 +77,7 @@ post_upgrade() {
 		pacman --noconfirm -S systemd systemd-sysvcompat
 	fi
 
-	# fix turbojpeg
+	# Fix turbojpeg
 	if [ -e /usr/bin/tjbench ] ; then
 	if [ "x`pacman -Qo /usr/bin/tjbench | grep libjpeg-turbo`" != "x" ]; then
 		msg "Fixing turbojpeg ..."
