@@ -52,7 +52,6 @@ build() {
 package_mhwd() {
   pkgdesc="Manjaro Linux Hardware Detection library and application"
   depends=('hwinfo' 'mhwd-db' 'v86d' 'manjaro-system>=20130115-1')
-  optdepends=('mhwd-db-catalyst: Catalyst support')
 
   cd ${srcdir}/${pkgname}
 
