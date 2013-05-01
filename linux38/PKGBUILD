@@ -10,8 +10,8 @@ pkgname=('linux38' 'linux38-headers')
 _kernelname=-MANJARO
 _basekernel=3.8
 _basever=38
-_aufs=20130401
-pkgver=${_basekernel}.8
+_aufs=20130429
+pkgver=${_basekernel}.11
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -32,21 +32,23 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
         '3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch'
+        '3.8.10-alsa-firmware-loading.patch'
 )
 sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
-            '759313a1012f17c83af15f237f3ad8b50a45f1bb34c62409e558a4d65bf014c3'
+            '4666f2ca152e454b090525efa79cfcacc81a3d82011e14c412f07edd45457a95'
             'bf3c69d18738278167b0b798acce90333e05e9ce81dbf4b33338230e8976a2d6'
             '85d50b3704a8d4c04adc28e867e8004b94a2a3f7508ebe1972a97961622c7349'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '81b46d84b3d72d688567e32b65e7a639952119b61585ef1012ab8068416753c1'
+            '2d4303c214d1e0fd879a8b60041f11797dae4bbe78f04e1428c23a3e42cd47cd'
             '6f473f3faef88393a3bedf57c30487ff64b0b4173270e05280a796023c29d491'
             '2178505b162ac3b152bdac70f3291f5a0985bd5a3a3dec42882e5dd2f8e12ab6'
-            'c048da019b1e440a7635e4ea3607f3ce6da14c82625fc36ae8eac126fb423149'
+            'efb67e83b6d09452c9f6f8c19b889a04f63ca95a53a5efb1a64709b5f56bbae6'
             '22d7177f49ab3642e3227d1fe0fd6f1e9019ad83dab9b1412cb227c9c144faf1'
             '8979c9d667414c8be7084035f4964bfb88c19f0836c702a8621bdfe4cf846143'
             '56bd99e54429a25a144f2d221718b67f516344ffd518fd7dcdd752206ec5be69'
             '611d11b5346e52e957d9690b7fac2464d83f1c67fe64a943b0026ffb466a5798'
+            'ac2059c0c13fa5297b166e505f0fc2531272a02e2b9d01716dc415de6e910ba4'
 )
 
 prepare() {
@@ -68,6 +70,9 @@ prepare() {
   # fix dvb issues
   # see: http://forum.manjaro.org/index.php?topic=1108.0
   patch -Np1 -i "${srcdir}/3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch"
+
+  # fix alsa firmware loading #34865
+  patch -Np1 -i "${srcdir}/3.8.10-alsa-firmware-loading.patch"
 
   # add aufs3 support
   patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
