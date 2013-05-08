@@ -103,16 +103,10 @@ diff -Npur po.orig/de.po pacman-4.1.0/src/pacman/po/de.po
 diff -Npur po.orig/el.po pacman-4.1.0/src/pacman/po/el.po
 --- po.orig/el.po	2013-04-01 07:58:00.000000000 +0200
 +++ pacman-4.1.0/src/pacman/po/el.po	2013-03-10 00:25:49.000000000 +0100
-@@ -1120,8 +994,20 @@ msgid "Errors occurred, no packages were
- msgstr "Προέκυψαν σφάλματα, δεν αναβαθμίστηκαν πακέτα.\n"
+@@ -1135,6 +1135,18 @@ msgid "Synchronizing package databases..
+ msgstr "Συγχρονισμός βάσεων πακέτων...\n"
  
  #, c-format
--msgid "Synchronizing package databases...\n"
--msgstr "Συγχρονισμός βάσης πακέτων...\n"
-+msgid "Synchronizing package databases...\n"
-+msgstr "Συγχρονισμός βάσης πακέτων...\n"
-+
-+#, c-format
 +msgid ":: The following packages should be upgraded first :\n"
 +msgstr ":: Τα ακόλουθα πακέτα πρέπει να αναβαθμιστούν πρώτα :\n"
 +
@@ -123,9 +117,11 @@ diff -Npur po.orig/el.po pacman-4.1.0/src/pacman/po/el.po
 +msgstr ""
 +"Ακύρωση τρέχουσας λειτουργίας\n"
 +":: και αναβάθμιση αυτών των πακέτων τώρα;"
- 
- #, c-format
++
++#, c-format
  msgid "loading packages...\n"
+ msgstr "φόρτωση πακέτων...\n"
+ 
 diff -Npur po.orig/en_GB.po pacman-4.1.0/src/pacman/po/en_GB.po
 --- po.orig/en_GB.po	2013-04-01 07:58:00.000000000 +0200
 +++ pacman-4.1.0/src/pacman/po/en_GB.po	2013-03-10 00:25:49.000000000 +0100

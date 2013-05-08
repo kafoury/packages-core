@@ -10,8 +10,8 @@ pkgname=('linux34' 'linux34-headers')
 _kernelname=-MANJARO
 _basekernel=3.4
 _basever=34
-_aufs=20130429
-pkgver=${_basekernel}.43
+_aufs=20130506
+pkgver=${_basekernel}.44
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -40,12 +40,12 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.4.23-fat.patch'
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
-            '7e56bd741e70963857e60ba3b11d5cf7bc8727b39d35a7e4c85e75e834431211'
+            '171beb7f14f5cc5558042e3beb8b82b282c59c4da20517aa3ee40da5396b60de'
             '32cb6f5076e78dac4158748e524ee048e422a58a08b0d590c795ecb6e369a76b'
             'ac8ee2dc5b9e64bf9cfa2bcbc48ea88e53626faaf190c4f4f03dfd0f67fa3f93'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '162f7a56cc735382e865f69f675bd231153892041e46ff57578b6908c4ca6c9b'
+            '3323ee4d83e506722b77257a4c64d4a89ac6cbaa50a9a7ea8c68745a975fbd1a'
             '874493462520e2323b973cb330e527bd629907bf9cc9ed0f1cea575628b0011e'
             'ec736c824f61c212c8bc79898b7727ed4b4b1c3b72a78bd0e221ae568a66192a'
             '1428ce64eb24bd90dfeabac94479d30de416826848b4fc03b9f51fa0f1072371'

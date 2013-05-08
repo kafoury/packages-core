@@ -6,8 +6,8 @@
 # Maintainer: Guinux <guillaume@manjaro.org>
 
 pkgname=pacman
-pkgver=4.1.0
-pkgrel=2
+pkgver=4.1.1
+pkgrel=1
 pkgdesc="A library-based package manager with dependency support"
 arch=('i686' 'x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -16,6 +16,7 @@ groups=('base' 'base-devel')
 depends=('bash>=4.2.042-2' 'glibc>=2.17-2' 'libarchive>=3.1.2' 'curl>=7.19.4'
          'gpgme' 'pacman-mirrorlist>=20130418' 'archlinux-keyring' 'manjaro-keyring')
 checkdepends=('python2' 'fakechroot')
+makedepends=('asciidoc')
 optdepends=('fakeroot: for makepkg usage as normal user')
 provides=('pacman-contrib')
 conflicts=('pacman-contrib')
@@ -98,10 +99,10 @@ package() {
   rm "$pkgdir/usr/bin/rankmirrors"
   ln -sfv "/usr/bin/pacman-mirrors" "$pkgdir/usr/bin/rankmirrors"
 }
-sha256sums=('5d04f01afbacb899e135564daea7cffa8e14635dfc938f0bfac3af1723aab9b7'
+sha256sums=('2f8008d254655e19f890dba4fa26b27070584b8f0ef25ac476ed0136fbca8a46'
             'SKIP'
             '5c2cd964793ad94bacc661da6c3e6de19dd132e70accac9bdccc5175fd619dd1'
             '6b624eb1e9d59adc26c99b66bca7c082deb1f9f01c1c6c278d121559a7ad2f01'
             '49f3f5b748502f8013d0d14cd670a3e76bb667d5dfd330429549ed922b1c0c48'
-            '38805f0372a4cd975e40ac82ed0675d0cad6a4a8a85e639e2cc834ec79e2b0d1'
+            'a1a895c328f4cb3c3044da2a2075caa0ab45efd355be25ac3ec1519ed2197318'
             '4ae031c1110e9e4b05a305856f623b7d15b7915264024a5e7c5f8fcee2032f14')
