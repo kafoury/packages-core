@@ -1,4 +1,4 @@
-aufs3.x-rcN proc_map patch
+aufs3.9 proc_map patch
 
 diff --git a/fs/buffer.c b/fs/buffer.c
 index b4dcb34..7b6b475 100644
