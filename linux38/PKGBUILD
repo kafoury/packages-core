@@ -11,6 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.8
 _basever=38
 _aufs=20130506
+_zfs=0.6.1
 pkgver=${_basekernel}.12
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -32,6 +33,9 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
         '3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch'
+        "http://archive.zfsonlinux.org/downloads/zfsonlinux/spl/spl-$_zfs.tar.gz"
+        "http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-$_zfs.tar.gz"
+        'config.zfs'
 )
 sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             'c5e700d8fcf6250970e2bc6d9dd2b6281d0913ee0b563db905e3a1ea1a2f8b24'
@@ -47,6 +51,9 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             '8979c9d667414c8be7084035f4964bfb88c19f0836c702a8621bdfe4cf846143'
             '56bd99e54429a25a144f2d221718b67f516344ffd518fd7dcdd752206ec5be69'
             '611d11b5346e52e957d9690b7fac2464d83f1c67fe64a943b0026ffb466a5798'
+            '6baa3e56a945a508273dd47153e43610659fb6c3dfbe58d96a772e009855d1ae'
+            '80da294a05b02f668b6e34ea5602648f8c661afda0b34d4d55159c4b5a8277fa'
+            '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
 )
 
 prepare() {
@@ -94,6 +101,27 @@ prepare() {
 
   # don't run depmod on 'make install'. We'll do this ourselves in packaging
   sed -i '2iexit 0' scripts/depmod.sh
+
+  # get kernel version
+  make prepare
+
+  # run scripts
+  make scripts
+
+  # add zfs support
+  cd ${srcdir}/spl-${_zfs}
+  if [ "${CARCH}" = "i686" ]; then
+     ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
+     --enable-atomic-spinlocks
+  else
+     ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
+  fi
+  ./copy-builtin ${srcdir}/linux-${_basekernel}
+  cp spl.release.in "${srcdir}/linux-${_basekernel}/"
+  cd ${srcdir}/zfs-${_zfs}
+  ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
+  ./copy-builtin ${srcdir}/linux-${_basekernel}
+  cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}/.config
 }
 
 build() {
@@ -126,7 +154,9 @@ package_linux38() {
   pkgdesc="The Linux Kernel and modules"
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
-  provides=("linux=$pkgver")
+  provides=("linux=${pkgver}" "spl-modules=${_zfs}" "zfs-modules=${_zfs}")
+  replaces=("linux${_basever}-spl" "linux${_basever}-zfs")
+  conflicts=("linux${_basever}-spl" "linux${_basever}-zfs")
   install=${pkgname}.install
 
   cd "${srcdir}/linux-${_basekernel}"
@@ -189,6 +219,8 @@ package_linux38() {
 package_linux38-headers() {
   pkgdesc="Header files and scripts for building modules for linux kernel"
   provides=("linux-headers=$pkgver")
+  replaces=('spl-common' 'zfs-common')
+  conflicts=('spl-common' 'zfs-common')
 
   install -dm755 "${pkgdir}/usr/lib/modules/${_kernver}"
 
