@@ -8,6 +8,11 @@ BASEVER=38
 ARCH=x86_64
 
 post_install () {
+  # EOL
+  echo ">>> NOTE, this is the LAST 3.8.y kernel release, please move to the"
+  echo "    linux39-series at this time.  It is end-of-life, dead, gone, buried, and"
+  echo "    put way behind us never to be spoken of again.  Seriously, move on, it's"
+  echo "    just not worth it anymore."
   # updating module dependencies
   echo ">>> Updating module dependencies. Please wait ..."
   depmod ${KERNEL_VERSION}
@@ -26,6 +31,11 @@ post_install () {
 }
 
 post_upgrade() {
+  # EOL
+  echo ">>> NOTE, this is the LAST 3.8.y kernel release, please move to the"
+  echo "    linux39-series at this time.  It is end-of-life, dead, gone, buried, and"
+  echo "    put way behind us never to be spoken of again.  Seriously, move on, it's"
+  echo "    just not worth it anymore."
   # reminder notice
   if findmnt --fstab -uno SOURCE /boot &>/dev/null && ! mountpoint -q /boot; then
       echo "WARNING: /boot appears to be a separate partition but is not mounted."

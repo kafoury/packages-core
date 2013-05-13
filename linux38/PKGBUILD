@@ -10,9 +10,9 @@ pkgname=('linux38' 'linux38-headers')
 _kernelname=-MANJARO
 _basekernel=3.8
 _basever=38
-_aufs=20130506
+_aufs=20130513
 _zfs=0.6.1
-pkgver=${_basekernel}.12
+pkgver=${_basekernel}.13
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -38,12 +38,12 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'config.zfs'
 )
 sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
-            'c5e700d8fcf6250970e2bc6d9dd2b6281d0913ee0b563db905e3a1ea1a2f8b24'
+            'abc523f59e4c7a4c8ccadd7fd3cd03b7ae8788b399040a1c949c4232601cfd5b'
             'bf3c69d18738278167b0b798acce90333e05e9ce81dbf4b33338230e8976a2d6'
             '85d50b3704a8d4c04adc28e867e8004b94a2a3f7508ebe1972a97961622c7349'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '2ab148fa20b1b714e178c927204295bda5f7b2b05c7ed5aa47e0c2292a9358d5'
+            '38314a8481ec51e811528378a6325109d966fbf47d2b3d05902e5b033559ad66'
             '6f473f3faef88393a3bedf57c30487ff64b0b4173270e05280a796023c29d491'
             '2178505b162ac3b152bdac70f3291f5a0985bd5a3a3dec42882e5dd2f8e12ab6'
             'efb67e83b6d09452c9f6f8c19b889a04f63ca95a53a5efb1a64709b5f56bbae6'
