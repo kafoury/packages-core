@@ -10,9 +10,9 @@ pkgname=('linux39' 'linux39-headers')
 _kernelname=-MANJARO
 _basekernel=3.9
 _basever=39
-_aufs=20130513
+_aufs=20130520
 _zfs=0.6.1
-pkgver=${_basekernel}.2
+pkgver=${_basekernel}.3
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -37,12 +37,12 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'config.zfs'
 )
 sha256sums=('60bc3e64ee5dc778de2cd7cd7640abf518a4c9d4f31b8ed624e16fad53f54541'
-            '069126b2b70acbc27fada2bf67235238fd90ff103267b1bb392244a301321996'
-            '498b0655ebfdca5deb3bdcff45c811f48a9d0cf8d29abfd21f0ea6bbaf886524'
-            'c099cf2ad53d7a67ad3fea0c7d21c65970fec30427aee3017eaa0fbba51767a4'
+            '248ab5f9a42b72e5c3d961520a5fff609a625bbf570ad45d7ae97009525b94d7'
+            'aff84c4c9963a322ae97eec47794bf47ec4ed8f3b3b6773990457674848130bb'
+            'c73de9fe3774a9ec0608794f50c63bc2578bacc1fc69592af8ae6daf3383293c'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '5c0c0938059751e9ab92cccacf5e7cbbcf3f9fb1bee094a98bba590035ec41f0'
+            'dde03ca38ed94fd4f0dc5cd92f6800d4cee499ba31c2a0a8975f0fed665be7d5'
             'e89b2a88ca57f638d8fa818479b0924baa7827881554455acc4f652bd94c958d'
             '708476016948f38a602612a885ef46c8262696aa576697e34944d1b4543484e4'
             'c763185a791b0100828ef08f80c83170c1d52cf9b548782019a0fdec5d4007dd'
