@@ -8,11 +8,12 @@
 pkgbase=linux38
 pkgname=('linux38' 'linux38-headers')
 _kernelname=-MANJARO
-_basekernel=3.8
+_basekernel=3.8.13
 _basever=38
-_aufs=20130513
+_aufs=20130520
 _zfs=0.6.1
-pkgver=${_basekernel}.13
+_subver=1
+pkgver=${_basekernel}.${_subver}
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -20,12 +21,11 @@ license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
-        "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config' 'config.x86_64' 'config.aufs'
         # standard config files for mkinitcpio ramdisk
         "${pkgname}.preset"
-        "aufs${_basekernel}-${_aufs}.patch.bz2"
+        "aufs3.8-${_aufs}.patch.bz2"
         'aufs3-base.patch'
         'aufs3-kbuild.patch'
         'aufs3-loopback.patch'
@@ -36,14 +36,14 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "http://archive.zfsonlinux.org/downloads/zfsonlinux/spl/spl-$_zfs.tar.gz"
         "http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-$_zfs.tar.gz"
         'config.zfs'
+        "${_basekernel}.1.patch"
 )
-sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
-            'abc523f59e4c7a4c8ccadd7fd3cd03b7ae8788b399040a1c949c4232601cfd5b'
+sha256sums=('7cd135cc1791680553cc40bf23ce11ab24b84a3ece33d810950e089090d4f65f'
             'bf3c69d18738278167b0b798acce90333e05e9ce81dbf4b33338230e8976a2d6'
             '85d50b3704a8d4c04adc28e867e8004b94a2a3f7508ebe1972a97961622c7349'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '38314a8481ec51e811528378a6325109d966fbf47d2b3d05902e5b033559ad66'
+            '3aa64f8ef416239291688bc50c60daba92a06d7cbdfd1c215a97704a10f3c433'
             '6f473f3faef88393a3bedf57c30487ff64b0b4173270e05280a796023c29d491'
             '2178505b162ac3b152bdac70f3291f5a0985bd5a3a3dec42882e5dd2f8e12ab6'
             'efb67e83b6d09452c9f6f8c19b889a04f63ca95a53a5efb1a64709b5f56bbae6'
@@ -54,13 +54,14 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             '6baa3e56a945a508273dd47153e43610659fb6c3dfbe58d96a772e009855d1ae'
             '80da294a05b02f668b6e34ea5602648f8c661afda0b34d4d55159c4b5a8277fa'
             '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
+            'e58afecc77f9d476287f44d211e5482bc389cae49c0ecc2fcf13fd06edb18f97'
 )
 
 prepare() {
   cd "${srcdir}/linux-${_basekernel}"
 
-  # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  # add extended stable patch(es)
+  patch -p1 -i "${srcdir}/${_basekernel}.1.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -77,7 +78,7 @@ prepare() {
   patch -Np1 -i "${srcdir}/3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch"
 
   # add aufs3 support
-  patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
+  patch -Np1 -i "${srcdir}/aufs3.8-${_aufs}.patch"
   patch -Np1 -i "${srcdir}/aufs3-base.patch"
   patch -Np1 -i "${srcdir}/aufs3-kbuild.patch"
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
@@ -97,7 +98,12 @@ prepare() {
   fi
 
   # set extraversion to pkgrel
-  sed -ri "s|^(EXTRAVERSION =).*|\1 -${pkgrel}|" Makefile
+
+  sed -ri "s|^(EXTRAVERSION =).*|\1 .${_subver}-${pkgrel}|" Makefile
+
+  # set sublevel to prepatch
+
+  sed -ri "s|^(SUBLEVEL =).*|\1 13|" Makefile
 
   # don't run depmod on 'make install'. We'll do this ourselves in packaging
   sed -i '2iexit 0' scripts/depmod.sh
