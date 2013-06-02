@@ -13,7 +13,7 @@ _basever=38
 _aufs=20130520
 _zfs=0.6.1
 _subver=1
-pkgver=${_basekernel}.${_subver}
+pkgver=${_basekernel}.13.${_subver}
 pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -103,11 +103,9 @@ prepare() {
   fi
 
   # set extraversion to pkgrel
-
   sed -ri "s|^(EXTRAVERSION =).*|\1 .${_subver}-${pkgrel}|" Makefile
 
   # set sublevel to prepatch
-
   sed -ri "s|^(SUBLEVEL =).*|\1 13|" Makefile
 
   # don't run depmod on 'make install'. We'll do this ourselves in packaging
