@@ -8,24 +8,24 @@
 pkgbase=linux38
 pkgname=('linux38' 'linux38-headers')
 _kernelname=-MANJARO
-_basekernel=3.8.13
+_basekernel=3.8
 _basever=38
 _aufs=20130520
 _zfs=0.6.1
 _subver=1
-pkgver=${_basekernel}.${_subver}
+pkgver=${_basekernel}.13.${_subver}
 pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.13.tar.xz"
         # the main kernel config files
         'config' 'config.x86_64' 'config.aufs'
         # standard config files for mkinitcpio ramdisk
         "${pkgname}.preset"
-        "aufs3.8-${_aufs}.patch.bz2"
+        "aufs${_basekernel}-${_aufs}.patch.bz2"
         'aufs3-base.patch'
         'aufs3-kbuild.patch'
         'aufs3-loopback.patch'
@@ -36,7 +36,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "http://archive.zfsonlinux.org/downloads/zfsonlinux/spl/spl-$_zfs.tar.gz"
         "http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-$_zfs.tar.gz"
         'config.zfs'
-        "${_basekernel}.1.patch"
+        "3.8.13.1.patch"
 )
 sha256sums=('7cd135cc1791680553cc40bf23ce11ab24b84a3ece33d810950e089090d4f65f'
             'bf3c69d18738278167b0b798acce90333e05e9ce81dbf4b33338230e8976a2d6'
@@ -58,10 +58,10 @@ sha256sums=('7cd135cc1791680553cc40bf23ce11ab24b84a3ece33d810950e089090d4f65f'
 )
 
 prepare() {
-  cd "${srcdir}/linux-${_basekernel}"
+  cd "${srcdir}/linux-${_basekernel}.13"
 
   # add extended stable patch(es)
-  patch -p1 -i "${srcdir}/${_basekernel}.1.patch"
+  patch -p1 -i "${srcdir}/3.8.13.1.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -78,7 +78,7 @@ prepare() {
   patch -Np1 -i "${srcdir}/3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch"
 
   # add aufs3 support
-  patch -Np1 -i "${srcdir}/aufs3.8-${_aufs}.patch"
+  patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
   patch -Np1 -i "${srcdir}/aufs3-base.patch"
   patch -Np1 -i "${srcdir}/aufs3-kbuild.patch"
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
@@ -131,7 +131,7 @@ prepare() {
 }
 
 build() {
-  cd "${srcdir}/linux-${_basekernel}"
+  cd "${srcdir}/linux-${_basekernel}.13"
   # get kernel version
   make prepare
 
@@ -165,7 +165,7 @@ package_linux38() {
   conflicts=("linux${_basever}-spl" "linux${_basever}-zfs")
   install=${pkgname}.install
 
-  cd "${srcdir}/linux-${_basekernel}"
+  cd "${srcdir}/linux-${_basekernel}.13"
 
   KARCH=x86
 
@@ -210,10 +210,10 @@ package_linux38() {
   # gzip -9 all modules to save 100MB of space
   find "${pkgdir}" -name '*.ko' -exec gzip -9 {} \;
   # make room for external modules
-  ln -s "../extramodules-3.8${_kernelname:--MANJARO}" "${pkgdir}/lib/modules/${_kernver}/extramodules"
+  ln -s "../extramodules-${_basekernel}${_kernelname:--MANJARO}" "${pkgdir}/lib/modules/${_kernver}/extramodules"
   # add real version for building modules and running depmod from post_install/upgrade
-  mkdir -p "${pkgdir}/lib/modules/extramodules-3.8${_kernelname:--MANJARO}"
-  echo "${_kernver}" > "${pkgdir}/lib/modules/extramodules-3.8${_kernelname:--MANJARO}/version"
+  mkdir -p "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--MANJARO}"
+  echo "${_kernver}" > "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--MANJARO}/version"
 
   # Now we call depmod...
   depmod -b "$pkgdir" -F System.map "$_kernver"
@@ -233,7 +233,7 @@ package_linux38-headers() {
   cd "${pkgdir}/usr/lib/modules/${_kernver}"
   ln -sf ../../../src/linux-${_kernver} build
 
-  cd "${srcdir}/linux-${_basekernel}"
+  cd "${srcdir}/linux-${_basekernel}.13"
   install -D -m644 Makefile \
     "${pkgdir}/usr/src/linux-${_kernver}/Makefile"
   install -D -m644 kernel/Makefile \

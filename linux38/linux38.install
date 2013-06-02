@@ -1,18 +1,19 @@
 # arg 1:  the new package version
 # arg 2:  the old package version
 
-RELEASE=3.8.8-1
-KERNEL_VERSION=3.8.8-1-MANJARO
+RELEASE=3.8.13.1-2
+KERNEL_VERSION=3.8.13.1-2-MANJARO
 KERNEL_BASE=3.8
 BASEVER=38
 ARCH=x86_64
 
 post_install () {
   # EOL
-  echo ">>> NOTE, this is the LAST 3.8.y kernel release, please move to the"
-  echo "    linux39-series at this time.  It is end-of-life, dead, gone, buried, and"
-  echo "    put way behind us never to be spoken of again.  Seriously, move on, it's"
-  echo "    just not worth it anymore."
+  echo ">>> NOTE, 3.8.13 was the last maintained maintenance release by Greg Kroah-Hartman."
+  echo "    It is recommend to move on to linux39-series. Use followed cmd to do that:"
+  echo "    'sudo mhwd-kernel linux39'"
+  echo "    The Ubuntu kernel team will be providing extended stable support for the"
+  echo "    Linux 3.8 kernel until August 2014."
   # updating module dependencies
   echo ">>> Updating module dependencies. Please wait ..."
   depmod ${KERNEL_VERSION}
@@ -32,10 +33,11 @@ post_install () {
 
 post_upgrade() {
   # EOL
-  echo ">>> NOTE, this is the LAST 3.8.y kernel release, please move to the"
-  echo "    linux39-series at this time.  It is end-of-life, dead, gone, buried, and"
-  echo "    put way behind us never to be spoken of again.  Seriously, move on, it's"
-  echo "    just not worth it anymore."
+  echo ">>> NOTE, 3.8.13 was the last maintained maintenance release by Greg Kroah-Hartman."
+  echo "    It is recommend to move on to linux39-series. Use followed cmd to do that:"
+  echo "    'sudo mhwd-kernel linux39'"
+  echo "    The Ubuntu kernel team will be providing extended stable support for the"
+  echo "    Linux 3.8 kernel until August 2014."
   # reminder notice
   if findmnt --fstab -uno SOURCE /boot &>/dev/null && ! mountpoint -q /boot; then
       echo "WARNING: /boot appears to be a separate partition but is not mounted."
