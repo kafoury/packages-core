@@ -13,14 +13,15 @@ _basever=38
 _aufs=20130520
 _zfs=0.6.1
 _subver=1
-pkgver=${_basekernel}.13.${_subver}
+pkgver=${_basekernel}.${_subver}
 pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.13.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
+        "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${_basekernel}.13.xz"
         # the main kernel config files
         'config' 'config.x86_64' 'config.aufs'
         # standard config files for mkinitcpio ramdisk
@@ -38,7 +39,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.13.tar
         'config.zfs'
         "3.8.13.1.patch"
 )
-sha256sums=('7cd135cc1791680553cc40bf23ce11ab24b84a3ece33d810950e089090d4f65f'
+sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
+            'abc523f59e4c7a4c8ccadd7fd3cd03b7ae8788b399040a1c949c4232601cfd5b'
             'bf3c69d18738278167b0b798acce90333e05e9ce81dbf4b33338230e8976a2d6'
             '85d50b3704a8d4c04adc28e867e8004b94a2a3f7508ebe1972a97961622c7349'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
@@ -58,7 +60,10 @@ sha256sums=('7cd135cc1791680553cc40bf23ce11ab24b84a3ece33d810950e089090d4f65f'
 )
 
 prepare() {
-  cd "${srcdir}/linux-${_basekernel}.13"
+  cd "${srcdir}/linux-${_basekernel}"
+
+  # add upstream patch
+  patch -p1 -i "${srcdir}/patch-${_basekernel}.13"
 
   # add extended stable patch(es)
   patch -p1 -i "${srcdir}/3.8.13.1.patch"
@@ -131,7 +136,7 @@ prepare() {
 }
 
 build() {
-  cd "${srcdir}/linux-${_basekernel}.13"
+  cd "${srcdir}/linux-${_basekernel}"
   # get kernel version
   make prepare
 
@@ -165,7 +170,7 @@ package_linux38() {
   conflicts=("linux${_basever}-spl" "linux${_basever}-zfs")
   install=${pkgname}.install
 
-  cd "${srcdir}/linux-${_basekernel}.13"
+  cd "${srcdir}/linux-${_basekernel}"
 
   KARCH=x86
 
@@ -233,7 +238,7 @@ package_linux38-headers() {
   cd "${pkgdir}/usr/lib/modules/${_kernver}"
   ln -sf ../../../src/linux-${_kernver} build
 
-  cd "${srcdir}/linux-${_basekernel}.13"
+  cd "${srcdir}/linux-${_basekernel}"
   install -D -m644 Makefile \
     "${pkgdir}/usr/src/linux-${_kernver}/Makefile"
   install -D -m644 kernel/Makefile \
