@@ -6,7 +6,7 @@
 # Maintainer: Philip Müller <philm@manjaro.org>
 
 pkgname=filesystem
-pkgver=2013.03
+pkgver=2013.06
 pkgrel=1
 pkgdesc='Base filesystem'
 arch=('i686' 'x86_64')
@@ -19,10 +19,10 @@ depends=('iana-etc')
 backup=('etc/fstab' 'etc/crypttab' 'etc/group' 'etc/hosts' 'etc/ld.so.conf' 'etc/passwd'
         'etc/shadow' 'etc/gshadow' 'etc/resolv.conf' 'etc/motd' 'etc/nsswitch.conf'
         'etc/shells' 'etc/host.conf' 'etc/securetty' 'etc/profile' 'etc/issue' 'etc/rc.local'
-        'etc/rc.local.shutdown' 'etc/hostname' 'etc/locale.conf' 'etc/modules-load.d/modules.conf')
+        'etc/rc.local.shutdown' 'etc/hostname' 'etc/locale.conf' 'etc/modules-load.d/modules.conf' 'etc/vconsole.conf')
 source=('crypttab' 'fstab' 'group' 'gshadow' 'host.conf' 'hostname' 'hosts' 'issue' 'ld.so.conf' 'locale.conf'
         'locale.sh' 'manjaro.7.txt' 'modprobe.d.usb-load-ehci-first' 'modules.conf' 'motd' 'nsswitch.conf' 'os-release'
-        'passwd' 'profile' 'rc.local' 'rc.local.shutdown' 'resolv.conf' 'securetty' 'shadow' 'shells')
+        'passwd' 'profile' 'rc.local' 'rc.local.shutdown' 'resolv.conf' 'securetty' 'shadow' 'shells' 'vconsole.conf')
 sha256sums=(ea8c67a34a0a8a41beabe3ceb5733c9e8b84b27c569c11ddbfd8395fce99d8dd
             86dff00854a7f2280bb799484ccc39ad449a171448926880742ae64f41666a43
             4767285e8b29bb09c96ed6b4c03e0f866a31ea60a45ce0a20ba8cc199ce7bcbd
@@ -41,13 +41,14 @@ sha256sums=(ea8c67a34a0a8a41beabe3ceb5733c9e8b84b27c569c11ddbfd8395fce99d8dd
             3cfbffdf732985d8a5cd5145cca2da338df53bf45cd097f30c194294492f16f1
             c77720c6077823a98fd978cdde69cbdea1c550c03383dd31a4d516c02b7d977c
             84c8b6103553a88b43e83360446ea3da31e815b457eff233adfd636a304d399d
-            d8d4d3eb8e2bc1f64de5b0d33cd6864558c0fe149cedb479fad36e0523060e60
+            0262cacc91cd309be0747e088d46a39f0b205392fbbafab96d767e48a3872ad0
             156b75b3470c2f73efca084b7ee681eca01508df3d8e9ba0c9325162b5d80f11
             4367e4f2b40237448cad791410a1acaedcd46f5504827840aa85214fad1b546c
             74d2be3dd69600bcf0da751a1804a386bf4ad143b76d79c336acaa5c600e7991
             f7b38167196943d8fb9d2e75358c7262d5fe1082b257c4c8caffe3b6de429cb5
             bdf92c2a97996eb1b3be24090ca94100f16232290010a7395e44c5c92bd38027
-            6cff886fe9e23096d5f67b7857a747ebaf10431be5a2afc40236de5ad13a654f)
+            6cff886fe9e23096d5f67b7857a747ebaf10431be5a2afc40236de5ad13a654f
+            cd4a55177020a436254bb4baf84e068b98b3b0f6644173a7c853d58d236e00f1)
 
 build() {
 	cd ${srcdir}
@@ -72,7 +73,7 @@ package() {
 
 	# setup /etc
 	install -d etc/{ld.so.conf.d,skel,profile.d}
-	for f in fstab group host.conf hosts issue ld.so.conf motd nsswitch.conf os-release passwd resolv.conf securetty shells profile hostname locale.conf; do
+	for f in fstab group host.conf hosts issue ld.so.conf motd nsswitch.conf os-release passwd resolv.conf securetty shells profile hostname locale.conf vconsole.conf; do
 		install -m644 ${srcdir}/${f} etc/
 	done
 	ln -s /proc/self/mounts etc/mtab
@@ -109,7 +110,7 @@ package() {
 	#
 	# setup /usr hierarchy
 	#
-	for d in bin include lib sbin share/misc src; do
+	for d in bin include lib share/misc src; do
 		install -d -m755 usr/${d}
 	done
 	for d in $(seq 8); do
@@ -124,6 +125,13 @@ package() {
 		ln -s usr/lib ${pkgdir}/lib64
 		ln -s lib ${pkgdir}/usr/lib64
 	)
+
+ 	#
+	# add bin symlinks
+ 	#
+	ln -s usr/bin ${pkgdir}/bin
+	ln -s usr/bin ${pkgdir}/sbin
+	ln -s bin ${pkgdir}/usr/sbin
 
 	#
 	# install manjaro(7) manpage
