@@ -45,6 +45,7 @@ post_upgrade() {
 		done
 
 		# Move files
+# TODO: check symlinks valid!
 		for file in $files
 		do
 			local filename="${file##*/}"
@@ -59,9 +60,19 @@ post_upgrade() {
 			fi
 		done
 
+		# Remove directories and create symlinks
+		rm -fr /bin
+		rm -fr /sbin
+		rm -fr /usr/sbin
+		ln -s /usr/bin /bin
+		ln -s /usr/bin /sbin
+		ln -s /usr/bin /usr/sbin
+
 		# Update filesystem
 		rm /var/lib/pacman/db.lck
-		pacman --noconfirm -S filesystem
+		pacman --noconfirm --force -S filesystem
+
+		msg "Run pacman -Syu again!"
 	fi
 
 	# Remove obsolete version file of manjaro-system
