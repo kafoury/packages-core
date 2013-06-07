@@ -93,6 +93,9 @@ post_upgrade() {
 			fi
 		done
 
+		# Fix /usr/bin/init symlink
+		ln -sf "../lib/systemd/systemd" "/usr/bin/init"
+
 		# filesystem should own /bin, /sbin and /usr/sbin
 		local filesystem_path="/var/lib/pacman/local/$(pacman -Q filesystem | sed 's/ /-/g')/files"
 		sed -i 's|^\%FILES\%|\%FILES\%\nbin\nsbin\nusr/sbin|' "${filesystem_path}"
