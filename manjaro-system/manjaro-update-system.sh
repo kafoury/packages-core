@@ -21,6 +21,7 @@ post_upgrade() {
 	# Update filesystem to /usr/bin
 	if [ "$(vercmp $2 20130606-1)" -lt 0 ] && [ ! -L "/bin" ] && [ ! -L "/sbin" ] && [ ! -L "/usr/sbin" ]; then
 		msg "Binaries move to /usr/bin ..."
+		msg "Please be patient."
 		local files="$(find /bin/ /sbin/ /usr/sbin/ | tr "\n" " ")"
 
 		# List unowned files
@@ -104,7 +105,7 @@ post_upgrade() {
 		ln -s usr/bin /sbin
 		ln -s bin /usr/sbin
 
-		msg "Run pacman -Syu again!"
+		msg "Now update your system."
 	fi
 
 	# Remove obsolete version file of manjaro-system
