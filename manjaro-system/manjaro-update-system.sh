@@ -1,11 +1,3 @@
-#!/bin/bash
-
-PACKAGEVERSION="20130501"
-SYSTEMVERSION="$PACKAGEVERSION"
-
-if [ -f /var/lib/manjaro-system/version ]; then
-	. /var/lib/manjaro-system/version
-fi
 
 err() {
     ALL_OFF="\e[1;0m"
@@ -26,102 +18,101 @@ msg() {
 
 
 post_upgrade() {
-	# Remove systemd-next
-	if [ "$(pacman -Qq | grep systemd-next)" != "" ]; then
-		msg "Replacing systemd-next with systemd ..."
-		rm /var/lib/pacman/db.lck
-		pacman --noconfirm -Rdd systemd-next
-		pacman --noconfirm -S systemd systemd-sysvcompat
-	fi
-	if [ "$(pacman -Qq | grep lib32-systemd-next)" != "" ]; then
-		msg "Replacing lib32-systemd-next with lib32-systemd ..."
-		rm /var/lib/pacman/db.lck
-		pacman --noconfirm -Rdd lib32-systemd-next
-		pacman --noconfirm -S lib32-systemd
-	fi
+	# Update filesystem to /usr/bin
+	if [ "$(vercmp $2 20130606-1)" -lt 0 ] && [ ! -L "/bin" ] && [ ! -L "/sbin" ] && [ ! -L "/usr/sbin" ]; then
+		msg "Binaries move to /usr/bin ..."
+		msg "Please be patient."
+		local files="$(find /bin/ /sbin/ /usr/sbin/ | tr "\n" " ")"
 
-	# Install systemd-sysvcompat
-	if [ "$(pacman -Qq | grep systemd-sysvcompat)" == "" ]; then
-		msg "Installing missing systemd-sysvcompat ..."
-		rm /var/lib/pacman/db.lck
-		pacman --noconfirm -S systemd systemd-sysvcompat
-	fi
+		# List unowned files
+		for file in $files
+		do
+			local filename="${file##*/}"
+			if [ "${filename}" == "" ]; then continue; fi
 
-	# Fix turbojpeg
-	if [ -e /usr/bin/tjbench ] ; then
-	if [ "x`pacman -Qo /usr/bin/tjbench | grep libjpeg-turbo`" != "x" ]; then
-		msg "Fixing turbojpeg ..."
-		rm -f /usr/bin/tjbench
-		rm -f /usr/include/turbojpeg.h
-		rm -f /usr/lib/libturbojpeg.a
-		rm -f /usr/lib/libturbojpeg.so
-		rm /var/lib/pacman/db.lck
-		pacman --noconfirm -S libjpeg-turbo
-	fi
-	fi
-	if [ "x`uname -m`" == "xx86_64" ] && [ -e /usr/lib32/libturbojpeg.so ] ; then
-	if [ "x`pacman -Qo /usr/lib32/libturbojpeg.so | grep libjpeg-turbo`" != "x" ]; then
-		msg "Fixing lib32-turbojpeg ..."
-		rm -f /usr/lib32/libturbojpeg.{so,a}
-		rm /var/lib/pacman/db.lck
-		pacman --noconfirm -S lib32-libjpeg-turbo
-	fi
-	fi
+			pacman -Qo "${file}" &>/dev/null
+			if [ $? -ne 0 ]; then msg "Moving unowned file '${file}' to '/usr/bin'"; fi
+		done
 
-	# remove 99-manjaro.rules
-	if [ "$(pacman -Qq manjaro-hotfixes | grep 'manjaro-hotfixes')" == "manjaro-hotfixes" ]; then
-	if [ "$(pacman -Q manjaro-hotfixes | cut -d- -f2 | cut -d" " -f2 | sed -e 's/\.//g')" -lt "201303" ]; then
-		msg "Fixing manjaro-hotfixes ..."
-		# System operation
-		rm -f /etc/polkit-1/rules.d/99-manjaro.rules
-	fi
-	else
-		# No manjaro-hotfixes installed
-		msg "Installing manjaro-hotfixes ..."
-		# System operation
-		rm -f /etc/polkit-1/rules.d/99-manjaro.rules
-		rm /var/lib/pacman/db.lck
-		pacman --noconfirm -S manjaro-hotfixes
-	fi
+		# Update database
+		local pkgs="$(pacman -Qqo /bin /sbin /usr/sbin | sort -u | tr "\n" " ")"
+		for pkg in ${pkgs}
+		do
+			if [ "${pkg}" == "filesystem" ]; then continue; fi
+			local path="/var/lib/pacman/local/$(pacman -Q ${pkg} | sed 's/ /-/g')/files"
+			if [ ! -f "${path}" ]; then continue; fi
 
-	# remove linux-meta
-	for pkg in $(echo "linux linux-headers bbswitch broadcom-wl catalyst catalyst-legacy cdfs fcpci fcpcmcia lirc ndiswrapper nvidia nvidia-legacy nvidiabl open-vm-tools-modules r8168 rt3562sta vhba-module virtualbox-host-modules virtualbox-guest-modules") ; do
-		for rmpkg in $(pacman -Qq | grep ${pkg}) ; do
-			if [ "${pkg}" == "${rmpkg}" ] ; then
-				removepkgs="${removepkgs} ${rmpkg}"
+			sed -i -e 's|^bin/|usr/bin/|' -e 's|^sbin/|usr/bin/|' -e 's|^usr/sbin/|usr/bin/|' -e 's|^bin$|usr/bin|' -e 's|^sbin$|usr/bin|' -e 's|^usr/sbin$|usr/bin|' "${path}"
+		done
+
+		# Move files
+		for file in $files
+		do
+			local filename="${file##*/}"
+			if [ "${filename}" == "" ]; then continue; fi
+
+			# Check if file is a symlink
+			if [ -L "${file}" ]; then
+				local filelink="$(readlink "${file}")"
+
+				# Check if destination file exists. Otherwise move the symlink.
+				if [ -e "/usr/bin/${filename}" ]; then
+					# Remove link
+					unlink "${file}"
+				elif [[ "${file}" =~ ^"/bin/".*|^"/sbin/".* ]] && [[ "${filelink}" =~ ^"../usr/bin/".* ]]; then
+					# Move link to /usr/bin and update relative path
+					filelink="$(echo "${filelink}" | sed 's|^\.\./usr/bin/||')"
+					ln -s "${filelink}" "/usr/bin/${filename}"
+					unlink "${file}"
+				elif [[ "${file}" =~ ^"/bin/".*|^"/sbin/".* ]] && [[ "${filelink}" =~ ^"../".* ]]; then
+					# Move link to /usr/bin and update relative path
+					filelink="$(echo "${filelink}" | sed 's|^\.\./|\.\./\.\./|')"
+					ln -s "${filelink}" "/usr/bin/${filename}"
+					unlink "${file}"
+				elif [[ "${file}" =~ ^"/usr/sbin/".* ]] && [[ "${filelink}" =~ ^"../bin/".* ]]; then
+					# Move link to /usr/bin and update relative path
+					filelink="$(echo "${filelink}" | sed 's|^\.\./bin/||')"
+					ln -s "${filelink}" "/usr/bin/${filename}"
+					unlink "${file}"
+				else
+					# Move link as it is
+					ln -s "${filelink}" "/usr/bin/${filename}"
+					unlink "${file}"
+				fi
+			else
+				if [ -L "/usr/bin/${filename}" ]; then
+					unlink "/usr/bin/${filename}"
+					mv "${file}" "/usr/bin/"
+				elif [ -e "/usr/bin/${filename}" ]; then
+					err "'/usr/bin/${filename}' already exists! Moving file to '/usr/bin_duplicates/${filename}'"
+					if [ ! -d "/usr/bin_duplicates" ]; then mkdir "/usr/bin_duplicates"; fi
+					mv "${file}" "/usr/bin_duplicates/"
+				else
+					mv "${file}" "/usr/bin/"
+				fi
 			fi
 		done
-	done
-	if [ "x${removepkgs}" != "x" ]; then
-		msg "Removing linux-meta pkgs ..."
-		rm /var/lib/pacman/db.lck
-		pacman --noconfirm -Rdd ${removepkgs}
-		msg "Removing linux-meta pkgs - done"
+
+		# Fix /usr/bin/init symlink
+		ln -sf "../lib/systemd/systemd" "/usr/bin/init"
+
+		# filesystem should own /bin, /sbin and /usr/sbin
+		local filesystem_path="/var/lib/pacman/local/$(pacman -Q filesystem | sed 's/ /-/g')/files"
+		sed -i 's|^\%FILES\%|\%FILES\%\nbin\nsbin\nusr/sbin|' "${filesystem_path}"
+
+		# Remove directories and create symlinks
+		rm -fr /bin
+		rm -fr /sbin
+		rm -fr /usr/sbin
+		ln -s usr/bin /bin
+		ln -s usr/bin /sbin
+		ln -s bin /usr/sbin
+
+		msg "Now update your system."
 	fi
 
-	# remove symlinks if fontconfig < 2.10.1
-	if [ "$(pacman -Qq fontconfig | grep 'fontconfig')" == "fontconfig" ]; then
-	if [ "$(pacman -Q fontconfig | cut -d- -f1 | cut -d" " -f2 | sed -e 's/\.//g')" -lt "2101" ]; then
-		msg "Fixing fontconfig ..."
-		# System operation
-		rm -f /etc/fonts/conf.d/20-unhint-small-vera.conf
-		rm -f /etc/fonts/conf.d/29-replace-bitmap-fonts.conf
-		rm -f /etc/fonts/conf.d/30-metric-aliases.conf
-		rm -f /etc/fonts/conf.d/30-urw-aliases.conf
-		rm -f /etc/fonts/conf.d/40-nonlatin.conf
-		rm -f /etc/fonts/conf.d/45-latin.conf
-		rm -f /etc/fonts/conf.d/49-sansserif.conf
-		rm -f /etc/fonts/conf.d/50-user.conf
-		rm -f /etc/fonts/conf.d/51-local.conf
-		rm -f /etc/fonts/conf.d/60-latin.conf
-		rm -f /etc/fonts/conf.d/65-fonts-persian.conf
-		rm -f /etc/fonts/conf.d/65-nonlatin.conf
-		rm -f /etc/fonts/conf.d/69-unifont.conf
-		rm -f /etc/fonts/conf.d/80-delicious.conf
-		rm -f /etc/fonts/conf.d/90-synthetic.conf 
+	# Remove obsolete version file of manjaro-system
+	if [ -f /var/lib/manjaro-system/version ]; then
+		rm /var/lib/manjaro-system/version
 	fi
-	fi
-
-	# Update system version
-	echo "SYSTEMVERSION=\"$PACKAGEVERSION\"" > /var/lib/manjaro-system/version
 }
