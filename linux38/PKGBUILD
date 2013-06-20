@@ -12,7 +12,7 @@ _basekernel=3.8
 _basever=38
 _aufs=20130520
 _zfs=0.6.1
-_subver=2
+_subver=3
 pkgver=${_basekernel}.13.${_subver}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -39,11 +39,12 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'config.zfs'
         "3.8.13.1.patch"
         "3.8.13.2.patch"
+        "3.8.13.3.patch"
 )
 sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             'abc523f59e4c7a4c8ccadd7fd3cd03b7ae8788b399040a1c949c4232601cfd5b'
-            'b12e9a636fb0f17b91a33a618d95fd2314b450aa22136f7ef8db294f269ba382'
-            '6db46330d1b03ec68131c5917220bd84e4dcfae557771a84236bf38ae706ba56'
+            '09c59688367c0e7b34121b1b314740cc9e8deda482271c5e7e258d0ddaafb902'
+            '0cbdc36b81f9e3c3e257fc957b2ec3c1dfef2f36a543191aa2973599b3c203ab'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
             '3aa64f8ef416239291688bc50c60daba92a06d7cbdfd1c215a97704a10f3c433'
@@ -59,6 +60,7 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
             'e58afecc77f9d476287f44d211e5482bc389cae49c0ecc2fcf13fd06edb18f97'
             '5cb38a485d9f764181c0a2925d597232ceb8329e822a19ace52936730ad87927'
+            'fa3e91daed5928effc4e40fe5496d0ef59266880dd62b7d019b4fa280cbca73f'
 )
 
 ## modules.symboles md5sums
@@ -81,6 +83,7 @@ prepare() {
   # add extended stable patch(es)
   patch -p1 -i "${srcdir}/3.8.13.1.patch"
   patch -p1 -i "${srcdir}/3.8.13.2.patch"
+  patch -p1 -i "${srcdir}/3.8.13.3.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
