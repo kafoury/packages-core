@@ -71,13 +71,13 @@ sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
 ## modules.symboles md5sums
 #
 # i686
-# de2de0a01b32b9658aa97d24358ea254  /lib/modules/3.4.49-1-MANJARO/modules.symbols
-# 43f36a94c76dcf993d3e5e696adb78ac  /lib/modules/3.8.13.2-1-MANJARO/modules.symbols
-# 2187f2b0a6feba7973eccf130a3ceacf  /lib/modules/3.9.6-1-MANJARO/modules.symbols
+# 19b8c7b9bc51ae8c1233dc4fb89ad4ef  /lib/modules/3.4.50-1-MANJARO/modules.symbols
+# 43f36a94c76dcf993d3e5e696adb78ac  /lib/modules/3.8.13.3-1-MANJARO/modules.symbols
+# 4a9ef9648e2a79c6a6535b1eab8c5f72  /lib/modules/3.9.7-1-MANJARO/modules.symbols
 # x86_64
-# b626fe2b0e39077ad01b99775e546750  /lib/modules/3.4.49-1-MANJARO/modules.symbols
-# ab78f210650b776831a0954d86b66cfb  /lib/modules/3.8.13.2-1-MANJARO/modules.symbols
-# c8b6b0ea28a0eab80cace774d277ddaa  /lib/modules/3.9.6-1-MANJARO/modules.symbols
+# 3f37a741fdefdf14c9b4946d7508ef01  /lib/modules/3.4.50-1-MANJARO/modules.symbols
+# ab78f210650b776831a0954d86b66cfb  /lib/modules/3.8.13.3-1-MANJARO/modules.symbols
+# ae83578ec82d645dfe48b1b687235d14  /lib/modules/3.9.7-1-MANJARO/modules.symbols
 
 prepare() {
   cd "${srcdir}/linux-${_basekernel}"
