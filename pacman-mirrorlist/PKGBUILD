@@ -3,7 +3,7 @@
 # Maintainer: Philip Müller <philm@manjaro.org>
 
 pkgname=pacman-mirrorlist
-pkgver=20130620
+pkgver=20130625
 pkgrel=1
 pkgdesc="Manjaro Linux mirror list for use by pacman"
 arch=('any')
