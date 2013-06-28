@@ -57,7 +57,7 @@
    fi      
 -  if [ x$type != xrecovery ] ; then
 +  if [ x$type != xrecovery ] && [ x$type != xfallback ] ; then
-       save_default_entry | sed -e "s/^/\t/"
+       save_default_entry | grub_add_tab
    fi
  
 @@ -132,7 +134,8 @@ linux_entry ()
@@ -68,7 +68,7 @@
 +
 +  message="$(gettext_printf "Loading Linux %s ..." "${version}")"
    sed "s/^/$submenu_indentation/" << EOF
- 	echo	'$message'
+ 	echo '$(echo "$message" | grub_quote)'
  	linux	${rel_dirname}/${basename} root=${linux_root_device_thisversion} ro ${args}
 @@ -190,7 +190,15 @@ while [ "x$list" != "x" ] ; do
    alt_version=`echo $version | sed -e "s,\.old$,,g"`
