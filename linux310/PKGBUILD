@@ -5,15 +5,14 @@
 # Maintainer: Philip Müller <philm@manjaro.org>
 # Maintainer: Guinux <guillaume@manjaro.org>
 
-pkgbase=linux38
-pkgname=('linux38' 'linux38-headers')
+pkgbase=linux310
+pkgname=('linux310' 'linux310-headers')
 _kernelname=-MANJARO
-_basekernel=3.8
-_basever=38
+_basekernel=3.10
+_basever=310
 _aufs=20130701
 _zfs=0.6.1
-_subver=4
-pkgver=${_basekernel}.13.${_subver}
+pkgver=${_basekernel}.0
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -21,72 +20,60 @@ license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
-        "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${_basekernel}.13.xz"
+        #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config' 'config.x86_64' 'config.aufs'
         # standard config files for mkinitcpio ramdisk
         "${pkgname}.preset"
-        "aufs${_basekernel}-${_aufs}.patch.bz2"
+        "aufs3.x-rcN-${_aufs}.patch.bz2"
         'aufs3-base.patch'
         'aufs3-kbuild.patch'
         'aufs3-loopback.patch'
         'aufs3-proc_map.patch'
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
-        '3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch'
         "http://archive.zfsonlinux.org/downloads/zfsonlinux/spl/spl-$_zfs.tar.gz"
         "http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-$_zfs.tar.gz"
         'config.zfs'
-        "3.8.13.1.patch"
-        "3.8.13.2.patch"
-        "3.8.13.3.patch"
-        "3.8.13.4.patch"
+        "spl-${_zfs}-${_basever}.patch"
+        "zfs-${_zfs}-${_basever}.patch"
 )
-sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
-            'abc523f59e4c7a4c8ccadd7fd3cd03b7ae8788b399040a1c949c4232601cfd5b'
-            'fa4686e99699370e78936724ce8dcd3f4a233dc7b8e3d6bd6979547035873e52'
-            'dcdf9fd21c4fe021e0e5e4b7a3a9fd94316225a2c97b21a264f57d4266ec3290'
+sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
+            #'f25145ff6ddde7a633839aabfd97b0d8239e14c494fd16210871229a35c1c0de'
+            '9161d2ff24404904ac34f1b8ef20fa24d3048c4a17f03aa112434b098787def4'
+            '162eeb3fb625d8da80b0b6467d166d2bf61d7f17528ba4287a76efd28f5e6b54'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            'e090ff4f208be5d0434b88ffb8217b20ecc64bdc05b24250e257b45ac93a675d'
-            '6f473f3faef88393a3bedf57c30487ff64b0b4173270e05280a796023c29d491'
-            '2178505b162ac3b152bdac70f3291f5a0985bd5a3a3dec42882e5dd2f8e12ab6'
-            'efb67e83b6d09452c9f6f8c19b889a04f63ca95a53a5efb1a64709b5f56bbae6'
-            '22d7177f49ab3642e3227d1fe0fd6f1e9019ad83dab9b1412cb227c9c144faf1'
-            '8979c9d667414c8be7084035f4964bfb88c19f0836c702a8621bdfe4cf846143'
+            '2e42741b16b335ef0de70c3e233eb7bb894de39937c5635318151ee3baf42565'
+            'ea82bfe4850f8c50caf4321124945538931343d22420b3b09e9d69b57d7c98da'
+            'd4b433215d6395634d884f4208201a90b85bd162334d8ad1e5da6e0833e3cba9'
+            '549e25f83aa025c805276a3b2aff83a22fbf77a76ee2687ed601555eb6573b76'
+            '85711263ae21895996c14d1eb4feed9756aec1bd77719496500c9ad3069e1dfb'
+            '8287da172f526f67a6b5d24cfe76e0a81b7e3661f30a0673422606b6d26a40fa'
             '56bd99e54429a25a144f2d221718b67f516344ffd518fd7dcdd752206ec5be69'
-            '611d11b5346e52e957d9690b7fac2464d83f1c67fe64a943b0026ffb466a5798'
             '6baa3e56a945a508273dd47153e43610659fb6c3dfbe58d96a772e009855d1ae'
             '80da294a05b02f668b6e34ea5602648f8c661afda0b34d4d55159c4b5a8277fa'
             '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
-            'e58afecc77f9d476287f44d211e5482bc389cae49c0ecc2fcf13fd06edb18f97'
-            '5cb38a485d9f764181c0a2925d597232ceb8329e822a19ace52936730ad87927'
-            'fa3e91daed5928effc4e40fe5496d0ef59266880dd62b7d019b4fa280cbca73f'
-            'd3c826087357f8509dd2a689be96bcef04ceec1cfa8d7a79b0d3a62c23f2a72a'
+            'b7fdf1c3c898b90f186fbef3cbd2ce469d8d721004f23e9a467d5413aeb0a06e'
+            '013243fa195718cdf5cfbe223aeb6ee53e8b6f7e9416ebfc09da6fdbabf4842d'
 )
 
 ## modules.symboles md5sums
 #
 # i686
-# 19b8c7b9bc51ae8c1233dc4fb89ad4ef  /lib/modules/3.4.52-1-MANJARO/modules.symbols
-# 47f514dfacb1974f1d3c65f4c81b0e4e  /lib/modules/3.8.13.4-1-MANJARO/modules.symbols
-# 4a9ef9648e2a79c6a6535b1eab8c5f72  /lib/modules/3.9.9-1-MANJARO/modules.symbols
+# de2de0a01b32b9658aa97d24358ea254  /lib/modules/3.4.47-1-MANJARO/modules.symbols
+# 43f36a94c76dcf993d3e5e696adb78ac  /lib/modules/3.8.13.1-2-MANJARO/modules.symbols
+# 004884a10de46cd4cf50f68c73371c29  /lib/modules/3.9.4-1-MANJARO/modules.symbols
 # x86_64
-# 3f37a741fdefdf14c9b4946d7508ef01  /lib/modules/3.4.52-1-MANJARO/modules.symbols
-# 1f8fb4a0b66d5798ae2fa76a1bd11b83  /lib/modules/3.8.13.4-1-MANJARO/modules.symbols
-# ae83578ec82d645dfe48b1b687235d14  /lib/modules/3.9.9-1-MANJARO/modules.symbols
+# b626fe2b0e39077ad01b99775e546750  lib/modules/3.4.47-1-MANJARO/modules.symbols
+# ab78f210650b776831a0954d86b66cfb  lib/modules/3.8.13.1-2-MANJARO/modules.symbols
+# 848dc9c254981dfa6b9a3b8a96445241  lib/modules/3.9.4-1-MANJARO/modules.symbols
 
 prepare() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${_basekernel}.13"
-
-  # add extended stable patch(es)
-  patch -p1 -i "${srcdir}/3.8.13.1.patch"
-  patch -p1 -i "${srcdir}/3.8.13.2.patch"
-  patch -p1 -i "${srcdir}/3.8.13.3.patch"
-  patch -p1 -i "${srcdir}/3.8.13.4.patch"
+  #patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -98,12 +85,8 @@ prepare() {
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -Np1 -i "${srcdir}/change-default-console-loglevel.patch"
 
-  # fix dvb issues
-  # see: http://forum.manjaro.org/index.php?topic=1108.0
-  patch -Np1 -i "${srcdir}/3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch"
-
   # add aufs3 support
-  patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"
+  patch -Np1 -i "${srcdir}/aufs3.x-rcN-${_aufs}.patch"
   patch -Np1 -i "${srcdir}/aufs3-base.patch"
   patch -Np1 -i "${srcdir}/aufs3-kbuild.patch"
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
@@ -123,10 +106,7 @@ prepare() {
   fi
 
   # set extraversion to pkgrel
-  sed -ri "s|^(EXTRAVERSION =).*|\1 .${_subver}-${pkgrel}|" Makefile
-
-  # set sublevel to prepatch
-  sed -ri "s|^(SUBLEVEL =).*|\1 13|" Makefile
+  sed -ri "s|^(EXTRAVERSION =).*|\1 -${pkgrel}|" Makefile
 
   # don't run depmod on 'make install'. We'll do this ourselves in packaging
   sed -i '2iexit 0' scripts/depmod.sh
@@ -139,6 +119,8 @@ prepare() {
 
   # add zfs support
   cd ${srcdir}/spl-${_zfs}
+  patch -Np1 -i "${srcdir}/spl-${_zfs}-${_basever}.patch"
+  ./autogen.sh
   if [ "${CARCH}" = "i686" ]; then
      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
      --enable-atomic-spinlocks
@@ -148,6 +130,8 @@ prepare() {
   ./copy-builtin ${srcdir}/linux-${_basekernel}
   cp spl.release.in "${srcdir}/linux-${_basekernel}/"
   cd ${srcdir}/zfs-${_zfs}
+  patch -Np1 -i "${srcdir}/zfs-${_zfs}-${_basever}.patch"
+  ./autogen.sh
   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
   ./copy-builtin ${srcdir}/linux-${_basekernel}
   cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}/.config
@@ -155,8 +139,6 @@ prepare() {
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
-  # get kernel version
-  make prepare
 
   # load configuration
   # Configure the kernel. Replace the line below with one of your choice.
@@ -179,7 +161,7 @@ build() {
   make ${MAKEFLAGS} bzImage modules
 }
 
-package_linux38() {
+package_linux310() {
   pkgdesc="The Linux Kernel and modules"
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
@@ -245,7 +227,7 @@ package_linux38() {
   mv "$pkgdir/lib" "$pkgdir/usr"
 }
 
-package_linux38-headers() {
+package_linux310-headers() {
   pkgdesc="Header files and scripts for building modules for linux kernel"
   provides=("linux-headers=$pkgver")
   replaces=('spl-common' 'zfs-common')

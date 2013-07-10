@@ -18,6 +18,60 @@ msg() {
 
 
 post_upgrade() {
+	# remove pyc-files if python-gobject < 3.8.3
+	if [ "$(vercmp $2 20130707-3)" -lt 0 ] && [ "$(pacman -Qq python-gobject | grep 'python-gobject')" == "python-gobject" ] && [ "$(pacman -Q python-gobject | cut -d- -f2 | cut -d" " -f2 | sed -e 's/\.//g')" -lt "383" ]; then
+		msg "Fixing python-gobject ..."
+		# System operation
+		rm -f /usr/lib/python3.3/site-packages/gi/__pycache__/__init__.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/__pycache__/__init__.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/__pycache__/importer.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/__pycache__/importer.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/__pycache__/module.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/__pycache__/module.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/__pycache__/pygtkcompat.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/__pycache__/pygtkcompat.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/__pycache__/types.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/__pycache__/types.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/_glib/__pycache__/__init__.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/_glib/__pycache__/__init__.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/_glib/__pycache__/option.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/_glib/__pycache__/option.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/_gobject/__pycache__/__init__.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/_gobject/__pycache__/__init__.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/_gobject/__pycache__/constants.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/_gobject/__pycache__/constants.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/_gobject/__pycache__/propertyhelper.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/_gobject/__pycache__/propertyhelper.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/_gobject/__pycache__/signalhelper.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/_gobject/__pycache__/signalhelper.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/GIMarshallingTests.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/GIMarshallingTests.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/GLib.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/GLib.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/GObject.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/GObject.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/Gdk.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/Gdk.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/Gio.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/Gio.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/Gtk.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/Gtk.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/Pango.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/Pango.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/__init__.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/__init__.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/keysyms.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/overrides/__pycache__/keysyms.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/gi/repository/__pycache__/__init__.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/gi/repository/__pycache__/__init__.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/pygtkcompat/__pycache__/__init__.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/pygtkcompat/__pycache__/__init__.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/pygtkcompat/__pycache__/generictreemodel.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/pygtkcompat/__pycache__/generictreemodel.cpython-33.pyo
+		rm -f /usr/lib/python3.3/site-packages/pygtkcompat/__pycache__/pygtkcompat.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/pygtkcompat/__pycache__/pygtkcompat.cpython-33.pyo
+	fi
+
 	# Update filesystem to /usr/bin
 	if [ "$(vercmp $2 20130606-1)" -lt 0 ] && [ ! -L "/bin" ] && [ ! -L "/sbin" ] && [ ! -L "/usr/sbin" ]; then
 		msg "Binaries move to /usr/bin ..."
