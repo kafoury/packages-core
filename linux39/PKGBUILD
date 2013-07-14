@@ -12,7 +12,7 @@ _basekernel=3.9
 _basever=39
 _aufs=20130701
 _zfs=0.6.1
-pkgver=${_basekernel}.9
+pkgver=${_basekernel}.10
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -37,9 +37,9 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'config.zfs'
 )
 sha256sums=('60bc3e64ee5dc778de2cd7cd7640abf518a4c9d4f31b8ed624e16fad53f54541'
-            '4ae653db69190a10b842f05c19499a528ae29898e4f2dfbdb420ef5d26112f3b'
-            'd13b8c07b4be0f2c05d2ab0976e802cacdfbef37bf8243cbc236f696d4ee2889'
-            'f6b60dff5d16489f9e64e5c727196e13fe0e8817bc99d30ad78e6b9c70b698d2'
+            '917a1c08ee87c11911ab73af438cf27eb36ab42cae9b84bc60aa18c4a72ba3b6'
+            '4f34caf4c0eb382a1780077d04ef23722a5b3518006c889f9c1d659b54b190d7'
+            '7d2ebc97c7a7e30d30583c5604e82a3c5a855153fdadf7df9001046d559c0065'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
             '3745003657124dc37796b1c5e11743a8eac717d2870143c238980bf96d673a9f'
@@ -154,7 +154,7 @@ build() {
 }
 
 package_linux39() {
-  pkgdesc="The Linux Kernel and modules"
+  pkgdesc="The ${pkgbase/linux/Linux} kernel and modules"
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
   provides=("linux=${pkgver}" "spl-modules=${_zfs}" "zfs-modules=${_zfs}")
@@ -220,7 +220,7 @@ package_linux39() {
 }
 
 package_linux39-headers() {
-  pkgdesc="Header files and scripts for building modules for linux kernel"
+  pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel"
   provides=("linux-headers=$pkgver")
   replaces=('spl-common' 'zfs-common')
   conflicts=('spl-common' 'zfs-common')

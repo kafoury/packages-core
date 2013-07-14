@@ -180,7 +180,7 @@ build() {
 }
 
 package_linux38() {
-  pkgdesc="The Linux Kernel and modules"
+  pkgdesc="The ${pkgbase/linux/Linux} kernel and modules"
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
   provides=("linux=${pkgver}" "spl-modules=${_zfs}" "zfs-modules=${_zfs}")
@@ -246,7 +246,7 @@ package_linux38() {
 }
 
 package_linux38-headers() {
-  pkgdesc="Header files and scripts for building modules for linux kernel"
+  pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel"
   provides=("linux-headers=$pkgver")
   replaces=('spl-common' 'zfs-common')
   conflicts=('spl-common' 'zfs-common')

@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86_64 3.8.13.4-1 Kernel Configuration
+# Linux/x86_64 3.8.13.5-1 Kernel Configuration
 #
 CONFIG_64BIT=y
 CONFIG_X86_64=y
@@ -4913,7 +4913,9 @@ CONFIG_UIO_AEC=m
 CONFIG_UIO_SERCOS3=m
 CONFIG_UIO_PCI_GENERIC=m
 CONFIG_UIO_NETX=m
-# CONFIG_VFIO is not set
+CONFIG_VFIO=m
+CONFIG_VFIO_PCI=m
+CONFIG_VFIO_PCI_VGA=y
 CONFIG_VIRTIO=m
 
 #
