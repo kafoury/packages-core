@@ -1,4 +1,4 @@
-aufs3.x-rcN base patch
+aufs3.10 base patch
 
 diff --git a/fs/file_table.c b/fs/file_table.c
 index 485dc0e..8db8096 100644
@@ -27,7 +27,7 @@ index 00d5fc3..f324521 100644
  	if (inode->i_op->update_time)
  		return inode->i_op->update_time(inode, time, flags);
 diff --git a/fs/splice.c b/fs/splice.c
-index 9eca476..4ba1844 100644
+index d37431d..987346f 100644
 --- a/fs/splice.c
 +++ b/fs/splice.c
 @@ -1093,8 +1093,8 @@ EXPORT_SYMBOL(generic_splice_sendpage);

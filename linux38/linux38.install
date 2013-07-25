@@ -10,8 +10,8 @@ ARCH=x86_64
 post_install () {
   # EOL
   echo ">>> NOTE, 3.8.13 was the last maintained maintenance release by Greg Kroah-Hartman."
-  echo "    It is recommend to move on to linux39-series. Use followed cmd to do that:"
-  echo "    'sudo mhwd-kernel linux39'"
+  echo "    It is recommend to move on to linux310-series. Use followed cmd to do that:"
+  echo "    'sudo mhwd-kernel -i linux310'"
   echo "    The Ubuntu kernel team will be providing extended stable support for the"
   echo "    Linux 3.8 kernel until August 2014."
   # updating module dependencies
@@ -34,8 +34,8 @@ post_install () {
 post_upgrade() {
   # EOL
   echo ">>> NOTE, 3.8.13 was the last maintained maintenance release by Greg Kroah-Hartman."
-  echo "    It is recommend to move on to linux39-series. Use followed cmd to do that:"
-  echo "    'sudo mhwd-kernel linux39'"
+  echo "    It is recommend to move on to linux310-series. Use followed cmd to do that:"
+  echo "    'sudo mhwd-kernel -i linux310'"
   echo "    The Ubuntu kernel team will be providing extended stable support for the"
   echo "    Linux 3.8 kernel until August 2014."
   # reminder notice

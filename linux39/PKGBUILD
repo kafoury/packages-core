@@ -10,9 +10,9 @@ pkgname=('linux39' 'linux39-headers')
 _kernelname=-MANJARO
 _basekernel=3.9
 _basever=39
-_aufs=20130701
+_aufs=20130722
 _zfs=0.6.1
-pkgver=${_basekernel}.10
+pkgver=${_basekernel}.11
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -35,14 +35,19 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "http://archive.zfsonlinux.org/downloads/zfsonlinux/spl/spl-$_zfs.tar.gz"
         "http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-$_zfs.tar.gz"
         'config.zfs'
+        'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.9/1510_af_key-fix-info-leaks-in-notify-messages.patch'
+        'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.9/1511_ipv6-ip6_sk_dst_check-must-not-assume-ipv6-dst.patch'
+        'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.9/1600_CVE-2013-4125-ipv6-fix-fib6_add_rt2node-BUG.patch'
+        'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.9/1700_enable-thinkpad-micled.patch'
+        'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.9/2700_ThinkPad-30-brightness-control-fix.patch'
 )
 sha256sums=('60bc3e64ee5dc778de2cd7cd7640abf518a4c9d4f31b8ed624e16fad53f54541'
-            '917a1c08ee87c11911ab73af438cf27eb36ab42cae9b84bc60aa18c4a72ba3b6'
+            '29be11d16ef152ae1858d567cbf45f0da0193adf364826f5e3fa8b2fcd839682'
             '4f34caf4c0eb382a1780077d04ef23722a5b3518006c889f9c1d659b54b190d7'
             '7d2ebc97c7a7e30d30583c5604e82a3c5a855153fdadf7df9001046d559c0065'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '3745003657124dc37796b1c5e11743a8eac717d2870143c238980bf96d673a9f'
+            '32693a010c603bf45cd3891a5a6c5d9b1bc9b8c67accbe128608a48bc53d2f27'
             'e89b2a88ca57f638d8fa818479b0924baa7827881554455acc4f652bd94c958d'
             '708476016948f38a602612a885ef46c8262696aa576697e34944d1b4543484e4'
             'c763185a791b0100828ef08f80c83170c1d52cf9b548782019a0fdec5d4007dd'
@@ -52,18 +57,25 @@ sha256sums=('60bc3e64ee5dc778de2cd7cd7640abf518a4c9d4f31b8ed624e16fad53f54541'
             '6baa3e56a945a508273dd47153e43610659fb6c3dfbe58d96a772e009855d1ae'
             '80da294a05b02f668b6e34ea5602648f8c661afda0b34d4d55159c4b5a8277fa'
             '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
+            '50b4fbf9552f05366a15e7ed9f454216d0f7e102c4113f1840b97edf5e0032bb'
+            'e2362defbfdb3481957932d7010c041b97508eb41fd649c11d616cd8b3b4e616'
+            'ff39663ad9ca2fb42bef2e114ef8b41c017e5daa65bd93284024b3959f873093'
+            '8ef4a6c16e3d0df0c211fef7875089eda3821db4b1335cac79ca02511a4d6f5c'
+            '9d7eab1ffec60f2b0d2121221d957f17a02918d95f11ea52902c227df5105e25'
 )
 
 ## modules.symboles md5sums
 #
 # i686
-# 19b8c7b9bc51ae8c1233dc4fb89ad4ef  /lib/modules/3.4.52-1-MANJARO/modules.symbols
-# 47f514dfacb1974f1d3c65f4c81b0e4e  /lib/modules/3.8.13.4-1-MANJARO/modules.symbols
-# 4a9ef9648e2a79c6a6535b1eab8c5f72  /lib/modules/3.9.9-1-MANJARO/modules.symbols
+# a188a13cba4c621882c97087dd7c8d26  /lib/modules/3.10.2-1-MANJARO/modules.symbols
+# 19b8c7b9bc51ae8c1233dc4fb89ad4ef  /lib/modules/3.4.54-1-MANJARO/modules.symbols
+# e8c6cef1076d065e2bcab1e35f52f44a  /lib/modules/3.8.13.5-1-MANJARO/modules.symbols
+# 3d3ddd3c196b0bcc775044b4601d5099  /lib/modules/3.9.11-1-MANJARO/modules.symbols
 # x86_64
-# 3f37a741fdefdf14c9b4946d7508ef01  /lib/modules/3.4.52-1-MANJARO/modules.symbols
-# 1f8fb4a0b66d5798ae2fa76a1bd11b83  /lib/modules/3.8.13.4-1-MANJARO/modules.symbols
-# ae83578ec82d645dfe48b1b687235d14  /lib/modules/3.9.9-1-MANJARO/modules.symbols
+# 6f7b35fd9a29cb26820de5cebdf1a142  /lib/modules/3.10.2-1-MANJARO/modules.symbols
+# 3f37a741fdefdf14c9b4946d7508ef01  /lib/modules/3.4.54-1-MANJARO/modules.symbols
+# 4c45f173f5be1c03d9cdc67a146bd68b  /lib/modules/3.8.13.5-1-MANJARO/modules.symbols
+# d5c3101d05c35fc16b08212f96e0032d  /lib/modules/3.9.11-1-MANJARO/modules.symbols
 
 prepare() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -80,6 +92,13 @@ prepare() {
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -Np1 -i "${srcdir}/change-default-console-loglevel.patch"
+
+  # add Gentoo patches
+  patch -Np1 -i "${srcdir}/1510_af_key-fix-info-leaks-in-notify-messages.patch"
+  patch -Np1 -i "${srcdir}/1511_ipv6-ip6_sk_dst_check-must-not-assume-ipv6-dst.patch"
+  patch -Np1 -i "${srcdir}/1600_CVE-2013-4125-ipv6-fix-fib6_add_rt2node-BUG.patch"
+  patch -Np1 -i "${srcdir}/1700_enable-thinkpad-micled.patch"
+  patch -Np1 -i "${srcdir}/2700_ThinkPad-30-brightness-control-fix.patch"
 
   # add aufs3 support
   patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"

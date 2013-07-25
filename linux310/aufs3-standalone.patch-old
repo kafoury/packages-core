@@ -1,4 +1,4 @@
-aufs3.x-rcN standalone patch
+aufs3.10 standalone patch
 
 diff --git a/fs/file_table.c b/fs/file_table.c
 index 8db8096..e271e28 100644
@@ -154,7 +154,7 @@ index 8c74100..be563cd 100644
  long vfs_truncate(struct path *path, loff_t length)
  {
 diff --git a/fs/splice.c b/fs/splice.c
-index 4ba1844..2370d0b 100644
+index 987346f..8d6a045 100644
 --- a/fs/splice.c
 +++ b/fs/splice.c
 @@ -1120,6 +1120,7 @@ long do_splice_from(struct pipe_inode_info *pipe, struct file *out,

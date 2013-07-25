@@ -3,8 +3,8 @@
 # Maintainer: Philip Müller <philm@manjaro.org>
 
 pkgname=pacman-mirrorlist
-pkgver=20130716
-pkgrel=1
+pkgver=20130722
+pkgrel=2
 pkgdesc="Manjaro Linux mirror list for use by pacman"
 arch=('any')
 depends=('python')
@@ -43,6 +43,4 @@ prepare() {
 package() {
   cd "${srcdir}"/pacman-mirrors
   make DESTDIR="${pkgdir}" install
-  # Those mirrors seems to be broken
-  rm "${pkgdir}"/etc/pacman.d/mirrors/China
 }

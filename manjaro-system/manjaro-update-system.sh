@@ -18,8 +18,20 @@ msg() {
 
 
 post_upgrade() {
+	# workaround for bug: http://bugs.manjaro.org/index.php?do=details&task_id=124
+	cmd1="$(pacman -Qq bluez4 &> /tmp/cmd1)"
+	cmd2="$(pacman -Q bluez &> /tmp/cmd2)"
+	if [ "$(vercmp $2 20130725-1)" -lt 0 ] && [ "$(grep 'bluez4' /tmp/cmd1)" != "bluez4" ] && [ "$(cat /tmp/cmd2 | cut -d. -f1 | cut -d" " -f2)" -lt "5" ]; then
+		msg "Fixing bluez ..."
+		rm /var/lib/pacman/db.lck
+		pacman --noconfirm -Rdd bluez
+		pacman --noconfirm -S bluez4 bluez-libs
+	fi
+
 	# remove pyc-files if python-gobject < 3.8.3
-	if [ "$(vercmp $2 20130707-3)" -lt 0 ] && [ "$(pacman -Qq python-gobject | grep 'python-gobject')" == "python-gobject" ] && [ "$(pacman -Q python-gobject | cut -d- -f2 | cut -d" " -f2 | sed -e 's/\.//g')" -lt "383" ]; then
+	cmd1="$(pacman -Qq python-gobject &> /tmp/cmd1)"
+	cmd2="$(pacman -Q python-gobject &> /tmp/cmd2)"
+	if [ "$(vercmp $2 20130707-3)" -lt 0 ] && [ "$(grep 'python-gobject' /tmp/cmd1)" == "python-gobject" ] && [ "$(cat /tmp/cmd2 | cut -d- -f2 | cut -d" " -f2 | sed -e 's/\.//g')" -lt "383" ]; then
 		msg "Fixing python-gobject ..."
 		# System operation
 		rm -f /usr/lib/python3.3/site-packages/gi/__pycache__/__init__.cpython-33.pyc
