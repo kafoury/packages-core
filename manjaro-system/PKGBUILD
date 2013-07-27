@@ -3,7 +3,7 @@
 # maintainer: Roland Singer <roland[at]manjaro[dog]org>
 
 pkgname=manjaro-system
-pkgver=20130726
+pkgver=20130727
 pkgrel=1
 pkgdesc="Manjaro Linux System - Update script"
 arch=('any')
@@ -17,5 +17,5 @@ install=manjaro-update-system.sh
 package() {
 	mkdir -p ${pkgdir}/var/lib/manjaro-system
 	echo "# Manjaro Linux Kernels" > ${pkgdir}/var/lib/manjaro-system/manjaro-kernel.conf
-	echo 'manjaro_kernels="34 38 39"' > ${pkgdir}/var/lib/manjaro-system/manjaro-kernel.conf
+	echo 'manjaro_kernels="34 38 39 310"' > ${pkgdir}/var/lib/manjaro-system/manjaro-kernel.conf
 }
