@@ -12,7 +12,7 @@ _basekernel=3.8
 _basever=38
 _aufs=20130722
 _zfs=0.6.1
-_subver=5
+_subver=6
 pkgver=${_basekernel}.13.${_subver}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -37,7 +37,6 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "http://archive.zfsonlinux.org/downloads/zfsonlinux/spl/spl-$_zfs.tar.gz"
         "http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-$_zfs.tar.gz"
         'config.zfs'
-        'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.8/1600_CVE-2013-4125-ipv6-fix-fib6_add_rt2node-BUG.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.8/1700_enable-thinkpad-micled.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.8/2700_ThinkPad-30-brightness-control-fix.patch'
         "3.8.13.1.patch"
@@ -45,6 +44,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "3.8.13.3.patch"
         "3.8.13.4.patch"
         "3.8.13.5.patch"
+        "3.8.13.6.patch"
 )
 sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             'abc523f59e4c7a4c8ccadd7fd3cd03b7ae8788b399040a1c949c4232601cfd5b'
@@ -63,7 +63,6 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             '6baa3e56a945a508273dd47153e43610659fb6c3dfbe58d96a772e009855d1ae'
             '80da294a05b02f668b6e34ea5602648f8c661afda0b34d4d55159c4b5a8277fa'
             '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
-            'ff39663ad9ca2fb42bef2e114ef8b41c017e5daa65bd93284024b3959f873093'
             '8ef4a6c16e3d0df0c211fef7875089eda3821db4b1335cac79ca02511a4d6f5c'
             '9d7eab1ffec60f2b0d2121221d957f17a02918d95f11ea52902c227df5105e25'
             'e58afecc77f9d476287f44d211e5482bc389cae49c0ecc2fcf13fd06edb18f97'
@@ -71,18 +70,19 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             'fa3e91daed5928effc4e40fe5496d0ef59266880dd62b7d019b4fa280cbca73f'
             'd3c826087357f8509dd2a689be96bcef04ceec1cfa8d7a79b0d3a62c23f2a72a'
             '5bf544c716d05fb50dbce2f6705d23e5f46a4afcbda7039781d5d631ed9b89dd'
+            'ff6f4e3612e7293ddb11b0693488dbcad1256161e89cdefc445211d0753e1fb2'
 )
 
 ## modules.symboles md5sums
 #
 # i686
-# a188a13cba4c621882c97087dd7c8d26  /lib/modules/3.10.2-1-MANJARO/modules.symbols
-# 19b8c7b9bc51ae8c1233dc4fb89ad4ef  /lib/modules/3.4.54-1-MANJARO/modules.symbols
+# 12fcbc45df23475debcff8e7ef819fef  /lib/modules/3.10.5-0-MANJARO/modules.symbols
+# 19b8c7b9bc51ae8c1233dc4fb89ad4ef  /lib/modules/3.4.55-1-MANJARO/modules.symbols
 # e8c6cef1076d065e2bcab1e35f52f44a  /lib/modules/3.8.13.5-1-MANJARO/modules.symbols
 # 3d3ddd3c196b0bcc775044b4601d5099  /lib/modules/3.9.11-1-MANJARO/modules.symbols
 # x86_64
-# 6f7b35fd9a29cb26820de5cebdf1a142  /lib/modules/3.10.2-1-MANJARO/modules.symbols
-# 3f37a741fdefdf14c9b4946d7508ef01  /lib/modules/3.4.54-1-MANJARO/modules.symbols
+# 4b296d3b6937b83a0ceac6c2a32b6686  /lib/modules/3.10.5-0-MANJARO/modules.symbols
+# 3f37a741fdefdf14c9b4946d7508ef01  /lib/modules/3.4.55-1-MANJARO/modules.symbols
 # 4c45f173f5be1c03d9cdc67a146bd68b  /lib/modules/3.8.13.5-1-MANJARO/modules.symbols
 # d5c3101d05c35fc16b08212f96e0032d  /lib/modules/3.9.11-1-MANJARO/modules.symbols
 
@@ -98,6 +98,7 @@ prepare() {
   patch -p1 -i "${srcdir}/3.8.13.3.patch"
   patch -p1 -i "${srcdir}/3.8.13.4.patch"
   patch -p1 -i "${srcdir}/3.8.13.5.patch"
+  patch -p1 -i "${srcdir}/3.8.13.6.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -114,7 +115,6 @@ prepare() {
   patch -Np1 -i "${srcdir}/3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch"
 
   # add Gentoo patches
-  patch -Np1 -i "${srcdir}/1600_CVE-2013-4125-ipv6-fix-fib6_add_rt2node-BUG.patch"
   patch -Np1 -i "${srcdir}/1700_enable-thinkpad-micled.patch"
   patch -Np1 -i "${srcdir}/2700_ThinkPad-30-brightness-control-fix.patch"
 

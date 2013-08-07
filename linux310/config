@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 3.10.0-1 Kernel Configuration
+# Linux/x86 3.10.4-1 Kernel Configuration
 #
 # CONFIG_64BIT is not set
 CONFIG_X86_32=y
@@ -1702,8 +1702,8 @@ CONFIG_SENSORS_LIS3_I2C=m
 # Altera FPGA firmware download module
 #
 CONFIG_ALTERA_STAPL=m
-CONFIG_INTEL_MEI=y
-CONFIG_INTEL_MEI_ME=y
+CONFIG_INTEL_MEI=m
+CONFIG_INTEL_MEI_ME=m
 CONFIG_VMWARE_VMCI=m
 CONFIG_HAVE_IDE=y
 # CONFIG_IDE is not set
