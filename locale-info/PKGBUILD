@@ -1,5 +1,5 @@
 pkgname=locale-info
-pkgver=2.17
+pkgver=2.18
 pkgrel=1
 pkgdesc="Locale informations"
 arch=('any')
@@ -11,8 +11,8 @@ depends=("glibc=${pkgver}")
 source=(http://ftp.gnu.org/gnu/libc/glibc-${pkgver}.tar.xz{,.sig}
         localeinfo.sh)
 
-sha256sums=('6914e337401e0e0ade23694e1b2c52a5f09e4eda3270c67e7c3ba93a89b5b23e'
-            '8a741af26c29c4f6f880a395fd80d2e1270c4ec3a9e277bd48a496e360eb67d8'
+sha256sums=('2cb4e1e381928f1e5e55e71ab1ba8e0ea7ede75ff9709770435bfd018ea257a3'
+            '066ed81b422e6eac9e0af893968c8cffdfb9606f29d151be99444f3da861c5c4'
             '3c96d41a85f3b83debe4133cc922b08904960e15bff38ad9600ef4093d0c4646')
 
 

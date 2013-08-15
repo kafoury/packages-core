@@ -3,7 +3,7 @@
 # Maintainer: Philip Müller <philm@manjaro.org>
 
 pkgname=pacman-mirrorlist
-pkgver=20130804
+pkgver=20130814
 pkgrel=1
 pkgdesc="Manjaro Linux mirror list for use by pacman"
 arch=('any')
@@ -37,7 +37,7 @@ getsource() {
 }
 
 prepare() {
-  getsource "pacman-mirrors" "git://git.manjaro.org/core/pacman-mirrors.git"
+  getsource "pacman-mirrors" "http://git.manjaro.org/core/pacman-mirrors.git"
 }
 
 package() {
