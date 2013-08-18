@@ -5,7 +5,7 @@
 pkgbase=mhwd
 pkgname=('mhwd' 'mhwd-db')
 pkgver=0.2.8
-pkgrel=2
+pkgrel=3
 pkgdesc="Manjaro Linux Hardware Detection"
 arch=('i686' 'x86_64')
 url="http://git.manjaro.org"
@@ -37,8 +37,8 @@ getsource() {
 }
 
 prepare() {
-  getsource "mhwd" "git://git.manjaro.org/core/mhwd.git"
-  getsource "mhwd-db" "git://git.manjaro.org/core/mhwd-db.git"
+  getsource "mhwd" "http://git.manjaro.org/core/mhwd.git"
+  getsource "mhwd-db" "http://git.manjaro.org/core/mhwd-db.git"
 }
 
 build() {

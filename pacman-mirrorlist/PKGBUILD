@@ -3,7 +3,7 @@
 # Maintainer: Philip Müller <philm@manjaro.org>
 
 pkgname=pacman-mirrorlist
-pkgver=20130814
+pkgver=20$(date +%y%m%d)
 pkgrel=1
 pkgdesc="Manjaro Linux mirror list for use by pacman"
 arch=('any')
@@ -12,33 +12,8 @@ url="https://git.manjaro.org/core/pacman-mirrors"
 license=('GPL')
 install=pacman-mirrorlist.install
 backup=(etc/pacman-mirrors.conf)
-_git=yes
-
-
-getsource() {
-  cd "$srcdir"
-  msg "Connecting to GIT server...."
-
-  if [ -d $1 ] ; then
-    if [ "$_git" == "yes" ] ; then
-       cd $1 && git pull origin master
-    else
-       cd $1 && git pull origin master && git checkout -b $pkgver
-    fi
-    msg "The local files are updated."
-  else
-    git clone $2 $1
-    if [ "$_git" != "yes" ] ; then
-       cd $1 && git checkout -b $pkgver $pkgver
-    fi
-  fi
-
-  msg "GIT checkout done or server timeout"
-}
-
-prepare() {
-  getsource "pacman-mirrors" "http://git.manjaro.org/core/pacman-mirrors.git"
-}
+source=(git+http://git.manjaro.org/core/pacman-mirrors.git)
+sha256sums=('SKIP')
 
 package() {
   cd "${srcdir}"/pacman-mirrors
