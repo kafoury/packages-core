@@ -15,11 +15,42 @@ msg() {
 	printf "${GREEN}==>${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
 }
 
+check_pkgs()
+{
+	local remove=""
+
+    for pkg in ${packages} ; do
+        for rmpkg in $(pacman -Qq | grep ${pkg}) ; do
+            if [ "${pkg}" == "${rmpkg}" ] ; then
+               removepkgs="${removepkgs} ${rmpkg}"
+            fi
+        done
+    done
+
+    packages="${removepkgs}"
+}
+
+
 post_upgrade() {
+	# workaround for catalyst-server removal
+	pacman -Qq catalyst-server &> /tmp/cmd1
+	pacman -Q mhwd-catalyst &> /tmp/cmd2
+	packages="catalyst-server catalyst-input catalyst-video"
+	conflicts="xf86-input-acecad xf86-input-aiptek xf86-input-evdev xf86-input-joystick xf86-input-keyboard xf86-input-mouse xf86-input-synaptics xf86-input-void xf86-input-wacom xorg-server-common xorg-server"
+	if [ "$(vercmp $2 20130820-3)" -lt 0 ] && [ "$(grep 'catalyst-server' /tmp/cmd1)" == "catalyst-server" ]; then
+	   if [ "$(cat /tmp/cmd2 | cut -d- -f2 | cut -d" " -f2 | sed -e 's/\.//g')" -lt "138" ]; then
+		msg "Preparing Catalyst installation ..."
+		rm /var/lib/pacman/db.lck &> /dev/null
+		check_pkgs
+		pacman --noconfirm -Rdd ${packages} &> /dev/null
+		pacman --noconfirm -S ${conflicts} &> /dev/null
+	   fi
+	fi
+
 	# workaround for bug: http://bugs.manjaro.org/index.php?do=details&task_id=124
-	cmd1="$(pacman -Qq bluez4 &> /tmp/cmd1)"
-	cmd2="$(pacman -Qq bluez &> /tmp/cmd2)"
-	cmd3="$(pacman -Q bluez &> /tmp/cmd3)"
+	pacman -Qq bluez4 &> /tmp/cmd1
+	pacman -Qq bluez &> /tmp/cmd2
+	pacman -Q bluez &> /tmp/cmd3
 	if [ "$(vercmp $2 20130726-1)" -lt 0 ] && [ "$(grep 'bluez4' /tmp/cmd1)" != "bluez4" ] && [ "$(grep 'bluez' /tmp/cmd2)" == "bluez" ]; then
 	   if [ "$(cat /tmp/cmd3 | cut -d. -f1 | cut -d" " -f2)" -lt "5" ]; then
 		msg "Fixing bluez ..."
@@ -30,8 +61,8 @@ post_upgrade() {
 	fi
 
 	# remove pyc-files if python-gobject < 3.8.3
-	cmd1="$(pacman -Qq python-gobject &> /tmp/cmd1)"
-	cmd2="$(pacman -Q python-gobject &> /tmp/cmd2)"
+	pacman -Qq python-gobject &> /tmp/cmd1
+	pacman -Q python-gobject &> /tmp/cmd2
 	if [ "$(vercmp $2 20130707-3)" -lt 0 ] && [ "$(grep 'python-gobject' /tmp/cmd1)" == "python-gobject" ]; then
 	   if [ "$(cat /tmp/cmd2 | cut -d- -f2 | cut -d" " -f2 | sed -e 's/\.//g')" -lt "383" ]; then
 		msg "Fixing python-gobject ..."
