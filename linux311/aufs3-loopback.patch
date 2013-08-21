@@ -196,7 +196,7 @@ index 90df5d6..cb91822 100644
  	unsigned	lo_blocksize;
  	void		*key_data; 
 diff --git a/fs/aufs/f_op.c b/fs/aufs/f_op.c
-index 38e10fb..9db8654 100644
+index c43fafa..b9579d8 100644
 --- a/fs/aufs/f_op.c
 +++ b/fs/aufs/f_op.c
 @@ -353,7 +353,7 @@ static ssize_t aufs_splice_read(struct file *file, loff_t *ppos,
@@ -258,7 +258,7 @@ index 64d1e3f..e3a32a9 100644
  
  #endif /* __KERNEL__ */
 diff --git a/fs/aufs/super.c b/fs/aufs/super.c
-index 4f57ba0..786ffea 100644
+index 3955f86..b1d5e7f 100644
 --- a/fs/aufs/super.c
 +++ b/fs/aufs/super.c
 @@ -811,7 +811,10 @@ static const struct super_operations aufs_sop = {

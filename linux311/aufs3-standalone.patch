@@ -142,7 +142,7 @@ index 923fe4a..176b435 100644
  static int fsnotify_mark_destroy(void *ignored)
  {
 diff --git a/fs/open.c b/fs/open.c
-index d53e298..4feece8 100644
+index 7931f76..4100715 100644
 --- a/fs/open.c
 +++ b/fs/open.c
 @@ -61,6 +61,7 @@ int do_truncate(struct dentry *dentry, loff_t length, unsigned int time_attrs,
