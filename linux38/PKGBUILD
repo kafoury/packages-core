@@ -10,9 +10,9 @@ pkgname=('linux38' 'linux38-headers')
 _kernelname=-MANJARO
 _basekernel=3.8
 _basever=38
-_aufs=20130722
+_aufs=20130819
 _zfs=0.6.1
-_subver=6
+_subver=7
 pkgver=${_basekernel}.13.${_subver}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -45,6 +45,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "3.8.13.4.patch"
         "3.8.13.5.patch"
         "3.8.13.6.patch"
+        "3.8.13.7.patch"
 )
 sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             'abc523f59e4c7a4c8ccadd7fd3cd03b7ae8788b399040a1c949c4232601cfd5b'
@@ -52,10 +53,10 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             'c9c554b3c1b5482ebb2eca1ebc43275dbd483044f2e1a62c2122cc9d6c263b91'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '6eb33ef4ef9b27488587e776bd38807d734de8c7d6842a01b333becab4bfd6c8'
+            'f7c0537a25a307d37b315210c55459f03d77133112394e27822a12b421615d75'
             '6f473f3faef88393a3bedf57c30487ff64b0b4173270e05280a796023c29d491'
             '2178505b162ac3b152bdac70f3291f5a0985bd5a3a3dec42882e5dd2f8e12ab6'
-            'efb67e83b6d09452c9f6f8c19b889a04f63ca95a53a5efb1a64709b5f56bbae6'
+            '891f87f8a101a502efd1b77dc92c98be1684f17a79eb590ff542613774fd3b38'
             '22d7177f49ab3642e3227d1fe0fd6f1e9019ad83dab9b1412cb227c9c144faf1'
             '8979c9d667414c8be7084035f4964bfb88c19f0836c702a8621bdfe4cf846143'
             '56bd99e54429a25a144f2d221718b67f516344ffd518fd7dcdd752206ec5be69'
@@ -71,6 +72,7 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             'd3c826087357f8509dd2a689be96bcef04ceec1cfa8d7a79b0d3a62c23f2a72a'
             '5bf544c716d05fb50dbce2f6705d23e5f46a4afcbda7039781d5d631ed9b89dd'
             'ff6f4e3612e7293ddb11b0693488dbcad1256161e89cdefc445211d0753e1fb2'
+            '5bc0d17d70a12a8d535c5e464744e56801a8345625e89650dd3da65941fc2241'
 )
 
 ## modules.symboles md5sums
@@ -101,6 +103,7 @@ prepare() {
   patch -p1 -i "${srcdir}/3.8.13.4.patch"
   patch -p1 -i "${srcdir}/3.8.13.5.patch"
   patch -p1 -i "${srcdir}/3.8.13.6.patch"
+  patch -p1 -i "${srcdir}/3.8.13.7.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
