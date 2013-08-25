@@ -41,6 +41,7 @@ source=(#"http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.x
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.10/1700_enable-thinkpad-micled.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.10/2700_ThinkPad-30-brightness-control-fix.patch'
         'criu-no-expert.patch'
+        "zfs-0.6.1-${_basever}-rc5.patch"
 )
 sha256sums=('8ece730b9e0b0d7ce585bc1c002da48540e6c977c5629766aeba4da862e62c2e'
             #'c96b69a10ef5ade798dcaa1867df156ccc9e173225d5aa427d00c6e89246e035'
@@ -60,7 +61,8 @@ sha256sums=('8ece730b9e0b0d7ce585bc1c002da48540e6c977c5629766aeba4da862e62c2e'
             '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
             '8ef4a6c16e3d0df0c211fef7875089eda3821db4b1335cac79ca02511a4d6f5c'
             '9d7eab1ffec60f2b0d2121221d957f17a02918d95f11ea52902c227df5105e25'
-            'daa75228a4c45a925cc5dbfeba884aa696a973a26af7695adc198c396474cbd5')
+            'daa75228a4c45a925cc5dbfeba884aa696a973a26af7695adc198c396474cbd5'
+            '8a7d11293515d1efce25e68ddb8eda65a62a0073eb9c94ec5f84b85d4295b7d8')
 
 ## modules.symboles md5sums
 #
@@ -148,6 +150,7 @@ prepare() {
    ./copy-builtin ${srcdir}/linux-${_basekernel}
    cp spl.release.in "${srcdir}/linux-${_basekernel}/"
    cd ${srcdir}/zfs-${_zfs}
+   patch -Np1 -i "${srcdir}/zfs-0.6.1-${_basever}-rc5.patch"
    ./autogen.sh
    ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
    ./copy-builtin ${srcdir}/linux-${_basekernel}
