@@ -11,10 +11,11 @@ _kernelname=-MANJARO
 _basekernel=3.8
 _basever=38
 _aufs=20130819
-_zfs=0.6.1
+_zfs=0.6.2
+_withzfs=yes
 _subver=7
 pkgver=${_basekernel}.13.${_subver}
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -61,8 +62,8 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             '8979c9d667414c8be7084035f4964bfb88c19f0836c702a8621bdfe4cf846143'
             '56bd99e54429a25a144f2d221718b67f516344ffd518fd7dcdd752206ec5be69'
             '611d11b5346e52e957d9690b7fac2464d83f1c67fe64a943b0026ffb466a5798'
-            '6baa3e56a945a508273dd47153e43610659fb6c3dfbe58d96a772e009855d1ae'
-            '80da294a05b02f668b6e34ea5602648f8c661afda0b34d4d55159c4b5a8277fa'
+            '3c577c7055d6c73179726b9c8a7fd48f9122be0b345c50cd54732e801165daa4'
+            '6b8cd79486b3a51204fac07297b8c45aa8702b8dfade58f2098b5734517065a1'
             '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
             '8ef4a6c16e3d0df0c211fef7875089eda3821db4b1335cac79ca02511a4d6f5c'
             '9d7eab1ffec60f2b0d2121221d957f17a02918d95f11ea52902c227df5105e25'
@@ -158,20 +159,24 @@ prepare() {
   # run scripts
   make scripts
 
-  # add zfs support
-  cd ${srcdir}/spl-${_zfs}
-  if [ "${CARCH}" = "i686" ]; then
-     ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
-     --enable-atomic-spinlocks
-  else
-     ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
+  if [ "${_withzfs}" = "yes" ]; then
+   # add zfs support
+   cd ${srcdir}/spl-${_zfs}
+   ./autogen.sh
+   if [ "${CARCH}" = "i686" ]; then
+      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
+      --enable-atomic-spinlocks
+   else
+      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
+   fi
+   ./copy-builtin ${srcdir}/linux-${_basekernel}
+   cp spl.release.in "${srcdir}/linux-${_basekernel}/"
+   cd ${srcdir}/zfs-${_zfs}
+   ./autogen.sh
+   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
+   ./copy-builtin ${srcdir}/linux-${_basekernel}
+   cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}/.config
   fi
-  ./copy-builtin ${srcdir}/linux-${_basekernel}
-  cp spl.release.in "${srcdir}/linux-${_basekernel}/"
-  cd ${srcdir}/zfs-${_zfs}
-  ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
-  ./copy-builtin ${srcdir}/linux-${_basekernel}
-  cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}/.config
 }
 
 build() {

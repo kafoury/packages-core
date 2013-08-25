@@ -11,9 +11,10 @@ _kernelname=-MANJARO
 _basekernel=3.10
 _basever=310
 _aufs=20130819
-_zfs=0.6.1
+_zfs=0.6.2
+_withzfs=yes
 pkgver=${_basekernel}.9
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -35,8 +36,6 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "http://archive.zfsonlinux.org/downloads/zfsonlinux/spl/spl-$_zfs.tar.gz"
         "http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-$_zfs.tar.gz"
         'config.zfs'
-        "spl-${_zfs}-${_basever}.patch"
-        "zfs-${_zfs}-${_basever}.patch"
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.10/1700_enable-thinkpad-micled.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.10/2700_ThinkPad-30-brightness-control-fix.patch'
         '1-2-Revert-Revert-HID-Fix-logitech-dj-missing-Unifying-device-issue.patch'
@@ -55,11 +54,9 @@ sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
             'ce5b05e6c31480068862cc2c4fca108e7dc28b0c06cf63a02929b0f6ce1b5a01'
             'bd36b225c2e60f00f4bd88a0b7f1633e4737e19a06c1cd836d7c00a6ba403934'
             '56bd99e54429a25a144f2d221718b67f516344ffd518fd7dcdd752206ec5be69'
-            '6baa3e56a945a508273dd47153e43610659fb6c3dfbe58d96a772e009855d1ae'
-            '80da294a05b02f668b6e34ea5602648f8c661afda0b34d4d55159c4b5a8277fa'
+            '3c577c7055d6c73179726b9c8a7fd48f9122be0b345c50cd54732e801165daa4'
+            '6b8cd79486b3a51204fac07297b8c45aa8702b8dfade58f2098b5734517065a1'
             '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
-            'b7fdf1c3c898b90f186fbef3cbd2ce469d8d721004f23e9a467d5413aeb0a06e'
-            '013243fa195718cdf5cfbe223aeb6ee53e8b6f7e9416ebfc09da6fdbabf4842d'
             '8ef4a6c16e3d0df0c211fef7875089eda3821db4b1335cac79ca02511a4d6f5c'
             '9d7eab1ffec60f2b0d2121221d957f17a02918d95f11ea52902c227df5105e25'
             '5a356ee16bf71ff093a7d3ec5eefc60adcd3b86c87ae01d59a23a03800c9b276'
@@ -146,24 +143,24 @@ prepare() {
   # run scripts
   make scripts
 
-  # add zfs support
-  cd ${srcdir}/spl-${_zfs}
-  patch -Np1 -i "${srcdir}/spl-${_zfs}-${_basever}.patch"
-  ./autogen.sh
-  if [ "${CARCH}" = "i686" ]; then
-     ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
-     --enable-atomic-spinlocks
-  else
-     ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
+  if [ "${_withzfs}" = "yes" ]; then
+   # add zfs support
+   cd ${srcdir}/spl-${_zfs}
+   ./autogen.sh
+   if [ "${CARCH}" = "i686" ]; then
+      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
+      --enable-atomic-spinlocks
+   else
+      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
+   fi
+   ./copy-builtin ${srcdir}/linux-${_basekernel}
+   cp spl.release.in "${srcdir}/linux-${_basekernel}/"
+   cd ${srcdir}/zfs-${_zfs}
+   ./autogen.sh
+   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
+   ./copy-builtin ${srcdir}/linux-${_basekernel}
+   cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}/.config
   fi
-  ./copy-builtin ${srcdir}/linux-${_basekernel}
-  cp spl.release.in "${srcdir}/linux-${_basekernel}/"
-  cd ${srcdir}/zfs-${_zfs}
-  patch -Np1 -i "${srcdir}/zfs-${_zfs}-${_basever}.patch"
-  ./autogen.sh
-  ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
-  ./copy-builtin ${srcdir}/linux-${_basekernel}
-  cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}/.config
 }
 
 build() {

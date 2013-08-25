@@ -3,8 +3,8 @@
 # maintainer: Roland Singer <roland[at]manjaro[dog]org>
 
 pkgname=manjaro-system
-pkgver=20130820
-pkgrel=4
+pkgver=20130824
+pkgrel=2
 pkgdesc="Manjaro Linux System - Update script"
 arch=('any')
 url="http://www.manjaro.org"

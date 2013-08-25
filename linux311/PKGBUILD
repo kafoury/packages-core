@@ -11,13 +11,11 @@ _kernelname=-MANJARO
 _basekernel=3.11
 _basever=311
 _aufs=20130819
-_zfs=0.6.1
-_splgit=f7fd6ddd96fae173d64bf2982ba4ceda28db56e2
-_zfsgit=0f37d0c8bed442dd0d2c1b1dddd68653fa6eec66
-_rc=rc6
+_zfs=0.6.2
 _withzfs=yes
+_rc=rc6
 pkgver=${_basekernel}${_rc}
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -37,15 +35,12 @@ source=(#"http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.x
         'aufs3-proc_map.patch'
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
-#        "http://archive.zfsonlinux.org/downloads/zfsonlinux/spl/spl-$_zfs.tar.gz"
-#        "http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-$_zfs.tar.gz"
-        "https://github.com/zfsonlinux/spl/archive/$_splgit.zip"
-        "https://github.com/ryao/zfs/archive/$_zfsgit.zip"
+        "http://archive.zfsonlinux.org/downloads/zfsonlinux/spl/spl-$_zfs.tar.gz"
+        "http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-$_zfs.tar.gz"
         'config.zfs'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.10/1700_enable-thinkpad-micled.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.10/2700_ThinkPad-30-brightness-control-fix.patch'
         'criu-no-expert.patch'
-        "zfs-${_zfs}-${_basever}-rc5.patch"
 )
 sha256sums=('8ece730b9e0b0d7ce585bc1c002da48540e6c977c5629766aeba4da862e62c2e'
             #'c96b69a10ef5ade798dcaa1867df156ccc9e173225d5aa427d00c6e89246e035'
@@ -60,15 +55,12 @@ sha256sums=('8ece730b9e0b0d7ce585bc1c002da48540e6c977c5629766aeba4da862e62c2e'
             '224dff1a1390ada57c451af8b52b97e3432fd6357f787d5771ed5ef675ff7f5f'
             '86b15f569ad36e63eff2c83cba0c018145e339bb344f4b5b8b8bc14d84d4b6b4'
             'd633a2039877c00302f32738099ee53e0275350a8f73691ecb107fb9735db5a9'
-#            '6baa3e56a945a508273dd47153e43610659fb6c3dfbe58d96a772e009855d1ae'
-#            '80da294a05b02f668b6e34ea5602648f8c661afda0b34d4d55159c4b5a8277fa'
-            'SKIP'
-            'SKIP'
+            '3c577c7055d6c73179726b9c8a7fd48f9122be0b345c50cd54732e801165daa4'
+            '6b8cd79486b3a51204fac07297b8c45aa8702b8dfade58f2098b5734517065a1'
             '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
             '8ef4a6c16e3d0df0c211fef7875089eda3821db4b1335cac79ca02511a4d6f5c'
             '9d7eab1ffec60f2b0d2121221d957f17a02918d95f11ea52902c227df5105e25'
-            'daa75228a4c45a925cc5dbfeba884aa696a973a26af7695adc198c396474cbd5'
-            '8a7d11293515d1efce25e68ddb8eda65a62a0073eb9c94ec5f84b85d4295b7d8')
+            'daa75228a4c45a925cc5dbfeba884aa696a973a26af7695adc198c396474cbd5')
 
 ## modules.symboles md5sums
 #
@@ -145,31 +137,21 @@ prepare() {
 
   if [ "${_withzfs}" = "yes" ]; then
    # add zfs support
-#   cd ${srcdir}/spl-${_zfs}
-   cd ${srcdir}/spl-${_splgit}
+   cd ${srcdir}/spl-${_zfs}
    ./autogen.sh
    if [ "${CARCH}" = "i686" ]; then
-#      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
-      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}-${_rc} \
+      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
       --enable-atomic-spinlocks
    else
-#      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
-      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}-${_rc}
+      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
    fi
-#   ./copy-builtin ${srcdir}/linux-${_basekernel}
-   ./copy-builtin ${srcdir}/linux-${_basekernel}-${_rc}
-#   cp spl.release.in "${srcdir}/linux-${_basekernel}/"
-   cp spl.release.in "${srcdir}/linux-${_basekernel}-${_rc}/"
-#   cd ${srcdir}/zfs-${_zfs}
-   cd ${srcdir}/zfs-${_zfsgit}
-   patch -Np1 -i "${srcdir}/zfs-${_zfs}-${_basever}-rc5.patch"
+   ./copy-builtin ${srcdir}/linux-${_basekernel}
+   cp spl.release.in "${srcdir}/linux-${_basekernel}/"
+   cd ${srcdir}/zfs-${_zfs}
    ./autogen.sh
-#   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
-   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}-${_rc}
-#   ./copy-builtin ${srcdir}/linux-${_basekernel}
-   ./copy-builtin ${srcdir}/linux-${_basekernel}-${_rc}
-#   cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}/.config
-   cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}-${_rc}/.config
+   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
+   ./copy-builtin ${srcdir}/linux-${_basekernel}
+   cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}/.config
   fi
 }
 

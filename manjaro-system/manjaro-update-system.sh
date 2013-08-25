@@ -32,6 +32,19 @@ check_pkgs()
 
 
 post_upgrade() {
+	# workaround to install octopi 0.2.0
+	pacman -Qq octopi &> /tmp/cmd1
+	pacman -Q octopi &> /tmp/cmd2
+	packages="octopi octopi-notifier"
+	if [ "$(vercmp $2 20130824-1)" -lt 0 ] && [ "$(grep 'octopi' /tmp/cmd1)" == "octopi" ]; then
+	   if [ "$(cat /tmp/cmd2 | cut -d- -f1 | cut -d"." -f4)" -lt "0825" ]; then
+		msg "Updating octopi ..."
+		rm /var/lib/pacman/db.lck &> /dev/null
+		check_pkgs
+		pacman --noconfirm -S ${packages} &> /dev/null
+	   fi
+	fi
+
 	# workaround for catalyst-server removal
 	pacman -Qq catalyst-server &> /tmp/cmd1
 	pacman -Q mhwd-catalyst &> /tmp/cmd2
