@@ -29,7 +29,7 @@ index ccfd99b..c09e2cf 100644
  		ino = inode->i_ino;
  	}
 diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
-index dbf61f6..1c3331e 100644
+index 107d026..1c1e7f7 100644
 --- a/fs/proc/task_mmu.c
 +++ b/fs/proc/task_mmu.c
 @@ -273,6 +273,10 @@ show_map_vma(struct seq_file *m, struct vm_area_struct *vma, int is_pid)
@@ -43,7 +43,7 @@ index dbf61f6..1c3331e 100644
  		dev = inode->i_sb->s_dev;
  		ino = inode->i_ino;
  		pgoff = ((loff_t)vma->vm_pgoff) << PAGE_SHIFT;
-@@ -1372,6 +1376,8 @@ static int show_numa_map(struct seq_file *m, void *v, int is_pid)
+@@ -1383,6 +1387,8 @@ static int show_numa_map(struct seq_file *m, void *v, int is_pid)
  
  	if (file) {
  		seq_printf(m, " file=");
@@ -88,7 +88,7 @@ index fb425aa..cc0a3a4 100644
  
  #ifndef CONFIG_MMU
 diff --git a/kernel/fork.c b/kernel/fork.c
-index 403d2bb..b925978 100644
+index e23bb19..76de27c 100644
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
 @@ -416,6 +416,8 @@ static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
@@ -101,10 +101,10 @@ index 403d2bb..b925978 100644
  				atomic_dec(&inode->i_writecount);
  			mutex_lock(&mapping->i_mmap_mutex);
 diff --git a/mm/memory.c b/mm/memory.c
-index 1ce2e2a..b238822 100644
+index af84bc0..629d88a 100644
 --- a/mm/memory.c
 +++ b/mm/memory.c
-@@ -3453,6 +3453,8 @@ static int __do_fault(struct mm_struct *mm, struct vm_area_struct *vma,
+@@ -3466,6 +3466,8 @@ static int __do_fault(struct mm_struct *mm, struct vm_area_struct *vma,
  		/* file_update_time outside page_lock */
  		if (vma->vm_file && !page_mkwrite)
  			file_update_time(vma->vm_file);
@@ -114,7 +114,7 @@ index 1ce2e2a..b238822 100644
  		unlock_page(vmf.page);
  		if (anon)
 diff --git a/mm/mmap.c b/mm/mmap.c
-index 1edbaa3..bd5d475 100644
+index f9c97d1..f886e5f 100644
 --- a/mm/mmap.c
 +++ b/mm/mmap.c
 @@ -251,6 +251,8 @@ static struct vm_area_struct *remove_vma(struct vm_area_struct *vma)
