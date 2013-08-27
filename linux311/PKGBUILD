@@ -68,7 +68,7 @@ sha256sums=('3da383c6899281fffeb5ef825bb30e3d050859d13ee7b7af78c0901caa3c49f1'
 #
 # i686
 # 7789d8af00d473bf6b583b3fabfffeb9  /lib/modules/3.10.8-1-MANJARO/modules.symbols
-# 287e0153f986d0f2954339a17fcdd12b  /lib/modules/3.11.0-1-MANJARO/modules.symbols
+# 61afee7c6673823fcf05a70dcbc94a6f  /lib/modules/3.11.0-1-MANJARO/modules.symbols
 # 731000d08ccb67353de21f1b296ccf21  /lib/modules/3.4.59-1-MANJARO/modules.symbols
 # 25378bd16aef7dfea37869323eddd3f8  /lib/modules/3.8.13.6-1-MANJARO/modules.symbols
 # 3d3ddd3c196b0bcc775044b4601d5099  /lib/modules/3.9.11-1-MANJARO/modules.symbols
