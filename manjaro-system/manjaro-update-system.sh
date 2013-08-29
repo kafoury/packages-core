@@ -32,6 +32,16 @@ check_pkgs()
 
 
 post_upgrade() {
+	# depreciate linux39
+	pacman -Qq linux39 &> /tmp/cmd1
+	packages=$(pacman -Qqs linux39 | sed s'|linux39|linux310|'g)
+	if [ "$(vercmp $2 20130829-1)" -lt 0 ] && [ "$(grep 'linux39' /tmp/cmd1)" == "linux39" ]; then
+		msg "Depreciating linux39 ..."
+		rm /var/lib/pacman/db.lck &> /dev/null
+		pacman --noconfirm -Rscn linux39 &> /dev/null
+		pacman --noconfirm -S ${packages} &> /dev/null
+	fi
+
 	# workaround to install octopi 0.2.0
 	pacman -Qq octopi &> /tmp/cmd1
 	pacman -Q octopi &> /tmp/cmd2
