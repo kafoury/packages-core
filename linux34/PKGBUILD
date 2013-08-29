@@ -47,6 +47,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.4/1700_correct-bnx2-firware-ver-mips.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.4/2405_lpfs-build-warnings-debugfs-fix.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.4/2700_ThinkPad-30-brightness-control-fix.patch'
+        'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.4/4500_nouveau-video-output-control-Kconfig.patch'
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             '17dd4e6dc6748f638046b3f8e481f095d37171830f210a33cae0dc2433e96973'
@@ -75,6 +76,7 @@ sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             '307114d5a51b09a6ed6daa11c77f54f636c0e5ff0e6a646d8eb7c77da96ffc12'
             '6e864df4af9aa64d75031a63f8ce80f1fc88140aa4c9cac5b854859c2fb87512'
             '9d7eab1ffec60f2b0d2121221d957f17a02918d95f11ea52902c227df5105e25'
+            '59ad742a02bc24d58bc06eee584175a164cb82550b905ba9f402a6dc399d3ed1'
 )
 
 ## modules.symboles md5sums
@@ -136,6 +138,7 @@ prepare() {
   patch -Np1 -i "${srcdir}/1700_correct-bnx2-firware-ver-mips.patch"
   patch -Np1 -i "${srcdir}/2405_lpfs-build-warnings-debugfs-fix.patch"
   patch -Np1 -i "${srcdir}/2700_ThinkPad-30-brightness-control-fix.patch"
+  patch -Np1 -i "${srcdir}/4500_nouveau-video-output-control-Kconfig.patch"
 
   # fix dvb issues
   # see: http://forum.manjaro.org/index.php?topic=1108.0

@@ -40,6 +40,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'config.zfs'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.8/1700_enable-thinkpad-micled.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.8/2700_ThinkPad-30-brightness-control-fix.patch'
+        'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.10/4500_nouveau-video-output-control-Kconfig.patch'
         "3.8.13.1.patch"
         "3.8.13.2.patch"
         "3.8.13.3.patch"
@@ -67,6 +68,7 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
             '8ef4a6c16e3d0df0c211fef7875089eda3821db4b1335cac79ca02511a4d6f5c'
             '9d7eab1ffec60f2b0d2121221d957f17a02918d95f11ea52902c227df5105e25'
+            '59ad742a02bc24d58bc06eee584175a164cb82550b905ba9f402a6dc399d3ed1'
             'e58afecc77f9d476287f44d211e5482bc389cae49c0ecc2fcf13fd06edb18f97'
             '5cb38a485d9f764181c0a2925d597232ceb8329e822a19ace52936730ad87927'
             'fa3e91daed5928effc4e40fe5496d0ef59266880dd62b7d019b4fa280cbca73f'
@@ -123,6 +125,7 @@ prepare() {
   # add Gentoo patches
   patch -Np1 -i "${srcdir}/1700_enable-thinkpad-micled.patch"
   patch -Np1 -i "${srcdir}/2700_ThinkPad-30-brightness-control-fix.patch"
+  patch -Np1 -i "${srcdir}/4500_nouveau-video-output-control-Kconfig.patch"
 
   # add aufs3 support
   patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"

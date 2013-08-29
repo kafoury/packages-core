@@ -10,7 +10,7 @@ pkgname=('linux310' 'linux310-headers')
 _kernelname=-MANJARO
 _basekernel=3.10
 _basever=310
-_aufs=20130819
+_aufs=20130826
 _zfs=0.6.2
 _withzfs=yes
 pkgver=${_basekernel}.9
@@ -38,6 +38,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'config.zfs'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.10/1700_enable-thinkpad-micled.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.10/2700_ThinkPad-30-brightness-control-fix.patch'
+        'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.10/4500_nouveau-video-output-control-Kconfig.patch'
         '1-2-Revert-Revert-HID-Fix-logitech-dj-missing-Unifying-device-issue.patch'
         'criu-no-expert.patch'
 )
@@ -47,7 +48,7 @@ sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
             'ee24ef6e0fb6f285391cde3fc2914c2ad0339a5f8e31c78d1065a524796af7cf'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '4b3497669eb798454ad1317ed5b72703bc5f4c56930f3fc1f159f657fce098b9'
+            'a20a5a917c46f09d4023656c06e09c7d370ba2f48d45915fe8871a24480aa07d'
             'bd56283210474d62be22a429c8401a9b45501c6a182391d05290554c23283296'
             '3ef474c102a1fcc596d92c5d370c60845c789012efd41b4961b557ec3d6a88b1'
             'dfed8d5e3a07877482298817f4f8582adcb822f8997a22024722e98be77c14c4'
@@ -59,6 +60,7 @@ sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
             '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
             '8ef4a6c16e3d0df0c211fef7875089eda3821db4b1335cac79ca02511a4d6f5c'
             '9d7eab1ffec60f2b0d2121221d957f17a02918d95f11ea52902c227df5105e25'
+            '59ad742a02bc24d58bc06eee584175a164cb82550b905ba9f402a6dc399d3ed1'
             '5a356ee16bf71ff093a7d3ec5eefc60adcd3b86c87ae01d59a23a03800c9b276'
             'daa75228a4c45a925cc5dbfeba884aa696a973a26af7695adc198c396474cbd5'
 )
@@ -110,6 +112,7 @@ prepare() {
   # add Gentoo patches
   patch -Np1 -i "${srcdir}/1700_enable-thinkpad-micled.patch"
   patch -Np1 -i "${srcdir}/2700_ThinkPad-30-brightness-control-fix.patch"
+  patch -Np1 -i "${srcdir}/4500_nouveau-video-output-control-Kconfig.patch"
 
   # add aufs3 support
   patch -Np1 -i "${srcdir}/aufs3.10-${_aufs}.patch"
