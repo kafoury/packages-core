@@ -15,7 +15,7 @@ _zfs=0.6.2
 _withzfs=yes
 _subver=7
 pkgver=${_basekernel}.13.${_subver}
-pkgrel=2
+pkgrel=3
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -48,6 +48,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "3.8.13.5.patch"
         "3.8.13.6.patch"
         "3.8.13.7.patch"
+        "http://git.kernel.org/cgit/linux/kernel/git/stable/stable-queue.git/plain/releases/3.10.10/acpi-add-_sta-evaluation-at-do_acpi_find_child.patch"
+        "http://git.kernel.org/cgit/linux/kernel/git/stable/stable-queue.git/plain/releases/3.10.10/acpi-try-harder-to-resolve-_adr-collisions-for-bridges.patch"
 )
 sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             'abc523f59e4c7a4c8ccadd7fd3cd03b7ae8788b399040a1c949c4232601cfd5b'
@@ -76,6 +78,8 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             '5bf544c716d05fb50dbce2f6705d23e5f46a4afcbda7039781d5d631ed9b89dd'
             'ff6f4e3612e7293ddb11b0693488dbcad1256161e89cdefc445211d0753e1fb2'
             '5bc0d17d70a12a8d535c5e464744e56801a8345625e89650dd3da65941fc2241'
+            'cb505a5b9aa750490ba28facb537bfd928ff6d0dc8edc349b6ad5e202f876e69'
+            'aaf27758adaf142d04ea8ba43378716d24699a884906ae1e2ef3f655695497c6'
 )
 
 ## modules.symboles md5sums
@@ -124,6 +128,10 @@ prepare() {
   patch -Np1 -i "${srcdir}/1700_enable-thinkpad-micled.patch"
   patch -Np1 -i "${srcdir}/2700_ThinkPad-30-brightness-control-fix.patch"
   patch -Np1 -i "${srcdir}/4500_nouveau-video-output-control-Kconfig.patch"
+
+  # Fix bug #60561: https://bugzilla.kernel.org/show_bug.cgi?id=60561
+  patch -Np1 -i "${srcdir}/acpi-add-_sta-evaluation-at-do_acpi_find_child.patch"
+  patch -Np1 -i "${srcdir}/acpi-try-harder-to-resolve-_adr-collisions-for-bridges.patch"
 
   # add aufs3 support
   patch -Np1 -i "${srcdir}/aufs${_basekernel}-${_aufs}.patch"

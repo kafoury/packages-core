@@ -196,7 +196,7 @@ index 90df5d6..cb91822 100644
  	unsigned	lo_blocksize;
  	void		*key_data; 
 diff --git a/fs/aufs/f_op.c b/fs/aufs/f_op.c
-index c43fafa..b9579d8 100644
+index 494982d..b832480 100644
 --- a/fs/aufs/f_op.c
 +++ b/fs/aufs/f_op.c
 @@ -353,7 +353,7 @@ static ssize_t aufs_splice_read(struct file *file, loff_t *ppos,
@@ -258,10 +258,10 @@ index 64d1e3f..e3a32a9 100644
  
  #endif /* __KERNEL__ */
 diff --git a/fs/aufs/super.c b/fs/aufs/super.c
-index 3955f86..b1d5e7f 100644
+index e97f900..58d7c13 100644
 --- a/fs/aufs/super.c
 +++ b/fs/aufs/super.c
-@@ -811,7 +811,10 @@ static const struct super_operations aufs_sop = {
+@@ -821,7 +821,10 @@ static const struct super_operations aufs_sop = {
  	.statfs		= aufs_statfs,
  	.put_super	= aufs_put_super,
  	.sync_fs	= aufs_sync_fs,
@@ -288,3 +288,50 @@ index 146f304..bd17b39 100644
  };
  
  /*
+commit 218e0c3eb3090dc912d93d394955cea04ef13d3b
+Author: J. R. Okajima <hooanon05@yahoo.co.jp>
+Date:   Thu Jul 11 00:16:10 2013 +0900
+
+    loop aufs: loopback block device supports for aufs
+    
+    By the commit
+    	83a8761 2013-06-29 move linux/loop.h to drivers/block
+    the definition of struct loop_device is hidden from aufs.
+    But aufs still needs to know the backing file of the loopback block
+    device to identify whether the branches are overlapped or not.
+    This commit defines a new function loop_backing_file() in
+    drivers/block/loop.c for aufs. The declaration in the aufs header file
+    will be added by succeeding commit.
+    
+    Signed-off-by: J. R. Okajima <hooanon05@yahoo.co.jp>
+
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index 40e7155..6e43ab0 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -691,6 +691,24 @@ static inline int is_loop_device(struct file *file)
+ 	return i && S_ISBLK(i->i_mode) && MAJOR(i->i_rdev) == LOOP_MAJOR;
+ }
+ 
++/*
++ * for AUFS
++ * no get/put for file.
++ */
++struct file *loop_backing_file(struct super_block *sb)
++{
++	struct file *ret;
++	struct loop_device *l;
++
++	ret = NULL;
++	if (MAJOR(sb->s_dev) == LOOP_MAJOR) {
++		l = sb->s_bdev->bd_disk->private_data;
++		ret = l->lo_backing_file;
++	}
++	return ret;
++}
++EXPORT_SYMBOL(loop_backing_file);
++
+ /* loop sysfs attributes */
+ 
+ static ssize_t loop_attr_show(struct device *dev, char *page,
+
