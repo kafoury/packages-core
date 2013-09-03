@@ -13,17 +13,15 @@ _basever=311
 _aufs=20130902
 _zfs=0.6.2
 _withzfs=yes
-_rc=rc7
-pkgver=${_basekernel}${_rc}
-pkgrel=2
+pkgver=${_basekernel}.0
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=(#"http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
         #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
-        "http://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-${_basekernel}-${_rc}.tar.xz"
         # the main kernel config files
         'config' 'config.x86_64' 'config.aufs'
         # standard config files for mkinitcpio ramdisk
@@ -44,7 +42,7 @@ source=(#"http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.x
         'criu-no-expert.patch'
         "zfs-0.6.1-${_basever}-rc5.patch"
 )
-sha256sums=('3da383c6899281fffeb5ef825bb30e3d050859d13ee7b7af78c0901caa3c49f1'
+sha256sums=('803ec8f0ad4b2ddedcb0332a590cd2b5e10dfc57c3b1c95bc9c46af81d51d7f9'
             #'c96b69a10ef5ade798dcaa1867df156ccc9e173225d5aa427d00c6e89246e035'
             '661d039d17a7a0ca30ab88bd0ed07552f51badf41f994bc6ca5be4b5b76646c9'
             'f09702f5405a4b7b4fa710bc92530d1e4a6ff416d8a8634a27441b6894bdf906'
@@ -81,8 +79,7 @@ sha256sums=('3da383c6899281fffeb5ef825bb30e3d050859d13ee7b7af78c0901caa3c49f1'
 
 
 prepare() {
-  #cd "${srcdir}/linux-${_basekernel}"
-  cd "${srcdir}/linux-${_basekernel}-${_rc}"
+  cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
   #patch -p1 -i "${srcdir}/patch-${pkgver}"
@@ -142,25 +139,26 @@ prepare() {
    cd ${srcdir}/spl-${_zfs}
    ./autogen.sh
    if [ "${CARCH}" = "i686" ]; then
-      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}-${_rc} \
-      --enable-atomic-spinlocks
+      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
+      --with-linux-obj=${srcdir}/linux-${_basekernel} --enable-atomic-spinlocks
    else
-      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}-${_rc}
+      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
+      --with-linux-obj=${srcdir}/linux-${_basekernel}
    fi
-   ./copy-builtin ${srcdir}/linux-${_basekernel}-${_rc}
-   cp spl.release.in "${srcdir}/linux-${_basekernel}-${_rc}/"
+   ./copy-builtin ${srcdir}/linux-${_basekernel}
+   cp spl.release.in "${srcdir}/linux-${_basekernel}/"
    cd ${srcdir}/zfs-${_zfs}
    patch -Np1 -i "${srcdir}/zfs-0.6.1-${_basever}-rc5.patch"
    ./autogen.sh
-   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}-${_rc}
-   ./copy-builtin ${srcdir}/linux-${_basekernel}-${_rc}
-   cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}-${_rc}/.config
+   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
+   --with-linux-obj=${srcdir}/linux-${_basekernel}
+   ./copy-builtin ${srcdir}/linux-${_basekernel}
+   cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}/.config
   fi
 }
 
 build() {
-  #cd "${srcdir}/linux-${_basekernel}"
-  cd "${srcdir}/linux-${_basekernel}-${_rc}"
+  cd "${srcdir}/linux-${_basekernel}"
 
   # load configuration
   # Configure the kernel. Replace the line below with one of your choice.
@@ -196,8 +194,7 @@ package_linux311() {
   fi
   install=${pkgname}.install
 
-  #cd "${srcdir}/linux-${_basekernel}"
-  cd "${srcdir}/linux-${_basekernel}-${_rc}"
+  cd "${srcdir}/linux-${_basekernel}"
 
   KARCH=x86
 
@@ -267,8 +264,8 @@ package_linux311-headers() {
   cd "${pkgdir}/usr/lib/modules/${_kernver}"
   ln -sf ../../../src/linux-${_kernver} build
 
-  #cd "${srcdir}/linux-${_basekernel}"
-  cd "${srcdir}/linux-${_basekernel}-${_rc}"
+  cd "${srcdir}/linux-${_basekernel}"
+
   install -D -m644 Makefile \
     "${pkgdir}/usr/src/linux-${_kernver}/Makefile"
   install -D -m644 kernel/Makefile \

@@ -174,15 +174,17 @@ prepare() {
    ./autogen.sh
    if [ "${CARCH}" = "i686" ]; then
       ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
-      --enable-atomic-spinlocks
+      --with-linux-obj=${srcdir}/linux-${_basekernel} --enable-atomic-spinlocks
    else
-      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
+      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
+      --with-linux-obj=${srcdir}/linux-${_basekernel}
    fi
    ./copy-builtin ${srcdir}/linux-${_basekernel}
    cp spl.release.in "${srcdir}/linux-${_basekernel}/"
    cd ${srcdir}/zfs-${_zfs}
    ./autogen.sh
-   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}
+   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
+   --with-linux-obj=${srcdir}/linux-${_basekernel}
    ./copy-builtin ${srcdir}/linux-${_basekernel}
    cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}/.config
   fi
