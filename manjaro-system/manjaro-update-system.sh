@@ -30,8 +30,28 @@ check_pkgs()
     packages="${removepkgs}"
 }
 
+detectDE()
+{
+    if [ x"$KDE_FULL_SESSION" = x"true" ]; then DE=kde;
+    elif [ x"$GNOME_DESKTOP_SESSION_ID" != x"" ]; then DE=gnome;
+    elif `dbus-send --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.GetNameOwner string:org.gnome.SessionManager > /dev/null 2>&1` ; then DE=gnome;
+    elif xprop -root _DT_SAVE_MODE 2> /dev/null | grep ' = \"xfce4\"$' >/dev/null 2>&1; then DE=xfce;
+    elif [ x"$DESKTOP_SESSION" = x"LXDE" ]; then DE=lxde;
+    else DE=""
+    fi
+}
 
 post_upgrade() {
+	# fix pamac on systems without Gnome session
+        detectDE
+	pacman -Qq pamac &> /tmp/cmd1
+	packages="lxpolkit"
+	if [ "$(vercmp $2 20130905-1)" -lt 0 ] && [ "$DE" != "gnome" ] && [ "$(grep 'pamac' /tmp/cmd1)" == "pamac" ]; then
+		msg "Fixing polkit issue in pamac ..."
+		rm /var/lib/pacman/db.lck &> /dev/null
+		pacman --noconfirm -S ${packages} &> /dev/null
+	fi
+
 	# depreciate linux39
 	pacman -Qq linux39 &> /tmp/cmd1
 	packages=$(pacman -Qqs linux39 | sed s'|linux39|linux310|'g)
