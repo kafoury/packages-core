@@ -1,5 +1,34 @@
 aufs3.x-rcN base patch
 
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index 40e7155..6e43ab0 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -691,6 +691,24 @@ static inline int is_loop_device(struct file *file)
+ 	return i && S_ISBLK(i->i_mode) && MAJOR(i->i_rdev) == LOOP_MAJOR;
+ }
+ 
++/*
++ * for AUFS
++ * no get/put for file.
++ */
++struct file *loop_backing_file(struct super_block *sb)
++{
++	struct file *ret;
++	struct loop_device *l;
++
++	ret = NULL;
++	if (MAJOR(sb->s_dev) == LOOP_MAJOR) {
++		l = sb->s_bdev->bd_disk->private_data;
++		ret = l->lo_backing_file;
++	}
++	return ret;
++}
++EXPORT_SYMBOL(loop_backing_file);
++
+ /* loop sysfs attributes */
+ 
+ static ssize_t loop_attr_show(struct device *dev, char *page,
 diff --git a/fs/file_table.c b/fs/file_table.c
 index b44e4c5..aa91109 100644
 --- a/fs/file_table.c
