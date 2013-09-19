@@ -5,23 +5,25 @@
 # Maintainer: Philip Müller <philm@manjaro.org>
 # Maintainer: Guinux <guillaume@manjaro.org>
 
-pkgbase=linux311
-pkgname=('linux311' 'linux311-headers')
+pkgbase=linux312
+pkgname=('linux312' 'linux312-headers')
 _kernelname=-MANJARO
-_basekernel=3.11
-_basever=311
-_aufs=20130909
+_basekernel=3.12
+_basever=312
+_aufs=20130916
 _zfs=0.6.2
-_withzfs=yes
-pkgver=${_basekernel}.1
+_withzfs=no
+_rc=rc1
+pkgver=${_basekernel}${_rc}
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
-        "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
+source=(#"http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
+        "http://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-${_basekernel}-${_rc}.tar.xz"
+        #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config' 'config.x86_64' 'config.aufs'
         # standard config files for mkinitcpio ramdisk
@@ -37,28 +39,28 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-$_zfs.tar.gz"
         'config.zfs'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/1700_enable-thinkpad-micled.patch'
-        'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/2700_ThinkPad-30-brightness-control-fix.patch'
+        '2700_ThinkPad-30-brightness-control-fix-312rc1.patch'
         'criu-no-expert.patch'
-        "zfs-0.6.1-${_basever}-rc5.patch"
+        "zfs-0.6.1-311-rc5.patch"
 )
-sha256sums=('803ec8f0ad4b2ddedcb0332a590cd2b5e10dfc57c3b1c95bc9c46af81d51d7f9'
-            '516bb3193f868a28e218d1a5c69e145cf0568c62f87496ae7b6446d621e45d8e'
-            '661d039d17a7a0ca30ab88bd0ed07552f51badf41f994bc6ca5be4b5b76646c9'
-            'f09702f5405a4b7b4fa710bc92530d1e4a6ff416d8a8634a27441b6894bdf906'
+sha256sums=('c5cbad9dcaebe6321ad7a738da0b14c872771ab2fde278f9d41e8d421ecd71f2'
+            #'516bb3193f868a28e218d1a5c69e145cf0568c62f87496ae7b6446d621e45d8e'
+            '28c5322eb255f5d76a4f01e5f79b5807069e89152d14a6c65fb0f2655d9ae207'
+            '746e26f041eaf1012ac3278420e0a93d12b6b906df2a741cc12a26f71485e2b6'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            'f985d9a308a81bea4579d04a4144026a2c7a8e27c93e2cc0e4a05fc4f160ceca'
-            'f1d4db680aebdf98b71f35eebf09770966f04d3c758f6fadd9db541a1b8953e7'
-            'bfb1046e76d71e1f95d2d60b5ac69dfd8733d66901dc4bc96af5ffe28d607c7b'
-            'b4ed38df2db64f663bbe5c10bb39846700d72ccf097e79af3e003f1809cd29a7'
-            '2c14f6cf10b261d7e01675576e6cc88b2d789b4cc4cf6e443bd52b8c04414a03'
-            '0b3cc90d2f4a55b172d63aca4063ff2bec0daf73fdd7f4e4b692be0a4ac28a4c'
+            '7e4a2160007bec3e944f443ae9bddf54f2d89607e1d3f9f5b06e3f6024fe0ed4'
+            'd436f436131ef96c10684a31e50cc263df133432dd60f64b3a5cba580b301773'
+            '7463c6f37e63fd113f072c097a29c44e896429cfdb58c09166da12e2a69cc671'
+            'fc71cfd0963c698e6e3e150a6d02c869e357915e7cd5fb960153c8d7a91d97f0'
+            '3981cec973cdb9f05a11b14a8958532e35cbb1353894d8b94162f365f8e1c360'
+            '4b578fe00349247948143294b9727fd822be87f56699b56e507dd39aceaf060d'
             'd633a2039877c00302f32738099ee53e0275350a8f73691ecb107fb9735db5a9'
             '3c577c7055d6c73179726b9c8a7fd48f9122be0b345c50cd54732e801165daa4'
             '6b8cd79486b3a51204fac07297b8c45aa8702b8dfade58f2098b5734517065a1'
             '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
             '8ef4a6c16e3d0df0c211fef7875089eda3821db4b1335cac79ca02511a4d6f5c'
-            '9d7eab1ffec60f2b0d2121221d957f17a02918d95f11ea52902c227df5105e25'
+            'a3f85c3c35ee478fd174f8aaa6ca15e5fad8612b42ca4d90cc3ef79b49a99989'
             'daa75228a4c45a925cc5dbfeba884aa696a973a26af7695adc198c396474cbd5'
             '8a7d11293515d1efce25e68ddb8eda65a62a0073eb9c94ec5f84b85d4295b7d8'
 )
@@ -78,10 +80,10 @@ sha256sums=('803ec8f0ad4b2ddedcb0332a590cd2b5e10dfc57c3b1c95bc9c46af81d51d7f9'
 
 
 prepare() {
-  cd "${srcdir}/linux-${_basekernel}"
+  cd "${srcdir}/linux-${_basekernel}-${_rc}"
 
   # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  #patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -99,7 +101,7 @@ prepare() {
 
   # add Gentoo patches
   patch -Np1 -i "${srcdir}/1700_enable-thinkpad-micled.patch"
-  patch -Np1 -i "${srcdir}/2700_ThinkPad-30-brightness-control-fix.patch"
+  patch -Np1 -i "${srcdir}/2700_ThinkPad-30-brightness-control-fix-312rc1.patch"
 
   # add aufs3 support
   patch -Np1 -i "${srcdir}/aufs3.x-rcN-${_aufs}.patch"
@@ -138,26 +140,26 @@ prepare() {
    cd ${srcdir}/spl-${_zfs}
    ./autogen.sh
    if [ "${CARCH}" = "i686" ]; then
-      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
-      --with-linux-obj=${srcdir}/linux-${_basekernel} --enable-atomic-spinlocks
+      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}-${_rc} \
+      --with-linux-obj=${srcdir}/linux-${_basekernel}-${_rc} --enable-atomic-spinlocks
    else
-      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
-      --with-linux-obj=${srcdir}/linux-${_basekernel}
+      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}-${_rc} \
+      --with-linux-obj=${srcdir}/linux-${_basekernel}-${_rc}
    fi
-   ./copy-builtin ${srcdir}/linux-${_basekernel}
-   cp spl.release.in "${srcdir}/linux-${_basekernel}/"
+   ./copy-builtin ${srcdir}/linux-${_basekernel}-${_rc}
+   cp spl.release.in "${srcdir}/linux-${_basekernel}-${_rc}/"
    cd ${srcdir}/zfs-${_zfs}
-   patch -Np1 -i "${srcdir}/zfs-0.6.1-${_basever}-rc5.patch"
+   patch -Np1 -i "${srcdir}/zfs-0.6.1-311-rc5.patch"
    ./autogen.sh
-   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
-   --with-linux-obj=${srcdir}/linux-${_basekernel}
-   ./copy-builtin ${srcdir}/linux-${_basekernel}
-   cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}/.config
+   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}-${_rc} \
+   --with-linux-obj=${srcdir}/linux-${_basekernel}-${_rc}
+   ./copy-builtin ${srcdir}/linux-${_basekernel}-${_rc}
+   cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}-${_rc}/.config
   fi
 }
 
 build() {
-  cd "${srcdir}/linux-${_basekernel}"
+  cd "${srcdir}/linux-${_basekernel}-${_rc}"
 
   # load configuration
   # Configure the kernel. Replace the line below with one of your choice.
@@ -180,7 +182,7 @@ build() {
   make ${MAKEFLAGS} bzImage modules
 }
 
-package_linux311() {
+package_linux312() {
   pkgdesc="The ${pkgbase/linux/Linux} kernel and modules"
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
@@ -193,7 +195,7 @@ package_linux311() {
   fi
   install=${pkgname}.install
 
-  cd "${srcdir}/linux-${_basekernel}"
+  cd "${srcdir}/linux-${_basekernel}-${_rc}"
 
   KARCH=x86
 
@@ -250,7 +252,7 @@ package_linux311() {
   mv "$pkgdir/lib" "$pkgdir/usr"
 }
 
-package_linux311-headers() {
+package_linux312-headers() {
   pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel"
   provides=("linux-headers=$pkgver")
   if [ "${_withzfs}" = "yes" ]; then
@@ -263,7 +265,7 @@ package_linux311-headers() {
   cd "${pkgdir}/usr/lib/modules/${_kernver}"
   ln -sf ../../../src/linux-${_kernver} build
 
-  cd "${srcdir}/linux-${_basekernel}"
+  cd "${srcdir}/linux-${_basekernel}-${_rc}"
 
   install -D -m644 Makefile \
     "${pkgdir}/usr/src/linux-${_kernver}/Makefile"
