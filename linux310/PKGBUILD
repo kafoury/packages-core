@@ -41,7 +41,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.10/4500_nouveau-video-output-control-Kconfig.patch'
         '1-2-Revert-Revert-HID-Fix-logitech-dj-missing-Unifying-device-issue.patch'
         'criu-no-expert.patch'
-        '3.10.6-logitech-dj.patch')
+        '3.10.13-Revert-zram-use-zram--lock-to-protect-zram_free_page-in-swap-free-notify-path.patch')
 
 sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
             'cf8ec5b47c904f66f715e7ccd5051e15fe9f931fec03847a86d552caf8848be8'
@@ -64,7 +64,7 @@ sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
             '59ad742a02bc24d58bc06eee584175a164cb82550b905ba9f402a6dc399d3ed1'
             '5a356ee16bf71ff093a7d3ec5eefc60adcd3b86c87ae01d59a23a03800c9b276'
             'daa75228a4c45a925cc5dbfeba884aa696a973a26af7695adc198c396474cbd5'
-            '9b22ced985386854a4edf508f69d0b64ea6647f37c1e83d93c2f7500581aa5b3')
+            '9d7e80e30a60137b9b88dc37d17c65c6834c4e455e9be8db80d98238dfabb1a1')
 
 ## modules.symboles md5sums
 #
@@ -86,6 +86,9 @@ prepare() {
   # add upstream patch
   patch -p1 -i "${srcdir}/patch-${pkgver}"
 
+  # fix zram
+  patch -p1 -i "${srcdir}/3.10.13-Revert-zram-use-zram--lock-to-protect-zram_free_page-in-swap-free-notify-path.patch"
+
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
   # enable only if you have "gen-stable-queue-patch.sh" executed before
@@ -95,9 +98,6 @@ prepare() {
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -Np1 -i "${srcdir}/change-default-console-loglevel.patch"
-
-  # fix FS#35991 - [linux] 3.10.x renders Logitech Unified Receivers useless
-  patch -Np1 -i  "${srcdir}/3.10.6-logitech-dj.patch"
 
   # allow criu without expert option set
   # patch from fedora
