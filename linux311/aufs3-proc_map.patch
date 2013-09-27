@@ -1,4 +1,4 @@
-aufs3.x-rcN proc_map patch
+aufs3.11 proc_map patch
 
 diff --git a/fs/buffer.c b/fs/buffer.c
 index 4d74335..6b7ced7 100644
@@ -88,7 +88,7 @@ index faf4b7c..cd750ff 100644
  
  #ifndef CONFIG_MMU
 diff --git a/kernel/fork.c b/kernel/fork.c
-index e23bb19..76de27c 100644
+index bf46287..1150c1c 100644
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
 @@ -416,6 +416,8 @@ static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)

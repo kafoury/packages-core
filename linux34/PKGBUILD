@@ -10,10 +10,10 @@ pkgname=('linux34' 'linux34-headers')
 _kernelname=-MANJARO
 _basekernel=3.4
 _basever=34
-_aufs=20130909
+_aufs=20130923
 _zfs=0.6.2
 _withzfs=yes
-pkgver=${_basekernel}.62
+pkgver=${_basekernel}.63
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -50,12 +50,12 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.4/4500_nouveau-video-output-control-Kconfig.patch'
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
-            'b1e8cc75832e22e6f5e43c5a4089b637274b4f15acb284937ca0d56d35a26e76'
-            '18ccb1f308ef86e20dfdc5904bb0f52ca1db83dec22755a6625f39e4b7cb6a5e'
-            'b28e1fc77a3af2cc6bf47bc438abcf37a1ab95827a56df1cdc6e023c41ee6fd2'
+            '436422cc2c0ac6243632561955c3ecefd3150d0ba061943f45600c0674e4da89'
+            'a15f11f6027b6d8361cea25323ddd8cdf5f82b7c3e5eaa9aab588852944f3c08'
+            'ebecc5840233ab27ec2f94e76c1912ae4dcbe91bf154fed56dbc51a26a986e1c'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '06caf39cfe3bcac14232dc9117ce21d9b14b539b0e4d8bd39cfee86e62ac209b'
+            '1cdc012c29e98d9d0a0299bd2be2cbc12cb764cb33def8a9f90b9306ff4538f4'
             '874493462520e2323b973cb330e527bd629907bf9cc9ed0f1cea575628b0011e'
             'ec736c824f61c212c8bc79898b7727ed4b4b1c3b72a78bd0e221ae568a66192a'
             'f990d3aa3bb232267032839ec13b4b93175164a28c25cea35ce3101489bb3e1f'

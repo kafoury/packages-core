@@ -1,4 +1,4 @@
-aufs3.x-rcN standalone patch
+aufs3.11 standalone patch
 
 diff --git a/fs/file_table.c b/fs/file_table.c
 index aa91109..ab2f3c3 100644

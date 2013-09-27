@@ -42,6 +42,15 @@ detectDE()
 }
 
 post_upgrade() {
+	# depreciate sysctl.conf
+	if [ "$(vercmp $2 20130921-1)" -lt 0 ] && [ -f /etc/sysctl.conf ]; then
+		msg "Depreciate sysctl.conf ..."
+		if [ -f /etc/sysctl.d/99-sysctl.conf ]; then
+			mv /etc/sysctl.d/99-sysctl.conf /etc/sysctl.d/99-sysctl.conf.pacsave
+		fi
+		mv /etc/sysctl.conf /etc/sysctl.d/99-sysctl.conf
+	fi
+
 	# fix pamac on systems without Gnome session
         detectDE
 	pacman -Qq pamac &> /tmp/cmd1

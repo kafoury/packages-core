@@ -10,10 +10,10 @@ pkgname=('linux38' 'linux38-headers')
 _kernelname=-MANJARO
 _basekernel=3.8
 _basever=38
-_aufs=20130909
+_aufs=20130923
 _zfs=0.6.2
 _withzfs=yes
-_subver=9
+_subver=10
 pkgver=${_basekernel}.13.${_subver}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -50,16 +50,17 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "3.8.13.7.patch"
         "3.8.13.8.patch"
         "3.8.13.9.patch"
+        "3.8.13.10.patch"
         "http://git.kernel.org/cgit/linux/kernel/git/stable/stable-queue.git/plain/releases/3.10.10/acpi-add-_sta-evaluation-at-do_acpi_find_child.patch"
         "http://git.kernel.org/cgit/linux/kernel/git/stable/stable-queue.git/plain/releases/3.10.10/acpi-try-harder-to-resolve-_adr-collisions-for-bridges.patch"
 )
 sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             'abc523f59e4c7a4c8ccadd7fd3cd03b7ae8788b399040a1c949c4232601cfd5b'
-            'c0946fc3ff32e339c2a6c510efeee2a6b7326456816f7918bd9521ec6c20ce76'
-            'c9c554b3c1b5482ebb2eca1ebc43275dbd483044f2e1a62c2122cc9d6c263b91'
+            '6a6bc2f5c75509ad2860f8341238b52128b873ad6160697ce5d3a0c96b5ada2e'
+            '2e02323e9d481ce67ad19d86ac8f933d9e945b9a8cab644be920c6efa451ad09'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '58bfc7d7eca5e9235d3fa55d99d22f9a249db344946e5ada7991cf691c6a1aa0'
+            'ea52287f61221dc5b5c79b1a054b01c25630dc5940159249e305850af139f2be'
             '6f473f3faef88393a3bedf57c30487ff64b0b4173270e05280a796023c29d491'
             '2178505b162ac3b152bdac70f3291f5a0985bd5a3a3dec42882e5dd2f8e12ab6'
             'e446d94adb36a5e846fc1fbe748052732dc0d0e664c821a9a4dbe505522a0bed'
@@ -82,6 +83,7 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             '5bc0d17d70a12a8d535c5e464744e56801a8345625e89650dd3da65941fc2241'
             '0d70fdd280da0445c1f49942c043f567b0974dd2ce81da39cddda0a3e1921456'
             'dd4f5dd0ef520e261288bdd3cc8118e0dabd3d093cdc547437de0e20da1fe477'
+            '0995c5623fcf5b3ab6b519f378c393d4db5d1025ddb2d242de5c983bc5f2c7a6'
             'cb505a5b9aa750490ba28facb537bfd928ff6d0dc8edc349b6ad5e202f876e69'
             'aaf27758adaf142d04ea8ba43378716d24699a884906ae1e2ef3f655695497c6'
 )
