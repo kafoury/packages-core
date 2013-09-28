@@ -15,7 +15,7 @@ _zfs=0.6.2
 _withzfs=yes
 _subver=10
 pkgver=${_basekernel}.13.${_subver}
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -117,6 +117,7 @@ prepare() {
   patch -p1 -i "${srcdir}/3.8.13.7.patch"
   patch -p1 -i "${srcdir}/3.8.13.8.patch"
   patch -p1 -i "${srcdir}/3.8.13.9.patch"
+  patch -p1 -i "${srcdir}/3.8.13.10.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git

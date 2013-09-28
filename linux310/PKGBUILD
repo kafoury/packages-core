@@ -74,10 +74,11 @@ sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
 # 6f561daf5af8f313e483142019b339a7  /lib/modules/3.4.62-1-MANJARO/modules.symbols
 # e54bf3a44ce26d42022366829c150ae4  /lib/modules/3.8.13.9-1-MANJARO/modules.symbols
 # x86_64
-# 76b2e21db6f8f517b854c8afd4097680  /lib/modules/3.10.12-1-MANJARO/modules.symbols
-# 769a2618b9dc3ae633b1bc3196471747  /lib/modules/3.11.1-1-MANJARO/modules.symbols
-# 33bcedd2c5f698096233422c6d7d1c38  /lib/modules/3.4.62-1-MANJARO/modules.symbols
-# 67adb61fdc9098a0480278d1754d6992  /lib/modules/3.8.13.9-1-MANJARO/modules.symbols
+# e7b615e128e7d6083c09819f2484868a  /lib/modules/3.10.13-1-MANJARO/modules.symbols
+# 949efb3b9198f0836ac0cd5200413f1e  /lib/modules/3.11.2-1-MANJARO/modules.symbols
+# 8475a409dfcebb3dbce1c81849d3b66b  /lib/modules/3.12.0-1-MANJARO/modules.symbols
+# 33bcedd2c5f698096233422c6d7d1c38  /lib/modules/3.4.63-1-MANJARO/modules.symbols
+# 67adb61fdc9098a0480278d1754d6992  /lib/modules/3.8.13.10-1-MANJARO/modules.symbols
 
 
 prepare() {
