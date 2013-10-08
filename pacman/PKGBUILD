@@ -7,7 +7,7 @@
 
 pkgname=pacman
 pkgver=4.1.2
-pkgrel=2
+pkgrel=3
 pkgdesc="A library-based package manager with dependency support"
 arch=('i686' 'x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -45,8 +45,14 @@ prepare() {
     --localstatedir=/var --enable-doc \
     --with-scriptlet-shell=/usr/bin/bash \
     --with-ldconfig=/usr/bin/ldconfig
-  rm src/pacman/po/*gmo
-  cd src/pacman/po/
+  rm $srcdir/$pkgname-$pkgver/lib/libalpm/po/*gmo
+  cd $srcdir/$pkgname-$pkgver/lib/libalpm/po/
+  make update-gmo
+  rm $srcdir/$pkgname-$pkgver/scripts/po/*gmo
+  cd $srcdir/$pkgname-$pkgver/scripts/po/
+  make update-gmo
+  rm $srcdir/$pkgname-$pkgver/src/pacman/po/*gmo
+  cd $srcdir/$pkgname-$pkgver/src/pacman/po/
   make update-gmo
 }
 
@@ -109,10 +115,10 @@ package() {
 }
 sha256sums=('7c059b444735ee254cfbd8dc2fac8c5d61453601f8adaf001c7038cdc673334c'
             'SKIP'
-            '5c2cd964793ad94bacc661da6c3e6de19dd132e70accac9bdccc5175fd619dd1'
-            '6b624eb1e9d59adc26c99b66bca7c082deb1f9f01c1c6c278d121559a7ad2f01'
+            '14e13173498bce6b8837f5d635b819ffc8412c164ccac36d6d62207685aed83d'
+            '75e55f2ba3aaf76e839c6538df41219f047af7eddc7903ad8c25754db6b2b100'
             '49f3f5b748502f8013d0d14cd670a3e76bb667d5dfd330429549ed922b1c0c48'
-            '27be71b9b3c7d27b12f8af9976bfb410ff7028b0effb6ca2208c88f2356ffdef'
+            '2e07f37c3f36d918b1a08a39d65f59830b6834c2292e5b720b786bb0c7e2f5f3'
             '4ae031c1110e9e4b05a305856f623b7d15b7915264024a5e7c5f8fcee2032f14'
             'b6d14727ec465bb66d0a0358163b1bbfafcb4eaed55a0f57c30aabafae7eed68'
             'ca4aa967ccfb9affab23fd61ad6d16f330b2810e5f9de93deec49ea7872369ae')

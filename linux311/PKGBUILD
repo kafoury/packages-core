@@ -12,8 +12,8 @@ _basekernel=3.11
 _basever=311
 _aufs=20130923
 _zfs=0.6.2
-_withzfs=yes
-pkgver=${_basekernel}.2
+_withzfs=no
+pkgver=${_basekernel}.4
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -39,12 +39,12 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/1700_enable-thinkpad-micled.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/2700_ThinkPad-30-brightness-control-fix.patch'
         'criu-no-expert.patch'
-        '3.11.1-fix-skge.patch'
         '3.11-haswell-intel_pstate.patch'
         "zfs-0.6.1-${_basever}-rc5.patch"
+        "aufs3.11-handle-BLK_DEV_LOOP-m.patch"
 )
 sha256sums=('803ec8f0ad4b2ddedcb0332a590cd2b5e10dfc57c3b1c95bc9c46af81d51d7f9'
-            '8b59330272a87b7649f3d0924c3db51ff1d58612974521fb03041025877e4a1b'
+            '9995a6ae825513bd5678cd640d08469178c440b5e28c4dcddc5581b1035a9125'
             'b831f555bf6c6d7575b427b4ff553086e246c0ad43ae3a1f37c2cdf08dbea49f'
             'e7c1e6f9ff40fd69fae34aebbd951d66caefb6e8919cbe5759823b4e7423ee71'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
@@ -62,9 +62,9 @@ sha256sums=('803ec8f0ad4b2ddedcb0332a590cd2b5e10dfc57c3b1c95bc9c46af81d51d7f9'
             '8ef4a6c16e3d0df0c211fef7875089eda3821db4b1335cac79ca02511a4d6f5c'
             '9d7eab1ffec60f2b0d2121221d957f17a02918d95f11ea52902c227df5105e25'
             'daa75228a4c45a925cc5dbfeba884aa696a973a26af7695adc198c396474cbd5'
-            'f49320e5f33806313c9b3b9a2c945c8c4e80ffcce026973b25c487c0bc7b668e'
             'c29f41b754494b09e97b6f4bbdd467771bc481f840fdf0d3f5605ad585a6857b'
             '8a7d11293515d1efce25e68ddb8eda65a62a0073eb9c94ec5f84b85d4295b7d8'
+            '841c95c8a00f5a02727dca90c0859cb4a56d4bce5ca00fc126c3d1e452ce4a97'
 )
 
 ## modules.symboles md5sums
@@ -96,9 +96,6 @@ prepare() {
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -Np1 -i "${srcdir}/change-default-console-loglevel.patch"
-
-  # #36865 fix broken skge network module
-  patch -Np1 -i "${srcdir}/3.11.1-fix-skge.patch"
  
   # add intel haswell support to intel_pstate
   # https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/patch/?id=6cdcdb793791f776ea9408581b1242b636d43b37
@@ -120,6 +117,7 @@ prepare() {
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
   patch -Np1 -i "${srcdir}/aufs3-proc_map.patch"
   patch -Np1 -i "${srcdir}/aufs3-standalone.patch"
+  patch -Np1 -i "${srcdir}/aufs3.11-handle-BLK_DEV_LOOP-m.patch"
 
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config

@@ -12,8 +12,8 @@ _basekernel=3.4
 _basever=34
 _aufs=20130923
 _zfs=0.6.2
-_withzfs=yes
-pkgver=${_basekernel}.63
+_withzfs=no
+pkgver=${_basekernel}.65
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -50,7 +50,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.4/4500_nouveau-video-output-control-Kconfig.patch'
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
-            '436422cc2c0ac6243632561955c3ecefd3150d0ba061943f45600c0674e4da89'
+            '0cab0843ed38ae6f1839bdaa425033d9d1f3754923cc925ed6e13715c2158216'
             'a15f11f6027b6d8361cea25323ddd8cdf5f82b7c3e5eaa9aab588852944f3c08'
             'ebecc5840233ab27ec2f94e76c1912ae4dcbe91bf154fed56dbc51a26a986e1c'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
@@ -230,9 +230,13 @@ package_linux34() {
   pkgdesc="The ${pkgbase/linux/Linux} kernel and modules"
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
-  provides=("linux=${pkgver}" "spl-modules=${_zfs}" "zfs-modules=${_zfs}")
-  replaces=("linux${_basever}-spl" "linux${_basever}-zfs")
-  conflicts=("linux${_basever}-spl" "linux${_basever}-zfs")
+  if [ "${_withzfs}" = "yes" ]; then
+     provides=("linux=${pkgver}" "spl-modules=${_zfs}" "zfs-modules=${_zfs}")
+     replaces=("linux${_basever}-spl" "linux${_basever}-zfs")
+     conflicts=("linux${_basever}-spl" "linux${_basever}-zfs")
+  else
+     provides=("linux=${pkgver}")
+  fi
   install=${pkgname}.install
 
   cd "${srcdir}/linux-${_basekernel}"
@@ -295,8 +299,10 @@ package_linux34() {
 package_linux34-headers() {
   pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel"
   provides=("linux-headers=$pkgver")
-  replaces=('spl-common' 'zfs-common')
-  conflicts=('spl-common' 'zfs-common')
+  if [ "${_withzfs}" = "yes" ]; then
+     replaces=('spl-common' 'zfs-common')
+     conflicts=('spl-common' 'zfs-common')
+  fi
 
   install -dm755 "${pkgdir}/usr/lib/modules/${_kernver}"
 

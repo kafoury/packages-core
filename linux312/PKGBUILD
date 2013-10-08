@@ -10,10 +10,10 @@ pkgname=('linux312' 'linux312-headers')
 _kernelname=-MANJARO
 _basekernel=3.12
 _basever=312
-_aufs=20130916
+_aufs=20130923
 _zfs=0.6.2
 _withzfs=no
-_rc=rc1
+_rc=rc4
 pkgver=${_basekernel}${_rc}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -39,27 +39,27 @@ source=(#"http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.x
         "http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-$_zfs.tar.gz"
         'config.zfs'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/1700_enable-thinkpad-micled.patch'
-        '2700_ThinkPad-30-brightness-control-fix-312rc1.patch'
+        'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/2700_ThinkPad-30-brightness-control-fix.patch'
         'criu-no-expert.patch'
         "zfs-0.6.1-311-rc5.patch"
 )
-sha256sums=('c5cbad9dcaebe6321ad7a738da0b14c872771ab2fde278f9d41e8d421ecd71f2'
+sha256sums=('be5e22b83de349351145ed19b10f35d66d0300921ada71e1c3c8881de5e3f695'
             #'516bb3193f868a28e218d1a5c69e145cf0568c62f87496ae7b6446d621e45d8e'
-            '28c5322eb255f5d76a4f01e5f79b5807069e89152d14a6c65fb0f2655d9ae207'
-            '746e26f041eaf1012ac3278420e0a93d12b6b906df2a741cc12a26f71485e2b6'
+            'SKIP'
+            'SKIP'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '7e4a2160007bec3e944f443ae9bddf54f2d89607e1d3f9f5b06e3f6024fe0ed4'
-            'd436f436131ef96c10684a31e50cc263df133432dd60f64b3a5cba580b301773'
+            'c5d25fa7ba8bd19fe2f592b515ef0dbd53e79d2b6f6c6cf833639660f2435d60'
+            '1512ef92e4a99f6d1cc9b2a26ce945f9a053f8e809ed5e34cf328a14eaa29487'
             '7463c6f37e63fd113f072c097a29c44e896429cfdb58c09166da12e2a69cc671'
-            'fc71cfd0963c698e6e3e150a6d02c869e357915e7cd5fb960153c8d7a91d97f0'
-            '3981cec973cdb9f05a11b14a8958532e35cbb1353894d8b94162f365f8e1c360'
-            '4b578fe00349247948143294b9727fd822be87f56699b56e507dd39aceaf060d'
+            'ee7e88ce0db5002e6ff4b5fb58414c1e5b46ba5cd82cb1759334ed62e0dbfc7c'
+            'de3fead43c53eaa847e814c9788e69ec96a6fa8bbdd671ae1203bfde913c769c'
+            '3a875b065efd8e34f8937b1d4fd40de1c1459806ff377ba2b58ee10926fcd2bb'
             'd633a2039877c00302f32738099ee53e0275350a8f73691ecb107fb9735db5a9'
             '3c577c7055d6c73179726b9c8a7fd48f9122be0b345c50cd54732e801165daa4'
             '6b8cd79486b3a51204fac07297b8c45aa8702b8dfade58f2098b5734517065a1'
             '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
-            '8ef4a6c16e3d0df0c211fef7875089eda3821db4b1335cac79ca02511a4d6f5c'
+            '461aa0da7de8bda9474797339532304894b55825be34f8c009244da8c00c5b41'
             'a3f85c3c35ee478fd174f8aaa6ca15e5fad8612b42ca4d90cc3ef79b49a99989'
             'daa75228a4c45a925cc5dbfeba884aa696a973a26af7695adc198c396474cbd5'
             '8a7d11293515d1efce25e68ddb8eda65a62a0073eb9c94ec5f84b85d4295b7d8'
@@ -101,7 +101,7 @@ prepare() {
 
   # add Gentoo patches
   patch -Np1 -i "${srcdir}/1700_enable-thinkpad-micled.patch"
-  patch -Np1 -i "${srcdir}/2700_ThinkPad-30-brightness-control-fix-312rc1.patch"
+  patch -Np1 -i "${srcdir}/2700_ThinkPad-30-brightness-control-fix.patch"
 
   # add aufs3 support
   patch -Np1 -i "${srcdir}/aufs3.x-rcN-${_aufs}.patch"

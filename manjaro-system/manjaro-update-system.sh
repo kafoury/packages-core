@@ -42,6 +42,22 @@ detectDE()
 }
 
 post_upgrade() {
+
+	# add mate repo when missed in pacman.conf
+	if [ -e "/usr/bin/mate-session" ] && [ "$(grep '\[mate\]' /etc/pacman.conf)" == "" ]; then
+		msg "Adding MATE repository ..."
+		echo "[mate]" >> /etc/pacman.conf
+		echo "# Official MATE repo:" >> /etc/pacman.conf
+		echo "SigLevel = Never" >> /etc/pacman.conf
+		echo 'Server = http://repo.mate-desktop.org/archlinux/$arch' >> /etc/pacman.conf
+	fi
+
+	# fix broken mate repo entry
+	if [ -e "/usr/bin/mate-session" ] && [ "$(grep 'repo.mate-desktop.org/archlinux/\$arch' /etc/pacman.conf)" == "" ]; then
+		msg "Fixing MATE repository entry ..."
+		sed -i 's|repo.mate-desktop.org/archlinux/|repo.mate-desktop.org/archlinux/$arch|g' /etc/pacman.conf
+	fi
+
 	# depreciate sysctl.conf
 	if [ "$(vercmp $2 20130921-1)" -lt 0 ] && [ -f /etc/sysctl.conf ]; then
 		msg "Depreciate sysctl.conf ..."

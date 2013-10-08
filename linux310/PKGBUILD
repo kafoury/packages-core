@@ -12,8 +12,8 @@ _basekernel=3.10
 _basever=310
 _aufs=20130923
 _zfs=0.6.2
-_withzfs=yes
-pkgver=${_basekernel}.13
+_withzfs=no
+pkgver=${_basekernel}.15
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -44,7 +44,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.10.13-Revert-zram-use-zram--lock-to-protect-zram_free_page-in-swap-free-notify-path.patch')
 
 sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
-            'cf8ec5b47c904f66f715e7ccd5051e15fe9f931fec03847a86d552caf8848be8'
+            'bb0108609a95ddfe5030938e45ad123445af4e29510a0b1bd8cede89de8c013b'
             'd6b1491a47e831cddfaacec3af42d296648fd911abe7bae17d7a912710752ad9'
             '1db70b2c93a4d844d9863ae21c4008edf3de619b2ff9a3f8c15c88ae56dee008'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
@@ -69,17 +69,17 @@ sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
 ## modules.symboles md5sums
 #
 # i686
-# 1cee7c3a46a66e0c92d18f6f09e3f034  /lib/modules/3.10.12-1-MANJARO/modules.symbols
-# 2f3a16fbed2f08cd9b8d6575843469db  /lib/modules/3.11.1-1-MANJARO/modules.symbols
-# 6f561daf5af8f313e483142019b339a7  /lib/modules/3.4.62-1-MANJARO/modules.symbols
-# e54bf3a44ce26d42022366829c150ae4  /lib/modules/3.8.13.9-1-MANJARO/modules.symbols
+# a7509c465a936a9382cfa67a364d73b3  /lib/modules/3.10.14-1-MANJARO/modules.symbols
+# 9f6c1fd082f0d7f5aaa449df18ce29c3  /lib/modules/3.11.3-1-MANJARO/modules.symbols
+# b57620ac17be55f11162db05c1232aae  /lib/modules/3.12.0-1-MANJARO/modules.symbols
+# 31dcd92fcff25482de7ffac8ac589546  /lib/modules/3.4.64-1-MANJARO/modules.symbols
+# e54bf3a44ce26d42022366829c150ae4  /lib/modules/3.8.13.10-2-MANJARO/modules.symbols
 # x86_64
-# e7b615e128e7d6083c09819f2484868a  /lib/modules/3.10.13-1-MANJARO/modules.symbols
-# 949efb3b9198f0836ac0cd5200413f1e  /lib/modules/3.11.2-1-MANJARO/modules.symbols
-# 8475a409dfcebb3dbce1c81849d3b66b  /lib/modules/3.12.0-1-MANJARO/modules.symbols
-# 33bcedd2c5f698096233422c6d7d1c38  /lib/modules/3.4.63-1-MANJARO/modules.symbols
-# 67adb61fdc9098a0480278d1754d6992  /lib/modules/3.8.13.10-1-MANJARO/modules.symbols
-
+# be9cf57c4175f3c3e40cf33fa7843eaa  /lib/modules/3.10.15-1-MANJARO/modules.symbols
+# 5b9af4d55493f2b2746f8ddcdcc7c3e9  /lib/modules/3.11.4-1-MANJARO/modules.symbols
+# 6b169c6c483424ee322955f4dac25653  /lib/modules/3.12.0-1-MANJARO/modules.symbols
+# b22436db24dd59c5139d7df5e34df694  /lib/modules/3.4.65-1-MANJARO/modules.symbols
+# 67adb61fdc9098a0480278d1754d6992  /lib/modules/3.8.13.10-2-MANJARO/modules.symbols
 
 prepare() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -200,9 +200,13 @@ package_linux310() {
   pkgdesc="The ${pkgbase/linux/Linux} kernel and modules"
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
-  provides=("linux=${pkgver}" "spl-modules=${_zfs}" "zfs-modules=${_zfs}")
-  replaces=("linux${_basever}-spl" "linux${_basever}-zfs")
-  conflicts=("linux${_basever}-spl" "linux${_basever}-zfs")
+  if [ "${_withzfs}" = "yes" ]; then
+     provides=("linux=${pkgver}" "spl-modules=${_zfs}" "zfs-modules=${_zfs}")
+     replaces=("linux${_basever}-spl" "linux${_basever}-zfs")
+     conflicts=("linux${_basever}-spl" "linux${_basever}-zfs")
+  else
+     provides=("linux=${pkgver}")
+  fi
   install=${pkgname}.install
 
   cd "${srcdir}/linux-${_basekernel}"
@@ -265,8 +269,10 @@ package_linux310() {
 package_linux310-headers() {
   pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel"
   provides=("linux-headers=$pkgver")
-  replaces=('spl-common' 'zfs-common')
-  conflicts=('spl-common' 'zfs-common')
+  if [ "${_withzfs}" = "yes" ]; then
+     replaces=('spl-common' 'zfs-common')
+     conflicts=('spl-common' 'zfs-common')
+  fi
 
   install -dm755 "${pkgdir}/usr/lib/modules/${_kernver}"
 
