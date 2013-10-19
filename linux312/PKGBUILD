@@ -13,7 +13,7 @@ _basever=312
 _aufs=20131014
 _zfs=0.6.2
 _withzfs=no
-_rc=rc5
+_rc=rc6
 pkgver=${_basekernel}${_rc}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -43,7 +43,7 @@ source=(#"http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.x
         'criu-no-expert.patch'
         "zfs-0.6.1-311-rc5.patch"
 )
-sha256sums=('0e3aadd1a61a05d6dbcea8adbad8794c0b4e3d4ea6ef7b389af2b2fcc18c3ec9'
+sha256sums=('842a86ce600aafa8ea52fc0b1f64c6f3d34e7ac1a4bad8e40f337fb1eb693c34'
             #'516bb3193f868a28e218d1a5c69e145cf0568c62f87496ae7b6446d621e45d8e'
             'a9b4d348217be1945116517d2dcdfffe61404312305b53bc6e8afea006224b4c'
             'db8216bda63dc493de369eba758c10d77b248a9972a1d4aa8b404e7527890f6c'
@@ -68,17 +68,17 @@ sha256sums=('0e3aadd1a61a05d6dbcea8adbad8794c0b4e3d4ea6ef7b389af2b2fcc18c3ec9'
 ## modules.symboles md5sums
 #
 # i686
-# 783d968beb4c7a517a6fe836d3aecc20  lib/modules/3.10.15-1-MANJARO/modules.symbols
-# 020ea034926e75af951d422ded9a5148  lib/modules/3.11.4-1-MANJARO/modules.symbols
-# b1b158f5f4a6d0555c541bbb2a02be8b  lib/modules/3.12.0-1-MANJARO/modules.symbols
-# 975c51999ef798ef44db4cbb00a1f4b4  lib/modules/3.4.65-1-MANJARO/modules.symbols
-# e54bf3a44ce26d42022366829c150ae4  lib/modules/3.8.13.10-2-MANJARO/modules.symbols
+# 49dda44247d69fd4004601c3dd450322  /lib/modules/3.10.17-1-MANJARO/modules.symbols
+# eb88c266fb3470256cb06702d41dc076  /lib/modules/3.11.6-1-MANJARO/modules.symbols
+# 1109b4839aeb2612839597ad9c3d8393  /lib/modules/3.12.0-1-MANJARO/modules.symbols
+# ad0cd4d78cc915e1b9f6f89e00b52ff3  /lib/modules/3.4.66-1-MANJARO/modules.symbols
+# f7ed00ba343e32786d6d16e767bb868f  /lib/modules/3.8.13.11-1-MANJARO/modules.symbols
 # x86_64
-# be9cf57c4175f3c3e40cf33fa7843eaa  /lib/modules/3.10.15-1-MANJARO/modules.symbols
-# 5b9af4d55493f2b2746f8ddcdcc7c3e9  /lib/modules/3.11.4-1-MANJARO/modules.symbols
-# 6b169c6c483424ee322955f4dac25653  /lib/modules/3.12.0-1-MANJARO/modules.symbols
-# b22436db24dd59c5139d7df5e34df694  /lib/modules/3.4.65-1-MANJARO/modules.symbols
-# 67adb61fdc9098a0480278d1754d6992  /lib/modules/3.8.13.10-2-MANJARO/modules.symbols
+# aa9257e0d07b7850db7be58df47f4235  /lib/modules/3.10.17-1-MANJARO/modules.symbols
+# 1253b8353d7870168d7c738e962c9c63  /lib/modules/3.11.6-1-MANJARO/modules.symbols
+# 24ad6166b21d058c31a0d9d978c1e21c  /lib/modules/3.12.0-1-MANJARO/modules.symbols
+# 242d8b9c0e711b05561d3b8864fab7ab  /lib/modules/3.4.66-1-MANJARO/modules.symbols
+# b3a2930d437cfae0aff78c9cd32db003  /lib/modules/3.8.13.11-1-MANJARO/modules.symbols
 
 
 prepare() {

@@ -82,17 +82,18 @@ sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
 ## modules.symboles md5sums
 #
 # i686
-# 49dda44247d69fd4004601c3dd450322  /lib/modules/3.10.16-1-MANJARO/modules.symbols
-# eb88c266fb3470256cb06702d41dc076  /lib/modules/3.11.5-1-MANJARO/modules.symbols
+# 49dda44247d69fd4004601c3dd450322  /lib/modules/3.10.17-1-MANJARO/modules.symbols
+# eb88c266fb3470256cb06702d41dc076  /lib/modules/3.11.6-1-MANJARO/modules.symbols
 # 1109b4839aeb2612839597ad9c3d8393  /lib/modules/3.12.0-1-MANJARO/modules.symbols
 # ad0cd4d78cc915e1b9f6f89e00b52ff3  /lib/modules/3.4.66-1-MANJARO/modules.symbols
 # f7ed00ba343e32786d6d16e767bb868f  /lib/modules/3.8.13.11-1-MANJARO/modules.symbols
 # x86_64
-# aa9257e0d07b7850db7be58df47f4235  /lib/modules/3.10.16-1-MANJARO/modules.symbols
-# 1253b8353d7870168d7c738e962c9c63  /lib/modules/3.11.5-1-MANJARO/modules.symbols
+# aa9257e0d07b7850db7be58df47f4235  /lib/modules/3.10.17-1-MANJARO/modules.symbols
+# 1253b8353d7870168d7c738e962c9c63  /lib/modules/3.11.6-1-MANJARO/modules.symbols
 # 24ad6166b21d058c31a0d9d978c1e21c  /lib/modules/3.12.0-1-MANJARO/modules.symbols
 # 242d8b9c0e711b05561d3b8864fab7ab  /lib/modules/3.4.66-1-MANJARO/modules.symbols
 # b3a2930d437cfae0aff78c9cd32db003  /lib/modules/3.8.13.11-1-MANJARO/modules.symbols
+
 
 prepare() {
   cd "${srcdir}/linux-${_basekernel}"
