@@ -3,7 +3,7 @@
 # maintainer: Roland Singer <roland[at]manjaro[dog]org>
 
 pkgname=manjaro-system
-pkgver=20131005
+pkgver=20131015
 pkgrel=2
 pkgdesc="Manjaro Linux System - Update script"
 arch=('any')

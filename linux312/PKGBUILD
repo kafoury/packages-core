@@ -10,10 +10,10 @@ pkgname=('linux312' 'linux312-headers')
 _kernelname=-MANJARO
 _basekernel=3.12
 _basever=312
-_aufs=20130923
+_aufs=20131014
 _zfs=0.6.2
 _withzfs=no
-_rc=rc4
+_rc=rc5
 pkgver=${_basekernel}${_rc}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -43,18 +43,18 @@ source=(#"http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.x
         'criu-no-expert.patch'
         "zfs-0.6.1-311-rc5.patch"
 )
-sha256sums=('be5e22b83de349351145ed19b10f35d66d0300921ada71e1c3c8881de5e3f695'
+sha256sums=('0e3aadd1a61a05d6dbcea8adbad8794c0b4e3d4ea6ef7b389af2b2fcc18c3ec9'
             #'516bb3193f868a28e218d1a5c69e145cf0568c62f87496ae7b6446d621e45d8e'
-            'SKIP'
-            'SKIP'
+            'a9b4d348217be1945116517d2dcdfffe61404312305b53bc6e8afea006224b4c'
+            'db8216bda63dc493de369eba758c10d77b248a9972a1d4aa8b404e7527890f6c'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            'c5d25fa7ba8bd19fe2f592b515ef0dbd53e79d2b6f6c6cf833639660f2435d60'
+            'c4243f3d4ec47d4b649310b9f2193494e50e81d12202a05c7fa33d1334c0dcc4'
             '1512ef92e4a99f6d1cc9b2a26ce945f9a053f8e809ed5e34cf328a14eaa29487'
             '7463c6f37e63fd113f072c097a29c44e896429cfdb58c09166da12e2a69cc671'
-            'ee7e88ce0db5002e6ff4b5fb58414c1e5b46ba5cd82cb1759334ed62e0dbfc7c'
+            '2488e8a37c8bd4b091c8b3afb3f64acde960dad62184bb64db46c79dfe5134d5'
             'de3fead43c53eaa847e814c9788e69ec96a6fa8bbdd671ae1203bfde913c769c'
-            '3a875b065efd8e34f8937b1d4fd40de1c1459806ff377ba2b58ee10926fcd2bb'
+            '9dc765617f7eb43ba7605fd3fb7f2b0dfb5f00d6df39a7a79d305dd8763f7d98'
             'd633a2039877c00302f32738099ee53e0275350a8f73691ecb107fb9735db5a9'
             '3c577c7055d6c73179726b9c8a7fd48f9122be0b345c50cd54732e801165daa4'
             '6b8cd79486b3a51204fac07297b8c45aa8702b8dfade58f2098b5734517065a1'
@@ -68,15 +68,17 @@ sha256sums=('be5e22b83de349351145ed19b10f35d66d0300921ada71e1c3c8881de5e3f695'
 ## modules.symboles md5sums
 #
 # i686
-# 1cee7c3a46a66e0c92d18f6f09e3f034  /lib/modules/3.10.12-1-MANJARO/modules.symbols
-# 2f3a16fbed2f08cd9b8d6575843469db  /lib/modules/3.11.1-1-MANJARO/modules.symbols
-# 6f561daf5af8f313e483142019b339a7  /lib/modules/3.4.62-1-MANJARO/modules.symbols
-# e54bf3a44ce26d42022366829c150ae4  /lib/modules/3.8.13.9-1-MANJARO/modules.symbols
+# 783d968beb4c7a517a6fe836d3aecc20  lib/modules/3.10.15-1-MANJARO/modules.symbols
+# 020ea034926e75af951d422ded9a5148  lib/modules/3.11.4-1-MANJARO/modules.symbols
+# b1b158f5f4a6d0555c541bbb2a02be8b  lib/modules/3.12.0-1-MANJARO/modules.symbols
+# 975c51999ef798ef44db4cbb00a1f4b4  lib/modules/3.4.65-1-MANJARO/modules.symbols
+# e54bf3a44ce26d42022366829c150ae4  lib/modules/3.8.13.10-2-MANJARO/modules.symbols
 # x86_64
-# 76b2e21db6f8f517b854c8afd4097680  /lib/modules/3.10.12-1-MANJARO/modules.symbols
-# 769a2618b9dc3ae633b1bc3196471747  /lib/modules/3.11.1-1-MANJARO/modules.symbols
-# 33bcedd2c5f698096233422c6d7d1c38  /lib/modules/3.4.62-1-MANJARO/modules.symbols
-# 67adb61fdc9098a0480278d1754d6992  /lib/modules/3.8.13.9-1-MANJARO/modules.symbols
+# be9cf57c4175f3c3e40cf33fa7843eaa  /lib/modules/3.10.15-1-MANJARO/modules.symbols
+# 5b9af4d55493f2b2746f8ddcdcc7c3e9  /lib/modules/3.11.4-1-MANJARO/modules.symbols
+# 6b169c6c483424ee322955f4dac25653  /lib/modules/3.12.0-1-MANJARO/modules.symbols
+# b22436db24dd59c5139d7df5e34df694  /lib/modules/3.4.65-1-MANJARO/modules.symbols
+# 67adb61fdc9098a0480278d1754d6992  /lib/modules/3.8.13.10-2-MANJARO/modules.symbols
 
 
 prepare() {
@@ -128,6 +130,9 @@ prepare() {
 
   # don't run depmod on 'make install'. We'll do this ourselves in packaging
   sed -i '2iexit 0' scripts/depmod.sh
+
+  # normally not needed
+  make clean
 
   # get kernel version
   make prepare
