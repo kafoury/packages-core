@@ -13,7 +13,7 @@ _basever=38
 _aufs=20131007
 _zfs=0.6.2
 _withzfs=no
-_subver=11
+_subver=12
 pkgver=${_basekernel}.13.${_subver}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -52,6 +52,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "3.8.13.9.patch"
         "3.8.13.10.patch"
         "3.8.13.11.patch"
+        "3.8.13.12.patch"
         "http://git.kernel.org/cgit/linux/kernel/git/stable/stable-queue.git/plain/releases/3.10.10/acpi-add-_sta-evaluation-at-do_acpi_find_child.patch"
         "http://git.kernel.org/cgit/linux/kernel/git/stable/stable-queue.git/plain/releases/3.10.10/acpi-try-harder-to-resolve-_adr-collisions-for-bridges.patch"
 )
@@ -86,6 +87,7 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             'dd4f5dd0ef520e261288bdd3cc8118e0dabd3d093cdc547437de0e20da1fe477'
             '0995c5623fcf5b3ab6b519f378c393d4db5d1025ddb2d242de5c983bc5f2c7a6'
             '01d9cf8a53094e35b71a360828cea3965cccc62fbb454f23d59bf0570bd22920'
+            '44e54a32387ed3a2d08313a84bffcabfce1a4731d8fabbd6f3e3c7470f8d8a90'
             'cb505a5b9aa750490ba28facb537bfd928ff6d0dc8edc349b6ad5e202f876e69'
             'aaf27758adaf142d04ea8ba43378716d24699a884906ae1e2ef3f655695497c6'
 )
@@ -123,6 +125,7 @@ prepare() {
   patch -p1 -i "${srcdir}/3.8.13.9.patch"
   patch -p1 -i "${srcdir}/3.8.13.10.patch"
   patch -p1 -i "${srcdir}/3.8.13.11.patch"
+  patch -p1 -i "${srcdir}/3.8.13.12.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
