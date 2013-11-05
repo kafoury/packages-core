@@ -1,7 +1,7 @@
 aufs3.x-rcN standalone patch
 
 diff --git a/fs/file_table.c b/fs/file_table.c
-index da0ee1e..0a02e12 100644
+index ccd02ee..710c617 100644
 --- a/fs/file_table.c
 +++ b/fs/file_table.c
 @@ -37,6 +37,7 @@ struct files_stat_struct files_stat = {

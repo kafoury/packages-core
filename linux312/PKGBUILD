@@ -10,19 +10,17 @@ pkgname=('linux312' 'linux312-headers')
 _kernelname=-MANJARO
 _basekernel=3.12
 _basever=312
-_aufs=20131014
+_aufs=20131104
 _zfs=0.6.2
 _withzfs=no
-_rc=rc7
-pkgver=${_basekernel}${_rc}
+pkgver=${_basekernel}.0
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=(#"http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
-        "http://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-${_basekernel}-${_rc}.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz"
         #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config' 'config.x86_64' 'config.aufs'
@@ -43,18 +41,18 @@ source=(#"http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.x
         'criu-no-expert.patch'
         "zfs-0.6.1-311-rc5.patch"
 )
-sha256sums=('fdc590d2d61ea971fe05e77201e1e5bf78b320cffda01fcbdf83bc884f2d98db'
+sha256sums=('2e120ec7fde19fa51dc6b6cc11c81860a0775defcad5a5bf910ed9a50e845a02'
             #'516bb3193f868a28e218d1a5c69e145cf0568c62f87496ae7b6446d621e45d8e'
-            'a9b4d348217be1945116517d2dcdfffe61404312305b53bc6e8afea006224b4c'
-            'db8216bda63dc493de369eba758c10d77b248a9972a1d4aa8b404e7527890f6c'
+            '39545ddce3f86e09ebb8cfe16a467a7c61c97af5e5c1f1896376e98d6bd7abd5'
+            'abdea8ccb55d0f1232e8564d435d336759e0abfa539e3a1d2af28d11a42af1dd'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            'c4243f3d4ec47d4b649310b9f2193494e50e81d12202a05c7fa33d1334c0dcc4'
-            '1512ef92e4a99f6d1cc9b2a26ce945f9a053f8e809ed5e34cf328a14eaa29487'
+            'ca9059b376e02301992bd552200aba3c542100c0c121295e5489cf128ba6d8fa'
+            '490c44cc5b2f9e27bebe9ec4a6322bca7091cb323b04bec28f70a29b0743b3e2'
             '7463c6f37e63fd113f072c097a29c44e896429cfdb58c09166da12e2a69cc671'
             '2488e8a37c8bd4b091c8b3afb3f64acde960dad62184bb64db46c79dfe5134d5'
             'de3fead43c53eaa847e814c9788e69ec96a6fa8bbdd671ae1203bfde913c769c'
-            '9dc765617f7eb43ba7605fd3fb7f2b0dfb5f00d6df39a7a79d305dd8763f7d98'
+            '572067db0aa229fef61597223be2562a29efc0863751b22ebc455dcd442468f5'
             'd633a2039877c00302f32738099ee53e0275350a8f73691ecb107fb9735db5a9'
             '3c577c7055d6c73179726b9c8a7fd48f9122be0b345c50cd54732e801165daa4'
             '6b8cd79486b3a51204fac07297b8c45aa8702b8dfade58f2098b5734517065a1'
@@ -82,7 +80,7 @@ sha256sums=('fdc590d2d61ea971fe05e77201e1e5bf78b320cffda01fcbdf83bc884f2d98db'
 
 
 prepare() {
-  cd "${srcdir}/linux-${_basekernel}-${_rc}"
+  cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
   #patch -p1 -i "${srcdir}/patch-${pkgver}"
@@ -90,7 +88,7 @@ prepare() {
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
   # enable only if you have "gen-stable-queue-patch.sh" executed before
-  #patch -Np1 -i "${srcdir}/prepatch-${_basekernel}-`date +%Y%m%d`"
+  #patch -Np1 -i "${srcdir}/prepatch-${_basekernel}`date +%Y%m%d`"
 
   # set DEFAULT_CONSOLE_LOGLEVEL to 4 (same value as the 'quiet' kernel param)
   # remove this when a Kconfig knob is made available by upstream
@@ -145,26 +143,26 @@ prepare() {
    cd ${srcdir}/spl-${_zfs}
    ./autogen.sh
    if [ "${CARCH}" = "i686" ]; then
-      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}-${_rc} \
-      --with-linux-obj=${srcdir}/linux-${_basekernel}-${_rc} --enable-atomic-spinlocks
+      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
+      --with-linux-obj=${srcdir}/linux-${_basekernel} --enable-atomic-spinlocks
    else
-      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}-${_rc} \
-      --with-linux-obj=${srcdir}/linux-${_basekernel}-${_rc}
+      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
+      --with-linux-obj=${srcdir}/linux-${_basekernel}
    fi
-   ./copy-builtin ${srcdir}/linux-${_basekernel}-${_rc}
-   cp spl.release.in "${srcdir}/linux-${_basekernel}-${_rc}/"
+   ./copy-builtin ${srcdir}/linux-${_basekernel}
+   cp spl.release.in "${srcdir}/linux-${_basekernel}/"
    cd ${srcdir}/zfs-${_zfs}
    patch -Np1 -i "${srcdir}/zfs-0.6.1-311-rc5.patch"
    ./autogen.sh
-   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}-${_rc} \
-   --with-linux-obj=${srcdir}/linux-${_basekernel}-${_rc}
-   ./copy-builtin ${srcdir}/linux-${_basekernel}-${_rc}
-   cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}-${_rc}/.config
+   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
+   --with-linux-obj=${srcdir}/linux-${_basekernel}
+   ./copy-builtin ${srcdir}/linux-${_basekernel}
+   cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}/.config
   fi
 }
 
 build() {
-  cd "${srcdir}/linux-${_basekernel}-${_rc}"
+  cd "${srcdir}/linux-${_basekernel}"
 
   # load configuration
   # Configure the kernel. Replace the line below with one of your choice.
@@ -200,7 +198,7 @@ package_linux312() {
   fi
   install=${pkgname}.install
 
-  cd "${srcdir}/linux-${_basekernel}-${_rc}"
+  cd "${srcdir}/linux-${_basekernel}"
 
   KARCH=x86
 
@@ -270,7 +268,7 @@ package_linux312-headers() {
   cd "${pkgdir}/usr/lib/modules/${_kernver}"
   ln -sf ../../../src/linux-${_kernver} build
 
-  cd "${srcdir}/linux-${_basekernel}-${_rc}"
+  cd "${srcdir}/linux-${_basekernel}"
 
   install -D -m644 Makefile \
     "${pkgdir}/usr/src/linux-${_kernver}/Makefile"

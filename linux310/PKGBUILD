@@ -10,10 +10,10 @@ pkgname=('linux310' 'linux310-headers')
 _kernelname=-MANJARO
 _basekernel=3.10
 _basever=310
-_aufs=20131007
+_aufs=20131104
 _zfs=0.6.2
 _withzfs=no
-pkgver=${_basekernel}.17
+pkgver=${_basekernel}.18
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -44,12 +44,12 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.10.13-Revert-zram-use-zram--lock-to-protect-zram_free_page-in-swap-free-notify-path.patch')
 
 sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
-            '5552fc6f24a56d13d603ddc7759114a7b52e92ad2fb84a23a1b80b37b739a33b'
+            '6fe9123444e4803d2bdec0f89a969024813bd54ba9114471589d1326deee8d6f'
             'aa2c5c8f1956054d0e3ff0c391812a31dc3cb08c70c8e7d286989c46a8d23623'
             '310734baf81696fc8054e6df28a881286f4cac5f16565e1253d355f00b349a9f'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '990a8a2357fe51a6448da93e16259bc9a674c0e986a494c62ba657d7f9f2d840'
+            'bfea512dab702488d3bf056306a28292125d159fc9763f1b0d0f001c2860229e'
             'bd56283210474d62be22a429c8401a9b45501c6a182391d05290554c23283296'
             '3ef474c102a1fcc596d92c5d370c60845c789012efd41b4961b557ec3d6a88b1'
             '0bce2be354eac2c378a0782ccbb1c7d751f4cec61067e7e635be2562a0b1ab4d'

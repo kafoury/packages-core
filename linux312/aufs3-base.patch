@@ -30,7 +30,7 @@ index 40e7155..6e43ab0 100644
  
  static ssize_t loop_attr_show(struct device *dev, char *page,
 diff --git a/fs/file_table.c b/fs/file_table.c
-index abdd15a..da0ee1e 100644
+index e900ca5..ccd02ee 100644
 --- a/fs/file_table.c
 +++ b/fs/file_table.c
 @@ -36,7 +36,7 @@ struct files_stat_struct files_stat = {
