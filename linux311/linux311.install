@@ -8,6 +8,10 @@ BASEVER=311
 ARCH=x86_64
 
 post_install () {
+  # EOL
+  echo ">>> NOTE, 3.11.10 was the last maintained maintenance release by Greg Kroah-Hartman."
+  echo "    It is recommend to move on to linux312-series. Use followed cmd to do that:"
+  echo "    'sudo mhwd-kernel -i linux312'"
   # updating module dependencies
   echo ">>> Updating module dependencies. Please wait ..."
   depmod ${KERNEL_VERSION}
@@ -26,6 +30,10 @@ post_install () {
 }
 
 post_upgrade() {
+  # EOL
+  echo ">>> NOTE, 3.11.10 was the last maintained maintenance release by Greg Kroah-Hartman."
+  echo "    It is recommend to move on to linux312-series. Use followed cmd to do that:"
+  echo "    'sudo mhwd-kernel -i linux312'"
   # reminder notice
   if findmnt --fstab -uno SOURCE /boot &>/dev/null && ! mountpoint -q /boot; then
       echo "WARNING: /boot appears to be a separate partition but is not mounted."
