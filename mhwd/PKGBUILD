@@ -4,8 +4,8 @@
 
 pkgbase=mhwd
 pkgname=('mhwd' 'mhwd-db')
-pkgver=0.2.8
-pkgrel=4
+pkgver=0.3.0
+pkgrel=1
 pkgdesc="Manjaro Linux Hardware Detection"
 arch=('i686' 'x86_64')
 url="http://git.manjaro.org"
@@ -68,7 +68,6 @@ package_mhwd-db() {
   conflicts=("mhwd-db-catalyst")
   provides=("mhwd-db-catalyst")
   replaces=("mhwd-db-catalyst")
-  arch='any'
   install=mhwd-db.install
 
   cd ${srcdir}/${pkgname}/
@@ -90,6 +89,11 @@ package_mhwd-db() {
 
   # remove unichrome
   rm -r ${pkgdir}/var/lib/mhwd/db/pci/graphic_drivers/xf86-video-unichrome
+
+  # remove slmodem on x86_64
+  if [ "${CARCH}" = "x86_64" ]; then
+     rm -r ${pkgdir}/var/lib/mhwd/db/pci/network_drivers/slmodem/
+  fi
 }
 
 package_mhwd-db-catalyst() {
