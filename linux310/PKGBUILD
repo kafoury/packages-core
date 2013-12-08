@@ -13,7 +13,7 @@ _basever=310
 _aufs=20131104
 _zfs=0.6.2
 _withzfs=no
-pkgver=${_basekernel}.21
+pkgver=${_basekernel}.22
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -44,7 +44,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.10.13-Revert-zram-use-zram--lock-to-protect-zram_free_page-in-swap-free-notify-path.patch')
 
 sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
-            '245ae9f97ae4017a231d6bbecfe596429fefe029bb044818e570aadea96fb1a3'
+            '9c889789a1ed733d97c7e34ca67c8c4c3afd69791a4219f842ef7913b24c9115'
             'aa2c5c8f1956054d0e3ff0c391812a31dc3cb08c70c8e7d286989c46a8d23623'
             '310734baf81696fc8054e6df28a881286f4cac5f16565e1253d355f00b349a9f'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'

@@ -43,6 +43,30 @@ detectDE()
 
 post_upgrade() {
 
+	# workaround for catalyst-server removal
+	pacman -Qq catalyst-server &> /tmp/cmd1
+	pacman -Q mhwd-catalyst &> /tmp/cmd2
+	packages="catalyst-server catalyst-input catalyst-video"
+	conflicts="xf86-input-acecad xf86-input-aiptek xf86-input-evdev xf86-input-joystick xf86-input-keyboard xf86-input-mouse xf86-input-synaptics xf86-input-void xf86-input-wacom xorg-server-common xorg-server"
+	if [ "$(grep 'catalyst-server' /tmp/cmd1)" == "catalyst-server" ]; then
+	   if [ "$(cat /tmp/cmd2 | cut -d- -f2 | cut -d" " -f2 | sed -e 's/\.//g')" -lt "138" ]; then
+		msg "Preparing Catalyst installation ..."
+		rm /var/lib/pacman/db.lck &> /dev/null
+		check_pkgs
+		pacman --noconfirm -Rdd ${packages} &> /dev/null
+		pacman --noconfirm -S ${conflicts} &> /dev/null
+	   fi
+	fi
+
+	# fix mdm-themes on systems
+	pacman -Qq mdm-themes &> /tmp/cmd1
+	packages="mdm-themes-extra"
+	if [ "$(vercmp $2 20131206-1)" -lt 0 ] && [ "$(grep 'mdm-themes' /tmp/cmd1)" == "mdm-themes" ]; then
+		msg "Fixing mdm-themes issue ..."
+		rm /var/lib/pacman/db.lck &> /dev/null
+		pacman --noconfirm -S ${packages} &> /dev/null
+	fi
+
 	# remove pyc-files if python-gobject < 3.10.1
 	pacman -Qq python-gobject &> /tmp/cmd1
 	pacman -Q python-gobject &> /tmp/cmd2
@@ -159,21 +183,6 @@ post_upgrade() {
 		rm /var/lib/pacman/db.lck &> /dev/null
 		check_pkgs
 		pacman --noconfirm -S ${packages} &> /dev/null
-	   fi
-	fi
-
-	# workaround for catalyst-server removal
-	pacman -Qq catalyst-server &> /tmp/cmd1
-	pacman -Q mhwd-catalyst &> /tmp/cmd2
-	packages="catalyst-server catalyst-input catalyst-video"
-	conflicts="xf86-input-acecad xf86-input-aiptek xf86-input-evdev xf86-input-joystick xf86-input-keyboard xf86-input-mouse xf86-input-synaptics xf86-input-void xf86-input-wacom xorg-server-common xorg-server"
-	if [ "$(vercmp $2 20130820-4)" -lt 0 ] && [ "$(grep 'catalyst-server' /tmp/cmd1)" == "catalyst-server" ]; then
-	   if [ "$(cat /tmp/cmd2 | cut -d- -f2 | cut -d" " -f2 | sed -e 's/\.//g')" -lt "138" ]; then
-		msg "Preparing Catalyst installation ..."
-		rm /var/lib/pacman/db.lck &> /dev/null
-		check_pkgs
-		pacman --noconfirm -Rdd ${packages} &> /dev/null
-		pacman --noconfirm -S ${conflicts} &> /dev/null
 	   fi
 	fi
 
