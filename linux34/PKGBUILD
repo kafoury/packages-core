@@ -13,7 +13,7 @@ _basever=34
 _aufs=20131104
 _zfs=0.6.2
 _withzfs=no
-pkgver=${_basekernel}.72
+pkgver=${_basekernel}.73
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -50,7 +50,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.4/4500_nouveau-video-output-control-Kconfig.patch'
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
-            'e1322a2b940ddbe0907247b56bc004469a870f0e56beeb4b6a9d9664cb2b2627'
+            '1cb68b31810fa7d24651ab3347d26a8df44107e4431fac3a1f841b6127a51a5b'
             '5cc49f3ff3ef10c38eec82f147f46621053e62338efa4b6eb1ad41665e880cdf'
             '19262837fb3c07675be2c2953b883bdbec3c5652697457e4650aae34bb250a81'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
