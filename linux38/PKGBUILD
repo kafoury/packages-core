@@ -13,7 +13,7 @@ _basever=38
 _aufs=20131104
 _zfs=0.6.2
 _withzfs=no
-_subver=13
+_subver=14
 pkgver=${_basekernel}.13.${_subver}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -54,6 +54,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "3.8.13.11.patch"
         "3.8.13.12.patch"
         "3.8.13.13.patch"
+        "3.8.13.14.patch"
         "http://git.kernel.org/cgit/linux/kernel/git/stable/stable-queue.git/plain/releases/3.10.10/acpi-add-_sta-evaluation-at-do_acpi_find_child.patch"
         "http://git.kernel.org/cgit/linux/kernel/git/stable/stable-queue.git/plain/releases/3.10.10/acpi-try-harder-to-resolve-_adr-collisions-for-bridges.patch"
 )
@@ -90,6 +91,7 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             '01d9cf8a53094e35b71a360828cea3965cccc62fbb454f23d59bf0570bd22920'
             '44e54a32387ed3a2d08313a84bffcabfce1a4731d8fabbd6f3e3c7470f8d8a90'
             'b0e7ffd9fb3d73bc6fbadd88782f48d1b8f061d640ea7992c19e4426bca61546'
+            'f58a5e85421def91a4107e13657dcfc8740115f6a58a1d23bed181ef3facec89'
             'cb505a5b9aa750490ba28facb537bfd928ff6d0dc8edc349b6ad5e202f876e69'
             'aaf27758adaf142d04ea8ba43378716d24699a884906ae1e2ef3f655695497c6'
 )
@@ -97,17 +99,17 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
 ## modules.symboles md5sums
 #
 # i686
-# 605208637b9744284b3cf6412737e7dc  /lib/modules/3.10.18-1-MANJARO/modules.symbols
-# e18189dfba56af202e14730036924c9b  /lib/modules/3.11.7-1-MANJARO/modules.symbols
-# 71fd6f3cc2f4d53a620412a210c2ce6c  /lib/modules/3.12.0-1-MANJARO/modules.symbols
-# 2f75268c7f82293c703acc2e243710e5  /lib/modules/3.4.68-1-MANJARO/modules.symbols
-# fa9ecd59f11d8bc45379bb32128962f8  /lib/modules/3.8.13.12-1-MANJARO/modules.symbols
+# e712fe0304d900c4da81bd1546d08ba8  /lib/modules/3.10.23-1-MANJARO/modules.symbols
+# 65b70a0141d4a29c11533ac0b562f092  /lib/modules/3.11.10.1-1-MANJARO/modules.symbols
+# eb0b0078cfd9a463813775b7906a46c8  /lib/modules/3.12.4-1-MANJARO/modules.symbols
+# 95e9cd1437df60ad166f519b3157fac9  /lib/modules/3.4.73-1-MANJARO/modules.symbols
+# 134a13e5e152b28664c66979fc9894f3  /lib/modules/3.8.13.14-1-MANJARO/modules.symbols
 # x86_64
-# 03586999cf824b2bf308be67955a3314  /lib/modules/3.10.18-1-MANJARO/modules.symbols
-# 00dbfe21419df9dc4e83a99941a6a555  /lib/modules/3.11.7-1-MANJARO/modules.symbols
-# 7d702f7858b3808111c909654e69eefa  /lib/modules/3.12.0-1-MANJARO/modules.symbols
-# 6cb06ca3ba21ae062f81a96ac48c2fc3  /lib/modules/3.4.68-1-MANJARO/modules.symbols
-# 74149157574c276dcbbbf3b09ba83a25  /lib/modules/3.8.13.12-1-MANJARO/modules.symbols
+# 03586999cf824b2bf308be67955a3314  /lib/modules/3.10.23-1-MANJARO/modules.symbols
+# 00dbfe21419df9dc4e83a99941a6a555  /lib/modules/3.11.10.1-1-MANJARO/modules.symbols
+# 7d702f7858b3808111c909654e69eefa  /lib/modules/3.12.4-1-MANJARO/modules.symbols
+# 6cb06ca3ba21ae062f81a96ac48c2fc3  /lib/modules/3.4.73-1-MANJARO/modules.symbols
+# 74149157574c276dcbbbf3b09ba83a25  /lib/modules/3.8.13.14-1-MANJARO/modules.symbols
 
 prepare() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -129,6 +131,7 @@ prepare() {
   patch -p1 -i "${srcdir}/3.8.13.11.patch"
   patch -p1 -i "${srcdir}/3.8.13.12.patch"
   patch -p1 -i "${srcdir}/3.8.13.13.patch"
+  patch -p1 -i "${srcdir}/3.8.13.14.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -177,7 +180,7 @@ prepare() {
   sed -ri "s|^(EXTRAVERSION =).*|\1 .${_subver}-${pkgrel}|" Makefile
 
   # set sublevel to prepatch
-  sed -ri "s|^(SUBLEVEL =).*|\1 13|" Makefile
+  #sed -ri "s|^(SUBLEVEL =).*|\1 13|" Makefile
 
   # don't run depmod on 'make install'. We'll do this ourselves in packaging
   sed -i '2iexit 0' scripts/depmod.sh

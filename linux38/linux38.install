@@ -9,11 +9,13 @@ ARCH=x86_64
 
 post_install () {
   # EOL
-  echo ">>> NOTE, 3.8.13 was the last maintained maintenance release by Greg Kroah-Hartman."
-  echo "    It is recommend to move on to linux310-series. Use followed cmd to do that:"
-  echo "    'sudo mhwd-kernel -i linux310'"
+  echo ">>> NOTE, 3.8.13 was the last maintained maintenance release"
+  echo "    by Greg Kroah-Hartman. It is recommend to move on to linux310-series."
+  echo "    Use followed cmd to do that: 'sudo mhwd-kernel -i linux310'"
+  echo "    "
   echo "    The Ubuntu kernel team will be providing extended stable support for the"
   echo "    Linux 3.8 kernel until August 2014."
+  echo "    "
   # AUFS
   echo ">>> NOTE, aufs3.8-20131104 is the last release by J. R. Okajima."
   echo "    There will be no new release with updates or bugfixes."
@@ -39,11 +41,13 @@ post_install () {
 
 post_upgrade() {
   # EOL
-  echo ">>> NOTE, 3.8.13 was the last maintained maintenance release by Greg Kroah-Hartman."
-  echo "    It is recommend to move on to linux310-series. Use followed cmd to do that:"
-  echo "    'sudo mhwd-kernel -i linux310'"
+  echo ">>> NOTE, 3.8.13 was the last maintained maintenance release"
+  echo "    by Greg Kroah-Hartman. It is recommend to move on to linux310-series."
+  echo "    Use followed cmd to do that: 'sudo mhwd-kernel -i linux310'"
+  echo "    "
   echo "    The Ubuntu kernel team will be providing extended stable support for the"
   echo "    Linux 3.8 kernel until August 2014."
+  echo "    "
   # AUFS
   echo ">>> NOTE, aufs3.8-20131104 is the last release by J. R. Okajima."
   echo "    There will be no new release with updates or bugfixes."

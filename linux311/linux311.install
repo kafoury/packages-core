@@ -9,9 +9,13 @@ ARCH=x86_64
 
 post_install () {
   # EOL
-  echo ">>> NOTE, 3.11.10 was the last maintained maintenance release by Greg Kroah-Hartman."
-  echo "    It is recommend to move on to linux312-series. Use followed cmd to do that:"
-  echo "    'sudo mhwd-kernel -i linux312'"
+  echo ">>> NOTE, 3.11.10 was the last maintained maintenance release"
+  echo "    by Greg Kroah-Hartman. It is recommend to move on to linux312-series."
+  echo "    Use followed cmd to do that: 'sudo mhwd-kernel -i linux312'"
+  echo "    "
+  echo "    The Ubuntu kernel team will be providing extended stable support for the"
+  echo "    Linux 3.11 kernel until August 2014."
+  echo "    "
   # updating module dependencies
   echo ">>> Updating module dependencies. Please wait ..."
   depmod ${KERNEL_VERSION}
@@ -31,9 +35,13 @@ post_install () {
 
 post_upgrade() {
   # EOL
-  echo ">>> NOTE, 3.11.10 was the last maintained maintenance release by Greg Kroah-Hartman."
-  echo "    It is recommend to move on to linux312-series. Use followed cmd to do that:"
-  echo "    'sudo mhwd-kernel -i linux312'"
+  echo ">>> NOTE, 3.11.10 was the last maintained maintenance release"
+  echo "    by Greg Kroah-Hartman. It is recommend to move on to linux312-series."
+  echo "    Use followed cmd to do that: 'sudo mhwd-kernel -i linux312'"
+  echo "    "
+  echo "    The Ubuntu kernel team will be providing extended stable support for the"
+  echo "    Linux 3.11 kernel until August 2014."
+  echo "    "
   # reminder notice
   if findmnt --fstab -uno SOURCE /boot &>/dev/null && ! mountpoint -q /boot; then
       echo "WARNING: /boot appears to be a separate partition but is not mounted."

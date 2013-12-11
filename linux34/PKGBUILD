@@ -82,17 +82,17 @@ sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
 ## modules.symboles md5sums
 #
 # i686
-# 605208637b9744284b3cf6412737e7dc  /lib/modules/3.10.18-1-MANJARO/modules.symbols
-# e18189dfba56af202e14730036924c9b  /lib/modules/3.11.7-1-MANJARO/modules.symbols
-# 71fd6f3cc2f4d53a620412a210c2ce6c  /lib/modules/3.12.0-1-MANJARO/modules.symbols
-# 2f75268c7f82293c703acc2e243710e5  /lib/modules/3.4.68-1-MANJARO/modules.symbols
-# fa9ecd59f11d8bc45379bb32128962f8  /lib/modules/3.8.13.12-1-MANJARO/modules.symbols
+# e712fe0304d900c4da81bd1546d08ba8  /lib/modules/3.10.23-1-MANJARO/modules.symbols
+# 65b70a0141d4a29c11533ac0b562f092  /lib/modules/3.11.10.1-1-MANJARO/modules.symbols
+# eb0b0078cfd9a463813775b7906a46c8  /lib/modules/3.12.4-1-MANJARO/modules.symbols
+# 95e9cd1437df60ad166f519b3157fac9  /lib/modules/3.4.73-1-MANJARO/modules.symbols
+# 134a13e5e152b28664c66979fc9894f3  /lib/modules/3.8.13.14-1-MANJARO/modules.symbols
 # x86_64
-# 03586999cf824b2bf308be67955a3314  /lib/modules/3.10.18-1-MANJARO/modules.symbols
-# 00dbfe21419df9dc4e83a99941a6a555  /lib/modules/3.11.7-1-MANJARO/modules.symbols
-# 7d702f7858b3808111c909654e69eefa  /lib/modules/3.12.0-1-MANJARO/modules.symbols
-# 6cb06ca3ba21ae062f81a96ac48c2fc3  /lib/modules/3.4.70-1-MANJARO/modules.symbols
-# 74149157574c276dcbbbf3b09ba83a25  /lib/modules/3.8.13.12-1-MANJARO/modules.symbols
+# 03586999cf824b2bf308be67955a3314  /lib/modules/3.10.23-1-MANJARO/modules.symbols
+# 00dbfe21419df9dc4e83a99941a6a555  /lib/modules/3.11.10.1-1-MANJARO/modules.symbols
+# 7d702f7858b3808111c909654e69eefa  /lib/modules/3.12.4-1-MANJARO/modules.symbols
+# 6cb06ca3ba21ae062f81a96ac48c2fc3  /lib/modules/3.4.73-1-MANJARO/modules.symbols
+# 74149157574c276dcbbbf3b09ba83a25  /lib/modules/3.8.13.14-1-MANJARO/modules.symbols
 
 
 prepare() {
