@@ -1,0 +1,14 @@
+--- a/util/grub.d/10_linux.in	2013-12-25 13:53:28.059957412 +0100
++++ b/util/grub.d/10_linux.in	2013-12-25 13:53:40.809957568 +0100
+@@ -28,6 +28,11 @@ export TEXTDOMAINDIR="@localedir@"
+ 
+ CLASS="--class gnu-linux --class gnu --class os"
+ 
++if [ "x${GRUB_DISTRIBUTOR}" = "xManjaro" ] && [ -f /etc/grub.d/10_manjarolinux ] ; then
++  echo "Found Manjaro Linux - will use '/etc/grub.d/10_manjarolinux' instead" >&2
++  exit
++fi
++
+ if [ "x${GRUB_DISTRIBUTOR}" = "x" ] ; then
+   OS=Linux
+ else

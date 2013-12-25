@@ -104,6 +104,8 @@ package() {
     ln -s pacman "$pkgdir/usr/share/bash-completion/completions/$f"
   done
 
+  install -Dm644 contrib/PKGBUILD.vim "$pkgdir/usr/share/vim/vimfiles/syntax/PKGBUILD.vim"
+
   # replace rankmirrors
   rm "$pkgdir/usr/bin/rankmirrors"
   ln -sfv "/usr/bin/pacman-mirrors" "$pkgdir/usr/bin/rankmirrors"
