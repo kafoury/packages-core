@@ -17,7 +17,7 @@ _UNIFONT_VER="6.3.20131217"
 pkgname="grub"
 pkgdesc="GNU GRand Unified Bootloader (2)"
 pkgver=2.02.beta2
-pkgrel=1
+pkgrel=2
 url="https://www.gnu.org/software/grub/"
 arch=('x86_64' 'i686')
 license=('GPL3')
@@ -59,7 +59,7 @@ sha256sums=('SKIP'
             'SKIP'
             'a5198267ceb04dceb6d2ea7800281a42b3f91fd02da55d2cc9ea20d47273ca29'
             'cbf944f0e947f01367bfaeaace902bde6df0cd6002cedf7f1b431d4d5b5f298e'
-            '5698656283b916e862189027f1d4d202652d1f062e536156637bf92b7c50bf4c'
+            'd9cf4e47221f15834064935b3eb56f4fde1821430ec813dcd9b19adc95d244f4'
             '2b74814338675589118c0febbde2ae178d02c53fa599b2148b06e67d166c7f56'
             'b20172d7f753cf6a636595b37406b3070cd30d33072c15aea4a50a02ba4c85a5'
             '720db20a6a1c81864ad6405ef838db02206b53298fda48f383bebdb51eac56a8'

@@ -84,8 +84,10 @@ while [ "x${_LIST_}" != "x" ] ; do
     _KERNEL_BASE_="$(echo ${_KERNEL_FILE_} | sed -e 's,vmlinuz-,linux,g')"
     if test -e "/boot/${_KERNEL_BASE_}.kver" ; then
        _KERNEL_VER_="$(cat /boot/${_KERNEL_BASE_}.kver)"
+    elif test -e "/${_KERNEL_BASE_}.kver" ; then
+       _KERNEL_VER_="$(cat /${_KERNEL_BASE_}.kver)"
     else
-       _KERNEL_VER_="echo ${_KERNEL_FILE_} | sed -e 's,vmlinuz-,,g'"
+       _KERNEL_VER_="$(echo ${_KERNEL_FILE_} | sed -e 's,vmlinuz-,,g')"
     fi
     
     _INITRAMFS_="${_KERNEL_FILE_/vmlinuz-/initramfs-}.img"
