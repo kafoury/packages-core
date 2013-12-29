@@ -45,7 +45,7 @@ post_upgrade() {
 
 	# workaround for catalyst-server removal
 	pacman -Qq catalyst-server &> /tmp/cmd1
-	pacman -Q mhwd-catalyst &> /tmp/cmd2
+	pacman -Q catalyst-utils &> /tmp/cmd2
 	packages="catalyst-server catalyst-input catalyst-video"
 	conflicts="xf86-input-acecad xf86-input-aiptek xf86-input-evdev xf86-input-joystick xf86-input-keyboard xf86-input-mouse xf86-input-synaptics xf86-input-void xf86-input-wacom xorg-server-common xorg-server"
 	if [ "$(grep 'catalyst-server' /tmp/cmd1)" == "catalyst-server" ]; then

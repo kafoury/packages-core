@@ -40,6 +40,11 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/2700_ThinkPad-30-brightness-control-fix.patch'
         'criu-no-expert.patch'
         "zfs-0.6.1-311-rc5.patch"
+        # AMD fixes
+        '1|4-ramdisk-Export_relocated_ramdisk_VA.patch::https://lkml.org/lkml/diff/2013/12/5/621/1'
+        '2|4-microcode-Share_native_MSR_accessing_variants.patch::https://lkml.org/lkml/diff/2013/12/5/620/1'
+        '3|4-microcode-AMD-Fix_early_ucode_loading.patch::https://lkml.org/lkml/diff/2013/12/5/626/1'
+        '4|4-microcode-Move_to_a_proper_location.patch::https://lkml.org/lkml/diff/2013/12/5/698/1'
 )
 sha256sums=('2e120ec7fde19fa51dc6b6cc11c81860a0775defcad5a5bf910ed9a50e845a02'
             'd3f0fab91fa4f25b685ae087030252feedb0169061c2f486cdf38b399e4baf7a'
@@ -61,6 +66,10 @@ sha256sums=('2e120ec7fde19fa51dc6b6cc11c81860a0775defcad5a5bf910ed9a50e845a02'
             'a3f85c3c35ee478fd174f8aaa6ca15e5fad8612b42ca4d90cc3ef79b49a99989'
             'daa75228a4c45a925cc5dbfeba884aa696a973a26af7695adc198c396474cbd5'
             '8a7d11293515d1efce25e68ddb8eda65a62a0073eb9c94ec5f84b85d4295b7d8'
+            '0bde8ac782976b7ffd029cd8bf924447730bf4efdd6eddf5b3cd98a074f15fa3'
+            '8221a084ebdaa506d7f8f2864b383d2d4403ead9f6aedafcb683e287a517f831'
+            'd16446fa063490b17e8a656ac5b4ecce35a947112d7d78b29997757cea51e1fe'
+            '55fb9010e1bcecb2300b0f13aa47b341d69d23d964ddb74f48e4139539ec52f7'
 )
 
 ## modules.symboles md5sums
@@ -101,6 +110,12 @@ prepare() {
   # add Gentoo patches
   patch -Np1 -i "${srcdir}/1700_enable-thinkpad-micled.patch"
   patch -Np1 -i "${srcdir}/2700_ThinkPad-30-brightness-control-fix.patch"
+
+  # add AMD fixes
+  patch -Np1 -i "${srcdir}/1|4-ramdisk-Export_relocated_ramdisk_VA.patch"
+  patch -Np1 -i "${srcdir}/2|4-microcode-Share_native_MSR_accessing_variants.patch"
+  patch -Np1 -i "${srcdir}/3|4-microcode-AMD-Fix_early_ucode_loading.patch"
+  patch -Np1 -i "${srcdir}/4|4-microcode-Move_to_a_proper_location.patch"
 
   # add aufs3 support
   patch -Np1 -i "${srcdir}/aufs3.12-${_aufs}.patch"
