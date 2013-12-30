@@ -13,7 +13,7 @@ _basever=313
 _aufs=20131223
 _zfs=0.6.2
 _withzfs=no
-_rc=rc5
+_rc=rc6
 pkgver=${_basekernel}${_rc}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -38,11 +38,11 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-${_basekernel
         "http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-$_zfs.tar.gz"
         'config.zfs'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/1700_enable-thinkpad-micled.patch'
-        'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/2700_ThinkPad-30-brightness-control-fix.patch'
+        '2700_ThinkPad-30-brightness-control-fix.patch'
         'criu-no-expert.patch'
         "zfs-0.6.1-311-rc5.patch"
 )
-sha256sums=('c6b08ae034146b2e4798ab724a6d90efd4356c86bcf1abb601e9bba762e542cf'
+sha256sums=('79a45a0d4e43860606424d55cb47be1211bf808ef5f0ca47f95cc6282569899b'
             #'d3f0fab91fa4f25b685ae087030252feedb0169061c2f486cdf38b399e4baf7a'
             'f810c1ec60365420395c6015cbefbdafb938b268dfb0a2c621868d1ffe2df26e'
             '53e81ccb8719d72e88d0efa76229239527540f58ba2083645e3655b2fd107d9c'
