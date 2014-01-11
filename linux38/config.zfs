@@ -1,2 +1,0 @@
-CONFIG_SPL=y
-CONFIG_ZFS=y

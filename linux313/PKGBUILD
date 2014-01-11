@@ -11,9 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.13
 _basever=313
 _aufs=20131223
-_zfs=0.6.2
-_withzfs=no
-_rc=rc6
+_rc=rc7
 pkgver=${_basekernel}${_rc}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -34,15 +32,11 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-${_basekernel
         'aufs3-proc_map.patch'
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
-        "http://archive.zfsonlinux.org/downloads/zfsonlinux/spl/spl-$_zfs.tar.gz"
-        "http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-$_zfs.tar.gz"
-        'config.zfs'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/1700_enable-thinkpad-micled.patch'
         '2700_ThinkPad-30-brightness-control-fix.patch'
         'criu-no-expert.patch'
-        "zfs-0.6.1-311-rc5.patch"
 )
-sha256sums=('79a45a0d4e43860606424d55cb47be1211bf808ef5f0ca47f95cc6282569899b'
+sha256sums=('f01b1d33b0a9023c3e179c38e7257596672c4729a465abb97542796542929cd1'
             #'d3f0fab91fa4f25b685ae087030252feedb0169061c2f486cdf38b399e4baf7a'
             'f810c1ec60365420395c6015cbefbdafb938b268dfb0a2c621868d1ffe2df26e'
             '53e81ccb8719d72e88d0efa76229239527540f58ba2083645e3655b2fd107d9c'
@@ -55,13 +49,9 @@ sha256sums=('79a45a0d4e43860606424d55cb47be1211bf808ef5f0ca47f95cc6282569899b'
             'de3fead43c53eaa847e814c9788e69ec96a6fa8bbdd671ae1203bfde913c769c'
             'e08ff68769fb1f04eda410c34597cfc2ade0a3e69e4bae33c0619b82a251b4a9'
             'd633a2039877c00302f32738099ee53e0275350a8f73691ecb107fb9735db5a9'
-            '3c577c7055d6c73179726b9c8a7fd48f9122be0b345c50cd54732e801165daa4'
-            '6b8cd79486b3a51204fac07297b8c45aa8702b8dfade58f2098b5734517065a1'
-            '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
             '461aa0da7de8bda9474797339532304894b55825be34f8c009244da8c00c5b41'
             'a3f85c3c35ee478fd174f8aaa6ca15e5fad8612b42ca4d90cc3ef79b49a99989'
             'daa75228a4c45a925cc5dbfeba884aa696a973a26af7695adc198c396474cbd5'
-            '8a7d11293515d1efce25e68ddb8eda65a62a0073eb9c94ec5f84b85d4295b7d8'
 )
 
 ## modules.symboles md5sums
@@ -137,28 +127,6 @@ prepare() {
 
   # run scripts
   make scripts
-
-  if [ "${_withzfs}" = "yes" ]; then
-   # add zfs support
-   cd ${srcdir}/spl-${_zfs}
-   ./autogen.sh
-   if [ "${CARCH}" = "i686" ]; then
-      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}-${_rc} \
-      --with-linux-obj=${srcdir}/linux-${_basekernel}-${_rc} --enable-atomic-spinlocks
-   else
-      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}-${_rc} \
-      --with-linux-obj=${srcdir}/linux-${_basekernel}-${_rc}
-   fi
-   ./copy-builtin ${srcdir}/linux-${_basekernel}-${_rc}
-   cp spl.release.in "${srcdir}/linux-${_basekernel}-${_rc}/"
-   cd ${srcdir}/zfs-${_zfs}
-   patch -Np1 -i "${srcdir}/zfs-0.6.1-311-rc5.patch"
-   ./autogen.sh
-   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel}-${_rc} \
-   --with-linux-obj=${srcdir}/linux-${_basekernel}-${_rc}
-   ./copy-builtin ${srcdir}/linux-${_basekernel}-${_rc}
-   cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}-${_rc}/.config
-  fi
 }
 
 build() {
@@ -189,13 +157,7 @@ package_linux313() {
   pkgdesc="The ${pkgbase/linux/Linux} kernel and modules"
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
-  if [ "${_withzfs}" = "yes" ]; then
-     provides=("linux=${pkgver}" "spl-modules=${_zfs}" "zfs-modules=${_zfs}")
-     replaces=("linux${_basever}-spl" "linux${_basever}-zfs")
-     conflicts=("linux${_basever}-spl" "linux${_basever}-zfs")
-  else
-     provides=("linux=${pkgver}")
-  fi
+  provides=("linux=${pkgver}")
   install=${pkgname}.install
 
   cd "${srcdir}/linux-${_basekernel}-${_rc}"
@@ -258,10 +220,6 @@ package_linux313() {
 package_linux313-headers() {
   pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel"
   provides=("linux-headers=$pkgver")
-  if [ "${_withzfs}" = "yes" ]; then
-     replaces=('spl-common' 'zfs-common')
-     conflicts=('spl-common' 'zfs-common')
-  fi
 
   install -dm755 "${pkgdir}/usr/lib/modules/${_kernver}"
 

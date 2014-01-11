@@ -11,9 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.8
 _basever=38
 _aufs=20131104
-_zfs=0.6.2
-_withzfs=no
-_subver=14
+_subver=15
 pkgver=${_basekernel}.13.${_subver}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -31,13 +29,10 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'aufs3-base.patch'
         'aufs3-kbuild.patch'
         'aufs3-loopback.patch'
-        'aufs3-proc_map.patch'
+        'aufs3-mmap.patch'
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
         '3.7.0-Fix-DVB-ioctls-failing-if-frontend-open-closed-too-fast.patch'
-        "http://archive.zfsonlinux.org/downloads/zfsonlinux/spl/spl-$_zfs.tar.gz"
-        "http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-$_zfs.tar.gz"
-        'config.zfs'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.8/1700_enable-thinkpad-micled.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.8/2700_ThinkPad-30-brightness-control-fix.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.10/4500_nouveau-video-output-control-Kconfig.patch'
@@ -55,6 +50,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "3.8.13.12.patch"
         "3.8.13.13.patch"
         "3.8.13.14.patch"
+        "3.8.13.15.patch"
         "http://git.kernel.org/cgit/linux/kernel/git/stable/stable-queue.git/plain/releases/3.10.10/acpi-add-_sta-evaluation-at-do_acpi_find_child.patch"
         "http://git.kernel.org/cgit/linux/kernel/git/stable/stable-queue.git/plain/releases/3.10.10/acpi-try-harder-to-resolve-_adr-collisions-for-bridges.patch"
 )
@@ -68,13 +64,10 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             '6f473f3faef88393a3bedf57c30487ff64b0b4173270e05280a796023c29d491'
             '2178505b162ac3b152bdac70f3291f5a0985bd5a3a3dec42882e5dd2f8e12ab6'
             'e446d94adb36a5e846fc1fbe748052732dc0d0e664c821a9a4dbe505522a0bed'
-            '22d7177f49ab3642e3227d1fe0fd6f1e9019ad83dab9b1412cb227c9c144faf1'
+            '0de0f926d5034ca0b0edcdc9282bafe971a79e6d33b7cb6ad948d5c67169a39e'
             '8979c9d667414c8be7084035f4964bfb88c19f0836c702a8621bdfe4cf846143'
             '56bd99e54429a25a144f2d221718b67f516344ffd518fd7dcdd752206ec5be69'
             '611d11b5346e52e957d9690b7fac2464d83f1c67fe64a943b0026ffb466a5798'
-            '3c577c7055d6c73179726b9c8a7fd48f9122be0b345c50cd54732e801165daa4'
-            '6b8cd79486b3a51204fac07297b8c45aa8702b8dfade58f2098b5734517065a1'
-            '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
             '8ef4a6c16e3d0df0c211fef7875089eda3821db4b1335cac79ca02511a4d6f5c'
             '9d7eab1ffec60f2b0d2121221d957f17a02918d95f11ea52902c227df5105e25'
             '59ad742a02bc24d58bc06eee584175a164cb82550b905ba9f402a6dc399d3ed1'
@@ -92,6 +85,7 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             '44e54a32387ed3a2d08313a84bffcabfce1a4731d8fabbd6f3e3c7470f8d8a90'
             'b0e7ffd9fb3d73bc6fbadd88782f48d1b8f061d640ea7992c19e4426bca61546'
             'f58a5e85421def91a4107e13657dcfc8740115f6a58a1d23bed181ef3facec89'
+            '20e7afb6e2ba248c012186c6cff50e1f150a14cae0d8db121449b4ac34b73f56'
             'cb505a5b9aa750490ba28facb537bfd928ff6d0dc8edc349b6ad5e202f876e69'
             'aaf27758adaf142d04ea8ba43378716d24699a884906ae1e2ef3f655695497c6'
 )
@@ -132,6 +126,7 @@ prepare() {
   patch -p1 -i "${srcdir}/3.8.13.12.patch"
   patch -p1 -i "${srcdir}/3.8.13.13.patch"
   patch -p1 -i "${srcdir}/3.8.13.14.patch"
+  patch -p1 -i "${srcdir}/3.8.13.15.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -161,7 +156,7 @@ prepare() {
   patch -Np1 -i "${srcdir}/aufs3-base.patch"
   patch -Np1 -i "${srcdir}/aufs3-kbuild.patch"
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
-  patch -Np1 -i "${srcdir}/aufs3-proc_map.patch"
+  patch -Np1 -i "${srcdir}/aufs3-mmap.patch"
   patch -Np1 -i "${srcdir}/aufs3-standalone.patch"
 
   if [ "${CARCH}" = "x86_64" ]; then
@@ -193,27 +188,6 @@ prepare() {
 
   # run scripts
   make scripts
-
-  if [ "${_withzfs}" = "yes" ]; then
-   # add zfs support
-   cd ${srcdir}/spl-${_zfs}
-   ./autogen.sh
-   if [ "${CARCH}" = "i686" ]; then
-      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
-      --with-linux-obj=${srcdir}/linux-${_basekernel} --enable-atomic-spinlocks
-   else
-      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
-      --with-linux-obj=${srcdir}/linux-${_basekernel}
-   fi
-   ./copy-builtin ${srcdir}/linux-${_basekernel}
-   cp spl.release.in "${srcdir}/linux-${_basekernel}/"
-   cd ${srcdir}/zfs-${_zfs}
-   ./autogen.sh
-   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
-   --with-linux-obj=${srcdir}/linux-${_basekernel}
-   ./copy-builtin ${srcdir}/linux-${_basekernel}
-   cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}/.config
-  fi
 }
 
 build() {
@@ -246,13 +220,7 @@ package_linux38() {
   pkgdesc="The ${pkgbase/linux/Linux} kernel and modules"
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
-  if [ "${_withzfs}" = "yes" ]; then
-     provides=("linux=${pkgver}" "spl-modules=${_zfs}" "zfs-modules=${_zfs}")
-     replaces=("linux${_basever}-spl" "linux${_basever}-zfs")
-     conflicts=("linux${_basever}-spl" "linux${_basever}-zfs")
-  else
-     provides=("linux=${pkgver}")
-  fi
+  provides=("linux=${pkgver}")
   install=${pkgname}.install
 
   cd "${srcdir}/linux-${_basekernel}"
@@ -315,10 +283,6 @@ package_linux38() {
 package_linux38-headers() {
   pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel"
   provides=("linux-headers=$pkgver")
-  if [ "${_withzfs}" = "yes" ]; then
-     replaces=('spl-common' 'zfs-common')
-     conflicts=('spl-common' 'zfs-common')
-  fi
 
   install -dm755 "${pkgdir}/usr/lib/modules/${_kernver}"
 

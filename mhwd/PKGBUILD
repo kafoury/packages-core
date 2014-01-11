@@ -4,7 +4,7 @@
 
 pkgbase=mhwd
 pkgname=('mhwd' 'mhwd-db')
-pkgver=0.3.0
+pkgver=0.3.1
 pkgrel=3
 pkgdesc="Manjaro Linux Hardware Detection"
 arch=('i686' 'x86_64')
@@ -65,7 +65,7 @@ package_mhwd() {
 package_mhwd-db() {
   pkgdesc="Manjaro Linux Hardware Detection Database"
   arch=('i686' 'x86_64')
-  depends=('mhwd-nvidia' 'mhwd-nvidia-legacy' 'mhwd-catalyst-legacy' 'mhwd-catalyst')
+  depends=('mhwd-nvidia' 'mhwd-nvidia-legacy' 'mhwd-catalyst-legacy' 'mhwd-catalyst' 'mhwd-catalyst-13.4')
   conflicts=("mhwd-db-catalyst")
   provides=("mhwd-db-catalyst")
   replaces=("mhwd-db-catalyst")

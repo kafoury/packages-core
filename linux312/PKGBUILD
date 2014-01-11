@@ -10,10 +10,8 @@ pkgname=('linux312' 'linux312-headers')
 _kernelname=-MANJARO
 _basekernel=3.12
 _basever=312
-_aufs=20131111
-_zfs=0.6.2
-_withzfs=no
-pkgver=${_basekernel}.6
+_aufs=20131223
+pkgver=${_basekernel}.7
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -30,42 +28,34 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'aufs3-base.patch'
         'aufs3-kbuild.patch'
         'aufs3-loopback.patch'
-        'aufs3-proc_map.patch'
+        'aufs3-mmap.patch'
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
-        "http://archive.zfsonlinux.org/downloads/zfsonlinux/spl/spl-$_zfs.tar.gz"
-        "http://archive.zfsonlinux.org/downloads/zfsonlinux/zfs/zfs-$_zfs.tar.gz"
-        'config.zfs'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/1700_enable-thinkpad-micled.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/2700_ThinkPad-30-brightness-control-fix.patch'
         'criu-no-expert.patch'
-        "zfs-0.6.1-311-rc5.patch"
         # AMD fixes
-        '1|4-ramdisk-Export_relocated_ramdisk_VA.patch::https://lkml.org/lkml/diff/2013/12/5/621/1'
-        '2|4-microcode-Share_native_MSR_accessing_variants.patch::https://lkml.org/lkml/diff/2013/12/5/620/1'
-        '3|4-microcode-AMD-Fix_early_ucode_loading.patch::https://lkml.org/lkml/diff/2013/12/5/626/1'
-        '4|4-microcode-Move_to_a_proper_location.patch::https://lkml.org/lkml/diff/2013/12/5/698/1'
+        '1-4-ramdisk-Export_relocated_ramdisk_VA.patch::https://lkml.org/lkml/diff/2013/12/5/621/1'
+        '2-4-microcode-Share_native_MSR_accessing_variants.patch::https://lkml.org/lkml/diff/2013/12/5/620/1'
+        '3-4-microcode-AMD-Fix_early_ucode_loading.patch::https://lkml.org/lkml/diff/2013/12/5/626/1'
+        '4-4-microcode-Move_to_a_proper_location.patch::https://lkml.org/lkml/diff/2013/12/5/698/1'
 )
 sha256sums=('2e120ec7fde19fa51dc6b6cc11c81860a0775defcad5a5bf910ed9a50e845a02'
-            'd3f0fab91fa4f25b685ae087030252feedb0169061c2f486cdf38b399e4baf7a'
+            'ac57d56064bb23dae55fe656c407c662e842c98a6a5411251d6bb79c9718f555'
             'f2fcb660cf0478b29e579ae0e0981615c21d0aa24776bf34881db2d60cf5c905'
             'f1fb687d238fee0b7992fae3f914f7662c7a7beb17b886a04e68c7b587a7e028'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            'ae01cfb3c124c815938aad236309b56baf87fb37b69033aa7ff375b5d8847eaa'
+            '16193ef922a3f82e9733436ac782d9b6916ceaf0bc7c4cfc37f561e422d642bb'
             '03ec8d29245b222c21aee0a043ab9a48702d252d8460d44541fa9ea65bcea7ce'
             'e9604c6d87ae87830c154c1b12065eb6361e503006025497741f15dbaa9fd3ff'
-            '09a38d3864987f930947c3b0c67bc3644c6cce86f098fa956dc787bf1f7a81df'
-            'de3fead43c53eaa847e814c9788e69ec96a6fa8bbdd671ae1203bfde913c769c'
+            '19774ad8308c3d9a4b6c4a7d5c501fc93d1b432e4be3bdaeceab2cc749875bfe'
+            '3205cf2a7b48fd03840c16de434d79b99ebc7604f848e5d05054e7426525d014'
             '6c9a05787a392bd86da8f0fb66abd32a72808576aa7c635e5c2ae678134b59dd'
             'd633a2039877c00302f32738099ee53e0275350a8f73691ecb107fb9735db5a9'
-            '3c577c7055d6c73179726b9c8a7fd48f9122be0b345c50cd54732e801165daa4'
-            '6b8cd79486b3a51204fac07297b8c45aa8702b8dfade58f2098b5734517065a1'
-            '46a5e371b395b289d499dfc8bd948c565e7d972c07eaf0b9e68b5bf025abde01'
             '461aa0da7de8bda9474797339532304894b55825be34f8c009244da8c00c5b41'
             'a3f85c3c35ee478fd174f8aaa6ca15e5fad8612b42ca4d90cc3ef79b49a99989'
             'daa75228a4c45a925cc5dbfeba884aa696a973a26af7695adc198c396474cbd5'
-            '8a7d11293515d1efce25e68ddb8eda65a62a0073eb9c94ec5f84b85d4295b7d8'
             '0bde8ac782976b7ffd029cd8bf924447730bf4efdd6eddf5b3cd98a074f15fa3'
             '8221a084ebdaa506d7f8f2864b383d2d4403ead9f6aedafcb683e287a517f831'
             'd16446fa063490b17e8a656ac5b4ecce35a947112d7d78b29997757cea51e1fe'
@@ -112,17 +102,17 @@ prepare() {
   patch -Np1 -i "${srcdir}/2700_ThinkPad-30-brightness-control-fix.patch"
 
   # add AMD fixes
-  patch -Np1 -i "${srcdir}/1|4-ramdisk-Export_relocated_ramdisk_VA.patch"
-  patch -Np1 -i "${srcdir}/2|4-microcode-Share_native_MSR_accessing_variants.patch"
-  patch -Np1 -i "${srcdir}/3|4-microcode-AMD-Fix_early_ucode_loading.patch"
-  patch -Np1 -i "${srcdir}/4|4-microcode-Move_to_a_proper_location.patch"
+  patch -Np1 -i "${srcdir}/1-4-ramdisk-Export_relocated_ramdisk_VA.patch"
+  patch -Np1 -i "${srcdir}/2-4-microcode-Share_native_MSR_accessing_variants.patch"
+  patch -Np1 -i "${srcdir}/3-4-microcode-AMD-Fix_early_ucode_loading.patch"
+  patch -Np1 -i "${srcdir}/4-4-microcode-Move_to_a_proper_location.patch"
 
   # add aufs3 support
   patch -Np1 -i "${srcdir}/aufs3.12-${_aufs}.patch"
   patch -Np1 -i "${srcdir}/aufs3-base.patch"
   patch -Np1 -i "${srcdir}/aufs3-kbuild.patch"
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
-  patch -Np1 -i "${srcdir}/aufs3-proc_map.patch"
+  patch -Np1 -i "${srcdir}/aufs3-mmap.patch"
   patch -Np1 -i "${srcdir}/aufs3-standalone.patch"
 
   if [ "${CARCH}" = "x86_64" ]; then
@@ -152,27 +142,6 @@ prepare() {
   # run scripts
   make scripts
 
-  if [ "${_withzfs}" = "yes" ]; then
-   # add zfs support
-   cd ${srcdir}/spl-${_zfs}
-   ./autogen.sh
-   if [ "${CARCH}" = "i686" ]; then
-      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
-      --with-linux-obj=${srcdir}/linux-${_basekernel} --enable-atomic-spinlocks
-   else
-      ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
-      --with-linux-obj=${srcdir}/linux-${_basekernel}
-   fi
-   ./copy-builtin ${srcdir}/linux-${_basekernel}
-   cp spl.release.in "${srcdir}/linux-${_basekernel}/"
-   cd ${srcdir}/zfs-${_zfs}
-   patch -Np1 -i "${srcdir}/zfs-0.6.1-311-rc5.patch"
-   ./autogen.sh
-   ./configure --enable-linux-builtin --with-linux=${srcdir}/linux-${_basekernel} \
-   --with-linux-obj=${srcdir}/linux-${_basekernel}
-   ./copy-builtin ${srcdir}/linux-${_basekernel}
-   cat "${srcdir}/config.zfs" >> ${srcdir}/linux-${_basekernel}/.config
-  fi
 }
 
 build() {
@@ -203,13 +172,7 @@ package_linux312() {
   pkgdesc="The ${pkgbase/linux/Linux} kernel and modules"
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
-  if [ "${_withzfs}" = "yes" ]; then
-     provides=("linux=${pkgver}" "spl-modules=${_zfs}" "zfs-modules=${_zfs}")
-     replaces=("linux${_basever}-spl" "linux${_basever}-zfs")
-     conflicts=("linux${_basever}-spl" "linux${_basever}-zfs")
-  else
-     provides=("linux=${pkgver}")
-  fi
+  provides=("linux=${pkgver}")
   install=${pkgname}.install
 
   cd "${srcdir}/linux-${_basekernel}"
@@ -272,10 +235,6 @@ package_linux312() {
 package_linux312-headers() {
   pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel"
   provides=("linux-headers=$pkgver")
-  if [ "${_withzfs}" = "yes" ]; then
-     replaces=('spl-common' 'zfs-common')
-     conflicts=('spl-common' 'zfs-common')
-  fi
 
   install -dm755 "${pkgdir}/usr/lib/modules/${_kernver}"
 
