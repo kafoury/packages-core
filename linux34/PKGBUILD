@@ -11,7 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.4
 _basever=34
 _aufs=20131104
-pkgver=${_basekernel}.76
+pkgver=${_basekernel}.77
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -45,7 +45,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.4/4500_nouveau-video-output-control-Kconfig.patch'
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
-            '2858f0f489f360e688d6a88323f5f39b2ffbc7f4f9fca3839b4c98d10f1535ff'
+            'bd27f34ecf1f53d82cfe41d3ad7fb9bb133394e6c083ae6b150bcdb60675c660'
             'b9c364e752ba116c7da2850c206e29b35890afb6e193d2b42da6bc64217cdb8b'
             '0cd5e92232a3de89fb1cd90cc796a40014e7632ea4bc1d40d5dfc0701cf12d7f'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'

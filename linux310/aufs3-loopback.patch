@@ -183,10 +183,10 @@ index d92d50f..9fb5490 100644
  }
  
 diff --git a/fs/aufs/f_op.c b/fs/aufs/f_op.c
-index 81d5663..025b956 100644
+index 0a2b458..8e8891e 100644
 --- a/fs/aufs/f_op.c
 +++ b/fs/aufs/f_op.c
-@@ -352,7 +352,7 @@ static ssize_t aufs_splice_read(struct file *file, loff_t *ppos,
+@@ -335,7 +335,7 @@ static ssize_t aufs_splice_read(struct file *file, loff_t *ppos,
  	err = -EINVAL;
  	h_file = au_hf_top(file);
  	get_file(h_file);
@@ -196,10 +196,10 @@ index 81d5663..025b956 100644
  		if (file->f_mapping != h_file->f_mapping) {
  			file->f_mapping = h_file->f_mapping;
 diff --git a/fs/aufs/loop.c b/fs/aufs/loop.c
-index 3a46f94..7088154 100644
+index 1cdcee0..bcdcc42 100644
 --- a/fs/aufs/loop.c
 +++ b/fs/aufs/loop.c
-@@ -132,3 +132,19 @@ void au_loopback_fin(void)
+@@ -119,3 +119,19 @@ void au_loopback_fin(void)
  {
  	kfree(au_warn_loopback_array);
  }
@@ -220,10 +220,10 @@ index 3a46f94..7088154 100644
 +	return f;
 +}
 diff --git a/fs/aufs/loop.h b/fs/aufs/loop.h
-index 3ddd286..53a8a41 100644
+index 17042c5..a648b6e 100644
 --- a/fs/aufs/loop.h
 +++ b/fs/aufs/loop.h
-@@ -35,6 +35,8 @@ void au_warn_loopback(struct super_block *h_sb);
+@@ -22,6 +22,8 @@ void au_warn_loopback(struct super_block *h_sb);
  
  int au_loopback_init(void);
  void au_loopback_fin(void);
@@ -232,7 +232,7 @@ index 3ddd286..53a8a41 100644
  #else
  AuStubInt0(au_test_loopback_overlap, struct super_block *sb,
  	   struct dentry *h_adding)
-@@ -43,6 +45,8 @@ AuStubVoid(au_warn_loopback, struct super_block *h_sb)
+@@ -30,6 +32,8 @@ AuStubVoid(au_warn_loopback, struct super_block *h_sb)
  
  AuStubInt0(au_loopback_init, void)
  AuStubVoid(au_loopback_fin, void)
@@ -242,10 +242,10 @@ index 3ddd286..53a8a41 100644
  
  #endif /* __KERNEL__ */
 diff --git a/fs/aufs/super.c b/fs/aufs/super.c
-index bfc1429..95d8bcf 100644
+index 6828e68..d8d43f9 100644
 --- a/fs/aufs/super.c
 +++ b/fs/aufs/super.c
-@@ -820,7 +820,10 @@ static const struct super_operations aufs_sop = {
+@@ -807,7 +807,10 @@ static const struct super_operations aufs_sop = {
  	.statfs		= aufs_statfs,
  	.put_super	= aufs_put_super,
  	.sync_fs	= aufs_sync_fs,

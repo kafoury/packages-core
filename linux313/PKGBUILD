@@ -11,15 +11,16 @@ _kernelname=-MANJARO
 _basekernel=3.13
 _basever=313
 _aufs=20131223
-_rc=rc7
-pkgver=${_basekernel}${_rc}
-pkgrel=1
+_rc=rc8
+pkgver=${_basekernel}.0
+pkgrel=0
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-${_basekernel}-${_rc}.tar.xz"
+source=("linux-${_basekernel}-${_rc}.tar.gz::https://github.com/torvalds/linux/archive/v${_basekernel}-${_rc}.tar.gz"
+        #"http://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-${_basekernel}-${_rc}.tar.xz"
         #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config' 'config.x86_64' 'config.aufs'
@@ -29,16 +30,21 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-${_basekernel
         'aufs3-base.patch'
         'aufs3-kbuild.patch'
         'aufs3-loopback.patch'
-        'aufs3-proc_map.patch'
+        'aufs3-mmap.patch'
         'aufs3-standalone.patch'
         'change-default-console-loglevel.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/1700_enable-thinkpad-micled.patch'
         '2700_ThinkPad-30-brightness-control-fix.patch'
         'criu-no-expert.patch'
+        # AMD fixes
+        '1-4-ramdisk-Export_relocated_ramdisk_VA.patch::https://lkml.org/lkml/diff/2013/12/5/621/1'
+        '2-4-microcode-Share_native_MSR_accessing_variants.patch::https://lkml.org/lkml/diff/2013/12/5/620/1'
+        '3-4-microcode-AMD-Fix_early_ucode_loading.patch::https://lkml.org/lkml/diff/2013/12/5/626/1'
+        '4-4-microcode-Move_to_a_proper_location.patch::https://lkml.org/lkml/diff/2013/12/5/698/1'
 )
-sha256sums=('f01b1d33b0a9023c3e179c38e7257596672c4729a465abb97542796542929cd1'
+sha256sums=('afd331dfb3759fdc3e8f8879524aeb2d106d3776e56665a5c8f3cba95e71d686'
             #'d3f0fab91fa4f25b685ae087030252feedb0169061c2f486cdf38b399e4baf7a'
-            'f810c1ec60365420395c6015cbefbdafb938b268dfb0a2c621868d1ffe2df26e'
+            '95b2bb5787532ea205b801fc6072fe521319c461b0f6750605ce6dcf56d3e7b8'
             '53e81ccb8719d72e88d0efa76229239527540f58ba2083645e3655b2fd107d9c'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
@@ -46,12 +52,16 @@ sha256sums=('f01b1d33b0a9023c3e179c38e7257596672c4729a465abb97542796542929cd1'
             '52b8308ebf52c3b9854cdf5f3c664e364a390e0f4967cab991793f43f349ed17'
             '5d3aaad0bc1e4d74ceca69dd9ea38efab5fae5bf1c0ee08e6108edbb0a1ccf79'
             '518a546b89993a24a9f7fa723db97e44da7d80b7be98d1496b0bbf9991c092f8'
-            'de3fead43c53eaa847e814c9788e69ec96a6fa8bbdd671ae1203bfde913c769c'
+            '4cc56e982e22a2cc957b722487875a300fb8d68af33f27925bfeda33bbf73852'
             'e08ff68769fb1f04eda410c34597cfc2ade0a3e69e4bae33c0619b82a251b4a9'
             'd633a2039877c00302f32738099ee53e0275350a8f73691ecb107fb9735db5a9'
             '461aa0da7de8bda9474797339532304894b55825be34f8c009244da8c00c5b41'
             'a3f85c3c35ee478fd174f8aaa6ca15e5fad8612b42ca4d90cc3ef79b49a99989'
             'daa75228a4c45a925cc5dbfeba884aa696a973a26af7695adc198c396474cbd5'
+            '0bde8ac782976b7ffd029cd8bf924447730bf4efdd6eddf5b3cd98a074f15fa3'
+            '8221a084ebdaa506d7f8f2864b383d2d4403ead9f6aedafcb683e287a517f831'
+            'd16446fa063490b17e8a656ac5b4ecce35a947112d7d78b29997757cea51e1fe'
+            '55fb9010e1bcecb2300b0f13aa47b341d69d23d964ddb74f48e4139539ec52f7'
 )
 
 ## modules.symboles md5sums
@@ -93,12 +103,18 @@ prepare() {
   patch -Np1 -i "${srcdir}/1700_enable-thinkpad-micled.patch"
   patch -Np1 -i "${srcdir}/2700_ThinkPad-30-brightness-control-fix.patch"
 
+  # add AMD fixes
+  patch -Np1 -i "${srcdir}/1-4-ramdisk-Export_relocated_ramdisk_VA.patch"
+  patch -Np1 -i "${srcdir}/2-4-microcode-Share_native_MSR_accessing_variants.patch"
+  patch -Np1 -i "${srcdir}/3-4-microcode-AMD-Fix_early_ucode_loading.patch"
+  patch -Np1 -i "${srcdir}/4-4-microcode-Move_to_a_proper_location.patch"
+
   # add aufs3 support
   patch -Np1 -i "${srcdir}/aufs3.x-rcN-${_aufs}.patch"
   patch -Np1 -i "${srcdir}/aufs3-base.patch"
   patch -Np1 -i "${srcdir}/aufs3-kbuild.patch"
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
-  patch -Np1 -i "${srcdir}/aufs3-proc_map.patch"
+  patch -Np1 -i "${srcdir}/aufs3-mmap.patch"
   patch -Np1 -i "${srcdir}/aufs3-standalone.patch"
 
   if [ "${CARCH}" = "x86_64" ]; then

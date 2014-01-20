@@ -196,10 +196,10 @@ index 90df5d6..cb91822 100644
  	unsigned	lo_blocksize;
  	void		*key_data; 
 diff --git a/fs/aufs/f_op.c b/fs/aufs/f_op.c
-index 3fd3d2d..3bbd45d 100644
+index d18d28b..8576b1f 100644
 --- a/fs/aufs/f_op.c
 +++ b/fs/aufs/f_op.c
-@@ -357,7 +357,7 @@ static ssize_t aufs_splice_read(struct file *file, loff_t *ppos,
+@@ -340,7 +340,7 @@ static ssize_t aufs_splice_read(struct file *file, loff_t *ppos,
  	err = -EINVAL;
  	h_file = au_hf_top(file);
  	get_file(h_file);
@@ -209,10 +209,10 @@ index 3fd3d2d..3bbd45d 100644
  		if (file->f_mapping != h_file->f_mapping) {
  			file->f_mapping = h_file->f_mapping;
 diff --git a/fs/aufs/loop.c b/fs/aufs/loop.c
-index 23f8268..c772f17 100644
+index 3b03b52..4ab749d 100644
 --- a/fs/aufs/loop.c
 +++ b/fs/aufs/loop.c
-@@ -143,3 +143,19 @@ void au_loopback_fin(void)
+@@ -130,3 +130,19 @@ void au_loopback_fin(void)
  	symbol_put(loop_backing_file);
  	kfree(au_warn_loopback_array);
  }
@@ -233,10 +233,10 @@ index 23f8268..c772f17 100644
 +	return f;
 +}
 diff --git a/fs/aufs/loop.h b/fs/aufs/loop.h
-index 71af8e8..1656213 100644
+index da8b756..28cb7ea 100644
 --- a/fs/aufs/loop.h
 +++ b/fs/aufs/loop.h
-@@ -38,7 +38,11 @@ void au_warn_loopback(struct super_block *h_sb);
+@@ -25,7 +25,11 @@ void au_warn_loopback(struct super_block *h_sb);
  
  int au_loopback_init(void);
  void au_loopback_fin(void);
@@ -248,7 +248,7 @@ index 71af8e8..1656213 100644
  AuStubInt0(au_test_loopback_overlap, struct super_block *sb,
  	   struct dentry *h_adding)
  AuStubInt0(au_test_loopback_kthread, void)
-@@ -46,6 +50,8 @@ AuStubVoid(au_warn_loopback, struct super_block *h_sb)
+@@ -33,6 +37,8 @@ AuStubVoid(au_warn_loopback, struct super_block *h_sb)
  
  AuStubInt0(au_loopback_init, void)
  AuStubVoid(au_loopback_fin, void)
@@ -258,10 +258,10 @@ index 71af8e8..1656213 100644
  
  #endif /* __KERNEL__ */
 diff --git a/fs/aufs/super.c b/fs/aufs/super.c
-index bfc1429..95d8bcf 100644
+index 6828e68..d8d43f9 100644
 --- a/fs/aufs/super.c
 +++ b/fs/aufs/super.c
-@@ -820,7 +820,10 @@ static const struct super_operations aufs_sop = {
+@@ -807,7 +807,10 @@ static const struct super_operations aufs_sop = {
  	.statfs		= aufs_statfs,
  	.put_super	= aufs_put_super,
  	.sync_fs	= aufs_sync_fs,
