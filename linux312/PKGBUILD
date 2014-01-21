@@ -65,17 +65,19 @@ sha256sums=('2e120ec7fde19fa51dc6b6cc11c81860a0775defcad5a5bf910ed9a50e845a02'
 ## modules.symboles md5sums
 #
 # i686
-# e712fe0304d900c4da81bd1546d08ba8  /lib/modules/3.10.25-1-MANJARO/modules.symbols
-# 65b70a0141d4a29c11533ac0b562f092  /lib/modules/3.11.10.1-1-MANJARO/modules.symbols
-# bb6dcac37cec30ee012decdedeff6f39  /lib/modules/3.12.6-1-MANJARO/modules.symbols
-# 95e9cd1437df60ad166f519b3157fac9  /lib/modules/3.4.75-1-MANJARO/modules.symbols
-# 134a13e5e152b28664c66979fc9894f3  /lib/modules/3.8.13.14-1-MANJARO/modules.symbols
+# 327f520435aac3162c637fba46c7b6f4  /lib/modules/3.10.27-1-MANJARO/modules.symbols
+# ae67bd3f9ee2fbe29dddf2cd7786eccc  /lib/modules/3.11.10.3-1-MANJARO/modules.symbols
+# ba15d7a09322f0ecb0477506caa190d9  /lib/modules/3.12.8-1-MANJARO/modules.symbols
+# 8d470593b37f21822a5fc2dda4d5362b  /lib/modules/3.13.0-1-MANJARO/modules.symbols
+# 7b296a2ce5395f35a3c06b4d2ea8fb39  /lib/modules/3.4.77-1-MANJARO/modules.symbols
+# d883c826d56325c13816a4ea3395575d  /lib/modules/3.8.13.16-1-MANJARO/modules.symbols
 # x86_64
-# 03586999cf824b2bf308be67955a3314  /lib/modules/3.10.25-1-MANJARO/modules.symbols
-# 00dbfe21419df9dc4e83a99941a6a555  /lib/modules/3.11.10.1-1-MANJARO/modules.symbols
-# 0b673f8bead99b83599cff8aece92480  /lib/modules/3.12.6-1-MANJARO/modules.symbols
-# 6cb06ca3ba21ae062f81a96ac48c2fc3  /lib/modules/3.4.75-1-MANJARO/modules.symbols
-# 74149157574c276dcbbbf3b09ba83a25  /lib/modules/3.8.13.14-1-MANJARO/modules.symbols
+# 9c82210478776c06df877d97e10ed7f0  /lib/modules/3.10.27-1-MANJARO/modules.symbols
+# ca2dd8e6c02fed078b06c7e947654890  /lib/modules/3.11.10.3-1-MANJARO/modules.symbols
+# 376919bb83a21900eb1fd90d852daaf5  /lib/modules/3.12.8-1-MANJARO/modules.symbols
+# cfdd0ca8d49e3c908ba7c1de8e3cbc8d  /lib/modules/3.13.0-1-MANJARO/modules.symbols
+# 0d85eb4571ce79a5df3015bcf714e46a  /lib/modules/3.4.77-1-MANJARO/modules.symbols
+# b11bfd0f71f687adcad99fbbc820a517  /lib/modules/3.8.13.16-1-MANJARO/modules.symbols
 
 prepare() {
   cd "${srcdir}/linux-${_basekernel}"
