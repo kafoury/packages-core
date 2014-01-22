@@ -43,6 +43,34 @@ detectDE()
 
 post_upgrade() {
 
+	# remove pyc-files if python-dbus < 1.2.0-2
+	pacman -Qq python-dbus &> /tmp/cmd1
+	pacman -Q python-dbus &> /tmp/cmd2
+	if [ "$(grep 'python-dbus' /tmp/cmd1)" == "python-dbus" ]; then
+	   if [ "$(cat /tmp/cmd2 | cut -d" " -f2 | sed -e 's/\.//g' | sed -e 's/\-//g')" -lt "1202" ]; then
+		msg "Prepare python-dbus update ..."
+		# System operation
+		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/__init__.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/_compat.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/_dbus.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/_expat_introspect_parser.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/_version.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/bus.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/connection.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/decorators.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/exceptions.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/gi_service.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/glib.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/lowlevel.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/proxies.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/server.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/service.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/types.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/mainloop/__pycache__/__init__.cpython-33.pyc
+		rm -f /usr/lib/python3.3/site-packages/dbus/mainloop/__pycache__/glib.cpython-33.pyc
+	   fi
+	fi
+
 	# fix mdm-themes on systems
 	pacman -Qq mdm-themes &> /tmp/cmd1
 	packages="mdm-themes-extra"
@@ -112,21 +140,6 @@ post_upgrade() {
 		rm /var/lib/pacman/db.lck &> /dev/null
 		pacman --noconfirm -Sdd python-gobject &> /dev/null
 	   fi
-	fi
-
-	# add mate repo when missed in pacman.conf
-	if [ -e "/usr/bin/mate-session" ] && [ "$(grep '\[mate\]' /etc/pacman.conf)" == "" ]; then
-		msg "Adding MATE repository ..."
-		echo "[mate]" >> /etc/pacman.conf
-		echo "# Official MATE repo:" >> /etc/pacman.conf
-		echo "SigLevel = Never" >> /etc/pacman.conf
-		echo 'Server = http://repo.mate-desktop.org/archlinux/$arch' >> /etc/pacman.conf
-	fi
-
-	# fix broken mate repo entry
-	if [ -e "/usr/bin/mate-session" ] && [ "$(grep 'repo.mate-desktop.org/archlinux/\$arch' /etc/pacman.conf)" == "" ]; then
-		msg "Fixing MATE repository entry ..."
-		sed -i 's|repo.mate-desktop.org/archlinux/|repo.mate-desktop.org/archlinux/$arch|g' /etc/pacman.conf
 	fi
 
 	# depreciate sysctl.conf
