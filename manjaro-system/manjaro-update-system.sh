@@ -68,6 +68,8 @@ post_upgrade() {
 		rm -f /usr/lib/python3.3/site-packages/dbus/__pycache__/types.cpython-33.pyc
 		rm -f /usr/lib/python3.3/site-packages/dbus/mainloop/__pycache__/__init__.cpython-33.pyc
 		rm -f /usr/lib/python3.3/site-packages/dbus/mainloop/__pycache__/glib.cpython-33.pyc
+		rm /var/lib/pacman/db.lck &> /dev/null
+		pacman --noconfirm --force -Sdd python-dbus &> /dev/null
 	   fi
 	fi
 
@@ -138,7 +140,7 @@ post_upgrade() {
 		rm -f /usr/lib/python3.3/site-packages/pygtkcompat/__pycache__/pygtkcompat.cpython-33.pyc
 		rm -f /usr/lib/python3.3/site-packages/pygtkcompat/__pycache__/pygtkcompat.cpython-33.pyo
 		rm /var/lib/pacman/db.lck &> /dev/null
-		pacman --noconfirm -Sdd python-gobject &> /dev/null
+		pacman --noconfirm --force -Sdd python-gobject &> /dev/null
 	   fi
 	fi
 
