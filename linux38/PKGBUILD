@@ -13,7 +13,7 @@ _basever=38
 _aufs=20131104
 _subver=16
 pkgver=${_basekernel}.13.${_subver}
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -54,6 +54,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "3.8.13.16.patch"
         "http://git.kernel.org/cgit/linux/kernel/git/stable/stable-queue.git/plain/releases/3.10.10/acpi-add-_sta-evaluation-at-do_acpi_find_child.patch"
         "http://git.kernel.org/cgit/linux/kernel/git/stable/stable-queue.git/plain/releases/3.10.10/acpi-try-harder-to-resolve-_adr-collisions-for-bridges.patch"
+        'CVE-2014-0038.patch::http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/patch/net/compat.c?id=2def2ef2ae5f3990aabdbe8a755911902707d268'
 )
 sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             'abc523f59e4c7a4c8ccadd7fd3cd03b7ae8788b399040a1c949c4232601cfd5b'
@@ -90,6 +91,7 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             'e5a72966d88b6616dcf8492d304f5bf954e5b3e850b320a44cba4db7776dd6de'
             'cb505a5b9aa750490ba28facb537bfd928ff6d0dc8edc349b6ad5e202f876e69'
             'aaf27758adaf142d04ea8ba43378716d24699a884906ae1e2ef3f655695497c6'
+            'e9efc572c1243d05df1433fbbbe8cd34271435f6aeb7a85d70bc0de3b11f88dc'
 )
 
 ## modules.symboles md5sums
@@ -163,6 +165,9 @@ prepare() {
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
   patch -Np1 -i "${srcdir}/aufs3-mmap.patch"
   patch -Np1 -i "${srcdir}/aufs3-standalone.patch"
+
+  # Fix CVE-2014-0038
+  patch -p1 -i "${srcdir}/CVE-2014-0038.patch"
 
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config

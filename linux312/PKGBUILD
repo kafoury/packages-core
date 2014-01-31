@@ -12,7 +12,7 @@ _basekernel=3.12
 _basever=312
 _aufs=20140120
 pkgver=${_basekernel}.9
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -45,6 +45,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'sunrpc-add-an-info-file-for-the-dummy-gssd-pipe.patch'
         'sunrpc-create-a-new-dummy-pipe-for-gssd-to-hold-open.patch'
         'sunrpc-replace-gssd_running-with-more-reliable-check.patch'
+        'CVE-2014-0038.patch::http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/patch/net/compat.c?id=2def2ef2ae5f3990aabdbe8a755911902707d268'
 )
 sha256sums=('2e120ec7fde19fa51dc6b6cc11c81860a0775defcad5a5bf910ed9a50e845a02'
             'ab49afc13b365e9095315316afd12b265f3758225af3aee69cc734520e8bbb05'
@@ -72,6 +73,7 @@ sha256sums=('2e120ec7fde19fa51dc6b6cc11c81860a0775defcad5a5bf910ed9a50e845a02'
             'd8d6745a165e7f1608d8c298e49c8c2fee5a5d6c61c5b80d63a8dc7913ff8dc8'
             'b6f366ed2100ccab99029f61c39c0781ad4863f537381626196ed43b4b115a21'
             'cbfabd113a1954cd3d6cc1e70c19b95ce36a19e2c92ad93939d4982077178135'
+            'e9efc572c1243d05df1433fbbbe8cd34271435f6aeb7a85d70bc0de3b11f88dc'
 )
 
 ## modules.symboles md5sums
@@ -139,6 +141,9 @@ prepare() {
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
   patch -Np1 -i "${srcdir}/aufs3-mmap.patch"
   patch -Np1 -i "${srcdir}/aufs3-standalone.patch"
+
+  # Fix CVE-2014-0038
+  patch -p1 -i "${srcdir}/CVE-2014-0038.patch"
 
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config
