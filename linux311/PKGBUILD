@@ -10,10 +10,10 @@ pkgname=('linux311' 'linux311-headers')
 _kernelname=-MANJARO
 _basekernel=3.11
 _basever=311
-_aufs=20140113
-_subver=3
+_aufs=20140127
+_subver=4
 pkgver=${_basekernel}.10.${_subver}
-pkgrel=2
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -39,7 +39,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "${_basekernel}.10.1.patch"
         "${_basekernel}.10.2.patch"
         "${_basekernel}.10.3.patch"
-        'CVE-2014-0038.patch::http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/patch/net/compat.c?id=2def2ef2ae5f3990aabdbe8a755911902707d268'
+        "${_basekernel}.10.4.patch"
 )
 sha256sums=('803ec8f0ad4b2ddedcb0332a590cd2b5e10dfc57c3b1c95bc9c46af81d51d7f9'
             'b12321f0d62476211662945361178819b134964babd238a67dab0824edcf19b1'
@@ -47,11 +47,11 @@ sha256sums=('803ec8f0ad4b2ddedcb0332a590cd2b5e10dfc57c3b1c95bc9c46af81d51d7f9'
             'daf21aba55c5cef99cea5d99cadc4d894ba5cb64f50dbcd25b67e8c2817f4a5c'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '48cdaa69bbefee6a64494d60651a04f5ec120c4d8ecf07e13e91d0e10f837bd8'
+            'b2dd57f291714481fc7a97be3edac2f24f7fadb52aa90f372485a6e73bd46e98'
             'a896a9056f3b24c0c3656ec6b0c3f2a767ed8e6b650e0f377a40b9c4d9841f40'
             'c73dd98a7b0a6941762a74128625d0a64032a2e96ba74d379090c094fac41cf5'
             '3fd186ab93511403548f9313c4b5e97de916346fab1b7b12a764ee936b788b95'
-            'd3f85031f44b318dfc334036ab8aba1dcc71bf494f26fba7711494a53786b1a5'
+            '87720f0333b1a73e46d929d435f89c43c04b68d2353ca0f18557db7d0cf1e41e'
             'e0ed65e719be54bf3a71b7206289196e165b0a704b7e1b0f47ee9e378e51c5c9'
             'd633a2039877c00302f32738099ee53e0275350a8f73691ecb107fb9735db5a9'
             '461aa0da7de8bda9474797339532304894b55825be34f8c009244da8c00c5b41'
@@ -61,7 +61,7 @@ sha256sums=('803ec8f0ad4b2ddedcb0332a590cd2b5e10dfc57c3b1c95bc9c46af81d51d7f9'
             '41a7a1736a92b5247a1f62dafa0231f01dd382dacbf556c15fb1685d06a58ca5'
             '13b4068d934da3715b16459676eb844459ee3d39ee9d3cee260dae9fc30c37cd'
             '77edb62b255e650e390e66f20f9aa31b1e65b3ea05539db41bb6744e9b057f3f'
-            'e9efc572c1243d05df1433fbbbe8cd34271435f6aeb7a85d70bc0de3b11f88dc'
+            '0b1049ab532f19db675cb3b311a3f8af7702643ec33635c946c3354b3a865060'
 )
 
 ## modules.symboles md5sums
@@ -90,6 +90,8 @@ prepare() {
   # add extended stable patch(es)
   patch -p1 -i "${srcdir}/${_basekernel}.10.1.patch"
   patch -p1 -i "${srcdir}/${_basekernel}.10.2.patch"
+  patch -p1 -i "${srcdir}/${_basekernel}.10.3.patch"
+  patch -p1 -i "${srcdir}/${_basekernel}.10.4.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -121,9 +123,6 @@ prepare() {
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
   patch -Np1 -i "${srcdir}/aufs3-mmap.patch"
   patch -Np1 -i "${srcdir}/aufs3-standalone.patch"
-
-  # Fix CVE-2014-0038
-  patch -p1 -i "${srcdir}/CVE-2014-0038.patch"
 
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config

@@ -4,7 +4,7 @@
 # Maintainer: Guinux <nuxgui@gmail.com>
 
 pkgname=manjaro-keyring
-pkgver=20120504
+pkgver=20140209
 pkgrel=1
 pkgdesc='Manjaro PGP keyring'
 arch=('any')
@@ -16,9 +16,9 @@ source=('Makefile'
         'manjaro-revoked'
         'manjaro-trusted')
 sha256sums=('ac8fed4c8dbb910bb4fb3c01cb63de00d6b25ac79734ea5c933706aff6f9c950'
-            '34ea1e4bebc692ae9a3c0bd826f3ec77803ce5cd52d3879579d9d4d9a50819a9'
+            'a791747ecf36b9f17d84443494a09bf1fd31817a850daaf34b969b7607bf517e'
             'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
-            '8fda9e72a1edbd2151533ed6c858658d4632a6da1e0051b1dadf1f286ef7a6a8')
+            '27e110dc3cb3dc91f7ad198c370289d4f6019667ec1608bda5213522af154319')
 
 package() {
 	#cd "${srcdir}/${pkgname}-${pkgver}"

@@ -10,9 +10,9 @@ pkgname=('linux310' 'linux310-headers')
 _kernelname=-MANJARO
 _basekernel=3.10
 _basever=310
-_aufs=20140120
-pkgver=${_basekernel}.28
-pkgrel=2
+_aufs=20140127
+pkgver=${_basekernel}.29
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -35,16 +35,15 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.10/2700_ThinkPad-30-brightness-control-fix.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.10/4500_nouveau-video-output-control-Kconfig.patch'
         'criu-no-expert.patch'
-        '3.10.13-Revert-zram-use-zram--lock-to-protect-zram_free_page-in-swap-free-notify-path.patch'
-        'CVE-2014-0038.patch::http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/patch/net/compat.c?id=2def2ef2ae5f3990aabdbe8a755911902707d268')
+        '3.10.13-Revert-zram-use-zram--lock-to-protect-zram_free_page-in-swap-free-notify-path.patch')
 
 sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
-            'b169d1491e69307ef472b86b831ac524deefa542715c065d34c31409d35b674c'
+            'ebe2e152df34429b588bd8d97ab4e40ad3d0f376325cdb4248ff1f87d47be040'
             '92ef3ce51c5c727ced0038c2db0c7694880ee0254425b50a41b88795a78fc7f0'
             '14ea86805b752d136c139b6a71852e2800bab86d8c6483d0f46206c1418d70f7'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '1b051c8e6ee9a989502c1b9ca596f4896e93fb376775715e783fed5513c2b079'
+            'f8f53f46ec726e84ce9ad6b83a2909c3d9180093e50c56f3e9bb2b9286178b89'
             'bd56283210474d62be22a429c8401a9b45501c6a182391d05290554c23283296'
             '3ef474c102a1fcc596d92c5d370c60845c789012efd41b4961b557ec3d6a88b1'
             '11e0a841baa5edb08574cdc948ee4e0787fd0ad01c234914986f1b4525c5131f'
@@ -55,8 +54,7 @@ sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
             '9d7eab1ffec60f2b0d2121221d957f17a02918d95f11ea52902c227df5105e25'
             '59ad742a02bc24d58bc06eee584175a164cb82550b905ba9f402a6dc399d3ed1'
             'daa75228a4c45a925cc5dbfeba884aa696a973a26af7695adc198c396474cbd5'
-            '9d7e80e30a60137b9b88dc37d17c65c6834c4e455e9be8db80d98238dfabb1a1'
-            'e9efc572c1243d05df1433fbbbe8cd34271435f6aeb7a85d70bc0de3b11f88dc')
+            '9d7e80e30a60137b9b88dc37d17c65c6834c4e455e9be8db80d98238dfabb1a1')
 
 ## modules.symboles md5sums
 #
@@ -110,9 +108,6 @@ prepare() {
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
   patch -Np1 -i "${srcdir}/aufs3-mmap.patch"
   patch -Np1 -i "${srcdir}/aufs3-standalone.patch"
-
-  # Fix CVE-2014-0038
-  patch -p1 -i "${srcdir}/CVE-2014-0038.patch"
 
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config

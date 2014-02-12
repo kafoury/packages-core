@@ -10,9 +10,9 @@ pkgname=('linux312' 'linux312-headers')
 _kernelname=-MANJARO
 _basekernel=3.12
 _basever=312
-_aufs=20140120
-pkgver=${_basekernel}.9
-pkgrel=2
+_aufs=20140127
+pkgver=${_basekernel}.10
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -45,15 +45,14 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'sunrpc-add-an-info-file-for-the-dummy-gssd-pipe.patch'
         'sunrpc-create-a-new-dummy-pipe-for-gssd-to-hold-open.patch'
         'sunrpc-replace-gssd_running-with-more-reliable-check.patch'
-        'CVE-2014-0038.patch::http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/patch/net/compat.c?id=2def2ef2ae5f3990aabdbe8a755911902707d268'
 )
 sha256sums=('2e120ec7fde19fa51dc6b6cc11c81860a0775defcad5a5bf910ed9a50e845a02'
-            'ab49afc13b365e9095315316afd12b265f3758225af3aee69cc734520e8bbb05'
+            '8ab3d792dda272f3d4b40095c8ea9291a1235dd71b7c003cfb904eecc93a879b'
             '2a3cf56f7394bb2724f6dd9f66a3c4663f75d04929fd5df3ded0ea722d0d390d'
             '741a933cb25b9154e0891fb8a12ae7d3513157e5bc0441dddd682485967e83bc'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
-            '0ffcd8c1732b37c5ea5db5c417739df5e3ae06d3b99032a3ca8021abec39adaa'
+            '2afe70579508ab0f81d75e68c32755c39adeb630b6bcefa7cc42b44915c035e8'
             '03ec8d29245b222c21aee0a043ab9a48702d252d8460d44541fa9ea65bcea7ce'
             'e9604c6d87ae87830c154c1b12065eb6361e503006025497741f15dbaa9fd3ff'
             '14fce573416f3df468c562f5a0adc5f117fe0b632f455d989219670ed63d5397'
@@ -73,7 +72,6 @@ sha256sums=('2e120ec7fde19fa51dc6b6cc11c81860a0775defcad5a5bf910ed9a50e845a02'
             'd8d6745a165e7f1608d8c298e49c8c2fee5a5d6c61c5b80d63a8dc7913ff8dc8'
             'b6f366ed2100ccab99029f61c39c0781ad4863f537381626196ed43b4b115a21'
             'cbfabd113a1954cd3d6cc1e70c19b95ce36a19e2c92ad93939d4982077178135'
-            'e9efc572c1243d05df1433fbbbe8cd34271435f6aeb7a85d70bc0de3b11f88dc'
 )
 
 ## modules.symboles md5sums
@@ -141,9 +139,6 @@ prepare() {
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
   patch -Np1 -i "${srcdir}/aufs3-mmap.patch"
   patch -Np1 -i "${srcdir}/aufs3-standalone.patch"
-
-  # Fix CVE-2014-0038
-  patch -p1 -i "${srcdir}/CVE-2014-0038.patch"
 
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config
