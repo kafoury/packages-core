@@ -43,6 +43,13 @@ detectDE()
 
 post_upgrade() {
 
+	# fix korodes signature
+	if [ "$(vercmp $2 20140216-1)" -lt 0 ]; then
+		msg "Prepare for Xorg-Server downgrade ..."
+		rm /var/lib/pacman/db.lck &> /dev/null
+		pacman --noconfirm --force -Suu
+	fi
+
 	# workaround for catalyst-server removal
 	pacman -Qq catalyst-server &> /tmp/cmd1
 	pacman -Q catalyst-utils &> /tmp/cmd2
@@ -56,6 +63,20 @@ post_upgrade() {
 	      pacman --noconfirm -Rdd ${packages} &> /dev/null
 	      pacman --noconfirm -S ${conflicts} &> /dev/null
 	   fi
+	fi
+
+	# check for xorg-server
+	pacman -Qq xorg-server &> /tmp/cmd1
+	if [ "$(grep 'xorg-server' /tmp/cmd1)" != "xorg-server" ]; then
+	      msg "Installing missing Xorg-Server ..."
+	      rm /var/lib/pacman/db.lck &> /dev/null
+	      pacman --noconfirm -S xorg-server
+	fi
+
+	# fix korodes signature
+	if [ "$(vercmp $2 20140212-1)" -lt 0 ]; then
+		msg "Configure /etc/pacman.conf ..."
+		sed -i -e s'|^.*SyncFirst.*|SyncFirst   = archlinux-keyring manjaro-keyring manjaro-system pacman|g' /etc/pacman.conf
 	fi
 
 	# remove pyc-files if python-dbus < 1.2.0-2
