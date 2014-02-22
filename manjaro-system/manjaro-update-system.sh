@@ -43,11 +43,17 @@ detectDE()
 
 post_upgrade() {
 
-	# fix korodes signature
-	if [ "$(vercmp $2 20140216-1)" -lt 0 ]; then
+	# xorg downgrade
+	if [ "$(vercmp $2 20140221-1)" -lt 0 ]; then
 		msg "Prepare for Xorg-Server downgrade ..."
 		rm /var/lib/pacman/db.lck &> /dev/null
 		pacman --noconfirm --force -Suu
+	        # check for xorg-server
+	        pacman -Qq xorg-server &> /tmp/cmd1
+		if [ "$(grep 'xorg-server' /tmp/cmd1)" != "xorg-server" ]; then
+			msg "Installing missing Xorg-Server ..."
+			pacman --noconfirm -S xorg-server
+		fi
 	fi
 
 	# workaround for catalyst-server removal
@@ -63,14 +69,6 @@ post_upgrade() {
 	      pacman --noconfirm -Rdd ${packages} &> /dev/null
 	      pacman --noconfirm -S ${conflicts} &> /dev/null
 	   fi
-	fi
-
-	# check for xorg-server
-	pacman -Qq xorg-server &> /tmp/cmd1
-	if [ "$(grep 'xorg-server' /tmp/cmd1)" != "xorg-server" ]; then
-	      msg "Installing missing Xorg-Server ..."
-	      rm /var/lib/pacman/db.lck &> /dev/null
-	      pacman --noconfirm -S xorg-server
 	fi
 
 	# fix korodes signature

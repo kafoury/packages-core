@@ -11,7 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.10
 _basever=310
 _aufs=20140127
-pkgver=${_basekernel}.30
+pkgver=${_basekernel}.31
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -38,7 +38,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.10.13-Revert-zram-use-zram--lock-to-protect-zram_free_page-in-swap-free-notify-path.patch')
 
 sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
-            'b7b928e226acc90f7e59e91f9a89ad1bb074705ef1a86b5ed8f0856a34dc6720'
+            '023b90afa04edf1da927d11d90cccf042a19e1dd4abd41815d840a17d48bc895'
             '92ef3ce51c5c727ced0038c2db0c7694880ee0254425b50a41b88795a78fc7f0'
             '14ea86805b752d136c139b6a71852e2800bab86d8c6483d0f46206c1418d70f7'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'

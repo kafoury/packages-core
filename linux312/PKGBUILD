@@ -11,7 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.12
 _basever=312
 _aufs=20140127
-pkgver=${_basekernel}.11
+pkgver=${_basekernel}.12
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -47,7 +47,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'sunrpc-replace-gssd_running-with-more-reliable-check.patch'
 )
 sha256sums=('2e120ec7fde19fa51dc6b6cc11c81860a0775defcad5a5bf910ed9a50e845a02'
-            '70490fb45365e2503fd71c936a35c874a7f81b837f5aadc5c4a43c31eb3089d0'
+            '2076e38ed11cb8bc8af39cc42026e613ae92886b4b8ca27581d08da0d785bf7d'
             '2a3cf56f7394bb2724f6dd9f66a3c4663f75d04929fd5df3ded0ea722d0d390d'
             '741a933cb25b9154e0891fb8a12ae7d3513157e5bc0441dddd682485967e83bc'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
