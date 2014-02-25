@@ -47,3 +47,6 @@ GRUB_BACKGROUND="/usr/share/grub/background.png"
 
 # Uncomment to get a beep at GRUB start
 #GRUB_INIT_TUNE="480 440 1"
+
+# Disable sub menu. See bug https://bugs.archlinux.org/task/37904
+GRUB_DISABLE_SUBMENU=y
