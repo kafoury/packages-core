@@ -11,7 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.11
 _basever=311
 _aufs=20140127
-_subver=4
+_subver=5
 pkgver=${_basekernel}.10.${_subver}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -35,11 +35,11 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/1700_enable-thinkpad-micled.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/2700_ThinkPad-30-brightness-control-fix.patch'
         'criu-no-expert.patch'
-        '3.11-haswell-intel_pstate.patch'
         "${_basekernel}.10.1.patch"
         "${_basekernel}.10.2.patch"
         "${_basekernel}.10.3.patch"
         "${_basekernel}.10.4.patch"
+        "${_basekernel}.10.5.patch"
 )
 sha256sums=('803ec8f0ad4b2ddedcb0332a590cd2b5e10dfc57c3b1c95bc9c46af81d51d7f9'
             'b12321f0d62476211662945361178819b134964babd238a67dab0824edcf19b1'
@@ -57,11 +57,11 @@ sha256sums=('803ec8f0ad4b2ddedcb0332a590cd2b5e10dfc57c3b1c95bc9c46af81d51d7f9'
             '461aa0da7de8bda9474797339532304894b55825be34f8c009244da8c00c5b41'
             '9d7eab1ffec60f2b0d2121221d957f17a02918d95f11ea52902c227df5105e25'
             'daa75228a4c45a925cc5dbfeba884aa696a973a26af7695adc198c396474cbd5'
-            'c29f41b754494b09e97b6f4bbdd467771bc481f840fdf0d3f5605ad585a6857b'
             '41a7a1736a92b5247a1f62dafa0231f01dd382dacbf556c15fb1685d06a58ca5'
             '13b4068d934da3715b16459676eb844459ee3d39ee9d3cee260dae9fc30c37cd'
             '77edb62b255e650e390e66f20f9aa31b1e65b3ea05539db41bb6744e9b057f3f'
             '0b1049ab532f19db675cb3b311a3f8af7702643ec33635c946c3354b3a865060'
+            'c8c05494da51bebad223a63fe9ea0cbc1e6b2ecfe165873fb97cf4b33af552a1'
 )
 
 ## modules.symboles md5sums
@@ -92,6 +92,7 @@ prepare() {
   patch -p1 -i "${srcdir}/${_basekernel}.10.2.patch"
   patch -p1 -i "${srcdir}/${_basekernel}.10.3.patch"
   patch -p1 -i "${srcdir}/${_basekernel}.10.4.patch"
+  patch -p1 -i "${srcdir}/${_basekernel}.10.5.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -102,11 +103,6 @@ prepare() {
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -Np1 -i "${srcdir}/change-default-console-loglevel.patch"
- 
-  # add intel haswell support to intel_pstate
-  # https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/patch/?id=6cdcdb793791f776ea9408581b1242b636d43b37
-  # will be in 3.12
-  patch -Np1 -i "${srcdir}/3.11-haswell-intel_pstate.patch"
 
   # allow criu without expert option set
   # patch from fedora
