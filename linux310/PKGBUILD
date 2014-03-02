@@ -2,8 +2,9 @@
 # Tobias Powalowski <tpowa@archlinux.org>
 # Thomas Baechler <thomas@archlinux.org>
 
-# Maintainer: Philip Müller <philm@manjaro.org>
-# Maintainer: Guinux <guillaume@manjaro.org>
+# Maintainer : Philip Müller <philm@manjaro.org>
+# Maintainer : Guinux <guillaume@manjaro.org>
+# Contributor: Rob McCathie <rob@manjaro.org>
 
 pkgbase=linux310
 pkgname=('linux310' 'linux310-headers')
@@ -12,7 +13,7 @@ _basekernel=3.10
 _basever=310
 _aufs=20140127
 pkgver=${_basekernel}.32
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -114,6 +115,11 @@ prepare() {
   else
     cat "${srcdir}/config" > ./.config
   fi
+  
+  # Change I/O scheduler from Deadline to CFQ
+  sed -i "s|CONFIG_DEFAULT_DEADLINE=y|# CONFIG_DEFAULT_DEADLINE is not set|g" ./.config
+  sed -i "s|# CONFIG_DEFAULT_CFQ is not set|CONFIG_DEFAULT_CFQ=y|g" ./.config
+  sed -i "s|CONFIG_DEFAULT_IOSCHED="deadline"|CONFIG_DEFAULT_IOSCHED="cfq"|g" ./.config
 
   cat "${srcdir}/config.aufs" >> ./.config
 
