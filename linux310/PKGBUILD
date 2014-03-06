@@ -12,8 +12,9 @@ _basekernel=3.10
 _basever=310
 _aufs=20140127
 _bfq=v7r2
+_bfs=440
 pkgver=${_basekernel}.32
-pkgrel=3
+pkgrel=4
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -39,12 +40,13 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '3.10.13-Revert-zram-use-zram--lock-to-protect-zram_free_page-in-swap-free-notify-path.patch'
         "0001-block-cgroups-kconfig-build-bits-for-BFQ-${_bfq}.patch::http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.10.8+-${_bfq}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${_bfq}-3.10.8+.patch"
         "0002-block-introduce-the-BFQ-${_bfq}-I-O-sched.patch::http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.10.8+-${_bfq}/0002-block-introduce-the-BFQ-${_bfq}-I-O-sched-for-3.10.8+.patch"
-        "0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${_bfq}.patch::http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.10.8+-${_bfq}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${_bfq}-for-3.10.8+.patch")
+        "0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${_bfq}.patch::http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.10.8+-${_bfq}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${_bfq}-for-3.10.8+.patch"
+        "sched-bfs-${_bfs}.patch::http://ck.kolivas.org/patches/3.0/3.10/3.10-ck1/patches/3.10-sched-bfs-${_bfs}.patch")
 
 sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
             'e05a8b9bbd475a3b85b893b447109aa5a4af3c981d4fb4e500e25e20cae9286a'
             '4709d9c19c5064c168c7f3dd753eb05402d91d3af5818c25d1aa0cd8070a0e8c'
-            '920b049d65b28ec1f1a38b134381bcc74ac2de02be1fe2f194c14813b74155dc'
+            '5c95628d041458c33f0c68b79e274f3f8f18e2f26ead9e2029202808851f059a'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
             'f8f53f46ec726e84ce9ad6b83a2909c3d9180093e50c56f3e9bb2b9286178b89'
@@ -62,6 +64,7 @@ sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
             'eb1703be3eeef6d93befd355b2c366ac9d02fe46d1483d012c22a6022b984de1'
             'ee99c56324f72507c96e14eb3beb495ada6a0f29735801bf1e98f4aac3fff74b'
             'afa12b38a9304810cb5c9bfc3b3aab88a633048d20c60ffc08973e47c650d203'
+            'd77a7bdce57c5ba4708e05e867738d01b5d6a58f4c22770c4f048ea8238a6588'
 )
 
 ## modules.symboles md5sums
@@ -121,6 +124,9 @@ prepare() {
   patch -Np1 -i "${srcdir}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${_bfq}.patch"
   patch -Np1 -i "${srcdir}/0002-block-introduce-the-BFQ-${_bfq}-I-O-sched.patch"
   patch -Np1 -i "${srcdir}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${_bfq}.patch"
+
+  # add BFS scheduler
+  patch -Np1 -i "${srcdir}/sched-bfs-${_bfs}.patch"
 
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config

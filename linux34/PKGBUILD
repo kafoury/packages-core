@@ -11,6 +11,8 @@ _kernelname=-MANJARO
 _basekernel=3.4
 _basever=34
 _aufs=20131104
+_bfq=v7r2
+_bfs=424
 pkgver=${_basekernel}.82
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -43,6 +45,10 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.4/2405_lpfs-build-warnings-debugfs-fix.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.4/2700_ThinkPad-30-brightness-control-fix.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.4/4500_nouveau-video-output-control-Kconfig.patch'
+        "0001-block-cgroups-kconfig-build-bits-for-BFQ-${_bfq}.patch::http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.4.0-${_bfq}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${_bfq}-3.4.patch"
+        "0002-block-introduce-the-BFQ-${_bfq}-I-O-sched.patch::http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.4.0-${_bfq}/0002-block-introduce-the-BFQ-${_bfq}-I-O-sched-for-3.4.patch"
+        "0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${_bfq}.patch::http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.4.0-${_bfq}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${_bfq}-for-3.4.0.patch"
+        "sched-bfs-${_bfs}.patch::http://ck.kolivas.org/patches/3.0/3.4/3.4-ck3/patches/3.4-sched-bfs-${_bfs}.patch"
 )
 sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             '0f040418580670f8d119cd960a39c20e5b548261db3bb3382144c19f33d30404'
@@ -69,6 +75,10 @@ sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
             '6e864df4af9aa64d75031a63f8ce80f1fc88140aa4c9cac5b854859c2fb87512'
             '9d7eab1ffec60f2b0d2121221d957f17a02918d95f11ea52902c227df5105e25'
             '59ad742a02bc24d58bc06eee584175a164cb82550b905ba9f402a6dc399d3ed1'
+            'b2e010c5a8477ba40ac2182524ff017ab373a31fae0b17db67ad43b9988873e5'
+            '31c54de44d7385bc9cbbc4563031692147afe0dd5507292a4810c76637a71c24'
+            '55bf4b536d5a64a0bf9612e448ddec73d05bb70e84589f1ab88dfb41af907801'
+            '0faf4dd97ed903599db83d83b79b811d171ae6d1e916ad88ca32e55290fab32d'
 )
 
 ## modules.symboles md5sums
@@ -149,6 +159,14 @@ prepare() {
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
   patch -Np1 -i "${srcdir}/aufs3-mmap.patch"
   patch -Np1 -i "${srcdir}/aufs3-standalone.patch"
+
+  # add BFQ scheduler
+  patch -Np1 -i "${srcdir}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${_bfq}.patch"
+  patch -Np1 -i "${srcdir}/0002-block-introduce-the-BFQ-${_bfq}-I-O-sched.patch"
+  patch -Np1 -i "${srcdir}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${_bfq}.patch"
+
+  # add BFS scheduler
+  patch -Np1 -i "${srcdir}/sched-bfs-${_bfs}.patch"
 
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config

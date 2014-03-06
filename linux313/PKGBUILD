@@ -11,6 +11,8 @@ _kernelname=-MANJARO
 _basekernel=3.13
 _basever=313
 _aufs=20140127
+_bfq=v7r2
+_bfs=446
 pkgver=${_basekernel}.5
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -49,6 +51,10 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         '0006-rpc_pipe-fix-cleanup-of-dummy-gssd-directory-when-no.patch'
         'i8042-fix-aliases.patch'
         '0001-SUNRPC-Ensure-that-gss_auth-isn-t-freed-before-its-u.patch'
+        "0001-block-cgroups-kconfig-build-bits-for-BFQ-${_bfq}.patch::http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.13.0-${_bfq}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${_bfq}-3.13.patch"
+        "0002-block-introduce-the-BFQ-${_bfq}-I-O-sched.patch::http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.13.0-${_bfq}/0002-block-introduce-the-BFQ-${_bfq}-I-O-sched-for-3.13.patch"
+        "0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${_bfq}.patch::http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.13.0-${_bfq}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${_bfq}-for-3.13.0.patch"
+        "sched-bfs-${_bfs}.patch::http://ck.kolivas.org/patches/3.0/3.13/3.13-ck1/patches/3.13-sched-bfs-${_bfs}.patch"
 )
 sha256sums=('4d5e5eee5f276424c32e9591f1b6c971baedc7b49f28ce03d1f48b1e5d6226a2'
             '074fdf3079b943540918d487ded1a13087b9a31f07feddef03fcf1bbb90f1091'
@@ -79,6 +85,10 @@ sha256sums=('4d5e5eee5f276424c32e9591f1b6c971baedc7b49f28ce03d1f48b1e5d6226a2'
             'b54af31bf32ea47dd47c48113481cc3288c04d844f5b4814663b108f43f415a7'
             '1e1dc0c380fcfadfe46d396f3efade08c90f53d74fac7037edcfe9bc0a3c8d56'
             '115095cc4ad447cf5139dd838d833212bd89f7456428b01bd6a66363d6acb19a'
+            '38672f6b62bb4fba9aca23882c386fb003ea71b750d0c07d7aa5a32638710308'
+            '85ff750be365e33a0c54898cabfaf299f62a81e1ec142d36508b19f88f2ab8a7'
+            '254f8d1670234c2a9a99bec44ad0bafa9121b12f98ba78e3dae795b9e51faff7'
+            'c3e9f904b6061c4d2c74340c2950e6e8f94f3eda450ca81afc7ad692fd0f7812'
 )
 
 ## modules.symboles md5sums
@@ -160,6 +170,14 @@ prepare() {
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
   patch -Np1 -i "${srcdir}/aufs3-mmap.patch"
   patch -Np1 -i "${srcdir}/aufs3-standalone.patch"
+
+  # add BFQ scheduler
+  patch -Np1 -i "${srcdir}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${_bfq}.patch"
+  patch -Np1 -i "${srcdir}/0002-block-introduce-the-BFQ-${_bfq}-I-O-sched.patch"
+  patch -Np1 -i "${srcdir}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${_bfq}.patch"
+
+  # add BFS scheduler
+  patch -Np1 -i "${srcdir}/sched-bfs-${_bfs}.patch"
 
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config
