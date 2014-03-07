@@ -13,8 +13,8 @@ _basever=310
 _aufs=20140127
 _bfq=v7r2
 _bfs=440
-pkgver=${_basekernel}.32
-pkgrel=4
+pkgver=${_basekernel}.33
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -44,9 +44,9 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "sched-bfs-${_bfs}.patch::http://ck.kolivas.org/patches/3.0/3.10/3.10-ck1/patches/3.10-sched-bfs-${_bfs}.patch")
 
 sha256sums=('df27fa92d27a9c410bfe6c4a89f141638500d7eadcca5cce578954efc2ad3544'
-            'e05a8b9bbd475a3b85b893b447109aa5a4af3c981d4fb4e500e25e20cae9286a'
-            '4709d9c19c5064c168c7f3dd753eb05402d91d3af5818c25d1aa0cd8070a0e8c'
-            '5c95628d041458c33f0c68b79e274f3f8f18e2f26ead9e2029202808851f059a'
+            '4ba2db5d2c54cff38cbbbff940e9a45969ccea675fc1cf78a4e665dd8f97468e'
+            '6dbf5eb5df5b94da1ce4470b774d252942772ce6e000b94b1ea82bada04eccb8'
+            '8e1575146cab07f6f0b59a111ec49be89f2ed1a839c728e395cab1ba7fa501a9'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
             'f8f53f46ec726e84ce9ad6b83a2909c3d9180093e50c56f3e9bb2b9286178b89'
