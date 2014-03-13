@@ -11,7 +11,9 @@ _kernelname=-MANJARO
 _basekernel=3.11
 _basever=311
 _aufs=20140127
-_subver=5
+_subver=6
+_bfq=v7r2
+_bfs=441
 pkgver=${_basekernel}.10.${_subver}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -35,16 +37,21 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/1700_enable-thinkpad-micled.patch'
         'http://sources.gentoo.org/cgi-bin/viewvc.cgi/linux-patches/genpatches-2.6/trunk/3.11/2700_ThinkPad-30-brightness-control-fix.patch'
         'criu-no-expert.patch'
+        "0001-block-cgroups-kconfig-build-bits-for-BFQ-${_bfq}.patch::http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.11.0-${_bfq}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${_bfq}-3.11.patch"
+        "0002-block-introduce-the-BFQ-${_bfq}-I-O-sched.patch::http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.11.0-${_bfq}/0002-block-introduce-the-BFQ-${_bfq}-I-O-sched-for-3.11.patch"
+        "0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${_bfq}.patch::http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.11.0-${_bfq}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${_bfq}-for-3.11.0.patch"
+        "sched-bfs-${_bfs}.patch::http://ck.kolivas.org/patches/3.0/3.11/3.11-ck1/patches/3.11-sched-bfs-${_bfs}.patch"
         "${_basekernel}.10.1.patch"
         "${_basekernel}.10.2.patch"
         "${_basekernel}.10.3.patch"
         "${_basekernel}.10.4.patch"
         "${_basekernel}.10.5.patch"
+        "${_basekernel}.10.6.patch"
 )
 sha256sums=('803ec8f0ad4b2ddedcb0332a590cd2b5e10dfc57c3b1c95bc9c46af81d51d7f9'
             'b12321f0d62476211662945361178819b134964babd238a67dab0824edcf19b1'
-            '17b387de96b511dcf73d2017a13c48a32fcccdc716d7175c5c4af2ffcceba8ae'
-            'daf21aba55c5cef99cea5d99cadc4d894ba5cb64f50dbcd25b67e8c2817f4a5c'
+            '1f5f3b6375f72d6a4c2d3bb7fac5caa655a217255e0096ed075269d19b6cf47e'
+            '309836e7e14806331b65642ef33a9788e1659a8173b71c62535b848f5712ca5a'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
             'd3be8e800b7fa0ab82700a61f7c85e4fe351f1b73688120a9a465bd34b473b19'
             'b2dd57f291714481fc7a97be3edac2f24f7fadb52aa90f372485a6e73bd46e98'
@@ -57,11 +64,16 @@ sha256sums=('803ec8f0ad4b2ddedcb0332a590cd2b5e10dfc57c3b1c95bc9c46af81d51d7f9'
             '461aa0da7de8bda9474797339532304894b55825be34f8c009244da8c00c5b41'
             '9d7eab1ffec60f2b0d2121221d957f17a02918d95f11ea52902c227df5105e25'
             'daa75228a4c45a925cc5dbfeba884aa696a973a26af7695adc198c396474cbd5'
+            'd9eadbff6c442ffbfcef7d6a624059a92bcf91027aef23c27da3ab60369b6222'
+            '00ac37b51aaa902f48b926c6e9871723817733da6edaf59669adef78c0f18fc9'
+            'd42d833c00214c60ae1c130ea5a56e1c7878c57d67a983b5cafe5377737d38fb'
+            'd38fb584008b84bf3b2d7b7c382f1552773f1a68b32880e3d4531b5e2b7033d1'
             '41a7a1736a92b5247a1f62dafa0231f01dd382dacbf556c15fb1685d06a58ca5'
             '13b4068d934da3715b16459676eb844459ee3d39ee9d3cee260dae9fc30c37cd'
             '77edb62b255e650e390e66f20f9aa31b1e65b3ea05539db41bb6744e9b057f3f'
             '0b1049ab532f19db675cb3b311a3f8af7702643ec33635c946c3354b3a865060'
             'c8c05494da51bebad223a63fe9ea0cbc1e6b2ecfe165873fb97cf4b33af552a1'
+            '2f8a71f79b1bf130e962df69a58f605d367cdd246aed5395f0eac4c5f106ecf5'
 )
 
 ## modules.symboles md5sums
@@ -93,6 +105,7 @@ prepare() {
   patch -p1 -i "${srcdir}/${_basekernel}.10.3.patch"
   patch -p1 -i "${srcdir}/${_basekernel}.10.4.patch"
   patch -p1 -i "${srcdir}/${_basekernel}.10.5.patch"
+  patch -p1 -i "${srcdir}/${_basekernel}.10.6.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -119,6 +132,14 @@ prepare() {
   patch -Np1 -i "${srcdir}/aufs3-loopback.patch"
   patch -Np1 -i "${srcdir}/aufs3-mmap.patch"
   patch -Np1 -i "${srcdir}/aufs3-standalone.patch"
+
+  # add BFQ scheduler
+  patch -Np1 -i "${srcdir}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${_bfq}.patch"
+  patch -Np1 -i "${srcdir}/0002-block-introduce-the-BFQ-${_bfq}-I-O-sched.patch"
+  patch -Np1 -i "${srcdir}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${_bfq}.patch"
+
+  # add BFS scheduler
+  patch -Np1 -i "${srcdir}/sched-bfs-${_bfs}.patch"
 
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config
