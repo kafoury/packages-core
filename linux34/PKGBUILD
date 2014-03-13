@@ -103,8 +103,7 @@ sha256sums=('ff3dee6a855873d12487a6f4070ec2f7996d073019171361c955639664baa0c6'
 prepare() {
   cd "${srcdir}"
   # fix bfs
-  rm sched-bfs-${_bfs}.patch
-  cp -v ../sched-bfs-${_bfs}.patch sched-bfs-${_bfs}.patch
+  cp -v --remove-destination `readlink sched-bfs-${_bfs}.patch` sched-bfs-${_bfs}.patch
   patch -Np0 -i "${srcdir}/sched-bfs-${_bfs}-3.4.83.patch"
 
   cd "${srcdir}/linux-${_basekernel}"
