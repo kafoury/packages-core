@@ -43,22 +43,6 @@ detectDE()
 
 post_upgrade() {
 
-	# depreciate linux34
-	pacman -Qq linux34 &> /tmp/cmd1
-	pacman -Qq linux310 &> /tmp/cmd2
-	packages=$(pacman -Qqs linux34 | sed s'|linux34|linux310|'g)
-	if [ "$(vercmp $2 20140313-1)" -lt 0 ] && [ "$(grep 'linux34' /tmp/cmd1)" == "linux34" ]; then
-		msg "Depreciating linux34 ..."
-		rm /var/lib/pacman/db.lck &> /dev/null
-		pacman --noconfirm -Rscn linux34 &> /dev/null
-		if [ "$(grep 'linux310' /tmp/cmd2)" == "linux310" ]; then
-			msg "linux310 found, skipping installation ..."
-		else
-			msg "Installing linux310 ..."
-			pacman --noconfirm -S ${packages} &> /dev/null
-		fi
-	fi
-
 	# xorg downgrade
 	if [ "$(vercmp $2 20140221-1)" -lt 0 ]; then
 		msg "Prepare for Xorg-Server downgrade ..."
