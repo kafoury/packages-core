@@ -9,11 +9,11 @@ pkgdesc="Manjaro Linux mirror list for use by pacman"
 arch=('any')
 depends=('python')
 optdepends=('gtk3: for GTK UI' 'python-gobject: for GTK UI')
-url="https://git.manjaro.org/core/pacman-mirrors"
+url="https://github.com/manjaro/pacman-mirrors.git"
 license=('GPL')
 install=pacman-mirrorlist.install
 backup=(etc/pacman-mirrors.conf)
-source=(git+http://git.manjaro.org/core/pacman-mirrors.git)
+source=(git+https://github.com/manjaro/pacman-mirrors.git)
 sha256sums=('SKIP')
 
 package() {
