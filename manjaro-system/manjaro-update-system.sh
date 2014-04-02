@@ -43,6 +43,18 @@ detectDE()
 
 post_upgrade() {
 
+	# fix freeimage
+	pacman -Qq freeimage &> /tmp/cmd1
+	pacman -Q freeimage &> /tmp/cmd2
+	if [ "$(grep 'freeimage' /tmp/cmd1)" == "freeimage" ]; then
+		msg "Fix freeimage ..."
+		if [ "$(cat /tmp/cmd2 | cut -d" " -f2 | sed -e 's/\.//g' | sed -e 's/\-//g')" -lt "31602" ]; then
+			rm /var/lib/pacman/db.lck &> /dev/null
+			rm /usr/lib/libfreeimageplus.so.3
+			pacman --noconfirm -S freeimage
+		fi
+	fi
+
 	# xorg downgrade
 	if [ "$(vercmp $2 20140221-1)" -lt 0 ]; then
 		msg "Prepare for Xorg-Server downgrade ..."
