@@ -43,12 +43,21 @@ detectDE()
 
 post_upgrade() {
 
+	# fix python-configobj downgrade
+	pacman -Qq python-configobj &> /tmp/cmd1
+	if [ "$(vercmp $2 20140407-1)" -lt 0 ]; then
+		if [ "$(grep 'python-configobj' /tmp/cmd1)" == "python-configobj" ]; then
+			msg "Fix python-configobj ..."
+			pacman --noconfirm -S python-configobj
+		fi
+	fi
+
 	# fix freeimage
 	pacman -Qq freeimage &> /tmp/cmd1
 	pacman -Q freeimage &> /tmp/cmd2
 	if [ "$(grep 'freeimage' /tmp/cmd1)" == "freeimage" ]; then
-		msg "Fix freeimage ..."
 		if [ "$(cat /tmp/cmd2 | cut -d" " -f2 | sed -e 's/\.//g' | sed -e 's/\-//g')" -lt "31602" ]; then
+			msg "Fix freeimage ..."
 			rm /var/lib/pacman/db.lck &> /dev/null
 			rm /usr/lib/libfreeimageplus.so.3
 			pacman --noconfirm -S freeimage
