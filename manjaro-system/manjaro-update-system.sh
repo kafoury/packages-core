@@ -43,6 +43,18 @@ detectDE()
 
 post_upgrade() {
 
+	# fix btrfs-progs
+	pacman -Qq btrfs-progs &> /tmp/cmd1
+	pacman -Q btrfs-progs &> /tmp/cmd2
+	if [ "$(grep 'btrfs-progs' /tmp/cmd1)" == "btrfs-progs" ]; then
+		if [ "$(cat /tmp/cmd2 | cut -d" " -f2 | sed -e 's/\.//g' | sed -e 's/\-//g')" -lt "3141" ]; then
+			msg "Fix btrfs-progs ..."
+			rm /var/lib/pacman/db.lck &> /dev/null
+			rm /usr/bin/fsck.btrfs &> /dev/null
+			pacman --noconfirm -S btrfs-progs
+		fi
+	fi
+
 	# fix python-configobj downgrade
 	pacman -Qq python-configobj &> /tmp/cmd1
 	if [ "$(vercmp $2 20140407-1)" -lt 0 ]; then

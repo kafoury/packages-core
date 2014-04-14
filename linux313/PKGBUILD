@@ -12,7 +12,7 @@ _basekernel=3.13
 _basever=313
 _aufs=20140127
 _bfq=v7r2
-pkgver=${_basekernel}.9
+pkgver=${_basekernel}.10
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
@@ -55,7 +55,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${_bfq}.patch::http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.13.0-${_bfq}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${_bfq}-for-3.13.0.patch"
 )
 sha256sums=('4d5e5eee5f276424c32e9591f1b6c971baedc7b49f28ce03d1f48b1e5d6226a2'
-            'c1131c776964ee7d276b99142f4bd2e6feedf2adc92b44e983c3dd930c6d0c3b'
+            'c323d141f02b349ac5b37c744e0689c98dc698be81c7c974b182983b8073b03d'
             '27f9e59319f875df7b67482334937d41d97957fa65b31f48e9986486e2e43871'
             '85d28cc32f2ccfb97ed4377142c91d21e2e57eb74494255ffe20f729cc9c60d0'
             'b1b1cf291bd68270b700eb21f19f7b052116d07dde492761227cd94bb775910c'
