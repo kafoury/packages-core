@@ -11,7 +11,7 @@ _kernelname=-MANJARO
 _basekernel=3.11
 _basever=311
 _aufs=20140127
-_subver=7
+_subver=8
 _bfq=v7r2
 pkgver=${_basekernel}.10.${_subver}
 pkgrel=1
@@ -46,6 +46,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "${_basekernel}.10.5.patch"
         "${_basekernel}.10.6.patch"
         "${_basekernel}.10.7.patch"
+        "${_basekernel}.10.8.patch"
 )
 sha256sums=('803ec8f0ad4b2ddedcb0332a590cd2b5e10dfc57c3b1c95bc9c46af81d51d7f9'
             'b12321f0d62476211662945361178819b134964babd238a67dab0824edcf19b1'
@@ -73,6 +74,7 @@ sha256sums=('803ec8f0ad4b2ddedcb0332a590cd2b5e10dfc57c3b1c95bc9c46af81d51d7f9'
             'c8c05494da51bebad223a63fe9ea0cbc1e6b2ecfe165873fb97cf4b33af552a1'
             '2f8a71f79b1bf130e962df69a58f605d367cdd246aed5395f0eac4c5f106ecf5'
             '92d4ffe64e784beeed7002610aa5ce5154e42706f118afd41bebbaa1926c68e1'
+            'd22f7f07ed0f85067a23786949d48ff080cfda1eecae6fecc8bbf8c539d62f01'
 )
 
 ## modules.symboles md5sums
@@ -106,6 +108,7 @@ prepare() {
   patch -p1 -i "${srcdir}/${_basekernel}.10.5.patch"
   patch -p1 -i "${srcdir}/${_basekernel}.10.6.patch"
   patch -p1 -i "${srcdir}/${_basekernel}.10.7.patch"
+  patch -p1 -i "${srcdir}/${_basekernel}.10.8.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
