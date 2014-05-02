@@ -43,6 +43,18 @@ detectDE()
 
 post_upgrade() {
 
+	# fix terminus-font
+	pacman -Qq terminus-font &> /tmp/cmd1
+	pacman -Q terminus-font &> /tmp/cmd2
+	if [ "$(grep 'terminus-font' /tmp/cmd1)" == "terminus-font" ]; then
+		if [ "$(cat /tmp/cmd2 | cut -d" " -f2 | sed -e 's/\.//g' | sed -e 's/\-//g')" -lt "4385" ]; then
+			msg "Fix terminus-font ..."
+			rm /var/lib/pacman/db.lck &> /dev/null
+			rm /etc/fonts/conf.d/75-yes-terminus.conf &> /dev/null
+			pacman --noconfirm -S terminus-font
+		fi
+	fi
+
 	# fix btrfs-progs
 	pacman -Qq btrfs-progs &> /tmp/cmd1
 	pacman -Q btrfs-progs &> /tmp/cmd2
