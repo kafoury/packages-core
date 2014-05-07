@@ -12,7 +12,7 @@ _basekernel=3.8
 _basever=38
 _aufs=20131104
 _bfq=v7r2
-_subver=22
+_subver=23
 pkgver=${_basekernel}.13.${_subver}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -59,6 +59,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basekernel}.tar.xz
         "3.8.13.20.patch"
         "3.8.13.21.patch"
         "3.8.13.22.patch"
+        "3.8.13.23.patch"
         "http://git.kernel.org/cgit/linux/kernel/git/stable/stable-queue.git/plain/releases/3.10.10/acpi-add-_sta-evaluation-at-do_acpi_find_child.patch"
         "http://git.kernel.org/cgit/linux/kernel/git/stable/stable-queue.git/plain/releases/3.10.10/acpi-try-harder-to-resolve-_adr-collisions-for-bridges.patch"
         "0001-block-cgroups-kconfig-build-bits-for-BFQ-${_bfq}.patch::http://algo.ing.unimo.it/people/paolo/disk_sched/patches/3.8.0-${_bfq}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${_bfq}-3.8.patch"
@@ -105,6 +106,7 @@ sha256sums=('e070d1bdfbded5676a4f374721c63565f1c969466c5a3e214004a136b583184b'
             'b5561b49cb64f1ff99969369a4adda64ad957620bf9db24182ca2b39dbe96e81'
             'eb9c90bc0f0a569d7712ef6ab3d26e874ec83d982d4bad1e644db1192e929b31'
             '34d86756081b0c2c739ca01f1124cf9ffd85d7ed620337773313461e2fad38bf'
+            '3ad0389369064300ef2fd12e558be31c121d1f00dab4db157a9cc1a8b487244e'
             'cb505a5b9aa750490ba28facb537bfd928ff6d0dc8edc349b6ad5e202f876e69'
             'aaf27758adaf142d04ea8ba43378716d24699a884906ae1e2ef3f655695497c6'
             '9041d5c9c12d6b5035afa01aac6e813324e796053af846158665878f298bc786'
@@ -159,6 +161,7 @@ prepare() {
   patch -p1 -i "${srcdir}/3.8.13.20.patch"
   patch -p1 -i "${srcdir}/3.8.13.21.patch"
   patch -p1 -i "${srcdir}/3.8.13.22.patch"
+  patch -p1 -i "${srcdir}/3.8.13.23.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
